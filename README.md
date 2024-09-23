@@ -1,10 +1,11 @@
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
 
 # ekonomR
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-**2024-09-08 CURRENTLY IN THE PROCESS OF MERGING TWO PACKAGES TOGETHER. COME BACK IN A WEEK, PLEASE!**
 
 This package provides a typical workflow for economists, particularly those working with spatial data.
 
@@ -13,6 +14,8 @@ The package enables starting from scratch and building out a project structure d
 In addition to project structuring, it includes examples for downloading data (both with and without password protection), basic data cleaning, the workflow most typically encountered for spatial analysis common to environmental economics (i.e. downloading raster data, projecting it to the vector level and then generating a long dataset with observations at the unit-by-time level, e.g. city-month), several common analysis types (e.g. event study, basic regression, two-way fixed effects, instrumental variables), outputting the results of analysis into LaTex-friendly formats, and plotting and mapping with ggplot.
     
 The package is intended as a template to avoid having to search in your old files for the code in common tasks, providing aesthetically appealing but simple default settings for analysis outputs commonly used by economists (e.g. regression tables with specialized footnotes). 
+
+Still under construction! So some of the functions as advertised are still not yet available.
 
 ## Installation
 
@@ -23,18 +26,16 @@ You can install the development version of ekonomR from GitHub:
 remotes::install_github("stallman-j/ekonomR")
 ```
 
+## Example
+
+Workflow example starting from building out the folders (to add).
+
+
 ``` r
 library(ekonomR)
 ## basic example code
 ```
 
-## Example
-
-**To add: links to documentation and vignettes and such**
-
-
-
-<!--
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
 
@@ -59,4 +60,3 @@ You can also embed plots, for example:
 </div>
 
 In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
--->

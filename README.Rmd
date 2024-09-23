@@ -22,6 +22,8 @@ In addition to project structuring, it includes examples for downloading data (b
     
 The package is intended as a template to avoid having to search in your old files for the code in common tasks, providing aesthetically appealing but simple default settings for analysis outputs commonly used by economists (e.g. regression tables with specialized footnotes). 
 
+Still under construction! So some of the functions as advertised are still not yet available.
+
 ## Installation
 
 You can install the development version of ekonomR from GitHub:
@@ -33,7 +35,7 @@ remotes::install_github("stallman-j/ekonomR")
 
 ## Example
 
-Workflow example starting from building out the folders.
+Workflow example starting from building out the folders (to add).
 
 ```{r example}
 library(ekonomR)
