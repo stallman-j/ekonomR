@@ -1,6 +1,4 @@
-
-
-# Plot Themes ----
+#' Plot Themes
 
 theme_plot <- function(title_size = 25,
                        axis_title_x = element_text(color = "black"), # element_blank() # to remove
@@ -14,8 +12,8 @@ theme_plot <- function(title_size = 25,
       # panel.grid.minor = element_line(color = "#ebebe5", size = 0.2),
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
-      plot.background = element_rect(fill = "white", color = NA), 
-      panel.background = element_rect(fill = "white", color = NA), 
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
       legend.background = element_rect(fill = "white", color = NA),
       panel.border = element_blank(),
       axis.ticks = element_blank(),
@@ -29,37 +27,33 @@ theme_plot <- function(title_size = 25,
 }
 
 
-# Share plots ----
-
-# get a frequency table, which will be a good input into the following
-# share_plot function
-#'@data_call the column vector of a df, e.g. data$weight
-
-# make it of the form dataframe$data_call
+#' Share plot
+#'@param the column vector of a df, e.g. data$weight
 get_table <- function(data_call) {
   my_table <-  as.data.frame(table(data_call)) %>%
     arrange(desc(Freq)) %>%
     mutate(year = 2022,
            percentage = round(Freq/sum(Freq), digits = 3),
            count      = Freq)
-  
+
   return(my_table)
 }
 
 
-# make a vertical share plot with the labels and percentages on it
+#' Share plot
+#' make a vertical share plot with the labels and percentages on it
 #' @param data_frame is the main data, can be output of get_table
 #' @param fillvar write as data_frame$fillvar, the variable to put in shares.
 #' unless otherwise manipulated, this is data_frame$Var1 if using the output of get_table
 #' @param title plot title
-#' ... use to adjust the theme 
+#' ... use to adjust the theme
 
 share_plot <- function(data_frame,
                        fillvar,
                        title,
                        ylabel = "",
                        ...) {
-  
+
   my_plot <- ggplot(data_frame,
                     aes(x = year,
                         y = percentage,
@@ -78,19 +72,18 @@ share_plot <- function(data_frame,
 
 
 
-# make a vertical share plot with the labels and percentages on it
+#' make a vertical share plot with the labels and percentages on it
 #' @param data_frame is the main data, can be output of get_table
 #' @param fillvar write as data_frame$fillvar, the variable to put in shares.
 #' unless otherwise manipulated, this is data_frame$Var1 if using the output of get_table
 #' @param title plot title
-#' ... use to adjust the theme 
 
 share_plot_bottom <- function(data_frame,
                        fillvar,
                        title,
                        ylabel = "",
                        ...) {
-  
+
   my_plot <- ggplot(data_frame,
                     aes(x = year,
                         y = percentage,
@@ -113,38 +106,37 @@ share_plot_bottom <- function(data_frame,
 }
 
 
-# arrange maps and plots on a grid ----
+# # arrange maps and plots on a grid ----
+#
+# map_plot_grid  <- function(map,
+#                            plot,
+#                            caption_text) {
+#   temp_grid <-  grid.arrange(map,plot,
+#                              ncol = 1,
+#                              heights = c(2, 0.3),
+#                              # top = textGrob(
+#                              #   "Presenters",
+#                              #   gp = gpar(fontsize = 30,
+#                              #             fontface = "bold"),
+#                              #   hjust = 1.5),
+#                              bottom = textGrob(
+#                                caption_text,
+#                                gp = gpar(fontface = 3, fontsize = 15,
+#                                          lineheight = .4),
+#                                hjust = 1,
+#                                x = 1
+#                              ))
+#
+#   final_grid <- cowplot::ggdraw(temp_grid) +
+#     theme(plot.background = element_blank(),
+#           title = element_blank()
+#     )
+#
+#   return(final_grid)
+# }
 
-map_plot_grid  <- function(map,
-                           plot,
-                           caption_text) {
-  temp_grid <-  grid.arrange(map,plot,
-                             ncol = 1,
-                             heights = c(2, 0.3),
-                             # top = textGrob(
-                             #   "Presenters",
-                             #   gp = gpar(fontsize = 30,
-                             #             fontface = "bold"),
-                             #   hjust = 1.5),
-                             bottom = textGrob(
-                               caption_text,
-                               gp = gpar(fontface = 3, fontsize = 15,
-                                         lineheight = .4),
-                               hjust = 1,
-                               x = 1
-                             ))
-  
-  final_grid <- cowplot::ggdraw(temp_grid) + 
-    theme(plot.background = element_blank(),
-          title = element_blank()
-    )
-  
-  return(final_grid)
-}
 
-
-# Make Histogram with vertical lines + text at for 5th, median, 95th, mean ----
-
+#' Make Histogram with vertical lines + text at for 5th, median, 95th, mean ----
 #' Function make_histogram: generates a histogram with labels and vertical lines
 #'@param data_frame the data frome you want to make a histogram in
 #' @param counting_var_index numeric, the column that you want to take the hist over
@@ -155,16 +147,8 @@ map_plot_grid  <- function(map,
 #' the 95th percentile, median, 5th percentile, and mean, in terms of where the percentile
 #' distribution is, e.g. c(.98,.70,.02,.85),
 #' @param barcolor the color of the histogram
-#' @param ... goes into theme plot 
+#' @param ... goes into theme plot
 #' @return returns the plot object of your histogram
-#' 
-#' @example   make_histogram(   data_frame         = dt_4,
-#'                              counting_var_index = 3, # where weight of the network is located
-#'                              title              = "Distribution of Number of Common Agreements between Countries",
-#'                              caption            = "Data from International Environmental Agreements Database Project, (Mitchell 2022). ",
-#'                              where_y            = c(7000,8200,2000,2000),
-#'                              where_x            = c(.98,.70,.02,.85))
-
 
 
 
@@ -177,7 +161,7 @@ make_histogram <- function(data_frame,
                            fill_color = "#63aaff", # yale light blue
                            text_color = "#00356b", # yale blue
                            ...) {
-  
+
 
   ggplot(data  = data_frame,
          aes(x = data_frame[,counting_var_index]),
@@ -240,23 +224,9 @@ make_histogram <- function(data_frame,
 }
 
 
-# density plots -----
 #' Generates density plots of a base dataframe in one color and another data list
-#' that has the same sort of data each as elements of that list, e.g. for 
+#' that has the same sort of data each as elements of that list, e.g. for
 #' plotting a regular observed outcome and bootstrapped outcomes
-#' 
-#' @example 
-#' density_plot_all_layers(base_df = iea_net_eigen_df,
-#'                         plot_var_index = 1,
-#'                         layers_list = boots_eigens,
-#'                         xlim = c(0,1.2),
-#'                         ylim = c(0,30),
-#'                         where_text_y = c(2,4,20),
-#'                         where_text_x = c(.05,.67,.99),
-#'                         xlab = "Eigenvector Centrality (Higher == More Central)",
-#'                         ylab = "Density",
-#'                         main = paste0("Actual v. Bootstrapped Eigenvector Centrality, ",n_boots," Boots"))
-#' 
 
 
 density_plot_all_layers <- function(base_df,
@@ -265,41 +235,41 @@ density_plot_all_layers <- function(base_df,
                                     where_text_y,
                                     where_text_x,
                                     ...) {
-  
+
   dx <- density(x = base_df[,plot_var_index])
-  
+
   plot(dx,
        #prob = TRUE,
        col  = yale_blue,
-       bty  = "l", # remove the box around 
+       bty  = "l", # remove the box around
        lwd = 4,
        ...)
-  
-  
+
+
   for (i in 1:length(layers_list)) {
     lines(density(layers_list[[i]]),
           col = rgb(.39,.67,1, alpha = 0.1))
   }
-  
+
   abline(v = mean(base_df[,plot_var_index]),
          col = yale_blue,
          lty = "dashed")
-  
+
   text(x= quantile(base_df[,plot_var_index], where_text_x[1]),
        y = where_text_y[1],
        col = yale_blue,
        labels = "Observed Density")
-  
+
   text(x= quantile(base_df[,plot_var_index], where_text_x[2]),
        y = where_text_y[2],
        col = yale_blue,
        labels = "Observed Mean")
-  
-  
+
+
   text(x= quantile(base_df[,plot_var_index], where_text_x[3]),
        y = where_text_y[3],
        col = yale_lblue,
        labels = "Bootstrapped Densities")
-  
+
 }
 

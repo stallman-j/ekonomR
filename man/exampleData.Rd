@@ -7,12 +7,12 @@
 \format{
 A data frame with 60 rows and 2 variables:
 \describe{
-  \item{group}{Participant's group, A or B.}
-  \item{score}{The participant's score in hypothetical task.}
+\item{group}{Participant's group, A or B.}
+\item{score}{The participant's score in hypothetical task.}
 }
 }
 \source{
-<https://www.github.com/mvuorre/exampleRPackage>
+\url{https://www.github.com/mvuorre/exampleRPackage}
 }
 \usage{
 exampleData

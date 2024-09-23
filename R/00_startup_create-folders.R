@@ -11,28 +11,30 @@
 #' @export
 #'
 #' @examples
-#' 
-#' 
+#' my_home_folder <- file.path("P:","Projects","ECON-412_js")
+#' create_folders(home_folder = my_home_folder)
+#'
+#'
 create_folders <- function(home_folder,
                                  data_folder          = NULL,
                                  output_folder        = NULL,
                                  data_external_folder = NULL,
                                  data_pii_folder      = NULL){
-  
-# If data and output didn't get defaulted 
+
+# If data and output didn't get defaulted
   if (is.null(data_folder)) {
     data_folder <- file.path(home_folder,"data")
   }
-  
+
   if (is.null(output_folder)){
     output_folder <- file.path(home_folder,"output")
   }
-  
+
   # Code Paths
 
   # project-specific code lives here
   code_folder                   <- file.path(home_folder,"code")
-  
+
   # Code paths
   code_functions                <- file.path(code_folder,"00_functions")
   code_download                 <- file.path(code_folder,"01_download")
@@ -41,58 +43,58 @@ create_folders <- function(home_folder,
   code_plots                    <- file.path(code_folder,"04_plots")
   code_simulations              <- file.path(code_folder,"05_simulations")
   code_scratch                  <- file.path(code_folder,"scratch")
-  
+
   # Output Paths
   output_tables                 <- file.path(output_folder, "01_tables")
   output_figures                <- file.path(output_folder, "02_figures")
   output_maps                   <- file.path(output_folder, "03_maps")
   output_manual                 <- file.path(output_folder, "x_manual-output")
   output_scratch                <- file.path(output_folder, "scratch")
-  
-  
+
+
   # Data Paths
   data_manual                   <- file.path(data_folder,"00_manually-downloaded")
   data_raw                      <- file.path(data_folder, "01_raw")
   data_temp                     <- file.path(data_folder, "02_temp")
   data_clean                    <- file.path(data_folder, "03_clean")
-  
-  
-  # if there's an external data folder specified, create sub-folders 
+
+
+  # if there's an external data folder specified, create sub-folders
   if (!is.null(data_external_folder)) {
   data_external_manual          <- file.path(data_external_folder,"00_manually-downloaded")
   data_external_raw             <- file.path(data_external_folder,"01_raw")
   data_external_temp            <- file.path(data_external_folder,"02_temp")
   data_external_clean           <- file.path(data_external_folder,"03_clean")
-  
+
   folders <- c(data_external_raw,
                data_external_temp,
                data_external_clean)
-  
+
   for (folder in folders) {
     if (!dir.exists(folder)) dir.create(folder, recursive = TRUE) # recursive lets you create any needed subdirectories
   }
-  
+
   }
-  
+
   # if the PII data folder is specified, create its subfolders
   if (!is.null(data_pii_folder)) {
     data_pii_manual          <- file.path(data_pii_folder,"00_manually-downloaded")
     data_pii_raw             <- file.path(data_pii_folder,"01_raw")
     data_pii_temp            <- file.path(data_pii_folder,"02_temp")
     data_pii_clean           <- file.path(data_pii_folder,"03_clean")
-    
+
     folders <- c(data_pii_raw,
                  data_pii_temp,
                  data_pii_clean)
-    
+
     for (folder in folders) {
       if (!dir.exists(folder)) dir.create(folder, recursive = TRUE) # recursive lets you create any needed subdirectories
     }
-    
+
   }
-  
+
   folders         <- c(
-    # code folders 
+    # code folders
     code_folder,
     code_functions,
     code_download,
@@ -100,7 +102,7 @@ create_folders <- function(home_folder,
     code_analysis,
     code_plots,
     code_simulations,
-    code_scratch, 
+    code_scratch,
     # output folders
     output_folder,
     output_tables,
@@ -115,12 +117,12 @@ create_folders <- function(home_folder,
     data_temp,
     data_clean
   )
-  
-  
+
+
   for (folder in folders) {
   if (!dir.exists(folder)) dir.create(folder, recursive = TRUE) # recursive lets you create any needed subdirectories
   }
 
-  
-  
+
+
 }
