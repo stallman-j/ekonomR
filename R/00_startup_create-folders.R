@@ -1,20 +1,15 @@
 #' Create Folders
 #' @description create_folders is a function that creates your project folders in a number of (possibly separate) locations: the home_folder (where your code lives, and which would ideally by synced to a github repository); the data_folder; and the output_folder, which is where output goes. The reason these three are kept separate is for potential space constraints: the home_folder code may not take up much space and should be easy to sync to Github. The data_folder may be space intensive. For small projects which are not set up with GitHub, the data_folder and output_folder may reasonably be subdirectories of home_folder. Additional options are given for separate locations for external data and for data which contains sensitive information (E.g. personally identifying information or PII)
-#'
 #' @param home_folder The main project folder where code lives. Not specified to a default so that you have to know where your home folder lives.
 #' @param data_folder The folder where data lives, defaults to file.path(home_folder,"data")
 #' @param output_folder The folder where output lives. Defaults to file.path(home_folder,"output")
-#' @param data_external_folder a folder for an external hard drive with different data. Only gets created if specified; default to NULL creates nothing.
+#' @param data_external_folder a folder for an external hard drive with different data. Only gets created if specified; default to NULL creates nothing
 #' @param data_pii_folder a home folder with data with personal identitifying information (PII) which may need to be separately created. Only gets created if specified, default to NULL creates nothing.
-#'
 #' @return a bunch of folders
 #' @export
-#'
 #' @examples
 #' my_home_folder <- file.path("P:","Projects","ECON-412_js")
 #' create_folders(home_folder = my_home_folder)
-#'
-#'
 create_folders <- function(home_folder,
                                  data_folder          = NULL,
                                  output_folder        = NULL,
@@ -58,6 +53,9 @@ create_folders <- function(home_folder,
   data_temp                     <- file.path(data_folder, "02_temp")
   data_clean                    <- file.path(data_folder, "03_clean")
 
+  documents                     <- file.path(home_folder,"documents")
+  citations                     <- file.path(home_folder,"citations")
+  articles                      <- file.path(home_folder,"articles")
 
   # if there's an external data folder specified, create sub-folders
   if (!is.null(data_external_folder)) {
@@ -94,6 +92,10 @@ create_folders <- function(home_folder,
   }
 
   folders         <- c(
+    # varia folders
+    articles,
+    citations,
+    documents,
     # code folders
     code_folder,
     code_functions,

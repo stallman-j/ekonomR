@@ -28,36 +28,41 @@ remotes::install_github("stallman-j/ekonomR")
 
 ## Example
 
-If you're just starting your project, you can use `ekonomR` to create your project folders.
+If you're just starting your project, you can use `ekonomR` to create your project folders so that you have a tidy structure that can scale up if you take this project beyond the semester.
 
+First decide what folder you'd like your project to live in. 
+
+If you're coming from ECON 412, I highly recommend using your OneDrive, since Yale has free storage in there, and you'll be able to collaborate with your group. Unless your project is going to be hugely data intensive, it's likely best that your data, code and output live all in the same place, which we'll call your `home_folder`.
+
+Log into your OneDrive and find the folder path to your OneDrive folder. Mine is `J - Yale University`, for instance.
+
+In your RStudio session, click `File -> New Project`. 
+
+You'll most likely want to choose the option `New Directory`, and then `New Project`.
+
+In `Directory name:`, use something like `ECON-412_your-initials`. (When you ultimately share this project, you don't want everyone having the same name). A good place to put this would be under `Your Name - Yale University/Projects`.
+
+Then click `Create Project`.
+
+This should open your project in R. Install `remotes` if you don't have it, then install `ekonomR` like below.
+
+``` r
+# install.packages("remotes")
+remotes::install_github("stallman-j/ekonomR")
+```
+
+Bring the package into your library.
 
 ``` r
 library(ekonomR)
 
-## 
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
+The `file.path()` function in R allows you to ignore whether you're on a Mac or Windows. So `J - Yale University/Projects` would become `file.path("J - Yale University","Projects")`.
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+create_folders(home_folder = file.path("J - Yale University","Projects"))
+
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<div class="figure">
-<img src="man/figures/README-pressure-1.png" alt="plot of chunk pressure" width="100%" />
-<p class="caption">plot of chunk pressure</p>
-</div>
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+Take a look inside that folder and see what's been created. You should have a folder for code, a folder for data, and a folder for output and a few other collaboration folders.

@@ -19,7 +19,7 @@ create_folders(
 
 \item{output_folder}{The folder where output lives. Defaults to file.path(home_folder,"output")}
 
-\item{data_external_folder}{a folder for an external hard drive with different data. Only gets created if specified; default to NULL creates nothing.}
+\item{data_external_folder}{a folder for an external hard drive with different data. Only gets created if specified; default to NULL creates nothing}
 
 \item{data_pii_folder}{a home folder with data with personal identitifying information (PII) which may need to be separately created. Only gets created if specified, default to NULL creates nothing.}
 }
@@ -32,6 +32,4 @@ create_folders is a function that creates your project folders in a number of (p
 \examples{
 my_home_folder <- file.path("P:","Projects","ECON-412_js")
 create_folders(home_folder = my_home_folder)
-
-
 }
