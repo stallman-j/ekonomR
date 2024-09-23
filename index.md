@@ -5,7 +5,15 @@ subtitle: The R workflow package for economists
 ---
 
 <p style="color:#677385; font-style:italic;">
-"Den som är väldigt stark måste också vara väldigt snäll." - Astrid Lindgren
+道可道，非常道 
+<br/>
+名可名，非常名
+<br/>
+-老子
+<br/>
+小生以为此道可道
+<br/>
+是以常道
 </p>
 
 ekonomR's goal is to synthesize in one place a scalable workflow for economics projects, particularly those working with spatial data.
@@ -41,13 +49,12 @@ The workflow includes but is not limited to the following:
     - making plots
     - making maps
 
-**Currently under reconstruction. We apologize for any inconvenience!**
-
+**Currently under reconstruction. I apologize for any inconvenience!**
 
 Many of these tables and figures output to be used with the complementary resource **LaTekonomer**, which can be accessed [**here**](https://stallman-j.github.io/LaTekonomer).  **ekonomR** and **LaTekonomer**  are designed to be complementary research templates, getting you moving forward on your project whether you're at the stage of tinkering with your final figure captions or figuring out what R even is.
 
 The use of **LaTekonomer** does not require **ekonomR** or vice versa.
 
-If you're interested in exploring the Markdown world, check out [The Markdown Guide](https://www.markdownguide.org/book/), which integrates sublimely with R and GitHub. This README, for instance, is composed with Markdown.
+If you're interested in exploring the Markdown world, check out [The Markdown Guide](https://www.markdownguide.org/book/), which integrates sublimely with R and GitHub. This README, for instance, is composed with Markdown. If you're interested in Markdown and R, check out [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/). The upfront costs of Markdown are much lower than LaTex, and the ubiquity and readability of the Markdown style has made it a compelling alternative to LaTex in many situations.
 
-View [the ekonomR GitHub Pages website](https://stallman-j.github.io/ekonomR) or the repository directly on [GitHub](https://github.com/stallman-j/ekonomR)
+View [the ekonomR GitHub Pages website](https://stallman-j.github.io/ekonomR) or the ekonomR repository directly on [GitHub](https://github.com/stallman-j/ekonomR)

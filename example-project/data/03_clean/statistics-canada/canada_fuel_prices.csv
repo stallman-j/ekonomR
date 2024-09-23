@@ -1,0 +1,1891 @@
+city,province,date,year,month,fuel_price,units
+St. John's,Newfoundland and Labrador,2015-01-01,2015,1,95.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-01-01,2015,1,91.5,Cents per litre
+Halifax,Nova Scotia,2015-01-01,2015,1,91.6,Cents per litre
+Saint John,New Brunswick,2015-01-01,2015,1,90.8,Cents per litre
+Québec,Quebec,2015-01-01,2015,1,97,Cents per litre
+Montréal,Quebec,2015-01-01,2015,1,102.3,Cents per litre
+Ottawa-Gatineau,Ontario,2015-01-01,2015,1,88.6,Cents per litre
+Toronto,Ontario,2015-01-01,2015,1,91,Cents per litre
+Thunder Bay,Ontario,2015-01-01,2015,1,98.1,Cents per litre
+Winnipeg,Manitoba,2015-01-01,2015,1,82.4,Cents per litre
+Regina,Saskatchewan,2015-01-01,2015,1,83.4,Cents per litre
+Saskatoon,Saskatchewan,2015-01-01,2015,1,84.9,Cents per litre
+Edmonton,Alberta,2015-01-01,2015,1,72.4,Cents per litre
+Calgary,Alberta,2015-01-01,2015,1,77.9,Cents per litre
+Vancouver,British Columbia,2015-01-01,2015,1,102.9,Cents per litre
+Victoria,British Columbia,2015-01-01,2015,1,98.9,Cents per litre
+Whitehorse,Yukon,2015-01-01,2015,1,101.4,Cents per litre
+Yellowknife,Northwest Territories,2015-01-01,2015,1,107,Cents per litre
+St. John's,Newfoundland and Labrador,2015-02-01,2015,2,106.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-02-01,2015,2,100.2,Cents per litre
+Halifax,Nova Scotia,2015-02-01,2015,2,100.1,Cents per litre
+Saint John,New Brunswick,2015-02-01,2015,2,95.5,Cents per litre
+Québec,Quebec,2015-02-01,2015,2,101.4,Cents per litre
+Montréal,Quebec,2015-02-01,2015,2,112,Cents per litre
+Ottawa-Gatineau,Ontario,2015-02-01,2015,2,98.2,Cents per litre
+Toronto,Ontario,2015-02-01,2015,2,101.4,Cents per litre
+Thunder Bay,Ontario,2015-02-01,2015,2,106.3,Cents per litre
+Winnipeg,Manitoba,2015-02-01,2015,2,89.7,Cents per litre
+Regina,Saskatchewan,2015-02-01,2015,2,93.5,Cents per litre
+Saskatoon,Saskatchewan,2015-02-01,2015,2,94.6,Cents per litre
+Edmonton,Alberta,2015-02-01,2015,2,82.4,Cents per litre
+Calgary,Alberta,2015-02-01,2015,2,87.9,Cents per litre
+Vancouver,British Columbia,2015-02-01,2015,2,117.2,Cents per litre
+Victoria,British Columbia,2015-02-01,2015,2,103.2,Cents per litre
+Whitehorse,Yukon,2015-02-01,2015,2,97.4,Cents per litre
+Yellowknife,Northwest Territories,2015-02-01,2015,2,110.2,Cents per litre
+St. John's,Newfoundland and Labrador,2015-03-01,2015,3,113.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-03-01,2015,3,107.3,Cents per litre
+Halifax,Nova Scotia,2015-03-01,2015,3,108.3,Cents per litre
+Saint John,New Brunswick,2015-03-01,2015,3,103.5,Cents per litre
+Québec,Quebec,2015-03-01,2015,3,112,Cents per litre
+Montréal,Quebec,2015-03-01,2015,3,118.4,Cents per litre
+Ottawa-Gatineau,Ontario,2015-03-01,2015,3,103.9,Cents per litre
+Toronto,Ontario,2015-03-01,2015,3,105.5,Cents per litre
+Thunder Bay,Ontario,2015-03-01,2015,3,110.3,Cents per litre
+Winnipeg,Manitoba,2015-03-01,2015,3,96,Cents per litre
+Regina,Saskatchewan,2015-03-01,2015,3,96.9,Cents per litre
+Saskatoon,Saskatchewan,2015-03-01,2015,3,99.2,Cents per litre
+Edmonton,Alberta,2015-03-01,2015,3,90.7,Cents per litre
+Calgary,Alberta,2015-03-01,2015,3,93.5,Cents per litre
+Vancouver,British Columbia,2015-03-01,2015,3,124.6,Cents per litre
+Victoria,British Columbia,2015-03-01,2015,3,120.5,Cents per litre
+Whitehorse,Yukon,2015-03-01,2015,3,105.4,Cents per litre
+Yellowknife,Northwest Territories,2015-03-01,2015,3,113.9,Cents per litre
+St. John's,Newfoundland and Labrador,2015-04-01,2015,4,109.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-04-01,2015,4,105.2,Cents per litre
+Halifax,Nova Scotia,2015-04-01,2015,4,108.2,Cents per litre
+Saint John,New Brunswick,2015-04-01,2015,4,105.8,Cents per litre
+Québec,Quebec,2015-04-01,2015,4,111.4,Cents per litre
+Montréal,Quebec,2015-04-01,2015,4,117.6,Cents per litre
+Ottawa-Gatineau,Ontario,2015-04-01,2015,4,103.1,Cents per litre
+Toronto,Ontario,2015-04-01,2015,4,105.2,Cents per litre
+Thunder Bay,Ontario,2015-04-01,2015,4,106.6,Cents per litre
+Winnipeg,Manitoba,2015-04-01,2015,4,93.7,Cents per litre
+Regina,Saskatchewan,2015-04-01,2015,4,95.5,Cents per litre
+Saskatoon,Saskatchewan,2015-04-01,2015,4,96.7,Cents per litre
+Edmonton,Alberta,2015-04-01,2015,4,93.4,Cents per litre
+Calgary,Alberta,2015-04-01,2015,4,95.3,Cents per litre
+Vancouver,British Columbia,2015-04-01,2015,4,123.6,Cents per litre
+Victoria,British Columbia,2015-04-01,2015,4,118.3,Cents per litre
+Whitehorse,Yukon,2015-04-01,2015,4,109.4,Cents per litre
+Yellowknife,Northwest Territories,2015-04-01,2015,4,113.9,Cents per litre
+St. John's,Newfoundland and Labrador,2015-05-01,2015,5,117,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-05-01,2015,5,112.9,Cents per litre
+Halifax,Nova Scotia,2015-05-01,2015,5,115.5,Cents per litre
+Saint John,New Brunswick,2015-05-01,2015,5,113,Cents per litre
+Québec,Quebec,2015-05-01,2015,5,118.4,Cents per litre
+Montréal,Quebec,2015-05-01,2015,5,125,Cents per litre
+Ottawa-Gatineau,Ontario,2015-05-01,2015,5,109.8,Cents per litre
+Toronto,Ontario,2015-05-01,2015,5,112.6,Cents per litre
+Thunder Bay,Ontario,2015-05-01,2015,5,111.9,Cents per litre
+Winnipeg,Manitoba,2015-05-01,2015,5,97.8,Cents per litre
+Regina,Saskatchewan,2015-05-01,2015,5,101.5,Cents per litre
+Saskatoon,Saskatchewan,2015-05-01,2015,5,100.4,Cents per litre
+Edmonton,Alberta,2015-05-01,2015,5,94.4,Cents per litre
+Calgary,Alberta,2015-05-01,2015,5,100.2,Cents per litre
+Vancouver,British Columbia,2015-05-01,2015,5,133,Cents per litre
+Victoria,British Columbia,2015-05-01,2015,5,124.6,Cents per litre
+Whitehorse,Yukon,2015-05-01,2015,5,112.3,Cents per litre
+Yellowknife,Northwest Territories,2015-05-01,2015,5,119.4,Cents per litre
+St. John's,Newfoundland and Labrador,2015-06-01,2015,6,123.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-06-01,2015,6,118.7,Cents per litre
+Halifax,Nova Scotia,2015-06-01,2015,6,119.7,Cents per litre
+Saint John,New Brunswick,2015-06-01,2015,6,117.3,Cents per litre
+Québec,Quebec,2015-06-01,2015,6,120.3,Cents per litre
+Montréal,Quebec,2015-06-01,2015,6,129.9,Cents per litre
+Ottawa-Gatineau,Ontario,2015-06-01,2015,6,115.6,Cents per litre
+Toronto,Ontario,2015-06-01,2015,6,118.1,Cents per litre
+Thunder Bay,Ontario,2015-06-01,2015,6,118.8,Cents per litre
+Winnipeg,Manitoba,2015-06-01,2015,6,107.8,Cents per litre
+Regina,Saskatchewan,2015-06-01,2015,6,112.2,Cents per litre
+Saskatoon,Saskatchewan,2015-06-01,2015,6,111.3,Cents per litre
+Edmonton,Alberta,2015-06-01,2015,6,104.4,Cents per litre
+Calgary,Alberta,2015-06-01,2015,6,111,Cents per litre
+Vancouver,British Columbia,2015-06-01,2015,6,135.1,Cents per litre
+Victoria,British Columbia,2015-06-01,2015,6,126.8,Cents per litre
+Whitehorse,Yukon,2015-06-01,2015,6,117.7,Cents per litre
+Yellowknife,Northwest Territories,2015-06-01,2015,6,128.9,Cents per litre
+St. John's,Newfoundland and Labrador,2015-07-01,2015,7,121.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-07-01,2015,7,119.1,Cents per litre
+Halifax,Nova Scotia,2015-07-01,2015,7,117.9,Cents per litre
+Saint John,New Brunswick,2015-07-01,2015,7,116.6,Cents per litre
+Québec,Quebec,2015-07-01,2015,7,122.7,Cents per litre
+Montréal,Quebec,2015-07-01,2015,7,127,Cents per litre
+Ottawa-Gatineau,Ontario,2015-07-01,2015,7,119,Cents per litre
+Toronto,Ontario,2015-07-01,2015,7,121,Cents per litre
+Thunder Bay,Ontario,2015-07-01,2015,7,122.6,Cents per litre
+Winnipeg,Manitoba,2015-07-01,2015,7,104.1,Cents per litre
+Regina,Saskatchewan,2015-07-01,2015,7,109.1,Cents per litre
+Saskatoon,Saskatchewan,2015-07-01,2015,7,109.7,Cents per litre
+Edmonton,Alberta,2015-07-01,2015,7,103.7,Cents per litre
+Calgary,Alberta,2015-07-01,2015,7,109.5,Cents per litre
+Vancouver,British Columbia,2015-07-01,2015,7,135.5,Cents per litre
+Victoria,British Columbia,2015-07-01,2015,7,128.2,Cents per litre
+Whitehorse,Yukon,2015-07-01,2015,7,118.9,Cents per litre
+Yellowknife,Northwest Territories,2015-07-01,2015,7,133.9,Cents per litre
+St. John's,Newfoundland and Labrador,2015-08-01,2015,8,113.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-08-01,2015,8,113.8,Cents per litre
+Halifax,Nova Scotia,2015-08-01,2015,8,110.6,Cents per litre
+Saint John,New Brunswick,2015-08-01,2015,8,109.3,Cents per litre
+Québec,Quebec,2015-08-01,2015,8,115.4,Cents per litre
+Montréal,Quebec,2015-08-01,2015,8,119.8,Cents per litre
+Ottawa-Gatineau,Ontario,2015-08-01,2015,8,110.6,Cents per litre
+Toronto,Ontario,2015-08-01,2015,8,113,Cents per litre
+Thunder Bay,Ontario,2015-08-01,2015,8,129.2,Cents per litre
+Winnipeg,Manitoba,2015-08-01,2015,8,108.7,Cents per litre
+Regina,Saskatchewan,2015-08-01,2015,8,113.1,Cents per litre
+Saskatoon,Saskatchewan,2015-08-01,2015,8,116.3,Cents per litre
+Edmonton,Alberta,2015-08-01,2015,8,107.6,Cents per litre
+Calgary,Alberta,2015-08-01,2015,8,113.2,Cents per litre
+Vancouver,British Columbia,2015-08-01,2015,8,130.6,Cents per litre
+Victoria,British Columbia,2015-08-01,2015,8,124.7,Cents per litre
+Whitehorse,Yukon,2015-08-01,2015,8,124.9,Cents per litre
+Yellowknife,Northwest Territories,2015-08-01,2015,8,134.2,Cents per litre
+St. John's,Newfoundland and Labrador,2015-09-01,2015,9,106.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-09-01,2015,9,103.6,Cents per litre
+Halifax,Nova Scotia,2015-09-01,2015,9,101.8,Cents per litre
+Saint John,New Brunswick,2015-09-01,2015,9,103,Cents per litre
+Québec,Quebec,2015-09-01,2015,9,111.9,Cents per litre
+Montréal,Quebec,2015-09-01,2015,9,113.7,Cents per litre
+Ottawa-Gatineau,Ontario,2015-09-01,2015,9,101.7,Cents per litre
+Toronto,Ontario,2015-09-01,2015,9,105.2,Cents per litre
+Thunder Bay,Ontario,2015-09-01,2015,9,120.9,Cents per litre
+Winnipeg,Manitoba,2015-09-01,2015,9,99.2,Cents per litre
+Regina,Saskatchewan,2015-09-01,2015,9,101.9,Cents per litre
+Saskatoon,Saskatchewan,2015-09-01,2015,9,102.5,Cents per litre
+Edmonton,Alberta,2015-09-01,2015,9,95.4,Cents per litre
+Calgary,Alberta,2015-09-01,2015,9,101,Cents per litre
+Vancouver,British Columbia,2015-09-01,2015,9,118.2,Cents per litre
+Victoria,British Columbia,2015-09-01,2015,9,114.1,Cents per litre
+Whitehorse,Yukon,2015-09-01,2015,9,119.9,Cents per litre
+Yellowknife,Northwest Territories,2015-09-01,2015,9,123.3,Cents per litre
+St. John's,Newfoundland and Labrador,2015-10-01,2015,10,103.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-10-01,2015,10,100.2,Cents per litre
+Halifax,Nova Scotia,2015-10-01,2015,10,98.3,Cents per litre
+Saint John,New Brunswick,2015-10-01,2015,10,97.6,Cents per litre
+Québec,Quebec,2015-10-01,2015,10,103.7,Cents per litre
+Montréal,Quebec,2015-10-01,2015,10,111.8,Cents per litre
+Ottawa-Gatineau,Ontario,2015-10-01,2015,10,98.2,Cents per litre
+Toronto,Ontario,2015-10-01,2015,10,100.8,Cents per litre
+Thunder Bay,Ontario,2015-10-01,2015,10,118.6,Cents per litre
+Winnipeg,Manitoba,2015-10-01,2015,10,103.6,Cents per litre
+Regina,Saskatchewan,2015-10-01,2015,10,103.7,Cents per litre
+Saskatoon,Saskatchewan,2015-10-01,2015,10,104.1,Cents per litre
+Edmonton,Alberta,2015-10-01,2015,10,98,Cents per litre
+Calgary,Alberta,2015-10-01,2015,10,104.8,Cents per litre
+Vancouver,British Columbia,2015-10-01,2015,10,116.6,Cents per litre
+Victoria,British Columbia,2015-10-01,2015,10,108.7,Cents per litre
+Whitehorse,Yukon,2015-10-01,2015,10,119.8,Cents per litre
+Yellowknife,Northwest Territories,2015-10-01,2015,10,127.2,Cents per litre
+St. John's,Newfoundland and Labrador,2015-11-01,2015,11,103.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-11-01,2015,11,98,Cents per litre
+Halifax,Nova Scotia,2015-11-01,2015,11,99.1,Cents per litre
+Saint John,New Brunswick,2015-11-01,2015,11,97.8,Cents per litre
+Québec,Quebec,2015-11-01,2015,11,104.5,Cents per litre
+Montréal,Quebec,2015-11-01,2015,11,110.9,Cents per litre
+Ottawa-Gatineau,Ontario,2015-11-01,2015,11,100.5,Cents per litre
+Toronto,Ontario,2015-11-01,2015,11,103,Cents per litre
+Thunder Bay,Ontario,2015-11-01,2015,11,116.8,Cents per litre
+Winnipeg,Manitoba,2015-11-01,2015,11,98.4,Cents per litre
+Regina,Saskatchewan,2015-11-01,2015,11,101.3,Cents per litre
+Saskatoon,Saskatchewan,2015-11-01,2015,11,99.7,Cents per litre
+Edmonton,Alberta,2015-11-01,2015,11,89.1,Cents per litre
+Calgary,Alberta,2015-11-01,2015,11,99.7,Cents per litre
+Vancouver,British Columbia,2015-11-01,2015,11,124.7,Cents per litre
+Victoria,British Columbia,2015-11-01,2015,11,116.3,Cents per litre
+Whitehorse,Yukon,2015-11-01,2015,11,114.3,Cents per litre
+Yellowknife,Northwest Territories,2015-11-01,2015,11,119.7,Cents per litre
+St. John's,Newfoundland and Labrador,2015-12-01,2015,12,98,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2015-12-01,2015,12,97.5,Cents per litre
+Halifax,Nova Scotia,2015-12-01,2015,12,96.9,Cents per litre
+Saint John,New Brunswick,2015-12-01,2015,12,97,Cents per litre
+Québec,Quebec,2015-12-01,2015,12,102.3,Cents per litre
+Montréal,Quebec,2015-12-01,2015,12,109,Cents per litre
+Ottawa-Gatineau,Ontario,2015-12-01,2015,12,96,Cents per litre
+Toronto,Ontario,2015-12-01,2015,12,100.4,Cents per litre
+Thunder Bay,Ontario,2015-12-01,2015,12,108.6,Cents per litre
+Winnipeg,Manitoba,2015-12-01,2015,12,86.6,Cents per litre
+Regina,Saskatchewan,2015-12-01,2015,12,88.5,Cents per litre
+Saskatoon,Saskatchewan,2015-12-01,2015,12,87.6,Cents per litre
+Edmonton,Alberta,2015-12-01,2015,12,81.5,Cents per litre
+Calgary,Alberta,2015-12-01,2015,12,86.2,Cents per litre
+Vancouver,British Columbia,2015-12-01,2015,12,122.9,Cents per litre
+Victoria,British Columbia,2015-12-01,2015,12,113.9,Cents per litre
+Whitehorse,Yukon,2015-12-01,2015,12,101.2,Cents per litre
+Yellowknife,Northwest Territories,2015-12-01,2015,12,112.4,Cents per litre
+St. John's,Newfoundland and Labrador,2016-01-01,2016,1,93,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-01-01,2016,1,93.1,Cents per litre
+Halifax,Nova Scotia,2016-01-01,2016,1,93.6,Cents per litre
+Saint John,New Brunswick,2016-01-01,2016,1,92.6,Cents per litre
+Québec,Quebec,2016-01-01,2016,1,97.9,Cents per litre
+Montréal,Quebec,2016-01-01,2016,1,102.4,Cents per litre
+Ottawa-Gatineau,Ontario,2016-01-01,2016,1,86.9,Cents per litre
+Toronto,Ontario,2016-01-01,2016,1,95.7,Cents per litre
+Thunder Bay,Ontario,2016-01-01,2016,1,98,Cents per litre
+Winnipeg,Manitoba,2016-01-01,2016,1,83.2,Cents per litre
+Regina,Saskatchewan,2016-01-01,2016,1,80.5,Cents per litre
+Saskatoon,Saskatchewan,2016-01-01,2016,1,77.7,Cents per litre
+Edmonton,Alberta,2016-01-01,2016,1,73.3,Cents per litre
+Calgary,Alberta,2016-01-01,2016,1,80.3,Cents per litre
+Vancouver,British Columbia,2016-01-01,2016,1,110.7,Cents per litre
+Victoria,British Columbia,2016-01-01,2016,1,103.7,Cents per litre
+Whitehorse,Yukon,2016-01-01,2016,1,98.2,Cents per litre
+Yellowknife,Northwest Territories,2016-01-01,2016,1,107.3,Cents per litre
+St. John's,Newfoundland and Labrador,2016-02-01,2016,2,89.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-02-01,2016,2,86.7,Cents per litre
+Halifax,Nova Scotia,2016-02-01,2016,2,86.2,Cents per litre
+Saint John,New Brunswick,2016-02-01,2016,2,86.9,Cents per litre
+Québec,Quebec,2016-02-01,2016,2,90.1,Cents per litre
+Montréal,Quebec,2016-02-01,2016,2,98.1,Cents per litre
+Ottawa-Gatineau,Ontario,2016-02-01,2016,2,85.1,Cents per litre
+Toronto,Ontario,2016-02-01,2016,2,89.8,Cents per litre
+Thunder Bay,Ontario,2016-02-01,2016,2,87.1,Cents per litre
+Winnipeg,Manitoba,2016-02-01,2016,2,74.7,Cents per litre
+Regina,Saskatchewan,2016-02-01,2016,2,72.5,Cents per litre
+Saskatoon,Saskatchewan,2016-02-01,2016,2,74,Cents per litre
+Edmonton,Alberta,2016-02-01,2016,2,63.1,Cents per litre
+Calgary,Alberta,2016-02-01,2016,2,73.5,Cents per litre
+Vancouver,British Columbia,2016-02-01,2016,2,105.9,Cents per litre
+Victoria,British Columbia,2016-02-01,2016,2,98.1,Cents per litre
+Whitehorse,Yukon,2016-02-01,2016,2,90.8,Cents per litre
+Yellowknife,Northwest Territories,2016-02-01,2016,2,96.5,Cents per litre
+St. John's,Newfoundland and Labrador,2016-03-01,2016,3,89.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-03-01,2016,3,88.2,Cents per litre
+Halifax,Nova Scotia,2016-03-01,2016,3,87.3,Cents per litre
+Saint John,New Brunswick,2016-03-01,2016,3,86.2,Cents per litre
+Québec,Quebec,2016-03-01,2016,3,96.4,Cents per litre
+Montréal,Quebec,2016-03-01,2016,3,97.7,Cents per litre
+Ottawa-Gatineau,Ontario,2016-03-01,2016,3,90.6,Cents per litre
+Toronto,Ontario,2016-03-01,2016,3,92.5,Cents per litre
+Thunder Bay,Ontario,2016-03-01,2016,3,98.9,Cents per litre
+Winnipeg,Manitoba,2016-03-01,2016,3,85,Cents per litre
+Regina,Saskatchewan,2016-03-01,2016,3,86.9,Cents per litre
+Saskatoon,Saskatchewan,2016-03-01,2016,3,84.4,Cents per litre
+Edmonton,Alberta,2016-03-01,2016,3,78.1,Cents per litre
+Calgary,Alberta,2016-03-01,2016,3,84.6,Cents per litre
+Vancouver,British Columbia,2016-03-01,2016,3,112.9,Cents per litre
+Victoria,British Columbia,2016-03-01,2016,3,105.9,Cents per litre
+Whitehorse,Yukon,2016-03-01,2016,3,94.7,Cents per litre
+Yellowknife,Northwest Territories,2016-03-01,2016,3,104.4,Cents per litre
+St. John's,Newfoundland and Labrador,2016-04-01,2016,4,101.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-04-01,2016,4,99.9,Cents per litre
+Halifax,Nova Scotia,2016-04-01,2016,4,100.3,Cents per litre
+Saint John,New Brunswick,2016-04-01,2016,4,96.8,Cents per litre
+Québec,Quebec,2016-04-01,2016,4,101.7,Cents per litre
+Montréal,Quebec,2016-04-01,2016,4,109.4,Cents per litre
+Ottawa-Gatineau,Ontario,2016-04-01,2016,4,99.8,Cents per litre
+Toronto,Ontario,2016-04-01,2016,4,102.3,Cents per litre
+Thunder Bay,Ontario,2016-04-01,2016,4,103.6,Cents per litre
+Winnipeg,Manitoba,2016-04-01,2016,4,90.3,Cents per litre
+Regina,Saskatchewan,2016-04-01,2016,4,88.2,Cents per litre
+Saskatoon,Saskatchewan,2016-04-01,2016,4,90.4,Cents per litre
+Edmonton,Alberta,2016-04-01,2016,4,83.7,Cents per litre
+Calgary,Alberta,2016-04-01,2016,4,90.4,Cents per litre
+Vancouver,British Columbia,2016-04-01,2016,4,114.7,Cents per litre
+Victoria,British Columbia,2016-04-01,2016,4,105.9,Cents per litre
+Whitehorse,Yukon,2016-04-01,2016,4,99.8,Cents per litre
+Yellowknife,Northwest Territories,2016-04-01,2016,4,108.4,Cents per litre
+St. John's,Newfoundland and Labrador,2016-05-01,2016,5,104.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-05-01,2016,5,103.2,Cents per litre
+Halifax,Nova Scotia,2016-05-01,2016,5,102.7,Cents per litre
+Saint John,New Brunswick,2016-05-01,2016,5,100.3,Cents per litre
+Québec,Quebec,2016-05-01,2016,5,103.9,Cents per litre
+Montréal,Quebec,2016-05-01,2016,5,111.6,Cents per litre
+Ottawa-Gatineau,Ontario,2016-05-01,2016,5,104.5,Cents per litre
+Toronto,Ontario,2016-05-01,2016,5,106.1,Cents per litre
+Thunder Bay,Ontario,2016-05-01,2016,5,108.8,Cents per litre
+Winnipeg,Manitoba,2016-05-01,2016,5,94.8,Cents per litre
+Regina,Saskatchewan,2016-05-01,2016,5,94.6,Cents per litre
+Saskatoon,Saskatchewan,2016-05-01,2016,5,95.3,Cents per litre
+Edmonton,Alberta,2016-05-01,2016,5,90,Cents per litre
+Calgary,Alberta,2016-05-01,2016,5,95.7,Cents per litre
+Vancouver,British Columbia,2016-05-01,2016,5,120,Cents per litre
+Victoria,British Columbia,2016-05-01,2016,5,112.8,Cents per litre
+Whitehorse,Yukon,2016-05-01,2016,5,107.2,Cents per litre
+Yellowknife,Northwest Territories,2016-05-01,2016,5,113.4,Cents per litre
+St. John's,Newfoundland and Labrador,2016-06-01,2016,6,126.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-06-01,2016,6,104.7,Cents per litre
+Halifax,Nova Scotia,2016-06-01,2016,6,106,Cents per litre
+Saint John,New Brunswick,2016-06-01,2016,6,104.9,Cents per litre
+Québec,Quebec,2016-06-01,2016,6,107,Cents per litre
+Montréal,Quebec,2016-06-01,2016,6,110.8,Cents per litre
+Ottawa-Gatineau,Ontario,2016-06-01,2016,6,104.9,Cents per litre
+Toronto,Ontario,2016-06-01,2016,6,106.1,Cents per litre
+Thunder Bay,Ontario,2016-06-01,2016,6,123.5,Cents per litre
+Winnipeg,Manitoba,2016-06-01,2016,6,112.7,Cents per litre
+Regina,Saskatchewan,2016-06-01,2016,6,109.7,Cents per litre
+Saskatoon,Saskatchewan,2016-06-01,2016,6,107.8,Cents per litre
+Edmonton,Alberta,2016-06-01,2016,6,102.4,Cents per litre
+Calgary,Alberta,2016-06-01,2016,6,105.6,Cents per litre
+Vancouver,British Columbia,2016-06-01,2016,6,121.6,Cents per litre
+Victoria,British Columbia,2016-06-01,2016,6,114.9,Cents per litre
+Whitehorse,Yukon,2016-06-01,2016,6,121.6,Cents per litre
+Yellowknife,Northwest Territories,2016-06-01,2016,6,122.9,Cents per litre
+St. John's,Newfoundland and Labrador,2016-07-01,2016,7,121.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-07-01,2016,7,98.4,Cents per litre
+Halifax,Nova Scotia,2016-07-01,2016,7,97,Cents per litre
+Saint John,New Brunswick,2016-07-01,2016,7,98.7,Cents per litre
+Québec,Quebec,2016-07-01,2016,7,99.9,Cents per litre
+Montréal,Quebec,2016-07-01,2016,7,106.2,Cents per litre
+Ottawa-Gatineau,Ontario,2016-07-01,2016,7,100.9,Cents per litre
+Toronto,Ontario,2016-07-01,2016,7,102.4,Cents per litre
+Thunder Bay,Ontario,2016-07-01,2016,7,118.6,Cents per litre
+Winnipeg,Manitoba,2016-07-01,2016,7,95.5,Cents per litre
+Regina,Saskatchewan,2016-07-01,2016,7,94.4,Cents per litre
+Saskatoon,Saskatchewan,2016-07-01,2016,7,91.8,Cents per litre
+Edmonton,Alberta,2016-07-01,2016,7,86.1,Cents per litre
+Calgary,Alberta,2016-07-01,2016,7,92.8,Cents per litre
+Vancouver,British Columbia,2016-07-01,2016,7,124.1,Cents per litre
+Victoria,British Columbia,2016-07-01,2016,7,113.9,Cents per litre
+Whitehorse,Yukon,2016-07-01,2016,7,117.3,Cents per litre
+Yellowknife,Northwest Territories,2016-07-01,2016,7,119.4,Cents per litre
+St. John's,Newfoundland and Labrador,2016-08-01,2016,8,122.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-08-01,2016,8,96.4,Cents per litre
+Halifax,Nova Scotia,2016-08-01,2016,8,95.9,Cents per litre
+Saint John,New Brunswick,2016-08-01,2016,8,97.2,Cents per litre
+Québec,Quebec,2016-08-01,2016,8,101.2,Cents per litre
+Montréal,Quebec,2016-08-01,2016,8,108.2,Cents per litre
+Ottawa-Gatineau,Ontario,2016-08-01,2016,8,99.3,Cents per litre
+Toronto,Ontario,2016-08-01,2016,8,101.1,Cents per litre
+Thunder Bay,Ontario,2016-08-01,2016,8,115,Cents per litre
+Winnipeg,Manitoba,2016-08-01,2016,8,95,Cents per litre
+Regina,Saskatchewan,2016-08-01,2016,8,96.8,Cents per litre
+Saskatoon,Saskatchewan,2016-08-01,2016,8,96.8,Cents per litre
+Edmonton,Alberta,2016-08-01,2016,8,89.4,Cents per litre
+Calgary,Alberta,2016-08-01,2016,8,96.3,Cents per litre
+Vancouver,British Columbia,2016-08-01,2016,8,119.7,Cents per litre
+Victoria,British Columbia,2016-08-01,2016,8,112.6,Cents per litre
+Whitehorse,Yukon,2016-08-01,2016,8,115.9,Cents per litre
+Yellowknife,Northwest Territories,2016-08-01,2016,8,118.2,Cents per litre
+St. John's,Newfoundland and Labrador,2016-09-01,2016,9,127.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-09-01,2016,9,100.4,Cents per litre
+Halifax,Nova Scotia,2016-09-01,2016,9,102.1,Cents per litre
+Saint John,New Brunswick,2016-09-01,2016,9,102.3,Cents per litre
+Québec,Quebec,2016-09-01,2016,9,103.5,Cents per litre
+Montréal,Quebec,2016-09-01,2016,9,111,Cents per litre
+Ottawa-Gatineau,Ontario,2016-09-01,2016,9,98.8,Cents per litre
+Toronto,Ontario,2016-09-01,2016,9,100.9,Cents per litre
+Thunder Bay,Ontario,2016-09-01,2016,9,110.4,Cents per litre
+Winnipeg,Manitoba,2016-09-01,2016,9,94.8,Cents per litre
+Regina,Saskatchewan,2016-09-01,2016,9,95,Cents per litre
+Saskatoon,Saskatchewan,2016-09-01,2016,9,97.3,Cents per litre
+Edmonton,Alberta,2016-09-01,2016,9,87.6,Cents per litre
+Calgary,Alberta,2016-09-01,2016,9,92.7,Cents per litre
+Vancouver,British Columbia,2016-09-01,2016,9,125.6,Cents per litre
+Victoria,British Columbia,2016-09-01,2016,9,118.3,Cents per litre
+Whitehorse,Yukon,2016-09-01,2016,9,115.9,Cents per litre
+Yellowknife,Northwest Territories,2016-09-01,2016,9,116.5,Cents per litre
+St. John's,Newfoundland and Labrador,2016-10-01,2016,10,130.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-10-01,2016,10,105.6,Cents per litre
+Halifax,Nova Scotia,2016-10-01,2016,10,105.3,Cents per litre
+Saint John,New Brunswick,2016-10-01,2016,10,104.8,Cents per litre
+Québec,Quebec,2016-10-01,2016,10,106.1,Cents per litre
+Montréal,Quebec,2016-10-01,2016,10,115.8,Cents per litre
+Ottawa-Gatineau,Ontario,2016-10-01,2016,10,103.7,Cents per litre
+Toronto,Ontario,2016-10-01,2016,10,105.4,Cents per litre
+Thunder Bay,Ontario,2016-10-01,2016,10,108.2,Cents per litre
+Winnipeg,Manitoba,2016-10-01,2016,10,99.2,Cents per litre
+Regina,Saskatchewan,2016-10-01,2016,10,97.1,Cents per litre
+Saskatoon,Saskatchewan,2016-10-01,2016,10,98.1,Cents per litre
+Edmonton,Alberta,2016-10-01,2016,10,94.1,Cents per litre
+Calgary,Alberta,2016-10-01,2016,10,95.4,Cents per litre
+Vancouver,British Columbia,2016-10-01,2016,10,128.3,Cents per litre
+Victoria,British Columbia,2016-10-01,2016,10,119.5,Cents per litre
+Whitehorse,Yukon,2016-10-01,2016,10,115.9,Cents per litre
+Yellowknife,Northwest Territories,2016-10-01,2016,10,118.2,Cents per litre
+St. John's,Newfoundland and Labrador,2016-11-01,2016,11,127.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-11-01,2016,11,103.2,Cents per litre
+Halifax,Nova Scotia,2016-11-01,2016,11,103.1,Cents per litre
+Saint John,New Brunswick,2016-11-01,2016,11,104.7,Cents per litre
+Québec,Quebec,2016-11-01,2016,11,104.3,Cents per litre
+Montréal,Quebec,2016-11-01,2016,11,111.2,Cents per litre
+Ottawa-Gatineau,Ontario,2016-11-01,2016,11,99,Cents per litre
+Toronto,Ontario,2016-11-01,2016,11,101.4,Cents per litre
+Thunder Bay,Ontario,2016-11-01,2016,11,104.3,Cents per litre
+Winnipeg,Manitoba,2016-11-01,2016,11,88.1,Cents per litre
+Regina,Saskatchewan,2016-11-01,2016,11,88.9,Cents per litre
+Saskatoon,Saskatchewan,2016-11-01,2016,11,86.5,Cents per litre
+Edmonton,Alberta,2016-11-01,2016,11,83.8,Cents per litre
+Calgary,Alberta,2016-11-01,2016,11,87.4,Cents per litre
+Vancouver,British Columbia,2016-11-01,2016,11,115.3,Cents per litre
+Victoria,British Columbia,2016-11-01,2016,11,120.2,Cents per litre
+Whitehorse,Yukon,2016-11-01,2016,11,113.7,Cents per litre
+Yellowknife,Northwest Territories,2016-11-01,2016,11,114.2,Cents per litre
+St. John's,Newfoundland and Labrador,2016-12-01,2016,12,130.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2016-12-01,2016,12,105.3,Cents per litre
+Halifax,Nova Scotia,2016-12-01,2016,12,106.2,Cents per litre
+Saint John,New Brunswick,2016-12-01,2016,12,105.6,Cents per litre
+Québec,Quebec,2016-12-01,2016,12,106.2,Cents per litre
+Montréal,Quebec,2016-12-01,2016,12,117.3,Cents per litre
+Ottawa-Gatineau,Ontario,2016-12-01,2016,12,102.3,Cents per litre
+Toronto,Ontario,2016-12-01,2016,12,104.7,Cents per litre
+Thunder Bay,Ontario,2016-12-01,2016,12,103.7,Cents per litre
+Winnipeg,Manitoba,2016-12-01,2016,12,91.7,Cents per litre
+Regina,Saskatchewan,2016-12-01,2016,12,91.3,Cents per litre
+Saskatoon,Saskatchewan,2016-12-01,2016,12,94.4,Cents per litre
+Edmonton,Alberta,2016-12-01,2016,12,89.7,Cents per litre
+Calgary,Alberta,2016-12-01,2016,12,94.9,Cents per litre
+Vancouver,British Columbia,2016-12-01,2016,12,120.6,Cents per litre
+Victoria,British Columbia,2016-12-01,2016,12,114.2,Cents per litre
+Whitehorse,Yukon,2016-12-01,2016,12,112,Cents per litre
+Yellowknife,Northwest Territories,2016-12-01,2016,12,114.2,Cents per litre
+St. John's,Newfoundland and Labrador,2017-01-01,2017,1,137.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-01-01,2017,1,112.9,Cents per litre
+Halifax,Nova Scotia,2017-01-01,2017,1,111.8,Cents per litre
+Saint John,New Brunswick,2017-01-01,2017,1,111.3,Cents per litre
+Québec,Quebec,2017-01-01,2017,1,111,Cents per litre
+Montréal,Quebec,2017-01-01,2017,1,116.5,Cents per litre
+Ottawa-Gatineau,Ontario,2017-01-01,2017,1,110.8,Cents per litre
+Toronto,Ontario,2017-01-01,2017,1,112.8,Cents per litre
+Thunder Bay,Ontario,2017-01-01,2017,1,115.9,Cents per litre
+Winnipeg,Manitoba,2017-01-01,2017,1,101.9,Cents per litre
+Regina,Saskatchewan,2017-01-01,2017,1,101.2,Cents per litre
+Saskatoon,Saskatchewan,2017-01-01,2017,1,102,Cents per litre
+Edmonton,Alberta,2017-01-01,2017,1,100.9,Cents per litre
+Calgary,Alberta,2017-01-01,2017,1,106.8,Cents per litre
+Vancouver,British Columbia,2017-01-01,2017,1,127.9,Cents per litre
+Victoria,British Columbia,2017-01-01,2017,1,124,Cents per litre
+Whitehorse,Yukon,2017-01-01,2017,1,119.1,Cents per litre
+Yellowknife,Northwest Territories,2017-01-01,2017,1,121.7,Cents per litre
+St. John's,Newfoundland and Labrador,2017-02-01,2017,2,130.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-02-01,2017,2,105.8,Cents per litre
+Halifax,Nova Scotia,2017-02-01,2017,2,104.4,Cents per litre
+Saint John,New Brunswick,2017-02-01,2017,2,106.4,Cents per litre
+Québec,Quebec,2017-02-01,2017,2,106.4,Cents per litre
+Montréal,Quebec,2017-02-01,2017,2,113,Cents per litre
+Ottawa-Gatineau,Ontario,2017-02-01,2017,2,105.3,Cents per litre
+Toronto,Ontario,2017-02-01,2017,2,107.8,Cents per litre
+Thunder Bay,Ontario,2017-02-01,2017,2,111.6,Cents per litre
+Winnipeg,Manitoba,2017-02-01,2017,2,96.3,Cents per litre
+Regina,Saskatchewan,2017-02-01,2017,2,93.4,Cents per litre
+Saskatoon,Saskatchewan,2017-02-01,2017,2,94.1,Cents per litre
+Edmonton,Alberta,2017-02-01,2017,2,91.7,Cents per litre
+Calgary,Alberta,2017-02-01,2017,2,93.8,Cents per litre
+Vancouver,British Columbia,2017-02-01,2017,2,125.6,Cents per litre
+Victoria,British Columbia,2017-02-01,2017,2,116.9,Cents per litre
+Whitehorse,Yukon,2017-02-01,2017,2,119.8,Cents per litre
+Yellowknife,Northwest Territories,2017-02-01,2017,2,118.2,Cents per litre
+St. John's,Newfoundland and Labrador,2017-03-01,2017,3,126.6,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-03-01,2017,3,104.6,Cents per litre
+Halifax,Nova Scotia,2017-03-01,2017,3,103.2,Cents per litre
+Saint John,New Brunswick,2017-03-01,2017,3,103.9,Cents per litre
+Québec,Quebec,2017-03-01,2017,3,105,Cents per litre
+Montréal,Quebec,2017-03-01,2017,3,113.1,Cents per litre
+Ottawa-Gatineau,Ontario,2017-03-01,2017,3,97.6,Cents per litre
+Toronto,Ontario,2017-03-01,2017,3,107.6,Cents per litre
+Thunder Bay,Ontario,2017-03-01,2017,3,110.7,Cents per litre
+Winnipeg,Manitoba,2017-03-01,2017,3,94.2,Cents per litre
+Regina,Saskatchewan,2017-03-01,2017,3,92.4,Cents per litre
+Saskatoon,Saskatchewan,2017-03-01,2017,3,92.4,Cents per litre
+Edmonton,Alberta,2017-03-01,2017,3,92.2,Cents per litre
+Calgary,Alberta,2017-03-01,2017,3,93.3,Cents per litre
+Vancouver,British Columbia,2017-03-01,2017,3,133.9,Cents per litre
+Victoria,British Columbia,2017-03-01,2017,3,125.8,Cents per litre
+Whitehorse,Yukon,2017-03-01,2017,3,119.8,Cents per litre
+Yellowknife,Northwest Territories,2017-03-01,2017,3,116.9,Cents per litre
+St. John's,Newfoundland and Labrador,2017-04-01,2017,4,133.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-04-01,2017,4,110.3,Cents per litre
+Halifax,Nova Scotia,2017-04-01,2017,4,112.1,Cents per litre
+Saint John,New Brunswick,2017-04-01,2017,4,111.3,Cents per litre
+Québec,Quebec,2017-04-01,2017,4,115,Cents per litre
+Montréal,Quebec,2017-04-01,2017,4,124.5,Cents per litre
+Ottawa-Gatineau,Ontario,2017-04-01,2017,4,115.6,Cents per litre
+Toronto,Ontario,2017-04-01,2017,4,116,Cents per litre
+Thunder Bay,Ontario,2017-04-01,2017,4,119,Cents per litre
+Winnipeg,Manitoba,2017-04-01,2017,4,101.7,Cents per litre
+Regina,Saskatchewan,2017-04-01,2017,4,102.7,Cents per litre
+Saskatoon,Saskatchewan,2017-04-01,2017,4,102.1,Cents per litre
+Edmonton,Alberta,2017-04-01,2017,4,103.9,Cents per litre
+Calgary,Alberta,2017-04-01,2017,4,108.3,Cents per litre
+Vancouver,British Columbia,2017-04-01,2017,4,138.8,Cents per litre
+Victoria,British Columbia,2017-04-01,2017,4,128.8,Cents per litre
+Whitehorse,Yukon,2017-04-01,2017,4,119.5,Cents per litre
+Yellowknife,Northwest Territories,2017-04-01,2017,4,118.7,Cents per litre
+St. John's,Newfoundland and Labrador,2017-05-01,2017,5,129.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-05-01,2017,5,106.8,Cents per litre
+Halifax,Nova Scotia,2017-05-01,2017,5,106.4,Cents per litre
+Saint John,New Brunswick,2017-05-01,2017,5,107.6,Cents per litre
+Québec,Quebec,2017-05-01,2017,5,111.9,Cents per litre
+Montréal,Quebec,2017-05-01,2017,5,119,Cents per litre
+Ottawa-Gatineau,Ontario,2017-05-01,2017,5,112.3,Cents per litre
+Toronto,Ontario,2017-05-01,2017,5,112,Cents per litre
+Thunder Bay,Ontario,2017-05-01,2017,5,117.4,Cents per litre
+Winnipeg,Manitoba,2017-05-01,2017,5,93.3,Cents per litre
+Regina,Saskatchewan,2017-05-01,2017,5,95.8,Cents per litre
+Saskatoon,Saskatchewan,2017-05-01,2017,5,95.8,Cents per litre
+Edmonton,Alberta,2017-05-01,2017,5,96.1,Cents per litre
+Calgary,Alberta,2017-05-01,2017,5,99.5,Cents per litre
+Vancouver,British Columbia,2017-05-01,2017,5,134,Cents per litre
+Victoria,British Columbia,2017-05-01,2017,5,125.7,Cents per litre
+Whitehorse,Yukon,2017-05-01,2017,5,117.4,Cents per litre
+Yellowknife,Northwest Territories,2017-05-01,2017,5,116.9,Cents per litre
+St. John's,Newfoundland and Labrador,2017-06-01,2017,6,113.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-06-01,2017,6,105.8,Cents per litre
+Halifax,Nova Scotia,2017-06-01,2017,6,103.2,Cents per litre
+Saint John,New Brunswick,2017-06-01,2017,6,105.1,Cents per litre
+Québec,Quebec,2017-06-01,2017,6,107.4,Cents per litre
+Montréal,Quebec,2017-06-01,2017,6,114,Cents per litre
+Ottawa-Gatineau,Ontario,2017-06-01,2017,6,106.3,Cents per litre
+Toronto,Ontario,2017-06-01,2017,6,107.3,Cents per litre
+Thunder Bay,Ontario,2017-06-01,2017,6,114,Cents per litre
+Winnipeg,Manitoba,2017-06-01,2017,6,91.5,Cents per litre
+Regina,Saskatchewan,2017-06-01,2017,6,92.2,Cents per litre
+Saskatoon,Saskatchewan,2017-06-01,2017,6,91.4,Cents per litre
+Edmonton,Alberta,2017-06-01,2017,6,91.4,Cents per litre
+Calgary,Alberta,2017-06-01,2017,6,96.3,Cents per litre
+Vancouver,British Columbia,2017-06-01,2017,6,130.1,Cents per litre
+Victoria,British Columbia,2017-06-01,2017,6,124.5,Cents per litre
+Whitehorse,Yukon,2017-06-01,2017,6,113.7,Cents per litre
+Yellowknife,Northwest Territories,2017-06-01,2017,6,115.9,Cents per litre
+St. John's,Newfoundland and Labrador,2017-07-01,2017,7,112.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-07-01,2017,7,102.4,Cents per litre
+Halifax,Nova Scotia,2017-07-01,2017,7,102.8,Cents per litre
+Saint John,New Brunswick,2017-07-01,2017,7,102.1,Cents per litre
+Québec,Quebec,2017-07-01,2017,7,106.5,Cents per litre
+Montréal,Quebec,2017-07-01,2017,7,114.7,Cents per litre
+Ottawa-Gatineau,Ontario,2017-07-01,2017,7,104.3,Cents per litre
+Toronto,Ontario,2017-07-01,2017,7,109.5,Cents per litre
+Thunder Bay,Ontario,2017-07-01,2017,7,112.5,Cents per litre
+Winnipeg,Manitoba,2017-07-01,2017,7,87.6,Cents per litre
+Regina,Saskatchewan,2017-07-01,2017,7,93.1,Cents per litre
+Saskatoon,Saskatchewan,2017-07-01,2017,7,93.6,Cents per litre
+Edmonton,Alberta,2017-07-01,2017,7,93.1,Cents per litre
+Calgary,Alberta,2017-07-01,2017,7,95.7,Cents per litre
+Vancouver,British Columbia,2017-07-01,2017,7,131.8,Cents per litre
+Victoria,British Columbia,2017-07-01,2017,7,121.8,Cents per litre
+Whitehorse,Yukon,2017-07-01,2017,7,111.3,Cents per litre
+Yellowknife,Northwest Territories,2017-07-01,2017,7,114.4,Cents per litre
+St. John's,Newfoundland and Labrador,2017-08-01,2017,8,116.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-08-01,2017,8,106.9,Cents per litre
+Halifax,Nova Scotia,2017-08-01,2017,8,106.5,Cents per litre
+Saint John,New Brunswick,2017-08-01,2017,8,107.1,Cents per litre
+Québec,Quebec,2017-08-01,2017,8,113.3,Cents per litre
+Montréal,Quebec,2017-08-01,2017,8,118.3,Cents per litre
+Ottawa-Gatineau,Ontario,2017-08-01,2017,8,104.5,Cents per litre
+Toronto,Ontario,2017-08-01,2017,8,112.5,Cents per litre
+Thunder Bay,Ontario,2017-08-01,2017,8,112.6,Cents per litre
+Winnipeg,Manitoba,2017-08-01,2017,8,90.1,Cents per litre
+Regina,Saskatchewan,2017-08-01,2017,8,95.9,Cents per litre
+Saskatoon,Saskatchewan,2017-08-01,2017,8,95.8,Cents per litre
+Edmonton,Alberta,2017-08-01,2017,8,96.6,Cents per litre
+Calgary,Alberta,2017-08-01,2017,8,99.3,Cents per litre
+Vancouver,British Columbia,2017-08-01,2017,8,137.7,Cents per litre
+Victoria,British Columbia,2017-08-01,2017,8,127.7,Cents per litre
+Whitehorse,Yukon,2017-08-01,2017,8,110.7,Cents per litre
+Yellowknife,Northwest Territories,2017-08-01,2017,8,114.9,Cents per litre
+St. John's,Newfoundland and Labrador,2017-09-01,2017,9,125.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-09-01,2017,9,114.8,Cents per litre
+Halifax,Nova Scotia,2017-09-01,2017,9,115.7,Cents per litre
+Saint John,New Brunswick,2017-09-01,2017,9,115.1,Cents per litre
+Québec,Quebec,2017-09-01,2017,9,121.5,Cents per litre
+Montréal,Quebec,2017-09-01,2017,9,124.9,Cents per litre
+Ottawa-Gatineau,Ontario,2017-09-01,2017,9,117.9,Cents per litre
+Toronto,Ontario,2017-09-01,2017,9,118.2,Cents per litre
+Thunder Bay,Ontario,2017-09-01,2017,9,124.3,Cents per litre
+Winnipeg,Manitoba,2017-09-01,2017,9,100.2,Cents per litre
+Regina,Saskatchewan,2017-09-01,2017,9,99.5,Cents per litre
+Saskatoon,Saskatchewan,2017-09-01,2017,9,99.9,Cents per litre
+Edmonton,Alberta,2017-09-01,2017,9,96.7,Cents per litre
+Calgary,Alberta,2017-09-01,2017,9,102.3,Cents per litre
+Vancouver,British Columbia,2017-09-01,2017,9,137.4,Cents per litre
+Victoria,British Columbia,2017-09-01,2017,9,129.3,Cents per litre
+Whitehorse,Yukon,2017-09-01,2017,9,117.9,Cents per litre
+Yellowknife,Northwest Territories,2017-09-01,2017,9,115,Cents per litre
+St. John's,Newfoundland and Labrador,2017-10-01,2017,10,120,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-10-01,2017,10,107.9,Cents per litre
+Halifax,Nova Scotia,2017-10-01,2017,10,106.7,Cents per litre
+Saint John,New Brunswick,2017-10-01,2017,10,107.5,Cents per litre
+Québec,Quebec,2017-10-01,2017,10,111.3,Cents per litre
+Montréal,Quebec,2017-10-01,2017,10,119.4,Cents per litre
+Ottawa-Gatineau,Ontario,2017-10-01,2017,10,114.9,Cents per litre
+Toronto,Ontario,2017-10-01,2017,10,114.9,Cents per litre
+Thunder Bay,Ontario,2017-10-01,2017,10,119.8,Cents per litre
+Winnipeg,Manitoba,2017-10-01,2017,10,99.7,Cents per litre
+Regina,Saskatchewan,2017-10-01,2017,10,99.2,Cents per litre
+Saskatoon,Saskatchewan,2017-10-01,2017,10,99,Cents per litre
+Edmonton,Alberta,2017-10-01,2017,10,98.5,Cents per litre
+Calgary,Alberta,2017-10-01,2017,10,101.8,Cents per litre
+Vancouver,British Columbia,2017-10-01,2017,10,136.9,Cents per litre
+Victoria,British Columbia,2017-10-01,2017,10,127.3,Cents per litre
+Whitehorse,Yukon,2017-10-01,2017,10,113.1,Cents per litre
+Yellowknife,Northwest Territories,2017-10-01,2017,10,114.5,Cents per litre
+St. John's,Newfoundland and Labrador,2017-11-01,2017,11,126.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-11-01,2017,11,115.6,Cents per litre
+Halifax,Nova Scotia,2017-11-01,2017,11,115.9,Cents per litre
+Saint John,New Brunswick,2017-11-01,2017,11,115.5,Cents per litre
+Québec,Quebec,2017-11-01,2017,11,119.9,Cents per litre
+Montréal,Quebec,2017-11-01,2017,11,126.8,Cents per litre
+Ottawa-Gatineau,Ontario,2017-11-01,2017,11,121.9,Cents per litre
+Toronto,Ontario,2017-11-01,2017,11,122.2,Cents per litre
+Thunder Bay,Ontario,2017-11-01,2017,11,132.4,Cents per litre
+Winnipeg,Manitoba,2017-11-01,2017,11,108.9,Cents per litre
+Regina,Saskatchewan,2017-11-01,2017,11,110.4,Cents per litre
+Saskatoon,Saskatchewan,2017-11-01,2017,11,108.5,Cents per litre
+Edmonton,Alberta,2017-11-01,2017,11,110.7,Cents per litre
+Calgary,Alberta,2017-11-01,2017,11,113.9,Cents per litre
+Vancouver,British Columbia,2017-11-01,2017,11,141.3,Cents per litre
+Victoria,British Columbia,2017-11-01,2017,11,134.1,Cents per litre
+Whitehorse,Yukon,2017-11-01,2017,11,127,Cents per litre
+Yellowknife,Northwest Territories,2017-11-01,2017,11,123.4,Cents per litre
+St. John's,Newfoundland and Labrador,2017-12-01,2017,12,118,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2017-12-01,2017,12,111.5,Cents per litre
+Halifax,Nova Scotia,2017-12-01,2017,12,111.8,Cents per litre
+Saint John,New Brunswick,2017-12-01,2017,12,112.3,Cents per litre
+Québec,Quebec,2017-12-01,2017,12,114,Cents per litre
+Montréal,Quebec,2017-12-01,2017,12,122.8,Cents per litre
+Ottawa-Gatineau,Ontario,2017-12-01,2017,12,120.6,Cents per litre
+Toronto,Ontario,2017-12-01,2017,12,121,Cents per litre
+Thunder Bay,Ontario,2017-12-01,2017,12,127,Cents per litre
+Winnipeg,Manitoba,2017-12-01,2017,12,103.1,Cents per litre
+Regina,Saskatchewan,2017-12-01,2017,12,104.2,Cents per litre
+Saskatoon,Saskatchewan,2017-12-01,2017,12,103.6,Cents per litre
+Edmonton,Alberta,2017-12-01,2017,12,102.8,Cents per litre
+Calgary,Alberta,2017-12-01,2017,12,106.7,Cents per litre
+Vancouver,British Columbia,2017-12-01,2017,12,137.2,Cents per litre
+Victoria,British Columbia,2017-12-01,2017,12,128,Cents per litre
+Whitehorse,Yukon,2017-12-01,2017,12,124.5,Cents per litre
+Yellowknife,Northwest Territories,2017-12-01,2017,12,122.4,Cents per litre
+St. John's,Newfoundland and Labrador,2018-01-01,2018,1,120.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-01-01,2018,1,115.3,Cents per litre
+Halifax,Nova Scotia,2018-01-01,2018,1,115.2,Cents per litre
+Saint John,New Brunswick,2018-01-01,2018,1,114.1,Cents per litre
+Québec,Quebec,2018-01-01,2018,1,118.8,Cents per litre
+Montréal,Quebec,2018-01-01,2018,1,127.6,Cents per litre
+Ottawa-Gatineau,Ontario,2018-01-01,2018,1,124.4,Cents per litre
+Toronto,Ontario,2018-01-01,2018,1,124.5,Cents per litre
+Thunder Bay,Ontario,2018-01-01,2018,1,123.9,Cents per litre
+Winnipeg,Manitoba,2018-01-01,2018,1,107,Cents per litre
+Regina,Saskatchewan,2018-01-01,2018,1,105.9,Cents per litre
+Saskatoon,Saskatchewan,2018-01-01,2018,1,107.4,Cents per litre
+Edmonton,Alberta,2018-01-01,2018,1,107.5,Cents per litre
+Calgary,Alberta,2018-01-01,2018,1,112.1,Cents per litre
+Vancouver,British Columbia,2018-01-01,2018,1,141.7,Cents per litre
+Victoria,British Columbia,2018-01-01,2018,1,129.6,Cents per litre
+Whitehorse,Yukon,2018-01-01,2018,1,121.4,Cents per litre
+Yellowknife,Northwest Territories,2018-01-01,2018,1,123.1,Cents per litre
+St. John's,Newfoundland and Labrador,2018-02-01,2018,2,121.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-02-01,2018,2,115.5,Cents per litre
+Halifax,Nova Scotia,2018-02-01,2018,2,114.1,Cents per litre
+Saint John,New Brunswick,2018-02-01,2018,2,113.9,Cents per litre
+Québec,Quebec,2018-02-01,2018,2,119.3,Cents per litre
+Montréal,Quebec,2018-02-01,2018,2,127.5,Cents per litre
+Ottawa-Gatineau,Ontario,2018-02-01,2018,2,119.6,Cents per litre
+Toronto,Ontario,2018-02-01,2018,2,123.6,Cents per litre
+Thunder Bay,Ontario,2018-02-01,2018,2,122.7,Cents per litre
+Winnipeg,Manitoba,2018-02-01,2018,2,104.2,Cents per litre
+Regina,Saskatchewan,2018-02-01,2018,2,103.5,Cents per litre
+Saskatoon,Saskatchewan,2018-02-01,2018,2,103.5,Cents per litre
+Edmonton,Alberta,2018-02-01,2018,2,104,Cents per litre
+Calgary,Alberta,2018-02-01,2018,2,110.6,Cents per litre
+Vancouver,British Columbia,2018-02-01,2018,2,144.5,Cents per litre
+Victoria,British Columbia,2018-02-01,2018,2,134.9,Cents per litre
+Whitehorse,Yukon,2018-02-01,2018,2,121.4,Cents per litre
+Yellowknife,Northwest Territories,2018-02-01,2018,2,122.9,Cents per litre
+St. John's,Newfoundland and Labrador,2018-03-01,2018,3,122.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-03-01,2018,3,116.9,Cents per litre
+Halifax,Nova Scotia,2018-03-01,2018,3,114,Cents per litre
+Saint John,New Brunswick,2018-03-01,2018,3,113.9,Cents per litre
+Québec,Quebec,2018-03-01,2018,3,123.4,Cents per litre
+Montréal,Quebec,2018-03-01,2018,3,130,Cents per litre
+Ottawa-Gatineau,Ontario,2018-03-01,2018,3,125.8,Cents per litre
+Toronto,Ontario,2018-03-01,2018,3,126.1,Cents per litre
+Thunder Bay,Ontario,2018-03-01,2018,3,123.6,Cents per litre
+Winnipeg,Manitoba,2018-03-01,2018,3,106.9,Cents per litre
+Regina,Saskatchewan,2018-03-01,2018,3,108.1,Cents per litre
+Saskatoon,Saskatchewan,2018-03-01,2018,3,109.4,Cents per litre
+Edmonton,Alberta,2018-03-01,2018,3,111.3,Cents per litre
+Calgary,Alberta,2018-03-01,2018,3,115.3,Cents per litre
+Vancouver,British Columbia,2018-03-01,2018,3,151.4,Cents per litre
+Victoria,British Columbia,2018-03-01,2018,3,143.2,Cents per litre
+Whitehorse,Yukon,2018-03-01,2018,3,121.4,Cents per litre
+Yellowknife,Northwest Territories,2018-03-01,2018,3,122.9,Cents per litre
+St. John's,Newfoundland and Labrador,2018-04-01,2018,4,131,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-04-01,2018,4,123.5,Cents per litre
+Halifax,Nova Scotia,2018-04-01,2018,4,124.2,Cents per litre
+Saint John,New Brunswick,2018-04-01,2018,4,122.9,Cents per litre
+Québec,Quebec,2018-04-01,2018,4,131.7,Cents per litre
+Montréal,Quebec,2018-04-01,2018,4,137.9,Cents per litre
+Ottawa-Gatineau,Ontario,2018-04-01,2018,4,133.6,Cents per litre
+Toronto,Ontario,2018-04-01,2018,4,133.7,Cents per litre
+Thunder Bay,Ontario,2018-04-01,2018,4,135.4,Cents per litre
+Winnipeg,Manitoba,2018-04-01,2018,4,121.1,Cents per litre
+Regina,Saskatchewan,2018-04-01,2018,4,116.9,Cents per litre
+Saskatoon,Saskatchewan,2018-04-01,2018,4,117.6,Cents per litre
+Edmonton,Alberta,2018-04-01,2018,4,122.5,Cents per litre
+Calgary,Alberta,2018-04-01,2018,4,125.2,Cents per litre
+Vancouver,British Columbia,2018-04-01,2018,4,155.1,Cents per litre
+Victoria,British Columbia,2018-04-01,2018,4,147.2,Cents per litre
+Whitehorse,Yukon,2018-04-01,2018,4,130.9,Cents per litre
+Yellowknife,Northwest Territories,2018-04-01,2018,4,128.9,Cents per litre
+St. John's,Newfoundland and Labrador,2018-05-01,2018,5,137.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-05-01,2018,5,131.3,Cents per litre
+Halifax,Nova Scotia,2018-05-01,2018,5,130.4,Cents per litre
+Saint John,New Brunswick,2018-05-01,2018,5,128.9,Cents per litre
+Québec,Quebec,2018-05-01,2018,5,136.6,Cents per litre
+Montréal,Quebec,2018-05-01,2018,5,142.7,Cents per litre
+Ottawa-Gatineau,Ontario,2018-05-01,2018,5,136.9,Cents per litre
+Toronto,Ontario,2018-05-01,2018,5,137.3,Cents per litre
+Thunder Bay,Ontario,2018-05-01,2018,5,141.7,Cents per litre
+Winnipeg,Manitoba,2018-05-01,2018,5,125.1,Cents per litre
+Regina,Saskatchewan,2018-05-01,2018,5,123.7,Cents per litre
+Saskatoon,Saskatchewan,2018-05-01,2018,5,123.1,Cents per litre
+Edmonton,Alberta,2018-05-01,2018,5,127.5,Cents per litre
+Calgary,Alberta,2018-05-01,2018,5,129.6,Cents per litre
+Vancouver,British Columbia,2018-05-01,2018,5,159.9,Cents per litre
+Victoria,British Columbia,2018-05-01,2018,5,153.9,Cents per litre
+Whitehorse,Yukon,2018-05-01,2018,5,142.4,Cents per litre
+Yellowknife,Northwest Territories,2018-05-01,2018,5,137.2,Cents per litre
+St. John's,Newfoundland and Labrador,2018-06-01,2018,6,134.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-06-01,2018,6,130,Cents per litre
+Halifax,Nova Scotia,2018-06-01,2018,6,125.5,Cents per litre
+Saint John,New Brunswick,2018-06-01,2018,6,125.7,Cents per litre
+Québec,Quebec,2018-06-01,2018,6,131.7,Cents per litre
+Montréal,Quebec,2018-06-01,2018,6,139.7,Cents per litre
+Ottawa-Gatineau,Ontario,2018-06-01,2018,6,128.2,Cents per litre
+Toronto,Ontario,2018-06-01,2018,6,134.6,Cents per litre
+Thunder Bay,Ontario,2018-06-01,2018,6,140.6,Cents per litre
+Winnipeg,Manitoba,2018-06-01,2018,6,125.3,Cents per litre
+Regina,Saskatchewan,2018-06-01,2018,6,122.3,Cents per litre
+Saskatoon,Saskatchewan,2018-06-01,2018,6,122.4,Cents per litre
+Edmonton,Alberta,2018-06-01,2018,6,124.4,Cents per litre
+Calgary,Alberta,2018-06-01,2018,6,127.1,Cents per litre
+Vancouver,British Columbia,2018-06-01,2018,6,154.3,Cents per litre
+Victoria,British Columbia,2018-06-01,2018,6,150.1,Cents per litre
+Whitehorse,Yukon,2018-06-01,2018,6,144.9,Cents per litre
+Yellowknife,Northwest Territories,2018-06-01,2018,6,141.7,Cents per litre
+St. John's,Newfoundland and Labrador,2018-07-01,2018,7,134.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-07-01,2018,7,128.9,Cents per litre
+Halifax,Nova Scotia,2018-07-01,2018,7,126.2,Cents per litre
+Saint John,New Brunswick,2018-07-01,2018,7,126.9,Cents per litre
+Québec,Quebec,2018-07-01,2018,7,130.6,Cents per litre
+Montréal,Quebec,2018-07-01,2018,7,137.6,Cents per litre
+Ottawa-Gatineau,Ontario,2018-07-01,2018,7,129.5,Cents per litre
+Toronto,Ontario,2018-07-01,2018,7,135.6,Cents per litre
+Thunder Bay,Ontario,2018-07-01,2018,7,144.5,Cents per litre
+Winnipeg,Manitoba,2018-07-01,2018,7,123.4,Cents per litre
+Regina,Saskatchewan,2018-07-01,2018,7,123.4,Cents per litre
+Saskatoon,Saskatchewan,2018-07-01,2018,7,125.8,Cents per litre
+Edmonton,Alberta,2018-07-01,2018,7,131,Cents per litre
+Calgary,Alberta,2018-07-01,2018,7,131.4,Cents per litre
+Vancouver,British Columbia,2018-07-01,2018,7,155.7,Cents per litre
+Victoria,British Columbia,2018-07-01,2018,7,150,Cents per litre
+Whitehorse,Yukon,2018-07-01,2018,7,144.9,Cents per litre
+Yellowknife,Northwest Territories,2018-07-01,2018,7,144.4,Cents per litre
+St. John's,Newfoundland and Labrador,2018-08-01,2018,8,132.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-08-01,2018,8,126.9,Cents per litre
+Halifax,Nova Scotia,2018-08-01,2018,8,124,Cents per litre
+Saint John,New Brunswick,2018-08-01,2018,8,126.5,Cents per litre
+Québec,Quebec,2018-08-01,2018,8,131.1,Cents per litre
+Montréal,Quebec,2018-08-01,2018,8,138.3,Cents per litre
+Ottawa-Gatineau,Ontario,2018-08-01,2018,8,127.4,Cents per litre
+Toronto,Ontario,2018-08-01,2018,8,133.6,Cents per litre
+Thunder Bay,Ontario,2018-08-01,2018,8,145.3,Cents per litre
+Winnipeg,Manitoba,2018-08-01,2018,8,118,Cents per litre
+Regina,Saskatchewan,2018-08-01,2018,8,121.4,Cents per litre
+Saskatoon,Saskatchewan,2018-08-01,2018,8,122.9,Cents per litre
+Edmonton,Alberta,2018-08-01,2018,8,126.2,Cents per litre
+Calgary,Alberta,2018-08-01,2018,8,129.7,Cents per litre
+Vancouver,British Columbia,2018-08-01,2018,8,150.3,Cents per litre
+Victoria,British Columbia,2018-08-01,2018,8,144.5,Cents per litre
+Whitehorse,Yukon,2018-08-01,2018,8,144.9,Cents per litre
+Yellowknife,Northwest Territories,2018-08-01,2018,8,145.6,Cents per litre
+St. John's,Newfoundland and Labrador,2018-09-01,2018,9,131.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-09-01,2018,9,126.5,Cents per litre
+Halifax,Nova Scotia,2018-09-01,2018,9,123.5,Cents per litre
+Saint John,New Brunswick,2018-09-01,2018,9,127,Cents per litre
+Québec,Quebec,2018-09-01,2018,9,132,Cents per litre
+Montréal,Quebec,2018-09-01,2018,9,140,Cents per litre
+Ottawa-Gatineau,Ontario,2018-09-01,2018,9,123.1,Cents per litre
+Toronto,Ontario,2018-09-01,2018,9,129.3,Cents per litre
+Thunder Bay,Ontario,2018-09-01,2018,9,144.9,Cents per litre
+Winnipeg,Manitoba,2018-09-01,2018,9,116.6,Cents per litre
+Regina,Saskatchewan,2018-09-01,2018,9,120.6,Cents per litre
+Saskatoon,Saskatchewan,2018-09-01,2018,9,121.8,Cents per litre
+Edmonton,Alberta,2018-09-01,2018,9,126.6,Cents per litre
+Calgary,Alberta,2018-09-01,2018,9,129.9,Cents per litre
+Vancouver,British Columbia,2018-09-01,2018,9,151.9,Cents per litre
+Victoria,British Columbia,2018-09-01,2018,9,142.7,Cents per litre
+Whitehorse,Yukon,2018-09-01,2018,9,144.1,Cents per litre
+Yellowknife,Northwest Territories,2018-09-01,2018,9,146.4,Cents per litre
+St. John's,Newfoundland and Labrador,2018-10-01,2018,10,131.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-10-01,2018,10,124.5,Cents per litre
+Halifax,Nova Scotia,2018-10-01,2018,10,122.6,Cents per litre
+Saint John,New Brunswick,2018-10-01,2018,10,126.2,Cents per litre
+Québec,Quebec,2018-10-01,2018,10,127.5,Cents per litre
+Montréal,Quebec,2018-10-01,2018,10,131.7,Cents per litre
+Ottawa-Gatineau,Ontario,2018-10-01,2018,10,118.1,Cents per litre
+Toronto,Ontario,2018-10-01,2018,10,124,Cents per litre
+Thunder Bay,Ontario,2018-10-01,2018,10,142.3,Cents per litre
+Winnipeg,Manitoba,2018-10-01,2018,10,111.3,Cents per litre
+Regina,Saskatchewan,2018-10-01,2018,10,120.1,Cents per litre
+Saskatoon,Saskatchewan,2018-10-01,2018,10,122.4,Cents per litre
+Edmonton,Alberta,2018-10-01,2018,10,119.8,Cents per litre
+Calgary,Alberta,2018-10-01,2018,10,121.4,Cents per litre
+Vancouver,British Columbia,2018-10-01,2018,10,155.2,Cents per litre
+Victoria,British Columbia,2018-10-01,2018,10,148.3,Cents per litre
+Whitehorse,Yukon,2018-10-01,2018,10,144.7,Cents per litre
+Yellowknife,Northwest Territories,2018-10-01,2018,10,146,Cents per litre
+St. John's,Newfoundland and Labrador,2018-11-01,2018,11,118.6,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-11-01,2018,11,111.6,Cents per litre
+Halifax,Nova Scotia,2018-11-01,2018,11,108,Cents per litre
+Saint John,New Brunswick,2018-11-01,2018,11,113.4,Cents per litre
+Québec,Quebec,2018-11-01,2018,11,115.1,Cents per litre
+Montréal,Quebec,2018-11-01,2018,11,117,Cents per litre
+Ottawa-Gatineau,Ontario,2018-11-01,2018,11,106.4,Cents per litre
+Toronto,Ontario,2018-11-01,2018,11,111.7,Cents per litre
+Thunder Bay,Ontario,2018-11-01,2018,11,134.7,Cents per litre
+Winnipeg,Manitoba,2018-11-01,2018,11,102.4,Cents per litre
+Regina,Saskatchewan,2018-11-01,2018,11,109.4,Cents per litre
+Saskatoon,Saskatchewan,2018-11-01,2018,11,114.1,Cents per litre
+Edmonton,Alberta,2018-11-01,2018,11,105.7,Cents per litre
+Calgary,Alberta,2018-11-01,2018,11,108.3,Cents per litre
+Vancouver,British Columbia,2018-11-01,2018,11,141.9,Cents per litre
+Victoria,British Columbia,2018-11-01,2018,11,137.8,Cents per litre
+Whitehorse,Yukon,2018-11-01,2018,11,140.4,Cents per litre
+Yellowknife,Northwest Territories,2018-11-01,2018,11,140.4,Cents per litre
+St. John's,Newfoundland and Labrador,2018-12-01,2018,12,109.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2018-12-01,2018,12,103.5,Cents per litre
+Halifax,Nova Scotia,2018-12-01,2018,12,99.9,Cents per litre
+Saint John,New Brunswick,2018-12-01,2018,12,105.3,Cents per litre
+Québec,Quebec,2018-12-01,2018,12,108.7,Cents per litre
+Montréal,Quebec,2018-12-01,2018,12,112.5,Cents per litre
+Ottawa-Gatineau,Ontario,2018-12-01,2018,12,99.7,Cents per litre
+Toronto,Ontario,2018-12-01,2018,12,105.5,Cents per litre
+Thunder Bay,Ontario,2018-12-01,2018,12,124.5,Cents per litre
+Winnipeg,Manitoba,2018-12-01,2018,12,95.5,Cents per litre
+Regina,Saskatchewan,2018-12-01,2018,12,97.2,Cents per litre
+Saskatoon,Saskatchewan,2018-12-01,2018,12,101.4,Cents per litre
+Edmonton,Alberta,2018-12-01,2018,12,95,Cents per litre
+Calgary,Alberta,2018-12-01,2018,12,97.1,Cents per litre
+Vancouver,British Columbia,2018-12-01,2018,12,138.5,Cents per litre
+Victoria,British Columbia,2018-12-01,2018,12,132.5,Cents per litre
+Whitehorse,Yukon,2018-12-01,2018,12,124.9,Cents per litre
+Yellowknife,Northwest Territories,2018-12-01,2018,12,128.8,Cents per litre
+St. John's,Newfoundland and Labrador,2019-01-01,2019,1,107.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-01-01,2019,1,98,Cents per litre
+Halifax,Nova Scotia,2019-01-01,2019,1,99,Cents per litre
+Saint John,New Brunswick,2019-01-01,2019,1,102.1,Cents per litre
+Québec,Quebec,2019-01-01,2019,1,106.9,Cents per litre
+Montréal,Quebec,2019-01-01,2019,1,112.1,Cents per litre
+Ottawa-Gatineau,Ontario,2019-01-01,2019,1,96.5,Cents per litre
+Toronto,Ontario,2019-01-01,2019,1,102.4,Cents per litre
+Thunder Bay,Ontario,2019-01-01,2019,1,118.2,Cents per litre
+Winnipeg,Manitoba,2019-01-01,2019,1,89.9,Cents per litre
+Regina,Saskatchewan,2019-01-01,2019,1,91.8,Cents per litre
+Saskatoon,Saskatchewan,2019-01-01,2019,1,95.7,Cents per litre
+Edmonton,Alberta,2019-01-01,2019,1,91.8,Cents per litre
+Calgary,Alberta,2019-01-01,2019,1,95.2,Cents per litre
+Vancouver,British Columbia,2019-01-01,2019,1,132,Cents per litre
+Victoria,British Columbia,2019-01-01,2019,1,130.1,Cents per litre
+Whitehorse,Yukon,2019-01-01,2019,1,124.9,Cents per litre
+Yellowknife,Northwest Territories,2019-01-01,2019,1,119.7,Cents per litre
+St. John's,Newfoundland and Labrador,2019-02-01,2019,2,113.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-02-01,2019,2,99.8,Cents per litre
+Halifax,Nova Scotia,2019-02-01,2019,2,103.2,Cents per litre
+Saint John,New Brunswick,2019-02-01,2019,2,104.1,Cents per litre
+Québec,Quebec,2019-02-01,2019,2,107.2,Cents per litre
+Montréal,Quebec,2019-02-01,2019,2,113.6,Cents per litre
+Ottawa-Gatineau,Ontario,2019-02-01,2019,2,96.1,Cents per litre
+Toronto,Ontario,2019-02-01,2019,2,102.1,Cents per litre
+Thunder Bay,Ontario,2019-02-01,2019,2,116.7,Cents per litre
+Winnipeg,Manitoba,2019-02-01,2019,2,97.5,Cents per litre
+Regina,Saskatchewan,2019-02-01,2019,2,101.8,Cents per litre
+Saskatoon,Saskatchewan,2019-02-01,2019,2,101,Cents per litre
+Edmonton,Alberta,2019-02-01,2019,2,99.2,Cents per litre
+Calgary,Alberta,2019-02-01,2019,2,102,Cents per litre
+Vancouver,British Columbia,2019-02-01,2019,2,134.4,Cents per litre
+Victoria,British Columbia,2019-02-01,2019,2,126.7,Cents per litre
+Whitehorse,Yukon,2019-02-01,2019,2,124.9,Cents per litre
+Yellowknife,Northwest Territories,2019-02-01,2019,2,120.3,Cents per litre
+St. John's,Newfoundland and Labrador,2019-03-01,2019,3,122.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-03-01,2019,3,111.5,Cents per litre
+Halifax,Nova Scotia,2019-03-01,2019,3,116.6,Cents per litre
+Saint John,New Brunswick,2019-03-01,2019,3,114.6,Cents per litre
+Québec,Quebec,2019-03-01,2019,3,121.9,Cents per litre
+Montréal,Quebec,2019-03-01,2019,3,126.3,Cents per litre
+Ottawa-Gatineau,Ontario,2019-03-01,2019,3,110.9,Cents per litre
+Toronto,Ontario,2019-03-01,2019,3,115.8,Cents per litre
+Thunder Bay,Ontario,2019-03-01,2019,3,123.9,Cents per litre
+Winnipeg,Manitoba,2019-03-01,2019,3,108.4,Cents per litre
+Regina,Saskatchewan,2019-03-01,2019,3,111.2,Cents per litre
+Saskatoon,Saskatchewan,2019-03-01,2019,3,110.9,Cents per litre
+Edmonton,Alberta,2019-03-01,2019,3,110.2,Cents per litre
+Calgary,Alberta,2019-03-01,2019,3,113.6,Cents per litre
+Vancouver,British Columbia,2019-03-01,2019,3,149.6,Cents per litre
+Victoria,British Columbia,2019-03-01,2019,3,137.6,Cents per litre
+Whitehorse,Yukon,2019-03-01,2019,3,129.8,Cents per litre
+Yellowknife,Northwest Territories,2019-03-01,2019,3,125.6,Cents per litre
+St. John's,Newfoundland and Labrador,2019-04-01,2019,4,131.6,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-04-01,2019,4,125.8,Cents per litre
+Halifax,Nova Scotia,2019-04-01,2019,4,127.6,Cents per litre
+Saint John,New Brunswick,2019-04-01,2019,4,130,Cents per litre
+Québec,Quebec,2019-04-01,2019,4,130.6,Cents per litre
+Montréal,Quebec,2019-04-01,2019,4,136,Cents per litre
+Ottawa-Gatineau,Ontario,2019-04-01,2019,4,125.8,Cents per litre
+Toronto,Ontario,2019-04-01,2019,4,126.7,Cents per litre
+Thunder Bay,Ontario,2019-04-01,2019,4,140.2,Cents per litre
+Winnipeg,Manitoba,2019-04-01,2019,4,125.1,Cents per litre
+Regina,Saskatchewan,2019-04-01,2019,4,127.3,Cents per litre
+Saskatoon,Saskatchewan,2019-04-01,2019,4,127.8,Cents per litre
+Edmonton,Alberta,2019-04-01,2019,4,118.9,Cents per litre
+Calgary,Alberta,2019-04-01,2019,4,122.5,Cents per litre
+Vancouver,British Columbia,2019-04-01,2019,4,167.3,Cents per litre
+Victoria,British Columbia,2019-04-01,2019,4,157.5,Cents per litre
+Whitehorse,Yukon,2019-04-01,2019,4,137.9,Cents per litre
+Yellowknife,Northwest Territories,2019-04-01,2019,4,134.5,Cents per litre
+St. John's,Newfoundland and Labrador,2019-05-01,2019,5,131.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-05-01,2019,5,128.7,Cents per litre
+Halifax,Nova Scotia,2019-05-01,2019,5,125.8,Cents per litre
+Saint John,New Brunswick,2019-05-01,2019,5,130.3,Cents per litre
+Québec,Quebec,2019-05-01,2019,5,132.6,Cents per litre
+Montréal,Quebec,2019-05-01,2019,5,137.9,Cents per litre
+Ottawa-Gatineau,Ontario,2019-05-01,2019,5,127.8,Cents per litre
+Toronto,Ontario,2019-05-01,2019,5,127.7,Cents per litre
+Thunder Bay,Ontario,2019-05-01,2019,5,145.3,Cents per litre
+Winnipeg,Manitoba,2019-05-01,2019,5,122.6,Cents per litre
+Regina,Saskatchewan,2019-05-01,2019,5,123.7,Cents per litre
+Saskatoon,Saskatchewan,2019-05-01,2019,5,128.3,Cents per litre
+Edmonton,Alberta,2019-05-01,2019,5,117.8,Cents per litre
+Calgary,Alberta,2019-05-01,2019,5,120.7,Cents per litre
+Vancouver,British Columbia,2019-05-01,2019,5,169,Cents per litre
+Victoria,British Columbia,2019-05-01,2019,5,161.3,Cents per litre
+Whitehorse,Yukon,2019-05-01,2019,5,137.7,Cents per litre
+Yellowknife,Northwest Territories,2019-05-01,2019,5,142.7,Cents per litre
+St. John's,Newfoundland and Labrador,2019-06-01,2019,6,120.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-06-01,2019,6,116.2,Cents per litre
+Halifax,Nova Scotia,2019-06-01,2019,6,110.9,Cents per litre
+Saint John,New Brunswick,2019-06-01,2019,6,119.2,Cents per litre
+Québec,Quebec,2019-06-01,2019,6,122.2,Cents per litre
+Montréal,Quebec,2019-06-01,2019,6,128.5,Cents per litre
+Ottawa-Gatineau,Ontario,2019-06-01,2019,6,119.1,Cents per litre
+Toronto,Ontario,2019-06-01,2019,6,118.9,Cents per litre
+Thunder Bay,Ontario,2019-06-01,2019,6,139.9,Cents per litre
+Winnipeg,Manitoba,2019-06-01,2019,6,113.1,Cents per litre
+Regina,Saskatchewan,2019-06-01,2019,6,110.7,Cents per litre
+Saskatoon,Saskatchewan,2019-06-01,2019,6,121.5,Cents per litre
+Edmonton,Alberta,2019-06-01,2019,6,100.4,Cents per litre
+Calgary,Alberta,2019-06-01,2019,6,103.6,Cents per litre
+Vancouver,British Columbia,2019-06-01,2019,6,148.4,Cents per litre
+Victoria,British Columbia,2019-06-01,2019,6,146.5,Cents per litre
+Whitehorse,Yukon,2019-06-01,2019,6,137.7,Cents per litre
+Yellowknife,Northwest Territories,2019-06-01,2019,6,138.5,Cents per litre
+St. John's,Newfoundland and Labrador,2019-07-01,2019,7,128.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-07-01,2019,7,123.1,Cents per litre
+Halifax,Nova Scotia,2019-07-01,2019,7,119.9,Cents per litre
+Saint John,New Brunswick,2019-07-01,2019,7,124,Cents per litre
+Québec,Quebec,2019-07-01,2019,7,127.3,Cents per litre
+Montréal,Quebec,2019-07-01,2019,7,133.3,Cents per litre
+Ottawa-Gatineau,Ontario,2019-07-01,2019,7,125.4,Cents per litre
+Toronto,Ontario,2019-07-01,2019,7,125.3,Cents per litre
+Thunder Bay,Ontario,2019-07-01,2019,7,135.9,Cents per litre
+Winnipeg,Manitoba,2019-07-01,2019,7,114.7,Cents per litre
+Regina,Saskatchewan,2019-07-01,2019,7,115.1,Cents per litre
+Saskatoon,Saskatchewan,2019-07-01,2019,7,118.2,Cents per litre
+Edmonton,Alberta,2019-07-01,2019,7,105.4,Cents per litre
+Calgary,Alberta,2019-07-01,2019,7,108.4,Cents per litre
+Vancouver,British Columbia,2019-07-01,2019,7,151.5,Cents per litre
+Victoria,British Columbia,2019-07-01,2019,7,142.2,Cents per litre
+Whitehorse,Yukon,2019-07-01,2019,7,142.4,Cents per litre
+Yellowknife,Northwest Territories,2019-07-01,2019,7,134.4,Cents per litre
+St. John's,Newfoundland and Labrador,2019-08-01,2019,8,123.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-08-01,2019,8,116.7,Cents per litre
+Halifax,Nova Scotia,2019-08-01,2019,8,114.2,Cents per litre
+Saint John,New Brunswick,2019-08-01,2019,8,120,Cents per litre
+Québec,Quebec,2019-08-01,2019,8,118.6,Cents per litre
+Montréal,Quebec,2019-08-01,2019,8,125.1,Cents per litre
+Ottawa-Gatineau,Ontario,2019-08-01,2019,8,117.8,Cents per litre
+Toronto,Ontario,2019-08-01,2019,8,118.5,Cents per litre
+Thunder Bay,Ontario,2019-08-01,2019,8,133.7,Cents per litre
+Winnipeg,Manitoba,2019-08-01,2019,8,107.7,Cents per litre
+Regina,Saskatchewan,2019-08-01,2019,8,109,Cents per litre
+Saskatoon,Saskatchewan,2019-08-01,2019,8,110.6,Cents per litre
+Edmonton,Alberta,2019-08-01,2019,8,99.9,Cents per litre
+Calgary,Alberta,2019-08-01,2019,8,102.2,Cents per litre
+Vancouver,British Columbia,2019-08-01,2019,8,148.2,Cents per litre
+Victoria,British Columbia,2019-08-01,2019,8,136.1,Cents per litre
+Whitehorse,Yukon,2019-08-01,2019,8,142.9,Cents per litre
+Yellowknife,Northwest Territories,2019-08-01,2019,8,131.6,Cents per litre
+St. John's,Newfoundland and Labrador,2019-09-01,2019,9,121.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-09-01,2019,9,115.4,Cents per litre
+Halifax,Nova Scotia,2019-09-01,2019,9,112.5,Cents per litre
+Saint John,New Brunswick,2019-09-01,2019,9,117.8,Cents per litre
+Québec,Quebec,2019-09-01,2019,9,117.2,Cents per litre
+Montréal,Quebec,2019-09-01,2019,9,123.9,Cents per litre
+Ottawa-Gatineau,Ontario,2019-09-01,2019,9,116.2,Cents per litre
+Toronto,Ontario,2019-09-01,2019,9,116.7,Cents per litre
+Thunder Bay,Ontario,2019-09-01,2019,9,131.4,Cents per litre
+Winnipeg,Manitoba,2019-09-01,2019,9,108.2,Cents per litre
+Regina,Saskatchewan,2019-09-01,2019,9,108.2,Cents per litre
+Saskatoon,Saskatchewan,2019-09-01,2019,9,108.2,Cents per litre
+Edmonton,Alberta,2019-09-01,2019,9,99.3,Cents per litre
+Calgary,Alberta,2019-09-01,2019,9,102.1,Cents per litre
+Vancouver,British Columbia,2019-09-01,2019,9,153.6,Cents per litre
+Victoria,British Columbia,2019-09-01,2019,9,141.9,Cents per litre
+Whitehorse,Yukon,2019-09-01,2019,9,142.8,Cents per litre
+Yellowknife,Northwest Territories,2019-09-01,2019,9,133.5,Cents per litre
+St. John's,Newfoundland and Labrador,2019-10-01,2019,10,121.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-10-01,2019,10,114.5,Cents per litre
+Halifax,Nova Scotia,2019-10-01,2019,10,112.9,Cents per litre
+Saint John,New Brunswick,2019-10-01,2019,10,118.1,Cents per litre
+Québec,Quebec,2019-10-01,2019,10,115.2,Cents per litre
+Montréal,Quebec,2019-10-01,2019,10,123.6,Cents per litre
+Ottawa-Gatineau,Ontario,2019-10-01,2019,10,115.2,Cents per litre
+Toronto,Ontario,2019-10-01,2019,10,116.9,Cents per litre
+Thunder Bay,Ontario,2019-10-01,2019,10,130.7,Cents per litre
+Winnipeg,Manitoba,2019-10-01,2019,10,110.9,Cents per litre
+Regina,Saskatchewan,2019-10-01,2019,10,110.8,Cents per litre
+Saskatoon,Saskatchewan,2019-10-01,2019,10,109.9,Cents per litre
+Edmonton,Alberta,2019-10-01,2019,10,98.2,Cents per litre
+Calgary,Alberta,2019-10-01,2019,10,100.4,Cents per litre
+Vancouver,British Columbia,2019-10-01,2019,10,158.2,Cents per litre
+Victoria,British Columbia,2019-10-01,2019,10,150.7,Cents per litre
+Whitehorse,Yukon,2019-10-01,2019,10,142.9,Cents per litre
+Yellowknife,Northwest Territories,2019-10-01,2019,10,133.4,Cents per litre
+St. John's,Newfoundland and Labrador,2019-11-01,2019,11,122,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-11-01,2019,11,114.4,Cents per litre
+Halifax,Nova Scotia,2019-11-01,2019,11,113.7,Cents per litre
+Saint John,New Brunswick,2019-11-01,2019,11,118.9,Cents per litre
+Québec,Quebec,2019-11-01,2019,11,116.7,Cents per litre
+Montréal,Quebec,2019-11-01,2019,11,123.5,Cents per litre
+Ottawa-Gatineau,Ontario,2019-11-01,2019,11,113.6,Cents per litre
+Toronto,Ontario,2019-11-01,2019,11,116.4,Cents per litre
+Thunder Bay,Ontario,2019-11-01,2019,11,128.6,Cents per litre
+Winnipeg,Manitoba,2019-11-01,2019,11,107,Cents per litre
+Regina,Saskatchewan,2019-11-01,2019,11,108.7,Cents per litre
+Saskatoon,Saskatchewan,2019-11-01,2019,11,101.6,Cents per litre
+Edmonton,Alberta,2019-11-01,2019,11,95.1,Cents per litre
+Calgary,Alberta,2019-11-01,2019,11,97.9,Cents per litre
+Vancouver,British Columbia,2019-11-01,2019,11,140.5,Cents per litre
+Victoria,British Columbia,2019-11-01,2019,11,138.9,Cents per litre
+Whitehorse,Yukon,2019-11-01,2019,11,142.9,Cents per litre
+Yellowknife,Northwest Territories,2019-11-01,2019,11,132.1,Cents per litre
+St. John's,Newfoundland and Labrador,2019-12-01,2019,12,121.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2019-12-01,2019,12,113.7,Cents per litre
+Halifax,Nova Scotia,2019-12-01,2019,12,112.3,Cents per litre
+Saint John,New Brunswick,2019-12-01,2019,12,118.4,Cents per litre
+Québec,Quebec,2019-12-01,2019,12,116.4,Cents per litre
+Montréal,Quebec,2019-12-01,2019,12,123.5,Cents per litre
+Ottawa-Gatineau,Ontario,2019-12-01,2019,12,113.1,Cents per litre
+Toronto,Ontario,2019-12-01,2019,12,116,Cents per litre
+Thunder Bay,Ontario,2019-12-01,2019,12,127.9,Cents per litre
+Winnipeg,Manitoba,2019-12-01,2019,12,103.3,Cents per litre
+Regina,Saskatchewan,2019-12-01,2019,12,108.5,Cents per litre
+Saskatoon,Saskatchewan,2019-12-01,2019,12,107.2,Cents per litre
+Edmonton,Alberta,2019-12-01,2019,12,96.2,Cents per litre
+Calgary,Alberta,2019-12-01,2019,12,99,Cents per litre
+Vancouver,British Columbia,2019-12-01,2019,12,136.5,Cents per litre
+Victoria,British Columbia,2019-12-01,2019,12,132.4,Cents per litre
+Whitehorse,Yukon,2019-12-01,2019,12,142.7,Cents per litre
+Yellowknife,Northwest Territories,2019-12-01,2019,12,131.7,Cents per litre
+St. John's,Newfoundland and Labrador,2020-01-01,2020,1,123.6,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-01-01,2020,1,113.6,Cents per litre
+Halifax,Nova Scotia,2020-01-01,2020,1,112.4,Cents per litre
+Saint John,New Brunswick,2020-01-01,2020,1,117.8,Cents per litre
+Québec,Quebec,2020-01-01,2020,1,115.1,Cents per litre
+Montréal,Quebec,2020-01-01,2020,1,122.1,Cents per litre
+Ottawa-Gatineau,Ontario,2020-01-01,2020,1,111.6,Cents per litre
+Toronto,Ontario,2020-01-01,2020,1,114.6,Cents per litre
+Thunder Bay,Ontario,2020-01-01,2020,1,127.6,Cents per litre
+Winnipeg,Manitoba,2020-01-01,2020,1,101.6,Cents per litre
+Regina,Saskatchewan,2020-01-01,2020,1,109.8,Cents per litre
+Saskatoon,Saskatchewan,2020-01-01,2020,1,110,Cents per litre
+Edmonton,Alberta,2020-01-01,2020,1,98.8,Cents per litre
+Calgary,Alberta,2020-01-01,2020,1,101.6,Cents per litre
+Vancouver,British Columbia,2020-01-01,2020,1,139.9,Cents per litre
+Victoria,British Columbia,2020-01-01,2020,1,139.7,Cents per litre
+Whitehorse,Yukon,2020-01-01,2020,1,142.9,Cents per litre
+Yellowknife,Northwest Territories,2020-01-01,2020,1,129.7,Cents per litre
+St. John's,Newfoundland and Labrador,2020-02-01,2020,2,120.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-02-01,2020,2,111,Cents per litre
+Halifax,Nova Scotia,2020-02-01,2020,2,107.5,Cents per litre
+Saint John,New Brunswick,2020-02-01,2020,2,113.3,Cents per litre
+Québec,Quebec,2020-02-01,2020,2,113.4,Cents per litre
+Montréal,Quebec,2020-02-01,2020,2,120.1,Cents per litre
+Ottawa-Gatineau,Ontario,2020-02-01,2020,2,108.4,Cents per litre
+Toronto,Ontario,2020-02-01,2020,2,111,Cents per litre
+Thunder Bay,Ontario,2020-02-01,2020,2,126,Cents per litre
+Winnipeg,Manitoba,2020-02-01,2020,2,102.5,Cents per litre
+Regina,Saskatchewan,2020-02-01,2020,2,105.1,Cents per litre
+Saskatoon,Saskatchewan,2020-02-01,2020,2,107.1,Cents per litre
+Edmonton,Alberta,2020-02-01,2020,2,96.4,Cents per litre
+Calgary,Alberta,2020-02-01,2020,2,99,Cents per litre
+Vancouver,British Columbia,2020-02-01,2020,2,145.9,Cents per litre
+Victoria,British Columbia,2020-02-01,2020,2,143.2,Cents per litre
+Whitehorse,Yukon,2020-02-01,2020,2,142.5,Cents per litre
+Yellowknife,Northwest Territories,2020-02-01,2020,2,127.6,Cents per litre
+St. John's,Newfoundland and Labrador,2020-03-01,2020,3,101.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-03-01,2020,3,90.2,Cents per litre
+Halifax,Nova Scotia,2020-03-01,2020,3,85.4,Cents per litre
+Saint John,New Brunswick,2020-03-01,2020,3,95.4,Cents per litre
+Québec,Quebec,2020-03-01,2020,3,99.1,Cents per litre
+Montréal,Quebec,2020-03-01,2020,3,99.3,Cents per litre
+Ottawa-Gatineau,Ontario,2020-03-01,2020,3,84.3,Cents per litre
+Toronto,Ontario,2020-03-01,2020,3,86.1,Cents per litre
+Thunder Bay,Ontario,2020-03-01,2020,3,110.9,Cents per litre
+Winnipeg,Manitoba,2020-03-01,2020,3,84.5,Cents per litre
+Regina,Saskatchewan,2020-03-01,2020,3,88.4,Cents per litre
+Saskatoon,Saskatchewan,2020-03-01,2020,3,85.2,Cents per litre
+Edmonton,Alberta,2020-03-01,2020,3,77,Cents per litre
+Calgary,Alberta,2020-03-01,2020,3,79.2,Cents per litre
+Vancouver,British Columbia,2020-03-01,2020,3,121.4,Cents per litre
+Victoria,British Columbia,2020-03-01,2020,3,126.3,Cents per litre
+Whitehorse,Yukon,2020-03-01,2020,3,125.5,Cents per litre
+Yellowknife,Northwest Territories,2020-03-01,2020,3,112.4,Cents per litre
+St. John's,Newfoundland and Labrador,2020-04-01,2020,4,81.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-04-01,2020,4,73.6,Cents per litre
+Halifax,Nova Scotia,2020-04-01,2020,4,67.9,Cents per litre
+Saint John,New Brunswick,2020-04-01,2020,4,73.4,Cents per litre
+Québec,Quebec,2020-04-01,2020,4,81.1,Cents per litre
+Montréal,Quebec,2020-04-01,2020,4,85.5,Cents per litre
+Ottawa-Gatineau,Ontario,2020-04-01,2020,4,78.3,Cents per litre
+Toronto,Ontario,2020-04-01,2020,4,79.1,Cents per litre
+Thunder Bay,Ontario,2020-04-01,2020,4,84.9,Cents per litre
+Winnipeg,Manitoba,2020-04-01,2020,4,67.7,Cents per litre
+Regina,Saskatchewan,2020-04-01,2020,4,71.7,Cents per litre
+Saskatoon,Saskatchewan,2020-04-01,2020,4,65.6,Cents per litre
+Edmonton,Alberta,2020-04-01,2020,4,62.4,Cents per litre
+Calgary,Alberta,2020-04-01,2020,4,66.2,Cents per litre
+Vancouver,British Columbia,2020-04-01,2020,4,96.7,Cents per litre
+Victoria,British Columbia,2020-04-01,2020,4,99.4,Cents per litre
+Whitehorse,Yukon,2020-04-01,2020,4,100.9,Cents per litre
+Yellowknife,Northwest Territories,2020-04-01,2020,4,94.7,Cents per litre
+St. John's,Newfoundland and Labrador,2020-05-01,2020,5,91.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-05-01,2020,5,82.6,Cents per litre
+Halifax,Nova Scotia,2020-05-01,2020,5,78.2,Cents per litre
+Saint John,New Brunswick,2020-05-01,2020,5,82.8,Cents per litre
+Québec,Quebec,2020-05-01,2020,5,93.5,Cents per litre
+Montréal,Quebec,2020-05-01,2020,5,97,Cents per litre
+Ottawa-Gatineau,Ontario,2020-05-01,2020,5,90.7,Cents per litre
+Toronto,Ontario,2020-05-01,2020,5,91.2,Cents per litre
+Thunder Bay,Ontario,2020-05-01,2020,5,100.1,Cents per litre
+Winnipeg,Manitoba,2020-05-01,2020,5,85.2,Cents per litre
+Regina,Saskatchewan,2020-05-01,2020,5,87.9,Cents per litre
+Saskatoon,Saskatchewan,2020-05-01,2020,5,85.7,Cents per litre
+Edmonton,Alberta,2020-05-01,2020,5,83.3,Cents per litre
+Calgary,Alberta,2020-05-01,2020,5,87.2,Cents per litre
+Vancouver,British Columbia,2020-05-01,2020,5,113,Cents per litre
+Victoria,British Columbia,2020-05-01,2020,5,107.9,Cents per litre
+Whitehorse,Yukon,2020-05-01,2020,5,103,Cents per litre
+Yellowknife,Northwest Territories,2020-05-01,2020,5,96.7,Cents per litre
+St. John's,Newfoundland and Labrador,2020-06-01,2020,6,102.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-06-01,2020,6,94.8,Cents per litre
+Halifax,Nova Scotia,2020-06-01,2020,6,89.8,Cents per litre
+Saint John,New Brunswick,2020-06-01,2020,6,92.7,Cents per litre
+Québec,Quebec,2020-06-01,2020,6,103.8,Cents per litre
+Montréal,Quebec,2020-06-01,2020,6,105.6,Cents per litre
+Ottawa-Gatineau,Ontario,2020-06-01,2020,6,99.4,Cents per litre
+Toronto,Ontario,2020-06-01,2020,6,99.9,Cents per litre
+Thunder Bay,Ontario,2020-06-01,2020,6,111.8,Cents per litre
+Winnipeg,Manitoba,2020-06-01,2020,6,95.5,Cents per litre
+Regina,Saskatchewan,2020-06-01,2020,6,96.7,Cents per litre
+Saskatoon,Saskatchewan,2020-06-01,2020,6,96.5,Cents per litre
+Edmonton,Alberta,2020-06-01,2020,6,92,Cents per litre
+Calgary,Alberta,2020-06-01,2020,6,95.1,Cents per litre
+Vancouver,British Columbia,2020-06-01,2020,6,127.2,Cents per litre
+Victoria,British Columbia,2020-06-01,2020,6,123.2,Cents per litre
+Whitehorse,Yukon,2020-06-01,2020,6,115.3,Cents per litre
+Yellowknife,Northwest Territories,2020-06-01,2020,6,109.5,Cents per litre
+St. John's,Newfoundland and Labrador,2020-07-01,2020,7,107.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-07-01,2020,7,99.7,Cents per litre
+Halifax,Nova Scotia,2020-07-01,2020,7,96.1,Cents per litre
+Saint John,New Brunswick,2020-07-01,2020,7,98.2,Cents per litre
+Québec,Quebec,2020-07-01,2020,7,109.5,Cents per litre
+Montréal,Quebec,2020-07-01,2020,7,110.6,Cents per litre
+Ottawa-Gatineau,Ontario,2020-07-01,2020,7,103.7,Cents per litre
+Toronto,Ontario,2020-07-01,2020,7,104.3,Cents per litre
+Thunder Bay,Ontario,2020-07-01,2020,7,117.7,Cents per litre
+Winnipeg,Manitoba,2020-07-01,2020,7,99.9,Cents per litre
+Regina,Saskatchewan,2020-07-01,2020,7,102.4,Cents per litre
+Saskatoon,Saskatchewan,2020-07-01,2020,7,103.3,Cents per litre
+Edmonton,Alberta,2020-07-01,2020,7,95,Cents per litre
+Calgary,Alberta,2020-07-01,2020,7,97.4,Cents per litre
+Vancouver,British Columbia,2020-07-01,2020,7,131.4,Cents per litre
+Victoria,British Columbia,2020-07-01,2020,7,129.8,Cents per litre
+Whitehorse,Yukon,2020-07-01,2020,7,119.9,Cents per litre
+Yellowknife,Northwest Territories,2020-07-01,2020,7,115,Cents per litre
+St. John's,Newfoundland and Labrador,2020-08-01,2020,8,106.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-08-01,2020,8,99.5,Cents per litre
+Halifax,Nova Scotia,2020-08-01,2020,8,94.7,Cents per litre
+Saint John,New Brunswick,2020-08-01,2020,8,96.9,Cents per litre
+Québec,Quebec,2020-08-01,2020,8,108.3,Cents per litre
+Montréal,Quebec,2020-08-01,2020,8,109.3,Cents per litre
+Ottawa-Gatineau,Ontario,2020-08-01,2020,8,103.3,Cents per litre
+Toronto,Ontario,2020-08-01,2020,8,103.9,Cents per litre
+Thunder Bay,Ontario,2020-08-01,2020,8,116.2,Cents per litre
+Winnipeg,Manitoba,2020-08-01,2020,8,97.8,Cents per litre
+Regina,Saskatchewan,2020-08-01,2020,8,101.1,Cents per litre
+Saskatoon,Saskatchewan,2020-08-01,2020,8,102,Cents per litre
+Edmonton,Alberta,2020-08-01,2020,8,92.2,Cents per litre
+Calgary,Alberta,2020-08-01,2020,8,97.5,Cents per litre
+Vancouver,British Columbia,2020-08-01,2020,8,130,Cents per litre
+Victoria,British Columbia,2020-08-01,2020,8,127.9,Cents per litre
+Whitehorse,Yukon,2020-08-01,2020,8,119.9,Cents per litre
+Yellowknife,Northwest Territories,2020-08-01,2020,8,116.5,Cents per litre
+St. John's,Newfoundland and Labrador,2020-09-01,2020,9,106.6,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-09-01,2020,9,98.8,Cents per litre
+Halifax,Nova Scotia,2020-09-01,2020,9,94.2,Cents per litre
+Saint John,New Brunswick,2020-09-01,2020,9,97,Cents per litre
+Québec,Quebec,2020-09-01,2020,9,107.7,Cents per litre
+Montréal,Quebec,2020-09-01,2020,9,106.6,Cents per litre
+Ottawa-Gatineau,Ontario,2020-09-01,2020,9,101.1,Cents per litre
+Toronto,Ontario,2020-09-01,2020,9,101.8,Cents per litre
+Thunder Bay,Ontario,2020-09-01,2020,9,116.4,Cents per litre
+Winnipeg,Manitoba,2020-09-01,2020,9,96.7,Cents per litre
+Regina,Saskatchewan,2020-09-01,2020,9,102.8,Cents per litre
+Saskatoon,Saskatchewan,2020-09-01,2020,9,103.6,Cents per litre
+Edmonton,Alberta,2020-09-01,2020,9,98.8,Cents per litre
+Calgary,Alberta,2020-09-01,2020,9,104.9,Cents per litre
+Vancouver,British Columbia,2020-09-01,2020,9,125.9,Cents per litre
+Victoria,British Columbia,2020-09-01,2020,9,125,Cents per litre
+Whitehorse,Yukon,2020-09-01,2020,9,119.8,Cents per litre
+Yellowknife,Northwest Territories,2020-09-01,2020,9,117.2,Cents per litre
+St. John's,Newfoundland and Labrador,2020-10-01,2020,10,110.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-10-01,2020,10,99.6,Cents per litre
+Halifax,Nova Scotia,2020-10-01,2020,10,94.1,Cents per litre
+Saint John,New Brunswick,2020-10-01,2020,10,96.8,Cents per litre
+Québec,Quebec,2020-10-01,2020,10,101.1,Cents per litre
+Montréal,Quebec,2020-10-01,2020,10,105.4,Cents per litre
+Ottawa-Gatineau,Ontario,2020-10-01,2020,10,100.1,Cents per litre
+Toronto,Ontario,2020-10-01,2020,10,100.7,Cents per litre
+Thunder Bay,Ontario,2020-10-01,2020,10,116,Cents per litre
+Winnipeg,Manitoba,2020-10-01,2020,10,101.1,Cents per litre
+Regina,Saskatchewan,2020-10-01,2020,10,97.8,Cents per litre
+Saskatoon,Saskatchewan,2020-10-01,2020,10,102,Cents per litre
+Edmonton,Alberta,2020-10-01,2020,10,92,Cents per litre
+Calgary,Alberta,2020-10-01,2020,10,104.5,Cents per litre
+Vancouver,British Columbia,2020-10-01,2020,10,122.3,Cents per litre
+Victoria,British Columbia,2020-10-01,2020,10,121.6,Cents per litre
+Whitehorse,Yukon,2020-10-01,2020,10,119.9,Cents per litre
+Yellowknife,Northwest Territories,2020-10-01,2020,10,120,Cents per litre
+St. John's,Newfoundland and Labrador,2020-11-01,2020,11,112,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-11-01,2020,11,95.8,Cents per litre
+Halifax,Nova Scotia,2020-11-01,2020,11,91,Cents per litre
+Saint John,New Brunswick,2020-11-01,2020,11,94.3,Cents per litre
+Québec,Quebec,2020-11-01,2020,11,103,Cents per litre
+Montréal,Quebec,2020-11-01,2020,11,104.8,Cents per litre
+Ottawa-Gatineau,Ontario,2020-11-01,2020,11,98.7,Cents per litre
+Toronto,Ontario,2020-11-01,2020,11,99.3,Cents per litre
+Thunder Bay,Ontario,2020-11-01,2020,11,113.3,Cents per litre
+Winnipeg,Manitoba,2020-11-01,2020,11,95.9,Cents per litre
+Regina,Saskatchewan,2020-11-01,2020,11,98.4,Cents per litre
+Saskatoon,Saskatchewan,2020-11-01,2020,11,97.5,Cents per litre
+Edmonton,Alberta,2020-11-01,2020,11,90.2,Cents per litre
+Calgary,Alberta,2020-11-01,2020,11,103.7,Cents per litre
+Vancouver,British Columbia,2020-11-01,2020,11,123.6,Cents per litre
+Victoria,British Columbia,2020-11-01,2020,11,119.9,Cents per litre
+Whitehorse,Yukon,2020-11-01,2020,11,119.9,Cents per litre
+Yellowknife,Northwest Territories,2020-11-01,2020,11,118.9,Cents per litre
+St. John's,Newfoundland and Labrador,2020-12-01,2020,12,117,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2020-12-01,2020,12,101.5,Cents per litre
+Halifax,Nova Scotia,2020-12-01,2020,12,96.5,Cents per litre
+Saint John,New Brunswick,2020-12-01,2020,12,98.8,Cents per litre
+Québec,Quebec,2020-12-01,2020,12,107.2,Cents per litre
+Montréal,Quebec,2020-12-01,2020,12,108.7,Cents per litre
+Ottawa-Gatineau,Ontario,2020-12-01,2020,12,103.2,Cents per litre
+Toronto,Ontario,2020-12-01,2020,12,103.6,Cents per litre
+Thunder Bay,Ontario,2020-12-01,2020,12,114.6,Cents per litre
+Winnipeg,Manitoba,2020-12-01,2020,12,95.7,Cents per litre
+Regina,Saskatchewan,2020-12-01,2020,12,99.8,Cents per litre
+Saskatoon,Saskatchewan,2020-12-01,2020,12,100,Cents per litre
+Edmonton,Alberta,2020-12-01,2020,12,94.7,Cents per litre
+Calgary,Alberta,2020-12-01,2020,12,101.9,Cents per litre
+Vancouver,British Columbia,2020-12-01,2020,12,126.1,Cents per litre
+Victoria,British Columbia,2020-12-01,2020,12,120.3,Cents per litre
+Whitehorse,Yukon,2020-12-01,2020,12,119.9,Cents per litre
+Yellowknife,Northwest Territories,2020-12-01,2020,12,118.9,Cents per litre
+St. John's,Newfoundland and Labrador,2021-01-01,2021,1,124.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-01-01,2021,1,109.1,Cents per litre
+Halifax,Nova Scotia,2021-01-01,2021,1,107.5,Cents per litre
+Saint John,New Brunswick,2021-01-01,2021,1,106.1,Cents per litre
+Québec,Quebec,2021-01-01,2021,1,114.8,Cents per litre
+Montréal,Quebec,2021-01-01,2021,1,115.4,Cents per litre
+Ottawa-Gatineau,Ontario,2021-01-01,2021,1,110.9,Cents per litre
+Toronto,Ontario,2021-01-01,2021,1,110.9,Cents per litre
+Thunder Bay,Ontario,2021-01-01,2021,1,121.4,Cents per litre
+Winnipeg,Manitoba,2021-01-01,2021,1,102.9,Cents per litre
+Regina,Saskatchewan,2021-01-01,2021,1,104.1,Cents per litre
+Saskatoon,Saskatchewan,2021-01-01,2021,1,103.8,Cents per litre
+Edmonton,Alberta,2021-01-01,2021,1,100.9,Cents per litre
+Calgary,Alberta,2021-01-01,2021,1,102.8,Cents per litre
+Vancouver,British Columbia,2021-01-01,2021,1,134.6,Cents per litre
+Victoria,British Columbia,2021-01-01,2021,1,128,Cents per litre
+Whitehorse,Yukon,2021-01-01,2021,1,124.1,Cents per litre
+Yellowknife,Northwest Territories,2021-01-01,2021,1,121.4,Cents per litre
+St. John's,Newfoundland and Labrador,2021-02-01,2021,2,130.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-02-01,2021,2,115.3,Cents per litre
+Halifax,Nova Scotia,2021-02-01,2021,2,115.4,Cents per litre
+Saint John,New Brunswick,2021-02-01,2021,2,112.3,Cents per litre
+Québec,Quebec,2021-02-01,2021,2,121.1,Cents per litre
+Montréal,Quebec,2021-02-01,2021,2,122.5,Cents per litre
+Ottawa-Gatineau,Ontario,2021-02-01,2021,2,117.7,Cents per litre
+Toronto,Ontario,2021-02-01,2021,2,118.1,Cents per litre
+Thunder Bay,Ontario,2021-02-01,2021,2,125.3,Cents per litre
+Winnipeg,Manitoba,2021-02-01,2021,2,109.2,Cents per litre
+Regina,Saskatchewan,2021-02-01,2021,2,110.6,Cents per litre
+Saskatoon,Saskatchewan,2021-02-01,2021,2,110.3,Cents per litre
+Edmonton,Alberta,2021-02-01,2021,2,109,Cents per litre
+Calgary,Alberta,2021-02-01,2021,2,111.3,Cents per litre
+Vancouver,British Columbia,2021-02-01,2021,2,141.2,Cents per litre
+Victoria,British Columbia,2021-02-01,2021,2,137.6,Cents per litre
+Whitehorse,Yukon,2021-02-01,2021,2,127.1,Cents per litre
+Yellowknife,Northwest Territories,2021-02-01,2021,2,124.3,Cents per litre
+St. John's,Newfoundland and Labrador,2021-03-01,2021,3,141.6,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-03-01,2021,3,125.4,Cents per litre
+Halifax,Nova Scotia,2021-03-01,2021,3,125,Cents per litre
+Saint John,New Brunswick,2021-03-01,2021,3,123.1,Cents per litre
+Québec,Quebec,2021-03-01,2021,3,128.4,Cents per litre
+Montréal,Quebec,2021-03-01,2021,3,129.1,Cents per litre
+Ottawa-Gatineau,Ontario,2021-03-01,2021,3,123.1,Cents per litre
+Toronto,Ontario,2021-03-01,2021,3,123.8,Cents per litre
+Thunder Bay,Ontario,2021-03-01,2021,3,132.9,Cents per litre
+Winnipeg,Manitoba,2021-03-01,2021,3,115.9,Cents per litre
+Regina,Saskatchewan,2021-03-01,2021,3,120.4,Cents per litre
+Saskatoon,Saskatchewan,2021-03-01,2021,3,119.7,Cents per litre
+Edmonton,Alberta,2021-03-01,2021,3,114.5,Cents per litre
+Calgary,Alberta,2021-03-01,2021,3,117.3,Cents per litre
+Vancouver,British Columbia,2021-03-01,2021,3,149.6,Cents per litre
+Victoria,British Columbia,2021-03-01,2021,3,148.1,Cents per litre
+Whitehorse,Yukon,2021-03-01,2021,3,132.8,Cents per litre
+Yellowknife,Northwest Territories,2021-03-01,2021,3,130.4,Cents per litre
+St. John's,Newfoundland and Labrador,2021-04-01,2021,4,141.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-04-01,2021,4,126.2,Cents per litre
+Halifax,Nova Scotia,2021-04-01,2021,4,125.1,Cents per litre
+Saint John,New Brunswick,2021-04-01,2021,4,125.8,Cents per litre
+Québec,Quebec,2021-04-01,2021,4,128.7,Cents per litre
+Montréal,Quebec,2021-04-01,2021,4,128.5,Cents per litre
+Ottawa-Gatineau,Ontario,2021-04-01,2021,4,125.4,Cents per litre
+Toronto,Ontario,2021-04-01,2021,4,125.9,Cents per litre
+Thunder Bay,Ontario,2021-04-01,2021,4,138.5,Cents per litre
+Winnipeg,Manitoba,2021-04-01,2021,4,122.7,Cents per litre
+Regina,Saskatchewan,2021-04-01,2021,4,127.9,Cents per litre
+Saskatoon,Saskatchewan,2021-04-01,2021,4,126.5,Cents per litre
+Edmonton,Alberta,2021-04-01,2021,4,119.9,Cents per litre
+Calgary,Alberta,2021-04-01,2021,4,123.6,Cents per litre
+Vancouver,British Columbia,2021-04-01,2021,4,152.2,Cents per litre
+Victoria,British Columbia,2021-04-01,2021,4,148.3,Cents per litre
+Whitehorse,Yukon,2021-04-01,2021,4,139.8,Cents per litre
+Yellowknife,Northwest Territories,2021-04-01,2021,4,135.7,Cents per litre
+St. John's,Newfoundland and Labrador,2021-05-01,2021,5,143.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-05-01,2021,5,129.5,Cents per litre
+Halifax,Nova Scotia,2021-05-01,2021,5,127.6,Cents per litre
+Saint John,New Brunswick,2021-05-01,2021,5,128.7,Cents per litre
+Québec,Quebec,2021-05-01,2021,5,133.8,Cents per litre
+Montréal,Quebec,2021-05-01,2021,5,133.8,Cents per litre
+Ottawa-Gatineau,Ontario,2021-05-01,2021,5,129.9,Cents per litre
+Toronto,Ontario,2021-05-01,2021,5,130.2,Cents per litre
+Thunder Bay,Ontario,2021-05-01,2021,5,138.5,Cents per litre
+Winnipeg,Manitoba,2021-05-01,2021,5,127.8,Cents per litre
+Regina,Saskatchewan,2021-05-01,2021,5,127,Cents per litre
+Saskatoon,Saskatchewan,2021-05-01,2021,5,125.3,Cents per litre
+Edmonton,Alberta,2021-05-01,2021,5,123.4,Cents per litre
+Calgary,Alberta,2021-05-01,2021,5,127.3,Cents per litre
+Vancouver,British Columbia,2021-05-01,2021,5,155.6,Cents per litre
+Victoria,British Columbia,2021-05-01,2021,5,154.3,Cents per litre
+Whitehorse,Yukon,2021-05-01,2021,5,141.6,Cents per litre
+Yellowknife,Northwest Territories,2021-05-01,2021,5,140.9,Cents per litre
+St. John's,Newfoundland and Labrador,2021-06-01,2021,6,145,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-06-01,2021,6,130.9,Cents per litre
+Halifax,Nova Scotia,2021-06-01,2021,6,129.2,Cents per litre
+Saint John,New Brunswick,2021-06-01,2021,6,130.2,Cents per litre
+Québec,Quebec,2021-06-01,2021,6,134.7,Cents per litre
+Montréal,Quebec,2021-06-01,2021,6,136.4,Cents per litre
+Ottawa-Gatineau,Ontario,2021-06-01,2021,6,131.3,Cents per litre
+Toronto,Ontario,2021-06-01,2021,6,132.6,Cents per litre
+Thunder Bay,Ontario,2021-06-01,2021,6,140,Cents per litre
+Winnipeg,Manitoba,2021-06-01,2021,6,127.1,Cents per litre
+Regina,Saskatchewan,2021-06-01,2021,6,127,Cents per litre
+Saskatoon,Saskatchewan,2021-06-01,2021,6,126.5,Cents per litre
+Edmonton,Alberta,2021-06-01,2021,6,125.6,Cents per litre
+Calgary,Alberta,2021-06-01,2021,6,130.3,Cents per litre
+Vancouver,British Columbia,2021-06-01,2021,6,161.1,Cents per litre
+Victoria,British Columbia,2021-06-01,2021,6,155.2,Cents per litre
+Whitehorse,Yukon,2021-06-01,2021,6,144.9,Cents per litre
+Yellowknife,Northwest Territories,2021-06-01,2021,6,143.1,Cents per litre
+St. John's,Newfoundland and Labrador,2021-07-01,2021,7,153.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-07-01,2021,7,137.1,Cents per litre
+Halifax,Nova Scotia,2021-07-01,2021,7,135.4,Cents per litre
+Saint John,New Brunswick,2021-07-01,2021,7,135.8,Cents per litre
+Québec,Quebec,2021-07-01,2021,7,137.7,Cents per litre
+Montréal,Quebec,2021-07-01,2021,7,139.7,Cents per litre
+Ottawa-Gatineau,Ontario,2021-07-01,2021,7,134.7,Cents per litre
+Toronto,Ontario,2021-07-01,2021,7,136.4,Cents per litre
+Thunder Bay,Ontario,2021-07-01,2021,7,146.2,Cents per litre
+Winnipeg,Manitoba,2021-07-01,2021,7,131.5,Cents per litre
+Regina,Saskatchewan,2021-07-01,2021,7,131.8,Cents per litre
+Saskatoon,Saskatchewan,2021-07-01,2021,7,131.3,Cents per litre
+Edmonton,Alberta,2021-07-01,2021,7,133,Cents per litre
+Calgary,Alberta,2021-07-01,2021,7,135.6,Cents per litre
+Vancouver,British Columbia,2021-07-01,2021,7,169.1,Cents per litre
+Victoria,British Columbia,2021-07-01,2021,7,167.2,Cents per litre
+Whitehorse,Yukon,2021-07-01,2021,7,148.9,Cents per litre
+Yellowknife,Northwest Territories,2021-07-01,2021,7,147.6,Cents per litre
+St. John's,Newfoundland and Labrador,2021-08-01,2021,8,151.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-08-01,2021,8,136.7,Cents per litre
+Halifax,Nova Scotia,2021-08-01,2021,8,134.1,Cents per litre
+Saint John,New Brunswick,2021-08-01,2021,8,136.3,Cents per litre
+Québec,Quebec,2021-08-01,2021,8,139.9,Cents per litre
+Montréal,Quebec,2021-08-01,2021,8,141.2,Cents per litre
+Ottawa-Gatineau,Ontario,2021-08-01,2021,8,135.7,Cents per litre
+Toronto,Ontario,2021-08-01,2021,8,137.2,Cents per litre
+Thunder Bay,Ontario,2021-08-01,2021,8,146.7,Cents per litre
+Winnipeg,Manitoba,2021-08-01,2021,8,131.8,Cents per litre
+Regina,Saskatchewan,2021-08-01,2021,8,131.8,Cents per litre
+Saskatoon,Saskatchewan,2021-08-01,2021,8,131.3,Cents per litre
+Edmonton,Alberta,2021-08-01,2021,8,132.3,Cents per litre
+Calgary,Alberta,2021-08-01,2021,8,135.2,Cents per litre
+Vancouver,British Columbia,2021-08-01,2021,8,165.6,Cents per litre
+Victoria,British Columbia,2021-08-01,2021,8,163.1,Cents per litre
+Whitehorse,Yukon,2021-08-01,2021,8,154.6,Cents per litre
+Yellowknife,Northwest Territories,2021-08-01,2021,8,149.8,Cents per litre
+St. John's,Newfoundland and Labrador,2021-09-01,2021,9,153.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-09-01,2021,9,137.5,Cents per litre
+Halifax,Nova Scotia,2021-09-01,2021,9,135.1,Cents per litre
+Saint John,New Brunswick,2021-09-01,2021,9,137.7,Cents per litre
+Québec,Quebec,2021-09-01,2021,9,144.6,Cents per litre
+Montréal,Quebec,2021-09-01,2021,9,143.3,Cents per litre
+Ottawa-Gatineau,Ontario,2021-09-01,2021,9,136.3,Cents per litre
+Toronto,Ontario,2021-09-01,2021,9,137.9,Cents per litre
+Thunder Bay,Ontario,2021-09-01,2021,9,146.8,Cents per litre
+Winnipeg,Manitoba,2021-09-01,2021,9,131.8,Cents per litre
+Regina,Saskatchewan,2021-09-01,2021,9,131.8,Cents per litre
+Saskatoon,Saskatchewan,2021-09-01,2021,9,131.7,Cents per litre
+Edmonton,Alberta,2021-09-01,2021,9,129.5,Cents per litre
+Calgary,Alberta,2021-09-01,2021,9,133.1,Cents per litre
+Vancouver,British Columbia,2021-09-01,2021,9,156.7,Cents per litre
+Victoria,British Columbia,2021-09-01,2021,9,156.3,Cents per litre
+Whitehorse,Yukon,2021-09-01,2021,9,155.8,Cents per litre
+Yellowknife,Northwest Territories,2021-09-01,2021,9,149.9,Cents per litre
+St. John's,Newfoundland and Labrador,2021-10-01,2021,10,160.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-10-01,2021,10,143.9,Cents per litre
+Halifax,Nova Scotia,2021-10-01,2021,10,142.4,Cents per litre
+Saint John,New Brunswick,2021-10-01,2021,10,143.1,Cents per litre
+Québec,Quebec,2021-10-01,2021,10,150.6,Cents per litre
+Montréal,Quebec,2021-10-01,2021,10,151.6,Cents per litre
+Ottawa-Gatineau,Ontario,2021-10-01,2021,10,143.5,Cents per litre
+Toronto,Ontario,2021-10-01,2021,10,145.3,Cents per litre
+Thunder Bay,Ontario,2021-10-01,2021,10,153.7,Cents per litre
+Winnipeg,Manitoba,2021-10-01,2021,10,141.2,Cents per litre
+Regina,Saskatchewan,2021-10-01,2021,10,141.6,Cents per litre
+Saskatoon,Saskatchewan,2021-10-01,2021,10,141.3,Cents per litre
+Edmonton,Alberta,2021-10-01,2021,10,138.3,Cents per litre
+Calgary,Alberta,2021-10-01,2021,10,140.8,Cents per litre
+Vancouver,British Columbia,2021-10-01,2021,10,162.4,Cents per litre
+Victoria,British Columbia,2021-10-01,2021,10,160.9,Cents per litre
+Whitehorse,Yukon,2021-10-01,2021,10,155.9,Cents per litre
+Yellowknife,Northwest Territories,2021-10-01,2021,10,150.6,Cents per litre
+St. John's,Newfoundland and Labrador,2021-11-01,2021,11,159.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-11-01,2021,11,143.5,Cents per litre
+Halifax,Nova Scotia,2021-11-01,2021,11,140.8,Cents per litre
+Saint John,New Brunswick,2021-11-01,2021,11,146,Cents per litre
+Québec,Quebec,2021-11-01,2021,11,154.6,Cents per litre
+Montréal,Quebec,2021-11-01,2021,11,152.1,Cents per litre
+Ottawa-Gatineau,Ontario,2021-11-01,2021,11,142.6,Cents per litre
+Toronto,Ontario,2021-11-01,2021,11,144.3,Cents per litre
+Thunder Bay,Ontario,2021-11-01,2021,11,153.8,Cents per litre
+Winnipeg,Manitoba,2021-11-01,2021,11,138.7,Cents per litre
+Regina,Saskatchewan,2021-11-01,2021,11,143.4,Cents per litre
+Saskatoon,Saskatchewan,2021-11-01,2021,11,143,Cents per litre
+Edmonton,Alberta,2021-11-01,2021,11,136,Cents per litre
+Calgary,Alberta,2021-11-01,2021,11,141.9,Cents per litre
+Vancouver,British Columbia,2021-11-01,2021,11,159.8,Cents per litre
+Victoria,British Columbia,2021-11-01,2021,11,158.2,Cents per litre
+Whitehorse,Yukon,2021-11-01,2021,11,155.9,Cents per litre
+Yellowknife,Northwest Territories,2021-11-01,2021,11,152.8,Cents per litre
+St. John's,Newfoundland and Labrador,2021-12-01,2021,12,151.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2021-12-01,2021,12,134.6,Cents per litre
+Halifax,Nova Scotia,2021-12-01,2021,12,130.7,Cents per litre
+Saint John,New Brunswick,2021-12-01,2021,12,139.6,Cents per litre
+Québec,Quebec,2021-12-01,2021,12,149.8,Cents per litre
+Montréal,Quebec,2021-12-01,2021,12,148.3,Cents per litre
+Ottawa-Gatineau,Ontario,2021-12-01,2021,12,136,Cents per litre
+Toronto,Ontario,2021-12-01,2021,12,137.7,Cents per litre
+Thunder Bay,Ontario,2021-12-01,2021,12,143.8,Cents per litre
+Winnipeg,Manitoba,2021-12-01,2021,12,130.7,Cents per litre
+Regina,Saskatchewan,2021-12-01,2021,12,130.8,Cents per litre
+Saskatoon,Saskatchewan,2021-12-01,2021,12,129.7,Cents per litre
+Edmonton,Alberta,2021-12-01,2021,12,130.6,Cents per litre
+Calgary,Alberta,2021-12-01,2021,12,139.5,Cents per litre
+Vancouver,British Columbia,2021-12-01,2021,12,157.2,Cents per litre
+Victoria,British Columbia,2021-12-01,2021,12,152.6,Cents per litre
+Whitehorse,Yukon,2021-12-01,2021,12,155.9,Cents per litre
+Yellowknife,Northwest Territories,2021-12-01,2021,12,151.5,Cents per litre
+St. John's,Newfoundland and Labrador,2022-01-01,2022,1,159.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-01-01,2022,1,143.5,Cents per litre
+Halifax,Nova Scotia,2022-01-01,2022,1,141.4,Cents per litre
+Saint John,New Brunswick,2022-01-01,2022,1,142.2,Cents per litre
+Québec,Quebec,2022-01-01,2022,1,152.7,Cents per litre
+Montréal,Quebec,2022-01-01,2022,1,155.5,Cents per litre
+Ottawa-Gatineau,Ontario,2022-01-01,2022,1,144.3,Cents per litre
+Toronto,Ontario,2022-01-01,2022,1,146.1,Cents per litre
+Thunder Bay,Ontario,2022-01-01,2022,1,149.9,Cents per litre
+Winnipeg,Manitoba,2022-01-01,2022,1,138.5,Cents per litre
+Regina,Saskatchewan,2022-01-01,2022,1,137,Cents per litre
+Saskatoon,Saskatchewan,2022-01-01,2022,1,135.7,Cents per litre
+Edmonton,Alberta,2022-01-01,2022,1,133.7,Cents per litre
+Calgary,Alberta,2022-01-01,2022,1,138.9,Cents per litre
+Vancouver,British Columbia,2022-01-01,2022,1,170.5,Cents per litre
+Victoria,British Columbia,2022-01-01,2022,1,164.6,Cents per litre
+Whitehorse,Yukon,2022-01-01,2022,1,157.2,Cents per litre
+Yellowknife,Northwest Territories,2022-01-01,2022,1,151.5,Cents per litre
+St. John's,Newfoundland and Labrador,2022-02-01,2022,2,170.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-02-01,2022,2,154.8,Cents per litre
+Halifax,Nova Scotia,2022-02-01,2022,2,153.8,Cents per litre
+Saint John,New Brunswick,2022-02-01,2022,2,153.2,Cents per litre
+Québec,Quebec,2022-02-01,2022,2,164.5,Cents per litre
+Montréal,Quebec,2022-02-01,2022,2,166.6,Cents per litre
+Ottawa-Gatineau,Ontario,2022-02-01,2022,2,156,Cents per litre
+Toronto,Ontario,2022-02-01,2022,2,157.5,Cents per litre
+Thunder Bay,Ontario,2022-02-01,2022,2,157.5,Cents per litre
+Winnipeg,Manitoba,2022-02-01,2022,2,147.1,Cents per litre
+Regina,Saskatchewan,2022-02-01,2022,2,145.9,Cents per litre
+Saskatoon,Saskatchewan,2022-02-01,2022,2,145.7,Cents per litre
+Edmonton,Alberta,2022-02-01,2022,2,142.2,Cents per litre
+Calgary,Alberta,2022-02-01,2022,2,145.4,Cents per litre
+Vancouver,British Columbia,2022-02-01,2022,2,177.1,Cents per litre
+Victoria,British Columbia,2022-02-01,2022,2,170.1,Cents per litre
+Whitehorse,Yukon,2022-02-01,2022,2,164.5,Cents per litre
+Yellowknife,Northwest Territories,2022-02-01,2022,2,158.1,Cents per litre
+St. John's,Newfoundland and Labrador,2022-03-01,2022,3,187.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-03-01,2022,3,172.4,Cents per litre
+Halifax,Nova Scotia,2022-03-01,2022,3,171.1,Cents per litre
+Saint John,New Brunswick,2022-03-01,2022,3,169.6,Cents per litre
+Québec,Quebec,2022-03-01,2022,3,181.5,Cents per litre
+Montréal,Quebec,2022-03-01,2022,3,183.7,Cents per litre
+Ottawa-Gatineau,Ontario,2022-03-01,2022,3,172,Cents per litre
+Toronto,Ontario,2022-03-01,2022,3,173,Cents per litre
+Thunder Bay,Ontario,2022-03-01,2022,3,186.9,Cents per litre
+Winnipeg,Manitoba,2022-03-01,2022,3,169.8,Cents per litre
+Regina,Saskatchewan,2022-03-01,2022,3,168.5,Cents per litre
+Saskatoon,Saskatchewan,2022-03-01,2022,3,168.2,Cents per litre
+Edmonton,Alberta,2022-03-01,2022,3,161.7,Cents per litre
+Calgary,Alberta,2022-03-01,2022,3,164.7,Cents per litre
+Vancouver,British Columbia,2022-03-01,2022,3,198.3,Cents per litre
+Victoria,British Columbia,2022-03-01,2022,3,196.6,Cents per litre
+Whitehorse,Yukon,2022-03-01,2022,3,177,Cents per litre
+Yellowknife,Northwest Territories,2022-03-01,2022,3,175.6,Cents per litre
+St. John's,Newfoundland and Labrador,2022-04-01,2022,4,189.9,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-04-01,2022,4,171,Cents per litre
+Halifax,Nova Scotia,2022-04-01,2022,4,169.1,Cents per litre
+Saint John,New Brunswick,2022-04-01,2022,4,174.4,Cents per litre
+Québec,Quebec,2022-04-01,2022,4,180.8,Cents per litre
+Montréal,Quebec,2022-04-01,2022,4,181.2,Cents per litre
+Ottawa-Gatineau,Ontario,2022-04-01,2022,4,174.3,Cents per litre
+Toronto,Ontario,2022-04-01,2022,4,174.3,Cents per litre
+Thunder Bay,Ontario,2022-04-01,2022,4,187.9,Cents per litre
+Winnipeg,Manitoba,2022-04-01,2022,4,170.9,Cents per litre
+Regina,Saskatchewan,2022-04-01,2022,4,167.3,Cents per litre
+Saskatoon,Saskatchewan,2022-04-01,2022,4,167.2,Cents per litre
+Edmonton,Alberta,2022-04-01,2022,4,150.5,Cents per litre
+Calgary,Alberta,2022-04-01,2022,4,155.5,Cents per litre
+Vancouver,British Columbia,2022-04-01,2022,4,198.5,Cents per litre
+Victoria,British Columbia,2022-04-01,2022,4,194.1,Cents per litre
+Whitehorse,Yukon,2022-04-01,2022,4,182.8,Cents per litre
+Yellowknife,Northwest Territories,2022-04-01,2022,4,174.4,Cents per litre
+St. John's,Newfoundland and Labrador,2022-05-01,2022,5,215.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-05-01,2022,5,204.5,Cents per litre
+Halifax,Nova Scotia,2022-05-01,2022,5,195.8,Cents per litre
+Saint John,New Brunswick,2022-05-01,2022,5,194.2,Cents per litre
+Québec,Quebec,2022-05-01,2022,5,206.6,Cents per litre
+Montréal,Quebec,2022-05-01,2022,5,205.4,Cents per litre
+Ottawa-Gatineau,Ontario,2022-05-01,2022,5,198,Cents per litre
+Toronto,Ontario,2022-05-01,2022,5,198,Cents per litre
+Thunder Bay,Ontario,2022-05-01,2022,5,196,Cents per litre
+Winnipeg,Manitoba,2022-05-01,2022,5,183.1,Cents per litre
+Regina,Saskatchewan,2022-05-01,2022,5,181.4,Cents per litre
+Saskatoon,Saskatchewan,2022-05-01,2022,5,181.5,Cents per litre
+Edmonton,Alberta,2022-05-01,2022,5,163.3,Cents per litre
+Calgary,Alberta,2022-05-01,2022,5,167.4,Cents per litre
+Vancouver,British Columbia,2022-05-01,2022,5,220.1,Cents per litre
+Victoria,British Columbia,2022-05-01,2022,5,217.4,Cents per litre
+Whitehorse,Yukon,2022-05-01,2022,5,202.2,Cents per litre
+Yellowknife,Northwest Territories,2022-05-01,2022,5,187,Cents per litre
+St. John's,Newfoundland and Labrador,2022-06-01,2022,6,219.7,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-06-01,2022,6,214.2,Cents per litre
+Halifax,Nova Scotia,2022-06-01,2022,6,208.1,Cents per litre
+Saint John,New Brunswick,2022-06-01,2022,6,210.6,Cents per litre
+Québec,Quebec,2022-06-01,2022,6,219.7,Cents per litre
+Montréal,Quebec,2022-06-01,2022,6,216.5,Cents per litre
+Ottawa-Gatineau,Ontario,2022-06-01,2022,6,205.7,Cents per litre
+Toronto,Ontario,2022-06-01,2022,6,205.9,Cents per litre
+Thunder Bay,Ontario,2022-06-01,2022,6,214.4,Cents per litre
+Winnipeg,Manitoba,2022-06-01,2022,6,205.3,Cents per litre
+Regina,Saskatchewan,2022-06-01,2022,6,203.8,Cents per litre
+Saskatoon,Saskatchewan,2022-06-01,2022,6,202.9,Cents per litre
+Edmonton,Alberta,2022-06-01,2022,6,186,Cents per litre
+Calgary,Alberta,2022-06-01,2022,6,189.5,Cents per litre
+Vancouver,British Columbia,2022-06-01,2022,6,225.4,Cents per litre
+Victoria,British Columbia,2022-06-01,2022,6,225.2,Cents per litre
+Whitehorse,Yukon,2022-06-01,2022,6,217.1,Cents per litre
+Yellowknife,Northwest Territories,2022-06-01,2022,6,208.1,Cents per litre
+St. John's,Newfoundland and Labrador,2022-07-01,2022,7,200.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-07-01,2022,7,195.5,Cents per litre
+Halifax,Nova Scotia,2022-07-01,2022,7,187.1,Cents per litre
+Saint John,New Brunswick,2022-07-01,2022,7,192.1,Cents per litre
+Québec,Quebec,2022-07-01,2022,7,201,Cents per litre
+Montréal,Quebec,2022-07-01,2022,7,196.8,Cents per litre
+Ottawa-Gatineau,Ontario,2022-07-01,2022,7,180.4,Cents per litre
+Toronto,Ontario,2022-07-01,2022,7,180.5,Cents per litre
+Thunder Bay,Ontario,2022-07-01,2022,7,185.7,Cents per litre
+Winnipeg,Manitoba,2022-07-01,2022,7,190.1,Cents per litre
+Regina,Saskatchewan,2022-07-01,2022,7,191.4,Cents per litre
+Saskatoon,Saskatchewan,2022-07-01,2022,7,186.5,Cents per litre
+Edmonton,Alberta,2022-07-01,2022,7,179.1,Cents per litre
+Calgary,Alberta,2022-07-01,2022,7,183.1,Cents per litre
+Vancouver,British Columbia,2022-07-01,2022,7,202.4,Cents per litre
+Victoria,British Columbia,2022-07-01,2022,7,203,Cents per litre
+Whitehorse,Yukon,2022-07-01,2022,7,208.5,Cents per litre
+Yellowknife,Northwest Territories,2022-07-01,2022,7,200,Cents per litre
+St. John's,Newfoundland and Labrador,2022-08-01,2022,8,184.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-08-01,2022,8,180,Cents per litre
+Halifax,Nova Scotia,2022-08-01,2022,8,170.2,Cents per litre
+Saint John,New Brunswick,2022-08-01,2022,8,177.1,Cents per litre
+Québec,Quebec,2022-08-01,2022,8,186.8,Cents per litre
+Montréal,Quebec,2022-08-01,2022,8,183.5,Cents per litre
+Ottawa-Gatineau,Ontario,2022-08-01,2022,8,165.5,Cents per litre
+Toronto,Ontario,2022-08-01,2022,8,165.6,Cents per litre
+Thunder Bay,Ontario,2022-08-01,2022,8,164.3,Cents per litre
+Winnipeg,Manitoba,2022-08-01,2022,8,169.9,Cents per litre
+Regina,Saskatchewan,2022-08-01,2022,8,158,Cents per litre
+Saskatoon,Saskatchewan,2022-08-01,2022,8,153.8,Cents per litre
+Edmonton,Alberta,2022-08-01,2022,8,147.3,Cents per litre
+Calgary,Alberta,2022-08-01,2022,8,153,Cents per litre
+Vancouver,British Columbia,2022-08-01,2022,8,193.2,Cents per litre
+Victoria,British Columbia,2022-08-01,2022,8,189,Cents per litre
+Whitehorse,Yukon,2022-08-01,2022,8,186.6,Cents per litre
+Yellowknife,Northwest Territories,2022-08-01,2022,8,177.1,Cents per litre
+St. John's,Newfoundland and Labrador,2022-09-01,2022,9,166.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-09-01,2022,9,163.7,Cents per litre
+Halifax,Nova Scotia,2022-09-01,2022,9,153.5,Cents per litre
+Saint John,New Brunswick,2022-09-01,2022,9,158.5,Cents per litre
+Québec,Quebec,2022-09-01,2022,9,165.8,Cents per litre
+Montréal,Quebec,2022-09-01,2022,9,160.8,Cents per litre
+Ottawa-Gatineau,Ontario,2022-09-01,2022,9,148.7,Cents per litre
+Toronto,Ontario,2022-09-01,2022,9,148.7,Cents per litre
+Thunder Bay,Ontario,2022-09-01,2022,9,164.9,Cents per litre
+Winnipeg,Manitoba,2022-09-01,2022,9,169.2,Cents per litre
+Regina,Saskatchewan,2022-09-01,2022,9,158.1,Cents per litre
+Saskatoon,Saskatchewan,2022-09-01,2022,9,155,Cents per litre
+Edmonton,Alberta,2022-09-01,2022,9,136.8,Cents per litre
+Calgary,Alberta,2022-09-01,2022,9,144.2,Cents per litre
+Vancouver,British Columbia,2022-09-01,2022,9,205.7,Cents per litre
+Victoria,British Columbia,2022-09-01,2022,9,196.5,Cents per litre
+Whitehorse,Yukon,2022-09-01,2022,9,186.2,Cents per litre
+Yellowknife,Northwest Territories,2022-09-01,2022,9,173.9,Cents per litre
+St. John's,Newfoundland and Labrador,2022-10-01,2022,10,180.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-10-01,2022,10,177.1,Cents per litre
+Halifax,Nova Scotia,2022-10-01,2022,10,167.2,Cents per litre
+Saint John,New Brunswick,2022-10-01,2022,10,168.9,Cents per litre
+Québec,Quebec,2022-10-01,2022,10,176.3,Cents per litre
+Montréal,Quebec,2022-10-01,2022,10,173.4,Cents per litre
+Ottawa-Gatineau,Ontario,2022-10-01,2022,10,164.3,Cents per litre
+Toronto,Ontario,2022-10-01,2022,10,164.3,Cents per litre
+Thunder Bay,Ontario,2022-10-01,2022,10,185.4,Cents per litre
+Winnipeg,Manitoba,2022-10-01,2022,10,184.3,Cents per litre
+Regina,Saskatchewan,2022-10-01,2022,10,177.8,Cents per litre
+Saskatoon,Saskatchewan,2022-10-01,2022,10,177.3,Cents per litre
+Edmonton,Alberta,2022-10-01,2022,10,163.4,Cents per litre
+Calgary,Alberta,2022-10-01,2022,10,167.1,Cents per litre
+Vancouver,British Columbia,2022-10-01,2022,10,206.9,Cents per litre
+Victoria,British Columbia,2022-10-01,2022,10,211.6,Cents per litre
+Whitehorse,Yukon,2022-10-01,2022,10,199.9,Cents per litre
+Yellowknife,Northwest Territories,2022-10-01,2022,10,180.2,Cents per litre
+St. John's,Newfoundland and Labrador,2022-11-01,2022,11,181.2,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-11-01,2022,11,177,Cents per litre
+Halifax,Nova Scotia,2022-11-01,2022,11,170.2,Cents per litre
+Saint John,New Brunswick,2022-11-01,2022,11,174.1,Cents per litre
+Québec,Quebec,2022-11-01,2022,11,179.3,Cents per litre
+Montréal,Quebec,2022-11-01,2022,11,173.3,Cents per litre
+Ottawa-Gatineau,Ontario,2022-11-01,2022,11,161.5,Cents per litre
+Toronto,Ontario,2022-11-01,2022,11,161.6,Cents per litre
+Thunder Bay,Ontario,2022-11-01,2022,11,159.1,Cents per litre
+Winnipeg,Manitoba,2022-11-01,2022,11,171.7,Cents per litre
+Regina,Saskatchewan,2022-11-01,2022,11,162.3,Cents per litre
+Saskatoon,Saskatchewan,2022-11-01,2022,11,157.1,Cents per litre
+Edmonton,Alberta,2022-11-01,2022,11,148.1,Cents per litre
+Calgary,Alberta,2022-11-01,2022,11,149.3,Cents per litre
+Vancouver,British Columbia,2022-11-01,2022,11,183.5,Cents per litre
+Victoria,British Columbia,2022-11-01,2022,11,185.7,Cents per litre
+Whitehorse,Yukon,2022-11-01,2022,11,186.3,Cents per litre
+Yellowknife,Northwest Territories,2022-11-01,2022,11,174.1,Cents per litre
+St. John's,Newfoundland and Labrador,2022-12-01,2022,12,157.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2022-12-01,2022,12,151.2,Cents per litre
+Halifax,Nova Scotia,2022-12-01,2022,12,144,Cents per litre
+Saint John,New Brunswick,2022-12-01,2022,12,149.5,Cents per litre
+Québec,Quebec,2022-12-01,2022,12,157.4,Cents per litre
+Montréal,Quebec,2022-12-01,2022,12,151.6,Cents per litre
+Ottawa-Gatineau,Ontario,2022-12-01,2022,12,140.6,Cents per litre
+Toronto,Ontario,2022-12-01,2022,12,140.7,Cents per litre
+Thunder Bay,Ontario,2022-12-01,2022,12,140.1,Cents per litre
+Winnipeg,Manitoba,2022-12-01,2022,12,150.8,Cents per litre
+Regina,Saskatchewan,2022-12-01,2022,12,142.1,Cents per litre
+Saskatoon,Saskatchewan,2022-12-01,2022,12,140,Cents per litre
+Edmonton,Alberta,2022-12-01,2022,12,126.2,Cents per litre
+Calgary,Alberta,2022-12-01,2022,12,124.2,Cents per litre
+Vancouver,British Columbia,2022-12-01,2022,12,164.1,Cents per litre
+Victoria,British Columbia,2022-12-01,2022,12,160.4,Cents per litre
+Whitehorse,Yukon,2022-12-01,2022,12,174.5,Cents per litre
+Yellowknife,Northwest Territories,2022-12-01,2022,12,158.7,Cents per litre
+St. John's,Newfoundland and Labrador,2023-01-01,2023,1,165.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-01-01,2023,1,161.8,Cents per litre
+Halifax,Nova Scotia,2023-01-01,2023,1,151.3,Cents per litre
+Saint John,New Brunswick,2023-01-01,2023,1,157.4,Cents per litre
+Québec,Quebec,2023-01-01,2023,1,165.1,Cents per litre
+Montréal,Quebec,2023-01-01,2023,1,160.4,Cents per litre
+Ottawa-Gatineau,Ontario,2023-01-01,2023,1,148.6,Cents per litre
+Toronto,Ontario,2023-01-01,2023,1,148.6,Cents per litre
+Thunder Bay,Ontario,2023-01-01,2023,1,150.5,Cents per litre
+Winnipeg,Manitoba,2023-01-01,2023,1,147.2,Cents per litre
+Regina,Saskatchewan,2023-01-01,2023,1,147.9,Cents per litre
+Saskatoon,Saskatchewan,2023-01-01,2023,1,147.6,Cents per litre
+Edmonton,Alberta,2023-01-01,2023,1,127.4,Cents per litre
+Calgary,Alberta,2023-01-01,2023,1,128.6,Cents per litre
+Vancouver,British Columbia,2023-01-01,2023,1,179.3,Cents per litre
+Victoria,British Columbia,2023-01-01,2023,1,173.4,Cents per litre
+Whitehorse,Yukon,2023-01-01,2023,1,169.6,Cents per litre
+Yellowknife,Northwest Territories,2023-01-01,2023,1,158,Cents per litre
+St. John's,Newfoundland and Labrador,2023-02-01,2023,2,166.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-02-01,2023,2,162.7,Cents per litre
+Halifax,Nova Scotia,2023-02-01,2023,2,151.4,Cents per litre
+Saint John,New Brunswick,2023-02-01,2023,2,158.7,Cents per litre
+Québec,Quebec,2023-02-01,2023,2,161.9,Cents per litre
+Montréal,Quebec,2023-02-01,2023,2,157.9,Cents per litre
+Ottawa-Gatineau,Ontario,2023-02-01,2023,2,146,Cents per litre
+Toronto,Ontario,2023-02-01,2023,2,144.6,Cents per litre
+Thunder Bay,Ontario,2023-02-01,2023,2,151.7,Cents per litre
+Winnipeg,Manitoba,2023-02-01,2023,2,153.2,Cents per litre
+Regina,Saskatchewan,2023-02-01,2023,2,147.9,Cents per litre
+Saskatoon,Saskatchewan,2023-02-01,2023,2,146.4,Cents per litre
+Edmonton,Alberta,2023-02-01,2023,2,123,Cents per litre
+Calgary,Alberta,2023-02-01,2023,2,125.5,Cents per litre
+Vancouver,British Columbia,2023-02-01,2023,2,183.3,Cents per litre
+Victoria,British Columbia,2023-02-01,2023,2,178.6,Cents per litre
+Whitehorse,Yukon,2023-02-01,2023,2,167.8,Cents per litre
+Yellowknife,Northwest Territories,2023-02-01,2023,2,160.7,Cents per litre
+St. John's,Newfoundland and Labrador,2023-03-01,2023,3,165.1,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-03-01,2023,3,160.7,Cents per litre
+Halifax,Nova Scotia,2023-03-01,2023,3,150.1,Cents per litre
+Saint John,New Brunswick,2023-03-01,2023,3,156.7,Cents per litre
+Québec,Quebec,2023-03-01,2023,3,162.8,Cents per litre
+Montréal,Quebec,2023-03-01,2023,3,160.1,Cents per litre
+Ottawa-Gatineau,Ontario,2023-03-01,2023,3,147.7,Cents per litre
+Toronto,Ontario,2023-03-01,2023,3,145.8,Cents per litre
+Thunder Bay,Ontario,2023-03-01,2023,3,160.7,Cents per litre
+Winnipeg,Manitoba,2023-03-01,2023,3,151.5,Cents per litre
+Regina,Saskatchewan,2023-03-01,2023,3,155.1,Cents per litre
+Saskatoon,Saskatchewan,2023-03-01,2023,3,152.7,Cents per litre
+Edmonton,Alberta,2023-03-01,2023,3,129,Cents per litre
+Calgary,Alberta,2023-03-01,2023,3,132.2,Cents per litre
+Vancouver,British Columbia,2023-03-01,2023,3,183,Cents per litre
+Victoria,British Columbia,2023-03-01,2023,3,180.9,Cents per litre
+Whitehorse,Yukon,2023-03-01,2023,3,169.2,Cents per litre
+Yellowknife,Northwest Territories,2023-03-01,2023,3,162.3,Cents per litre
+St. John's,Newfoundland and Labrador,2023-04-01,2023,4,174.3,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-04-01,2023,4,168.4,Cents per litre
+Halifax,Nova Scotia,2023-04-01,2023,4,163.2,Cents per litre
+Saint John,New Brunswick,2023-04-01,2023,4,169.3,Cents per litre
+Québec,Quebec,2023-04-01,2023,4,171.7,Cents per litre
+Montréal,Quebec,2023-04-01,2023,4,167.4,Cents per litre
+Ottawa-Gatineau,Ontario,2023-04-01,2023,4,157.8,Cents per litre
+Toronto,Ontario,2023-04-01,2023,4,156.6,Cents per litre
+Thunder Bay,Ontario,2023-04-01,2023,4,165.7,Cents per litre
+Winnipeg,Manitoba,2023-04-01,2023,4,162.4,Cents per litre
+Regina,Saskatchewan,2023-04-01,2023,4,160.5,Cents per litre
+Saskatoon,Saskatchewan,2023-04-01,2023,4,158.8,Cents per litre
+Edmonton,Alberta,2023-04-01,2023,4,140.4,Cents per litre
+Calgary,Alberta,2023-04-01,2023,4,145.1,Cents per litre
+Vancouver,British Columbia,2023-04-01,2023,4,188.9,Cents per litre
+Victoria,British Columbia,2023-04-01,2023,4,184.9,Cents per litre
+Whitehorse,Yukon,2023-04-01,2023,4,183.1,Cents per litre
+Yellowknife,Northwest Territories,2023-04-01,2023,4,166.9,Cents per litre
+St. John's,Newfoundland and Labrador,2023-05-01,2023,5,165.5,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-05-01,2023,5,161.2,Cents per litre
+Halifax,Nova Scotia,2023-05-01,2023,5,151.4,Cents per litre
+Saint John,New Brunswick,2023-05-01,2023,5,159.1,Cents per litre
+Québec,Quebec,2023-05-01,2023,5,173.8,Cents per litre
+Montréal,Quebec,2023-05-01,2023,5,166.4,Cents per litre
+Ottawa-Gatineau,Ontario,2023-05-01,2023,5,156,Cents per litre
+Toronto,Ontario,2023-05-01,2023,5,156.1,Cents per litre
+Thunder Bay,Ontario,2023-05-01,2023,5,162.6,Cents per litre
+Winnipeg,Manitoba,2023-05-01,2023,5,163,Cents per litre
+Regina,Saskatchewan,2023-05-01,2023,5,160,Cents per litre
+Saskatoon,Saskatchewan,2023-05-01,2023,5,156,Cents per litre
+Edmonton,Alberta,2023-05-01,2023,5,138.1,Cents per litre
+Calgary,Alberta,2023-05-01,2023,5,146,Cents per litre
+Vancouver,British Columbia,2023-05-01,2023,5,187.8,Cents per litre
+Victoria,British Columbia,2023-05-01,2023,5,185,Cents per litre
+Whitehorse,Yukon,2023-05-01,2023,5,183.9,Cents per litre
+Yellowknife,Northwest Territories,2023-05-01,2023,5,166,Cents per litre
+St. John's,Newfoundland and Labrador,2023-06-01,2023,6,168.4,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-06-01,2023,6,163.4,Cents per litre
+Halifax,Nova Scotia,2023-06-01,2023,6,153.1,Cents per litre
+Saint John,New Brunswick,2023-06-01,2023,6,161.4,Cents per litre
+Québec,Quebec,2023-06-01,2023,6,177.9,Cents per litre
+Montréal,Quebec,2023-06-01,2023,6,169.1,Cents per litre
+Ottawa-Gatineau,Ontario,2023-06-01,2023,6,158.7,Cents per litre
+Toronto,Ontario,2023-06-01,2023,6,159.1,Cents per litre
+Thunder Bay,Ontario,2023-06-01,2023,6,167,Cents per litre
+Winnipeg,Manitoba,2023-06-01,2023,6,157.6,Cents per litre
+Regina,Saskatchewan,2023-06-01,2023,6,159.8,Cents per litre
+Saskatoon,Saskatchewan,2023-06-01,2023,6,156.3,Cents per litre
+Edmonton,Alberta,2023-06-01,2023,6,139.4,Cents per litre
+Calgary,Alberta,2023-06-01,2023,6,144.6,Cents per litre
+Vancouver,British Columbia,2023-06-01,2023,6,202,Cents per litre
+Victoria,British Columbia,2023-06-01,2023,6,197.3,Cents per litre
+Whitehorse,Yukon,2023-06-01,2023,6,183.9,Cents per litre
+Yellowknife,Northwest Territories,2023-06-01,2023,6,166.9,Cents per litre
+St. John's,Newfoundland and Labrador,2023-07-01,2023,7,174.8,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-07-01,2023,7,173.7,Cents per litre
+Halifax,Nova Scotia,2023-07-01,2023,7,174.7,Cents per litre
+Saint John,New Brunswick,2023-07-01,2023,7,170.6,Cents per litre
+Québec,Quebec,2023-07-01,2023,7,174.6,Cents per litre
+Montréal,Quebec,2023-07-01,2023,7,172.2,Cents per litre
+Ottawa-Gatineau,Ontario,2023-07-01,2023,7,162,Cents per litre
+Toronto,Ontario,2023-07-01,2023,7,162.5,Cents per litre
+Thunder Bay,Ontario,2023-07-01,2023,7,161.8,Cents per litre
+Winnipeg,Manitoba,2023-07-01,2023,7,157.5,Cents per litre
+Regina,Saskatchewan,2023-07-01,2023,7,156.2,Cents per litre
+Saskatoon,Saskatchewan,2023-07-01,2023,7,153.5,Cents per litre
+Edmonton,Alberta,2023-07-01,2023,7,136.7,Cents per litre
+Calgary,Alberta,2023-07-01,2023,7,141.3,Cents per litre
+Vancouver,British Columbia,2023-07-01,2023,7,197,Cents per litre
+Victoria,British Columbia,2023-07-01,2023,7,195,Cents per litre
+Whitehorse,Yukon,2023-07-01,2023,7,183.9,Cents per litre
+Yellowknife,Northwest Territories,2023-07-01,2023,7,166.8,Cents per litre
+St. John's,Newfoundland and Labrador,2023-08-01,2023,8,188,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-08-01,2023,8,185.3,Cents per litre
+Halifax,Nova Scotia,2023-08-01,2023,8,185,Cents per litre
+Saint John,New Brunswick,2023-08-01,2023,8,182.7,Cents per litre
+Québec,Quebec,2023-08-01,2023,8,185,Cents per litre
+Montréal,Quebec,2023-08-01,2023,8,179.8,Cents per litre
+Ottawa-Gatineau,Ontario,2023-08-01,2023,8,168.9,Cents per litre
+Toronto,Ontario,2023-08-01,2023,8,169.4,Cents per litre
+Thunder Bay,Ontario,2023-08-01,2023,8,170,Cents per litre
+Winnipeg,Manitoba,2023-08-01,2023,8,163.3,Cents per litre
+Regina,Saskatchewan,2023-08-01,2023,8,163.4,Cents per litre
+Saskatoon,Saskatchewan,2023-08-01,2023,8,157.6,Cents per litre
+Edmonton,Alberta,2023-08-01,2023,8,142.5,Cents per litre
+Calgary,Alberta,2023-08-01,2023,8,146.8,Cents per litre
+Vancouver,British Columbia,2023-08-01,2023,8,206.9,Cents per litre
+Victoria,British Columbia,2023-08-01,2023,8,198.7,Cents per litre
+Whitehorse,Yukon,2023-08-01,2023,8,191.4,Cents per litre
+Yellowknife,Northwest Territories,2023-08-01,2023,8,167.2,Cents per litre
+St. John's,Newfoundland and Labrador,2023-09-01,2023,9,190,Cents per litre
+Charlottetown and Summerside,Prince Edward Island,2023-09-01,2023,9,184.8,Cents per litre
+Halifax,Nova Scotia,2023-09-01,2023,9,182.2,Cents per litre
+Saint John,New Brunswick,2023-09-01,2023,9,184.5,Cents per litre
+Québec,Quebec,2023-09-01,2023,9,182.6,Cents per litre
+Montréal,Quebec,2023-09-01,2023,9,178.4,Cents per litre
+Ottawa-Gatineau,Ontario,2023-09-01,2023,9,164.9,Cents per litre
+Toronto,Ontario,2023-09-01,2023,9,165.6,Cents per litre
+Thunder Bay,Ontario,2023-09-01,2023,9,168.2,Cents per litre
+Winnipeg,Manitoba,2023-09-01,2023,9,163.4,Cents per litre
+Regina,Saskatchewan,2023-09-01,2023,9,163.7,Cents per litre
+Saskatoon,Saskatchewan,2023-09-01,2023,9,155.8,Cents per litre
+Edmonton,Alberta,2023-09-01,2023,9,141.8,Cents per litre
+Calgary,Alberta,2023-09-01,2023,9,143.1,Cents per litre
+Vancouver,British Columbia,2023-09-01,2023,9,203.6,Cents per litre
+Victoria,British Columbia,2023-09-01,2023,9,200.9,Cents per litre
+Whitehorse,Yukon,2023-09-01,2023,9,193.6,Cents per litre
+Yellowknife,Northwest Territories,2023-09-01,2023,9,167.2,Cents per litre
