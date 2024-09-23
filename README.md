@@ -61,7 +61,7 @@ library(ekonomR)
 The `file.path()` function in R allows you to ignore whether you're on a Mac or Windows. So `J - Yale University/Projects` would become `file.path("J - Yale University","Projects")`.
 
 ``` r
-create_folders(home_folder = file.path("J - Yale University","Projects"))
+create_folders(home_folder = file.path("J - Yale University","Projects","ECON-412_js"))
 
 ```
 
