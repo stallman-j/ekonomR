@@ -22,7 +22,7 @@ In addition to project structuring, it includes examples for downloading data (b
     
 The package is intended as a template to avoid having to search in your old files for the code in common tasks, providing aesthetically appealing but simple default settings for analysis outputs commonly used by economists (e.g. regression tables with specialized footnotes). 
 
-Still under construction! So some of the functions as advertised are still not yet available.
+Still under construction! Many of the functions as advertised are still not yet available, but will be online shortly.
 
 ## Installation
 
@@ -35,11 +35,13 @@ remotes::install_github("stallman-j/ekonomR")
 
 ## Example
 
-Workflow example starting from building out the folders (to add).
+If you're just starting your project, you can use `ekonomR` to create your project folders.
 
 ```{r example}
 library(ekonomR)
-## basic example code
+
+## 
+
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
