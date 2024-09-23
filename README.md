@@ -67,14 +67,16 @@ my_home_folder <- getwd()
 
 ```
 
-Install `remotes` if you don't have it, then install `ekonomR` like below.` Installing a package is like buying a Kindle book off Amazon. `remotes` allows you to download packages from the internets. `ekonomR` is this package, which provides a bunch of templates to get you going on your projects.
+Install `remotes` if you don't have it, then install `ekonomR` like below. Installing a package is like buying a Kindle book off Amazon, or buying an app off an app store. Different packages have different content that lets you do different stuff.
+
+`remotes` allows you to download packages from the internets. `ekonomR` is this package, which provides a bunch of templates to get you going on your projects.
 
 ``` r
 install.packages("remotes")
 remotes::install_github("stallman-j/ekonomR")
 ```
 
-Bring the package into your library. Putting a package in your library is like downloading the book that you'd already purchased onto your Kindle so that you can read it when you want.
+Bring the package into your library. Putting a package in your library is like downloading the book that you'd already purchased onto your Kindle so that you can read it when you want, or downloading an app that you've already bought onto a new device.
 
 ``` r
 library(ekonomR)
@@ -82,7 +84,12 @@ library(ekonomR)
 ```
 ## Create your project folders
 
-Now use the `create_folders` function from `ekonomR` to create your project folders on your local device. In the `home_folder` folder that you set, it's going to create the following structure of folders so that your stuff is easy to find.
+Now use the `create_folders` function from `ekonomR` to create your project folders on your local device. In the `home_folder` folder that you set, it's going to create the following structure so that your stuff is easy to find.
+
+``` r
+create_folders(home_folder = my_home_folder)
+
+```
 
 ```bash
 . (home_folder)
@@ -125,18 +132,22 @@ Now use the `create_folders` function from `ekonomR` to create your project fold
 │   └── 03_clean
 ```
 
-You can also set `output` and `data` to live in a different folder (for instance if you generate a lot of plots that take up space) by setting a path for `output_folder` and `data_folder` respectively. If you leave these as default, they'll get created within `home_folder`.
+You can also set `output` and `data` to live in a different folder (for instance if you generate a lot of plots that take up space, or if you have a lot of data and just want to sync your code to GitHub) by setting a path for `output_folder` and `data_folder` respectively. If you leave these as default, they'll get created within `home_folder`.
 
 If you have sensitive information, you can also set `data_pii_folder` so that private data lives separately; and if you have an external hard drive that, say, holds big data, you can set this with `data_external_folder`. If you don't set these, these folders don't get created.
 
 
-``` r
-create_folders(home_folder = my_home_folder)
 
-```
 
 Instead of `my_home_folder` which we accessed as the working directory with `getwd()`, you can also set the file path manually by finding what folder on your device you'd like to use, and getting its full path.
 
 The `file.path()` function in R allows you to ignore whether you're on a Mac or Windows (which have different backslash and forward slash conventions). So `J - Yale University/Projects` becomes `file.path("J - Yale University","Projects")`.
+
+In that case, you would input something like the following in your console:
+
+``` r
+create_folders(home_folder = file.path("J - Yale University","Projects","ECON-412_js"))
+
+```
 
 Take a look inside the `home_folder` and see what's been created. You should have a folder for code, a folder for data, and a folder for output and a few other collaboration folders.

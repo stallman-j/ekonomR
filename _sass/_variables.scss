@@ -1,0 +1,32 @@
+/*============================================================================
+     Formatting
+     I learned what things to put in here by looking at the full files for minimal-mistakes from its github
+     And then going into _sass\minimal-mistakes\skins\_contrast.scss to look at what the skin changes from default
+
+     OR similarly looking into _sass\minimial-mistakes\_navigation.scss for things relating to the table of contents 
+     on the right
+
+     or _masthead.scss for things relating to the top header bar thing.
+========================================================================== */
+
+
+$box-shadow: none; 
+$border-color: transparent;
+/*============================================================================
+     Colors
+========================================================================== */
+
+$primary-color: #318243 !default;
+
+$background-color: #fff !default;
+
+$footer-background-color: #318243 !default;
+
+
+$masthead-background-color: #318243 !default;
+$masthead-link-color: #ffffff !default;
+$masthead-link-color-hover: mix(#ffffff, $primary-color, 60%) !default;
+
+
+$link-color: #318243 !default;
+$link-color-hover: mix(#fff, $link-color, 50%) !default;
