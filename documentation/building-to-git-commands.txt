@@ -7,3 +7,5 @@ git push -u origin main
 # do this in R Console
 library(knitr)
 knitr::knit(input = "README.Rmd", output = "README.md")
+
+knitr::knit(input = file.path("documentation","documentation.Rmd"), output = file.path("documentation","documentation.md"))
