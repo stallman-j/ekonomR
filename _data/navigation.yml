@@ -1,10 +1,10 @@
 # main links
 main:
+  - title: "Documentation"
+    url: https://stallman-j.github.io/ekonomR/documentation
   - title: "LaTekonomer"
     url: https://stallman-j.github.io/LaTekonomer
-  - title: "Documentation"
-    url: https://stallman-j.github.io/LaTekonomer/how-tos/documentation-LaTekonomer
-  - title: "ECON 412"
+  - title: "ECON 412 LaTeX"
     url: https://stallman-j.github.io/LaTekonomer/how-tos/ECON-412_overleaf/
   - title: "About"
     url: https://stallman-j.github.io/

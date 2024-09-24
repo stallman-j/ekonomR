@@ -13,20 +13,20 @@
 $box-shadow: none; 
 $border-color: transparent;
 /*============================================================================
-     Colors
+     Colors (taken from R's coloring)
 ========================================================================== */
 
-$primary-color: #318243 !default;
+$primary-color: #3275b4 !default;
 
 $background-color: #fff !default;
 
-$footer-background-color: #318243 !default;
+$footer-background-color: #3275b4 !default;
 
 
-$masthead-background-color: #318243 !default;
+$masthead-background-color: #3275b4 !default;
 $masthead-link-color: #ffffff !default;
 $masthead-link-color-hover: mix(#ffffff, $primary-color, 60%) !default;
 
 
-$link-color: #318243 !default;
+$link-color: #3275b4 !default;
 $link-color-hover: mix(#fff, $link-color, 50%) !default;
