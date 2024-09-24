@@ -17,16 +17,8 @@ The package is intended as a template to avoid having to search in your old file
 
 Still under construction! Many of the functions as advertised are still not yet available, but will be online shortly.
 
-# Installation
 
-You can install the development version of `ekonomR` from GitHub:
-
-``` r
-# install.packages("remotes")
-remotes::install_github("stallman-j/ekonomR")
-```
-
-## Quick Links
+# Quick Links
 
 Check out the [documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/).
 
@@ -50,7 +42,9 @@ remotes::install_github("stallman-j/ekonomR")
 
 # Migration of Documentation
 
-**UPDATED AS OF 2024-09-23: Documentation including installing R and RStudio has been moved to the [documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/)**
+**UPDATED AS OF 2024-09-23: Documentation including installing R and RStudio has been moved to the [ekonomR documentation website](https://stallman-j.github.io/ekonomR/documentation/documentation/).** 
+
+**If you're in ECON 412, go to this website for detailed tutorials on getting started with ekonomR**
 
 # What's Included?
 
@@ -79,7 +73,7 @@ Many of these tables and figures output to be used with the complementary resour
 
 The use of **LaTekonomer** does not require **ekonomR** or vice versa.
 
-## Consider Markdown
+## What's Not Included?: A Plug for Markdown and RMarkdown
 
 If you're not interested in LaTex (which is what **LaTekonomer** uses) but want something that's more professional than Word and easier to learn than LaTex, you may be interested in Markdown. 
 

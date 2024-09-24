@@ -266,7 +266,7 @@ If you're working with LaTex/Overleaf, you'll then upload the figures, maps and 
 
 ## Communicate with your audience
 
-If you're working with LaTeX/Overleaf (in which case you should check out [LaTekonomer]() if you're doing a big project, and the [ECON 412 LaTex Guide](https://stallman-j.github.io/LaTekonomer/how-tos/ECON-412_overleaf/) if you're in ECON 412), your documents will be produced in Overleaf.
+If you're working with LaTeX/Overleaf (in which case you should check out [LaTekonomer](https://stallman-j.github.io/LaTekonomer/) if you're doing a big project, and the [ECON 412 LaTex Guide](https://stallman-j.github.io/LaTekonomer/how-tos/ECON-412_overleaf/) if you're in ECON 412), your documents will be produced in Overleaf.
 
 When you generate PDFs or presentations, save them into `documents`.
 
@@ -311,7 +311,9 @@ On my list of things to do: put a UN Comtrade cleaning sequence into an `ekonomR
 
 ## Climate Data
 
-Climate data is often generated as rasters (think pixels on a map). It requires an additional level of cleaning to translate these rasters into vectors (polygons like countries or points like cities) that we can run analysis on. `ekonomR` vignettes will contain examples of this workflow (in progress).
+Climate data is often generated as rasters (think pixels on a map). It requires an additional level of cleaning to translate these rasters into vectors (polygons like countries or points like cities) that we can run analysis on. 
+
+`ekonomR` vignettes will contain examples of this workflow (in progress).
 
 [Climate Data from Copernicus (ECMWF)](https://cds-beta.climate.copernicus.eu/)
 
@@ -337,7 +339,7 @@ Climate data is often generated as rasters (think pixels on a map). It requires 
 
 ### Fish and Other Aquatics
 
-(fishR)[https://fishr-core-team.github.io/fishR/]: tons of great resources
+[fishR](https://fishr-core-team.github.io/fishR/): this website has tons of great resources and data
 
 ## Pollution
 
@@ -348,3 +350,5 @@ Climate data is often generated as rasters (think pixels on a map). It requires 
 [PurpleAir](https://map.purpleair.com): a map of low-cost air quality sensors that have a high correlation with industrial-quality sensors according to California's [South Coast Air Quality Management District](https://www.aqmd.gov/aq-spec/evaluations/criteria-pollutants/summary-pm). These sensors update every 2 minutes; but the downside is that the data would be a bugger to clean
 
 To add: the latest stratospheric rasters estimates.
+
+### Water / Other Pollution
