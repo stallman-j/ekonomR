@@ -32,13 +32,15 @@ Once you've done that, click on your RStudio icon to open a new session.
 
 Now decide what folder you'd like your project to live in. 
 
-If you're coming from ECON 412, I highly recommend using your OneDrive, since Yale has free storage in there and you'll be able to collaborate with your group by syncing your folders remotely. 
+If you're coming from ECON 412, I highly recommend putting your project in your OneDrive, since Yale has free storage in there and you'll be able to collaborate with your group by syncing your folders remotely. 
 
 Unless your project is going to be hugely data intensive, it's likely best that your data, code and output live all in the same place, which we'll call your `home_folder`.
 
-Log into your OneDrive (install it if necessary) and find the folder path to your OneDrive folder. Mine is `J - Yale University`, for instance. You might also use GoogleDrive or Dropbox, but be cautioned that your teammates may not have this software.
+Log into your OneDrive (after installing if need be) and find the folder path to your OneDrive folder. Mine is `J - Yale University`, for instance. You might also use GoogleDrive or Dropbox, but be cautioned that your teammates may not have this software.
 
-If you're trying to decide what cloud to use in the future, I use [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale.
+If you're trying to decide what cloud to use, I use [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale. 
+
+If you're using big data, know that pCloud only draws storage from the person who's the host of the data. Dropbox, on the other hand, counts storage against every user.
 
 ## Create a new RStudio Project
 
@@ -48,7 +50,7 @@ Choose the option `New Directory`, and then `New Project`. Creating an R project
 
 In `Directory name:`, use something like `ECON-412_your-initials`. When you ultimately share this project, you don't want everyone having the same name or you might have file path conflicts.
 
-Click `Browse` and navigate to your OneDrive (or other folder on your device). A good place to put this would be under a file path that looks like `Your Name - Yale University/Projects`. You might have to create the `Projects` subfolder.
+Click `Browse` and navigate to your OneDrive (or other folder on your device where you've decided your folder is living). A good place to put this would be under a file path that looks like `Your Name - Yale University/Projects`. You might have to create the `Projects` subfolder.
 
 Then click `Create Project`.
 
@@ -63,32 +65,56 @@ my_home_folder <- getwd()
 
 ```
 
-Install `remotes` if you don't have it, then install `ekonomR` like below. Installing a package is like buying a Kindle book off Amazon, or buying an app off an app store. Different packages have different content that lets you do different things.
+To see the path in full, type in the console:
 
-`remotes` allows you to download packages from the internets. `ekonomR` is this package, which provides a bunch of templates of code that you're likely to run into in your project.
+``` r
+getwd()
 
+```
+
+You should probably save a shortcut to this folder somewhere that is easy to get to. If you have a PC, right-clicking on the folder once you've navigated to it and then clicking `Pin to Quick Access` is a good way to make it easily accessible. Mac probably has something similar.
+
+Now you want to install this `ekonomR` package.
+
+First, you need to install the package `remotes` from CRAN (which is where most standard R packages live) that allows you to install a package from GitHub (which is where `ekonomR` lives).
+
+Installing a package is like buying a Kindle book off Amazon, or buying an app off an app store. Different packages have different content that lets you do different things.
+
+You can do both of these with the following code:
 ``` r
 install.packages("remotes")
 remotes::install_github("stallman-j/ekonomR")
 ```
 
-Bring the package into your library. Putting a package in your library is like downloading the book that you'd already purchased onto your Kindle so that you can read it when you want, or downloading an app that you've already bought onto a new device.
+Then you'll want to bring the package into your library. Putting a package in your library is like downloading the book that you'd already purchased onto your Kindle so that you can read it when you want, or downloading an app that you've already bought onto a new device.
 
 ``` r
 library(ekonomR)
 
 ```
+
+Now you can access the functions of the `ekonomR` package.
+
 ## Create your project folders
 
-Now use the `create_folders` function from `ekonomR` to create your project folders on your local device. In the `home_folder` folder that you set, it's going to create the following structure so that your stuff is easy to find.
+If you're making a new project, you can use the `create_folders` function from `ekonomR` to create your project folders on your local device. 
 
-Type the following into your RStudio console.
+In the `home_folder` folder that you set, it's going to create a bunch of folders so that your stuff is easy to find.
+
+To see the help documentation for this function, put the following in your RStudio console:
+``` r
+?create_folders
+
+```
+Putting a question mark before the function name accesses the function description, for any function. If you get an error, it's probably the case that the package that contains the function is either not installed on your computer, not loaded into your library, or both.
+
+To create your project folders, type the following into your RStudio console.
 
 ``` r
 create_folders(home_folder = my_home_folder)
 
 ```
-Take a look inside the `home_folder` and see what's been created. You should have a folder for code, a folder for data, and a folder for output and a few other collaboration folders.
+Now take a look inside the `home_folder` and see what's been created. You should have a folder for code, a folder for data, and a folder for output and a few other collaboration folders, along with a `.Rproj` file that's storing your project settings.
 
 This is the entire folder structure that gets created on your computer.
 
@@ -151,12 +177,17 @@ create_folders(home_folder = file.path("J - Yale University","Projects","ECON-41
 
 ```
 
+If the folder `ECON-412_js` doesn't already exist, the `create_folders` function will create it.
+
 # A Typical Workflow
 
-Here's the way a typical project analysis should go and how the folder structure you've just created works with that. The folders mentioned here are all assumed to be subfolders of the project folder you set as `home_folder`, but if you set separate folders for your data and output then just adjust accordingly.
+Here's the way a typical project analysis should go and how the folder structure you've just created works with that. 
+
+The folders mentioned here are all assumed to be subfolders of the project folder you set as `home_folder`, but if you set separate folders for your data and output then just adjust accordingly.
 
 ## Decide your research question
-   This is not trivial!
+
+This is not trivial!
   
 ## Decide your emipirical strategy
   
@@ -175,19 +206,21 @@ That's okay! The research process is not linear.
 
 ## Access your data 
 
-If you're used to using R, challenge yourself to download the data entirely using R. This package has a few functions for making that easier. You should tell your files to download into `data/01_raw`.
+If you're used to using R already, challenge yourself to download the data entirely using R. This package has a few functions for making that easier. 
+
+You should tell your files to download into `data/01_raw`.
 
 The R code for downloading the files should live in `code/00_download`.
 
-If you're new to R, you'll most likely download this manually
-`00_manually downloaded`.
+If you're new to R, downloading manually is fine. In that case, save your data into 
+`data/00_manually downloaded`.
   
 
 ## Clean your data
 
 The R code for cleaning your data should live in `code/02_cleaning`
 
-Your data should get pulled from `data/01_raw` (if you downloaded your data using an R script) or `data/00_manually-downloaded` (if you clicked something like a `Download` button on the internet). 
+Your data should get pulled from `data/01_raw` (if you downloaded your data using an R script) or `data/00_manually-downloaded` (if you clicked something like a `Download` button on a website somewhere). 
 
 It should be sent to either `data/02_temp` or `data/03_clean`
 
@@ -254,3 +287,64 @@ If you're using a citation manager like Zotero with a software like LaTex/Overle
 ## Save Important Articles
 
 If you have important articles to save, put them in `articles`. If you're working with Zotero, though, you can access these at any time through Zotero instead.
+
+# Good Data Sources for (Environmental) Projects
+
+Here's where I'll keep a running list of good data resources. I'll add sources in as they come up, but if you have suggestions please [email me](mailto:j.stallman@yale.edu) with suggestions if you have them!
+
+A good way to find data is to find the most recent well-published paper in your area, and check out what data sources they use.
+
+## General Data
+
+[Our World in Data (OWID)](https://ourworldindata.org/): OWID may well be your first stop for just about any topic. 
+
+They have a wealth of subjects and data sources. If you're using data you first accessed through OWID, you'll want to cite OWID as a source, but ultimately pull your data from the source that *they* pull from to make sure you've got the latest.
+
+## Trade Data
+
+[UN Comtrade](https://comtradeplus.un.org/): all the trade data you could possibly want. 
+
+On my list of things to do: put a UN Comtrade cleaning sequence into an `ekonomR` vignette. Email if you've got one handy!
+
+
+## Carbon Tax / Emissions Trading Data
+
+## Climate Data
+
+Climate data is often generated as rasters (think pixels on a map). It requires an additional level of cleaning to translate these rasters into vectors (polygons like countries or points like cities) that we can run analysis on. `ekonomR` vignettes will contain examples of this workflow (in progress).
+
+[Climate Data from Copernicus (ECMWF)](https://cds-beta.climate.copernicus.eu/)
+
+## Geoengineering Simulations
+
+[Geoengineering Large Ensemble Project (GLENS)](https://www.cesm.ucar.edu/community-projects/glens)
+[Simulations from Cornell's Engineering Lab](https://climate-engineering.mae.cornell.edu/data/)
+
+
+## Energy Price Data
+
+[US Energy Information Administration (EIA)](https://www.eia.gov/): contains oil and natural gas prices along with lots of information on energy production
+
+## Agriculture
+
+[The US Department of Agriculture](https://www.usda.gov/): There's a reason so much research is done on the United States! The data is great! If the thing you're looking at is traded in a market in the United States, chances are pretty good the USDA is capturing something about it.
+
+
+## Animals
+
+### Birds
+[eBird](https://science.ebird.org/en/use-ebird-data/download-ebird-data-products): Cornell and the Audobon Society's registry of over 600 million birding observations since 2002. You need to request access (which can take around a week). Once you've done that, you can use [auk](https://cornelllabofornithology.github.io/auk/), the R package for eBird analysis.
+
+### Fish and Other Aquatics
+
+(fishR)[https://fishr-core-team.github.io/fishR/]: tons of great resources
+
+## Pollution
+
+### Air Pollution
+
+[AirNow.gov](https://www.epa.gov/outdoor-air-quality-data): the best first stop for air quality monitoring
+
+[PurpleAir](https://map.purpleair.com): a map of low-cost air quality sensors that have a high correlation with industrial-quality sensors according to California's [South Coast Air Quality Management District](https://www.aqmd.gov/aq-spec/evaluations/criteria-pollutants/summary-pm). These sensors update every 2 minutes; but the downside is that the data would be a bugger to clean
+
+To add: the latest stratospheric rasters estimates.
