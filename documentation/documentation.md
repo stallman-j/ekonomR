@@ -203,6 +203,7 @@ Your research question and empirical strategy will get revised throughout your p
 
 That's okay! The research process is not linear.
 
+See my [recommended data sources](https://stallman-j.github.io/how-tos/data) page to get started on finding data.
 
 ## Access your data 
 
@@ -233,21 +234,39 @@ In short: if you're not running analysis on it but still want to create the file
 
 **How do I know if my data is cleaned?**
 
-Your data is cleaned once you have:
+In most cases, you'll know that your data counts as cleaned once you have done the following:
 
-1. Defined all your variables (you should *not* be taking transformations of variables in an analysis script). In other words, the number of *columns* in your data should not increase in any of your analysis or plot scripts. 
-
-Why does this matter? 
-
-It's a lot easier to have analysis and plotting or mapping scripts kept separate. Oftentimes a transformation of a variable (e.g. taking logs) that you like for your analysis will also look good for your plots and maps. If you define this variable in your cleaning script, then all your later scripts can make use of this without you trying to figure out what variables you set where. Just define all your variables in your cleaning script.
-
-2. Set up your data in long format: this means that an observation (a row) signifies a unique combination of:
-  1. a unit (e.g. a country, person, firm, city)
-  2. (possibly) a time period (e.g. month, year, quarter).
+- Set up your data in long format: this means that an observation (a row) signifies a unique combination of:
   
+  - a unit (e.g. a country, person, firm, city)
+  - (possibly) a time period (e.g. month, year, quarter)
+  
+- Accounted for oddities in the data
+  
+  - This typically includes analyzing the data's missing values, correcting entries that may have been erroneous, and getting a sense of how well the data were collected and inputted
+  
+- Merged the datasets that you're planning to use into a single cleaned dataset.
+  
+  - Oftentimes we end up bringing multiple datasets together. For instance, an analysis of the relationship between greenhouse gases per capita and incomes per capita would require data on greenhouse gases, data on incomes, and data on populations
+  
+  - In this example you might have a cleaning script to clean each of the datasets on greenhouse gases, incomes, and population, as well as a final fourth script merging these three (cleaned) datasets together. (Vignette showing this to be added).
+
+  
+- Defined all the variables you're planning to use. 
+
+  - You should *not* be defining variables in plotting, simulation, or analysis scripts. In other words, the number of *columns* in your data should not increase in any of your analysis or plot scripts. 
+  
+    - Your final merging script is where you should define your variables, if at all possible. That way, when you look back because you forgot how you defined a variable, you know where to find it: it's in your merge script. Otherwise you have to look through all your cleaning scripts, and your collaborators also have to look through all your cleaning scripts, in order to find *anything.*
+
+  - Why shouldn't you define variables outside of cleaning scripts?
+
+  It's a lot easier to have analysis and plotting or mapping scripts kept separate. Oftentimes a transformation of a variable (e.g. taking logs) that you like for your analysis will also look good for your plots and maps. If you define this variable in your cleaning script, then all your later scripts can make use of this without you trying to figure out what variables you set where.
+
+
 Usually you can tell you're there when you have one column that contains your units (say, countries) and another column that tracks the time period.
   
 If your rows contain countries and your columns contain years, for instance, your data is not ready for analysis and will need to be transformed from what's called "wide" format into "long" format. Vignettes with examples will be put up to show you simple ways to achieve this.
+
 
 
 ## Run your analysis and make your plots
@@ -287,68 +306,3 @@ If you're using a citation manager like Zotero with a software like LaTex/Overle
 ## Save Important Articles
 
 If you have important articles to save, put them in `articles`. If you're working with Zotero, though, you can access these at any time through Zotero instead.
-
-# Good Data Sources for (Environmental) Projects
-
-Here's where I'll keep a running list of good data resources. I'll add sources in as they come up, but if you have suggestions please [email me](mailto:j.stallman@yale.edu) with suggestions if you have them!
-
-A good way to find data is to find the most recent well-published paper in your area, and check out what data sources they use.
-
-## General Data
-
-[Our World in Data (OWID)](https://ourworldindata.org/): OWID may well be your first stop for just about any topic. 
-
-They have a wealth of subjects and data sources. If you're using data you first accessed through OWID, you'll want to cite OWID as a source, but ultimately pull your data from the source that *they* pull from to make sure you've got the latest.
-
-## Trade Data
-
-[UN Comtrade](https://comtradeplus.un.org/): all the trade data you could possibly want. 
-
-On my list of things to do: put a UN Comtrade cleaning sequence into an `ekonomR` vignette. Email if you've got one handy!
-
-
-## Carbon Tax / Emissions Trading Data
-
-## Climate Data
-
-Climate data is often generated as rasters (think pixels on a map). It requires an additional level of cleaning to translate these rasters into vectors (polygons like countries or points like cities) that we can run analysis on. 
-
-`ekonomR` vignettes will contain examples of this workflow (in progress).
-
-[Climate Data from Copernicus (ECMWF)](https://cds-beta.climate.copernicus.eu/)
-
-## Geoengineering Simulations
-
-[Geoengineering Large Ensemble Project (GLENS)](https://www.cesm.ucar.edu/community-projects/glens)
-[Simulations from Cornell's Engineering Lab](https://climate-engineering.mae.cornell.edu/data/)
-
-
-## Energy Price Data
-
-[US Energy Information Administration (EIA)](https://www.eia.gov/): contains oil and natural gas prices along with lots of information on energy production
-
-## Agriculture
-
-[The US Department of Agriculture](https://www.usda.gov/): There's a reason so much research is done on the United States! The data is great! If the thing you're looking at is traded in a market in the United States, chances are pretty good the USDA is capturing something about it.
-
-
-## Animals
-
-### Birds
-[eBird](https://science.ebird.org/en/use-ebird-data/download-ebird-data-products): Cornell and the Audobon Society's registry of over 600 million birding observations since 2002. You need to request access (which can take around a week). Once you've done that, you can use [auk](https://cornelllabofornithology.github.io/auk/), the R package for eBird analysis.
-
-### Fish and Other Aquatics
-
-[fishR](https://fishr-core-team.github.io/fishR/): this website has tons of great resources and data
-
-## Pollution
-
-### Air Pollution
-
-[AirNow.gov](https://www.epa.gov/outdoor-air-quality-data): the best first stop for air quality monitoring
-
-[PurpleAir](https://map.purpleair.com): a map of low-cost air quality sensors that have a high correlation with industrial-quality sensors according to California's [South Coast Air Quality Management District](https://www.aqmd.gov/aq-spec/evaluations/criteria-pollutants/summary-pm). These sensors update every 2 minutes; but the downside is that the data would be a bugger to clean
-
-To add: the latest stratospheric rasters estimates.
-
-### Water / Other Pollution
