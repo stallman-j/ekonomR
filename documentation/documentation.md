@@ -306,3 +306,7 @@ If you're using a citation manager like Zotero with a software like LaTex/Overle
 ## Save Important Articles
 
 If you have important articles to save, put them in `articles`. If you're working with Zotero, though, you can access these at any time through Zotero instead.
+
+# Vignettes
+
+[Basic Plotting](https://stallman-j.github.io/ekonomR/basic-plotting/)
