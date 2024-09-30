@@ -1,7 +1,5 @@
 ---
-title: "basic-plotting"
-#subtitle: Hopefully everything you need and lots of things you hopefully won't
-# https://bookdown.org/yihui/rmarkdown/html-document.html#floating-toc
+title: "Basic Plotting"
 layout: single
 toc: true
 toc_label: "Contents"
@@ -22,21 +20,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(ekonomR)
-```
+# Getting Started
+
+Throughout, exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If these checks aren't obvious to you, you should implement the code to figure them out.
+
+There's a more involved exercise at the very end that you're encouraged to build out on your own in an R script. If you're working with the `ekonomR` sequence and you've created a project 
 
 # Bring in the data
 
 We'll be plotting data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
 
+
+
 This data has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR`, you'll want to go into the "Packages" tab and make sure that `ekonomR` is *unchecked* before you run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
 
-``` r
+``` {r install}
 install.packages("remotes")
 remotes::install_github("stallman-j/ekonomR")
 ```
 
+```{r setup}
+library(ekonomR)
+```
 
 Let's tell R that we want to use this data.
 
@@ -53,14 +58,16 @@ options(scipen = 999)
 
 # Data Exploration
 
-Let's look at this data frame. In your console, enter the following:
+Let's look at this data. R calls it a data frame, which you can think of as a single sheet in an Excel workbook. 
+
+In your console, enter the following:
 
 ```{r}
 View(gcb_clean)
 names(gcb_clean)
 ```
 
-*Comprehension check:* What is `names(data)` giving us for output?
+*Comprehension check:* What is `names(gcb_clean)` giving us for output?
 
 Let's see what years we have available (Note: Not all years will be available for all measures)
 
@@ -75,18 +82,21 @@ unique(gcb_clean$year)
 
 Let's plot territorial emissions for China for all the available years. This is a **time series**: we're showing the change in a single unit (here, a country), over time.
 
-We want to make this a little more programmatic, though. Rather than inputting "China" everywhere, and then replacing it everywhere if we later want to plot something else, let's define at the top what we'd like:
+We want to make our code-writing somewhat clever. Rather than inputting "China" everywhere, and then replacing it everywhere if we later want to plot something else, let's define at the top what we'd like:
 
 ```{r}
 chosen_country <- c("CHN")
 chosen_country_name <- "China"
 ```
 
-Let's create a data frame that just contains the data for China.
+These will show up in other code blocks throughout this vignette. Let's also create a data frame that just contains the data for China.
 
 ```{r}
-data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country)
+data_country <- gcb_clean %>% 
+                dplyr::filter(iso3c == chosen_country)
 ```
+
+## The Pipe Operator %>%
 
 If you're not familiar with the data cleaning and organizing packages included in what's called the `tidyverse`, you might be a little confused by the `%>%` symbol. This is called the "pipe operator": think of it as a funnel.
 
@@ -111,21 +121,40 @@ Look at the help for this function
 
 and click on the `filter` function for `dplyr`.
 
-*Comprehension Check*: What's the other common package that also has a filter function?
+*Comprehension Check*: Did you see another package that also has a `filter` function? If so, which was it?
 
-You'll see that the first thing that goes into the function is `.data`. `filter` takes a data frame, and keeps only the *rows* for which a condition holds (here, that the iso3c code is the same as we've listed for `chosen_country`).
+You'll see that the first thing that goes into the function is `.data`. `filter` takes a data frame, and keeps only the *rows* for which a condition holds (here, that the iso3c code is the same as we've listed for `chosen_country`.)
 
 The reason for using `%>%` is that there may be many data manipulation operations we'd like to do. Here, it's simple because we just want one thing to happen: we want to keep only the observations for China.
 
-If you click on this data frame, you'll notice a number of missing observations. Since we want to plot territorial emissions, we can add a condition to the filter:
+## == or =?
+
+Note the `==` double equals sign is not the same as the single `=` sign. 
+
+The double equals sign means that R is checking whether the condition on the left (here, that `iso3c`) is indeed equal to the thing on the right (here, that it equals `chosen_country`, which is actually `CHN`). 
+
+The single equals sign would be setting the left-hand side equal to the right-hand side. We could have written `chosen_country = c("CHN")` to set the value for `chosen_country`, but in R it's common to use the left-facing arrow `<-` in your scripts, and `=` sign in functions.
+
+So `iso3c == "CHN"` will return `TRUE` if the row is for China, and `FALSE` if the observation is not for China. 
+
+
+## Filtering with Multiple Conditions
+
+If you click on this data frame, you'll notice a number of missing observations. 
+
+Since we want to plot territorial emissions, we can add a condition to the filter:
 
 ```{r}
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 ```
 
-We've added a condition, removing the values for which `gcb_ghg_territorial` is missing.
+We've added a condition, which is removing the rows for which `gcb_ghg_territorial` is missing. `is.na()` will return `TRUE` if the row is missing (`NA`) in the column `gcb_ghg_territorial`.
 
-Just for exposition purposes, let's see the `%>%` in action with a little more complexity. Since we're just plotting territorial emissions, let's keep only that column.
+The `!` is a negation, so `!is.na()` now returns `TRUE` if the row is *not* missing, so that we keep the rows for which the territorial emissions *are* present.
+
+## Multiple Pipes
+
+For exposition purposes, let's see the `%>%` in action with a little more complexity. Since we're just plotting territorial emissions, let's drop the other columns.
 
 ```{r}
 data_country <- gcb_clean %>% 
@@ -135,11 +164,17 @@ data_country <- gcb_clean %>%
 
 **Note:** if you're using the pipe, you have to make sure that it goes at the end of the line, not the beginning.
 
+This is saying: first take the data frame `gcb_clean`, and then take only the rows where the `iso3c` is equal to `CHN` and also the `gcb_ghg_territorial` is not missing. Once you've done that, keep only the columns `year`, `country_name`, `iso3c`, `gcb_ghg_territorial`. 
+
+There are lots of ways we could write this. We could split the filter into two separate pipes, we could swap the order of the `filter` and `select`... in this case the order won't matter. But in other cases, with more complicated cleaning, the order may well matter.
+
+*Comprehension check:* Create a new dataframe called `data_country2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`.
+
 Now let's get to plotting. The package `ggplot2` is a versatile plotting package that allows you to use a similar syntax for plotting all sorts of figures, from bar charts to complicated maps. There's a [whole ggplot2 book](https://ggplot2-book.org/) that you can use to get into the details, but I've found that economists usually only manipulate a small subset of these options.
 
 We're also going to use the package `ggrepel` to put labels on the graph. The way `ggplot2` typically works is that we start with the data (here, `data_country`), and then we add visual components in layers with each new call to something of the form `geom_xxx`. 
 
-For the purpose of our labels, we're going to select just a few:
+For the purpose of our labels, we're going to select just a few years to label:
 
 ```{r}
 years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
@@ -197,13 +232,14 @@ ggsave_plot(output_folder = here::here("output","02_figures"),
 
 # Exercise:
 
-For a country which is  *not* China, plot its greenhouse gas consumption over time with the following edits:
+For a country which is  *not* China, plot its greenhouse gas *consumption* (not territorial emissions) over time with the following edits to the code above:
 
 - Edit the y axis labels to contain the appropriate units. They currently say `Emissions (units here)`.
     -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
 - Turn the legend off by using `legend_position = "none"` in the correct place in your version of the code chunk above ).
 - Correct the caption to contain the correct data attribution. It should be something like "Emissions data from GCB (2023)."
 - Comment on these trends relative to what you know about the history of the country. Do you think there's evidence for a Green Kuznets curve for this class? What else would you need to examine in order to make a more definitive claim?
+
 
 <!-- # Plot Cross Sections -->
 
