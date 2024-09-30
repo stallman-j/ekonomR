@@ -122,7 +122,7 @@ data_country <- gcb_clean %>%
 
 ## The Pipe Operator %>%
 
-If you're not familiar with the data cleaning and organizing packages included in what's called the `tidyverse` (which is just a collection of packages), you might be a little confused by the `%>%` symbol. This is called the "pipe operator." Think of it as a funnel.
+If you're not familiar with the data cleaning and organizing packages included in what's called the `tidyverse`, you might be a little confused by the `%>%` symbol. This is called the "pipe operator." Think of it as a funnel.
 
 You take the stuff that came before the pipe, and funnel it through the pipe into the next function that comes below.
 
@@ -157,27 +157,29 @@ The reason for using `%>%` is that there may be many data manipulation operation
 
 ## == or =?
 
-Note the `==` double equals sign is not the same as the single `=` sign. 
+The double equals sign, `==`,  is not the same as the single equals sign, `=`. 
 
-The double equals sign means that R is checking whether the condition on the left (here, that `iso3c`) is indeed equal to the thing on the right (here, that it equals `chosen_country`, which is actually `CHN`). 
+The double equals sign is a logical check: for certain elements, R is checking whether the condition on the left (here, the element's `iso3c`) is equal to the thing on the right (here, that it equals `chosen_country`, which we defined above to be `"CHN"`). 
 
-The single equals sign would be setting the left-hand side equal to the right-hand side. We could have written `chosen_country = c("CHN")` to set the value for `chosen_country`, but in R it's common to use the left-facing arrow `<-` in your scripts, and `=` sign in functions.
+A single equals sign would be setting the left-hand side equal to the right-hand side. There's a place that would have made sense to use this: We could have written `chosen_country = c("CHN")` to set the value for `chosen_country`. 
 
-So `iso3c == "CHN"` will return `TRUE` if the row is for China, and `FALSE` if the observation is not for China. 
+In R it's common to use the left-facing arrow `<-` in your scripts to make that sort of assignment. "Set the thing on the right to be equal to the thing that it's pointing to". However, the equals sign, `=`, is commonly used for this sort of assignment in functions. 
+
+In our context, `iso3c == "CHN"` will return `TRUE` if the row is for China, and `FALSE` if the observation is not for China. 
 
 
 ## Filtering with Multiple Conditions
 
-If you click on this data frame, you'll notice a number of missing observations. 
+If you click on this data frame in your Environment tab in RStudio, you may notice a number of missing observations. 
 
-Since we want to plot territorial emissions, we can add a condition to the filter:
+Since we want to plot territorial emissions, we can add a condition to the filter so that we can ignore those missing values:
 
 
 ``` r
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 ```
 
-We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing, and *replaced* the old `data_country` with our new one.
+We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing. We've also *replaced* the old `data_country` with our new one.
 
 
 ## Logical (Boolean) Statements
@@ -198,7 +200,7 @@ Using `dplyr::filter` masks that a little bit because we already stated up at th
 
 ## Multiple Pipes
 
-Let's see the `%>%` in action with a little more complexity. Since we're just plotting territorial emissions, let's drop the other columns.
+Let's see the `%>%` in action with a little more complexity. Since we're just plotting territorial emissions, let's pick out (select) only the relevant columns.
 
 
 ``` r
@@ -209,13 +211,23 @@ data_country <- gcb_clean %>%
 
 **Note:** if you're using the pipe, you have to make sure that it goes at the end of the line, not the beginning.
 
-This is saying: first take the data frame `gcb_clean`, and then take only the rows where the `iso3c` is equal to `CHN` and also the `gcb_ghg_territorial` is not missing. Once you've done that, keep only the columns `year`, `country_name`, `iso3c`, `gcb_ghg_territorial`. 
+This code block is saying the following:
 
-There are lots of ways we could write this. We could split the filter into two separate pipes, we could swap the order of the `filter` and `select`... in this case the order won't matter. But in other cases, with more complicated cleaning, the order may well matter.
+1. First take the data frame `gcb_clean` (that's what goes before the first pipe). 
+2. Then, take only the rows where the `iso3c` is equal to `CHN` and also the `gcb_ghg_territorial` is not missing (the second line, before the second pipe)
+3. Once you've done that, keep only the columns `year`, `country_name`, `iso3c`, and `gcb_ghg_territorial`. 
+
+There are many ways we could write a script in R to get to this result. Just with the functions we've seen, we could split the filter into two separate pipes. We could swap the order of the `filter` and `select`. 
+
+In this case the order of what goes into the pipes won't matter. But in other cases, with more complicated cleaning, the order that you do these operations may well make a difference.
 
 *Comprehension check:* Create a new dataframe called `data_country2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`.
 
-Now let's get to plotting. The package `ggplot2` is a versatile plotting package that allows you to use a similar syntax for plotting all sorts of figures, from bar charts to complicated maps. There's a [whole ggplot2 book](https://ggplot2-book.org/) that you can use to get into the details, but I've found that economists usually only manipulate a small subset of these options.
+# Plotting with ggplo2
+
+Now let's get to plotting. The package `ggplot2` is a versatile plotting package that allows you to use a similar syntax for plotting all sorts of figures, from bar charts to complicated maps. 
+
+There's a [whole ggplot2 book](https://ggplot2-book.org/) that you can use to get into the details, but I've found that I mostly end up tinkering with a few of these operations, and that's why `ekonomR` has a function called `theme_minimal_plot()` which wraps around the `ggplot2` functions `theme_minimal()` and `theme()` to give us a nicely formatted plot, in a good size for putting in a paper or a presentation, that we don't have to worry too much about.
 
 We're also going to use the package `ggrepel` to put labels on the graph. The way `ggplot2` typically works is that we start with the data (here, `data_country`), and then we add visual components in layers with each new call to something of the form `geom_xxx`. 
 
@@ -261,7 +273,9 @@ You can see the plot in your console by typing `my_plot` in the console.
 
 You should play around with commenting out lines using a `#` at the beginning of the line to see what changes, and changing text around to see what changes in the plot itself.
 
-Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
+Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults.
+
+
 
 ``` r
 ggsave_plot(output_folder = here::here("output","02_figures"),
@@ -345,7 +359,7 @@ my_plot <- ggplot2::ggplot(data = data_country,
              ),
              legend_position = c(.15,.85) # sets legend position, from [0,1] on X axis then [0,1] on y
   ) +
-  #ggplot2::scale_y_continuous(trans = "log10", limits = c(400,100000)) + # why doesn't this work?
+  #ggplot2::scale_y_continuous(trans = "log10", limits = c(400,100000)) + # why doesn't this work? hint: log(0) = -inf
   ggplot2::scale_x_continuous(limits = c(1899,2025))
 
 ggsave_plot(output_folder = here::here("output","02_figures"),
