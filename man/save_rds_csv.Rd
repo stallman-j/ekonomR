@@ -6,7 +6,7 @@
 \usage{
 save_rds_csv(
   data,
-  output_path,
+  output_path = NULL,
   date = "",
   output_filename,
   remove = TRUE,
@@ -17,19 +17,21 @@ save_rds_csv(
 \arguments{
 \item{data}{the data frame}
 
-\item{output_path}{file path to the directory you want to store}
+\item{output_path}{file path to the directory you want to store. NULL gives here::here("data","02_temp")}
 
 \item{date}{in character the dates relevant to the filename, will be put at the front of the filename}
 
-\item{output_filename}{character, in RDS the filename output, assumes it ends in ".rds" and starts with "_" e.g. "_gkg_events.rds" so if date = "2016"
-then the file would be called "2016_gkg_events.rds"}
+\item{output_filename}{character vector to name the data to be saved. Gets concatenated with date, so if date = "2016", and output_filename is "_events" then the file would be called "2016_gkg_events" and would get saved as "2016_events.rds"}
 
 \item{remove}{defaults to TRUE in which case the data are removed after being saved, if FALSE returns the data to memory}
 
-\item{csv_vars}{vector of character strings with the varnames of the variables that will be saved in the CSV file}
+\item{csv_vars}{vector of character strings with the varnames of the variables that will be saved in the CSV file. Default "all" uses all varnames.}
 
-\item{format}{defaults to "both" which is both csv and xlsx. Otherwise can use "csv" or "xlsx" for output format}
+\item{format}{defaults to "both" which is both csv and xlsx (and .rds). Otherwise can use just "csv" or "xlsx" for output format. The RDS always gets saved.}
+}
+\value{
+a CSV or XLSX file along with a RDS file saved in the location of output_path, and the original data back to you as a data frame
 }
 \description{
-Given data, saves an output in RDS and CSV
+Given data frame, saves an output in RDS and CSV
 }

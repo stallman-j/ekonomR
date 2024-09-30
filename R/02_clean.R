@@ -1,15 +1,15 @@
 #' Save RDS and CSV
-#' @description Given data, saves an output in RDS and CSV
+#' @description Given data frame, saves an output in RDS and CSV
 #' @param data the data frame
-#' @param output_path file path to the directory you want to store
+#' @param output_path file path to the directory you want to store. NULL gives here::here("data","02_temp")
 #' @param date in character the dates relevant to the filename, will be put at the front of the filename
-#' @param output_filename character, in RDS the filename output, assumes it ends in ".rds" and starts with "_" e.g. "_gkg_events.rds" so if date = "2016"
-#' then the file would be called "2016_gkg_events.rds"
-#' @param csv_vars vector of character strings with the varnames of the variables that will be saved in the CSV file
+#' @param output_filename character vector to name the data to be saved. Gets concatenated with date, so if date = "2016", and output_filename is "_events" then the file would be called "2016_gkg_events" and would get saved as "2016_events.rds"
+#' @param csv_vars vector of character strings with the varnames of the variables that will be saved in the CSV file. Default "all" uses all varnames.
 #' @param remove defaults to TRUE in which case the data are removed after being saved, if FALSE returns the data to memory
-#' @param format defaults to "both" which is both csv and xlsx. Otherwise can use "csv" or "xlsx" for output format
+#' @param format defaults to "both" which is both csv and xlsx (and .rds). Otherwise can use just "csv" or "xlsx" for output format. The RDS always gets saved.
+#' @returns a CSV or XLSX file along with a RDS file saved in the location of output_path, and the original data back to you as a data frame
 save_rds_csv <- function(data,
-                         output_path,
+                         output_path = NULL,
                          date = "",
                          output_filename,
                          remove = TRUE,
@@ -17,11 +17,17 @@ save_rds_csv <- function(data,
                          format   = "both"){
 
 
+  if (is.null(output_path)){
+    output_path <- here::here("data","02_temp")
+    cat("You haven't specified a place to put your data, so it's going into ",output_path,", which will be created if it isn't already. \n")
+  }
+
   if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE) # recursive lets you create any needed subdirectories
 
   out_path <- file.path(output_path,
                         paste0(date,
-                               output_filename))
+                               output_filename,
+                               ".rds"))
 
   saveRDS(data,file = out_path)
 
@@ -55,6 +61,7 @@ save_rds_csv <- function(data,
 
     writexl::write_xlsx(csv_data,
                         path = xlsx_path)
+
   } else if (format == "neither"){
     print("Not saving to CSV or XLSX, just saved RDS file.")
   }

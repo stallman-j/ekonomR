@@ -17,10 +17,10 @@ download_multiple_files <- function(data_subfolder = NULL,
                                     username = NULL,
                                     password = NULL) {
 
-  if (!is.null(data_raw)){
+  if (is.null(data_raw)){
     data_raw <- here::here("data","01_raw")
   }
-  if (!is.null(data_subfolder)){
+  if (is.null(data_subfolder)){
     extract_path <- file.path(data_raw)
 
   } else{
@@ -34,15 +34,10 @@ download_multiple_files <- function(data_subfolder = NULL,
     cat("The data subfolder",extract_path,"already exists. \n")
   } else{
     cat("Creating data subfolder",extract_path,".\n")
-    dir.create(extract_path)
+    dir.create(extract_path, recursive = TRUE)
   }
-  # create folder if it doesn't already exist
-  if (file.exists(extract_path)) {
-    cat("The data subfolder",extract_path,"already exists. \n")
-  } else{
-    cat("Creating data subfolder",extract_path,".\n")
-    dir.create(extract_path)
-  }
+
+
 
   for (i in seq_along(sub_urls)) {
 
@@ -131,10 +126,10 @@ download_data <- function(data_subfolder = NULL,
   # this is where the data will live
   # if prompted, can either "" block out with quotes or just copy+paste directly, works with zip and passwords! for a single link
 
-  if (!is.null(data_raw)){
+  if (is.null(data_raw)){
     data_raw <- here::here("data","01_raw")
   }
-  if (!is.null(data_subfolder)){
+  if (is.null(data_subfolder)){
     extract_path <- file.path(data_raw)
 
   } else{
@@ -148,7 +143,7 @@ download_data <- function(data_subfolder = NULL,
     cat("The data subfolder",extract_path,"already exists. \n")
   } else{
     cat("Creating data subfolder",extract_path,".\n")
-    dir.create(extract_path)
+    dir.create(extract_path, recursive = TRUE)
   }
 
   # if the file's a zip, make file_path a zip folder, then extract to its own folder
