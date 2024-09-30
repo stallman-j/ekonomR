@@ -201,7 +201,7 @@ ggsave_plot(output_folder = here::here("output","02_figures"),
     -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
 - Turn the legend off by using `legend_position = "none"` in the correct place in your version of the code chunk above ).
 - Correct the caption to contain the correct data attribution. It should be something like "Emissions data from GCB (2023)."
-
+- Comment on these trends relative to what you know about the history of the country. Do you think there's evidence for a Green Kuznets curve for this class? What else would you need to examine in order to make a more definitive claim?
 
 <!-- # Plot Cross Sections -->
 
