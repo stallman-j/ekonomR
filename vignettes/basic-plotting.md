@@ -220,7 +220,9 @@ ggsave_plot(output_folder = here::here("output","02_figures"),
          dpi  = 400)
 ```
 
-**Exercise:** For a country which is  *not* China, plot its greenhouse gas consumption over time with the following edits:
+# Exercise:
+
+For a country which is  *not* China, plot its greenhouse gas consumption over time with the following edits:
 
 - Edit the y axis labels to contain the appropriate units. They currently say `Emissions (units here)`.
     -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
