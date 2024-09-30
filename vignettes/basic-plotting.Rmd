@@ -179,7 +179,7 @@ my_plot <- ggplot2::ggplot(data = data_country,
 You can see the plot in your console by just typing `my_plot` in the console.
 
 ```{r out.width="300px"}
-url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png"
+url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true"
 knitr::include_graphics(url)
 
 ```

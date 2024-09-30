@@ -208,12 +208,12 @@ You can see the plot in your console by just typing `my_plot` in the console.
 
 
 ``` r
-url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png"
+url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true"
 knitr::include_graphics(url)
 ```
 
 <div class="figure">
-<img src="https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png" alt="plot of chunk unnamed-chunk-14" width="300px" />
+<img src="https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true" alt="plot of chunk unnamed-chunk-14" width="300px" />
 <p class="caption">plot of chunk unnamed-chunk-14</p>
 </div>
 
