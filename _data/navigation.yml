@@ -3,7 +3,7 @@ main:
   - title: "Documentation"
     url: https://stallman-j.github.io/ekonomR/documentation/documentation/
   - title: "Vignettes"
-    url: https://stallman-j.github.io/vignettes
+    url: https://stallman-j.github.io/vignettes/vignettes
   - title: "GitHub Repo"
     url: https://github.com/stallman-j/ekonomR
   - title: "Data"
