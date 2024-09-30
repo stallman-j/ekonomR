@@ -278,7 +278,7 @@ See the next vignette on [Intermediate Plotting](https://stallman-j.github.io/ek
 
 Here's just the code from the vignette in case you want to copy it into your own script. You may want to add in comments so you know what's happening, though.
 
-``` {r install, results = "hide", eval = FALSE}
+``` {r, results = "hide", eval = FALSE}
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 library(ekonomR)
