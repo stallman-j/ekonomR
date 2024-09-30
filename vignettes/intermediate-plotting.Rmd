@@ -22,11 +22,11 @@ knitr::opts_chunk$set(
 
 # Getting Started
 
-You're likely coming here from the vignette "Simple Plotting with a Review of R Coding Basics." If you're not and the following seems sudden, check out that first!
+You're likely coming here from the vignette [Simple Plotting with a Review of R Coding Basics](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/). If you're not and the following seems sudden, check out that first!
 
 We'll be continuing that vignette with data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
 
-The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting your vignette, you'll need to re-install it correctly so that you can access this update.
+The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting your vignette, you'll need to re-install it correctly so that you can access this update. (If you just did this in the last vignette, you can ignore this part).
 
 First, go into the "Packages" tab in RStudio and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
 
@@ -57,5 +57,7 @@ options(scipen = 999)
 ```
 
 
+Here's what this vignette will cover:
 
+1. Plotting 
 

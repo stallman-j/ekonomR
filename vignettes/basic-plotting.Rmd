@@ -271,31 +271,49 @@ ggsave_plot(output_folder = here::here("output","02_figures"),
 
 The `here::here()` function is amazing: it cleverly looks for where it thinks your home project folder is, and then defines directories relative to this folder. If you've got this code running in an R Project (which you should), then it will set "here" to be that project folder.
 
-# Exercise
+# Exercises
 
-For a country which is  *not* China, plot its greenhouse gas *consumption* (not territorial emissions!) over time with the following changes:
+For a country which is  *not* China, plot its greenhouse gas *consumption* (not territorial!) emissions over time with the following changes:
 
 - Edit the y axis labels to contain the appropriate units. They currently say `Emissions (units here)`.
     -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
-- Turn the legend off by using `legend_position = "none"` in the correct place in your version of the code chunk above. You don't need a legend if you have just one thing in your plot; but the next vignette on intermediate plotting will make use of a legend.
+    
+- Turn the legend off by using `legend_position = "none"` in the correct place in your version of the code chunk above. It's a little redundant to have a legend if you just plot one thing.
 - Correct the caption to contain the correct data attribution. It should be something like "Emissions data from GCB (2023)."
-- Comment on these trends relative to what you know about the history of the country. Do you think there's evidence for a Green Kuznets curve for this country? What else would you need to examine in order to make a more definitive claim?
+- Change the title to reflect that you're now plotting emissions from consumption. You should also make sure that the country you're listing in the title is the country that you show data for.
+
+- Think about what you see from these trends relative to what you know about the history of the country.
+
+  - Do you think there's evidence for a Green Kuznets curve for this country? 
+  - Do these trends accord with your priors?
+  - What else would you need to examine in order to make a more definitive claim about a relationship between greenhouse gas emissions and the growth trajectory of this country?
+
+- What quibbles might you have with the data itself? 
+
+  - Do you trust the exact numbers? If not, do you think it's getting the general direction right? 
+  - If there are biases in the data, what direction do you think they would take?
 
 
 # The Next Vignette in this Series
 
-See the next vignette on [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/) for more plotting details.
+See the next vignette on [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/) for more plotting examples including layered plots and finer-tuned settings.
 
 (Coming soon)
 
 # Just the code
 
-Here's just the code from the vignette in case you want to copy it into your own script. You may want to add in comments so you know what's happening, though.
+Here's just the code from the vignette in case you want to copy it into your own script. This is highly recommended for doing the exercise. 
+
+You may want to add in comments so you know what's happening, though. (Hint: You can comment out a single line or part of a line with a `#`. If you want to comment out multiple lines at once, in RStudio you can first highlight the lines you want to comment out, and then use the keyboard command `Ctrl`+`Shift`+`C`. This will put a pound sign before every line.
 
 ``` {r, results = "hide", eval = FALSE}
+
+# Setup
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 library(ekonomR)
+
+# Data Exploration
 data(gcb_clean)
 View(gcb_clean)
 
@@ -303,6 +321,7 @@ names(gcb_clean)
 
 unique(gcb_clean$year)
 
+# Coding Review
 chosen_country <- c("CHN")
 
 chosen_country_name <- "China"
@@ -310,15 +329,17 @@ chosen_country_name <- "China"
 data_country <- gcb_clean %>% 
                 dplyr::filter(iso3c == chosen_country)
                 
-data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
+#data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
 
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 
-data_country <- gcb_clean %>% 
-                dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
-                dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
+#data_country <- gcb_clean %>% 
+#                dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
+#                dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
 
 years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
+
+# Plotting
 
 my_plot <- ggplot2::ggplot(data = data_country,
                ggplot2::aes(x = year)) +
