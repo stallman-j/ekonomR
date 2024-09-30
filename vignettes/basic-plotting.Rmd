@@ -35,7 +35,7 @@ We'll be plotting data from the Global Carbon Budget, which you can learn about 
 This data has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR`, you'll want to go into the "Packages" tab and make sure that `ekonomR` is *unchecked* before you run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
 
 ``` {r install}
-install.packages("remotes")
+#install.packages("remotes") # uncomment this if you haven't run it before
 remotes::install_github("stallman-j/ekonomR")
 ```
 

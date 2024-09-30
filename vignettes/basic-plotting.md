@@ -31,8 +31,7 @@ This data has been cleaned and loaded into the package `ekonomR`. If you've alre
 
 
 ``` r
-install.packages("remotes")
-#> Error in install.packages : Updating loaded packages
+#install.packages("remotes") # uncomment this if you haven't run it before
 remotes::install_github("stallman-j/ekonomR")
 #> Using GitHub PAT from the git credential store.
 #> Downloading GitHub repo stallman-j/ekonomR@HEAD
@@ -49,11 +48,11 @@ remotes::install_github("stallman-j/ekonomR")
 #> 7: ggrepel (0.9.5  -> 0.9.6 ) [CRAN]
 #> 
 #> ── R CMD build ────────────────────────────────────────
-#>       ✔  checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b846c97559\stallman-j-ekonomR-1046f65/DESCRIPTION'
-#>       ─  preparing 'ekonomR': (670ms)
+#>          checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b8770baa7\stallman-j-ekonomR-f5aa978/DESCRIPTION' ...     checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b8770baa7\stallman-j-ekonomR-f5aa978/DESCRIPTION' ...   ✔  checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b8770baa7\stallman-j-ekonomR-f5aa978/DESCRIPTION'
+#>       ─  preparing 'ekonomR': (626ms)
 #>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
 #>       ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
+#>       ─  checking for empty or unneeded directories
 #>      NB: this package now depends on R (>=        NB: this package now depends on R (>= 3.5.0)
 #>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
 #>      serialize/load version 3 cannot be read in older versions of R.
@@ -77,7 +76,7 @@ remotes::install_github("stallman-j/ekonomR")
 #>        'ekonomR/example-project/data/03_clean/PWT/pwt_clean.rds'
 #>        'ekonomR/example-project/data/03_clean/WPP/wpp_clean.rds'
 #>        'ekonomR/example-project/data/03_clean/ghg_pop_gdp.rds'
-#>      'ekonomR/example-project/data/03_clean/statistics-canada/canada_fuel_prices.rds'         'ekonomR/example-project/data/03_clean/statistics-canada/canada_fuel_prices.rds'
+#>        'ekonomR/example-project/data/03_clean/statistics-canada/canada_fuel_prices.rds'
 #> ─  building 'ekonomR_0.0.0.9000.tar.gz'
 #>      
 #> 
