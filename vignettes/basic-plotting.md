@@ -31,57 +31,8 @@ This data has been cleaned and loaded into the package `ekonomR`. If you've alre
 
 
 ``` r
-#install.packages("remotes") # uncomment this if you haven't run it before
+install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
-#> Using GitHub PAT from the git credential store.
-#> Downloading GitHub repo stallman-j/ekonomR@HEAD
-#> These packages have more recent versions available.
-#> It is recommended to update all of them.
-#> Which would you like to update?
-#> 
-#> 1: All                              
-#> 2: CRAN packages only               
-#> 3: None                             
-#> 4: bit     (4.0.5  -> 4.5.0 ) [CRAN]
-#> 5: bit64   (4.0.5  -> 4.5.2 ) [CRAN]
-#> 6: Rcpp    (1.0.12 -> 1.0.13) [CRAN]
-#> 7: ggrepel (0.9.5  -> 0.9.6 ) [CRAN]
-#> 
-#> ── R CMD build ────────────────────────────────────────
-#>          checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b8770baa7\stallman-j-ekonomR-f5aa978/DESCRIPTION' ...     checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b8770baa7\stallman-j-ekonomR-f5aa978/DESCRIPTION' ...   ✔  checking for file 'C:\Users\jilli\AppData\Local\Temp\RtmpWeQTXy\remotes34b8770baa7\stallman-j-ekonomR-f5aa978/DESCRIPTION'
-#>       ─  preparing 'ekonomR': (626ms)
-#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
-#>       ─  checking for LF line-endings in source and make files and shell scripts
-#>       ─  checking for empty or unneeded directories
-#>      NB: this package now depends on R (>=        NB: this package now depends on R (>= 3.5.0)
-#>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
-#>      serialize/load version 3 cannot be read in older versions of R.
-#>      File(s) containing such objects:
-#>        'ekonomR/data/02_temp/GCB/gcb_emissions_consumption.rds'
-#>        'ekonomR/data/02_temp/GCB/gcb_emissions_territorial.rds'
-#>        'ekonomR/data/02_temp/GCB/gcb_emissions_transfers.rds'
-#>        'ekonomR/data/03_clean/GCB/gcb_clean.rds'
-#>        'ekonomR/example-project/data/02_temp/GCB/gcb_emissions_consumption.rds'
-#>        'ekonomR/example-project/data/02_temp/GCB/gcb_emissions_territorial.rds'
-#>        'ekonomR/example-project/data/02_temp/GCB/gcb_emissions_transfers.rds'
-#>        'ekonomR/example-project/data/02_temp/IEA/iea_ghg_energy.rds'
-#>        'ekonomR/example-project/data/02_temp/IEA/iea_ghg_fc.rds'
-#>        'ekonomR/example-project/data/02_temp/IEA/iea_ghg_fc_coal.rds'
-#>        'ekonomR/example-project/data/02_temp/IEA/iea_ghg_fc_gas.rds'
-#>        'ekonomR/example-project/data/02_temp/IEA/iea_ghg_fc_oil.rds'
-#>        'ekonomR/example-project/data/02_temp/IEA/iea_ghg_fugitive.rds'
-#>        'ekonomR/example-project/data/03_clean/ECON-412/ECON-412_presentation_groups.rds'
-#>        'ekonomR/example-project/data/03_clean/GCB/gcb_clean.rds'
-#>        'ekonomR/example-project/data/03_clean/IEA/iea_clean.rds'
-#>        'ekonomR/example-project/data/03_clean/PWT/pwt_clean.rds'
-#>        'ekonomR/example-project/data/03_clean/WPP/wpp_clean.rds'
-#>        'ekonomR/example-project/data/03_clean/ghg_pop_gdp.rds'
-#>        'ekonomR/example-project/data/03_clean/statistics-canada/canada_fuel_prices.rds'
-#> ─  building 'ekonomR_0.0.0.9000.tar.gz'
-#>      
-#> 
-#> Warning: package 'ekonomR' is in use and will not be
-#> installed
 ```
 
 
