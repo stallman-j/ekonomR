@@ -18,7 +18,7 @@ ggsave_plot(
 
 \item{plotname}{the name of the plot that you generated}
 
-\item{filename}{the name of the output filename, e.g. "my-plot"}
+\item{filename}{the name of the output filename, e.g. "my-plot.png"}
 
 \item{width}{numeric, defaults to 9 (inches)}
 

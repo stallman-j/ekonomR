@@ -12,6 +12,8 @@ RoxygenNote: 7.3.2
 Imports: 
     countrycode,
     dplyr,
+    ggplot2,
+    ggrepel,
     here,
     readr,
     sandwich,

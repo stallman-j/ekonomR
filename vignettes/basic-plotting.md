@@ -15,14 +15,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
-```{r setup}
+
+
+``` r
 library(ekonomR)
 ```
 
@@ -40,13 +36,15 @@ remotes::install_github("stallman-j/ekonomR")
 
 Let's tell R that we want to use this data.
 
-```{r}
+
+``` r
 data(gcb_clean)
 ```
 
 Let's also remove the scientific notation in our axes. Otherwise we get x and y axis as e^4 and this gets difficult to read. We'd rather take logs in most cases, or rescale the axes, instead of dealing with scientific notation in our plots.
 
-```{r}
+
+``` r
 options(scipen = 999)
 ```
 (Future vignettes will go through the details of downloading and cleaning this data).
@@ -55,17 +53,38 @@ options(scipen = 999)
 
 Let's look at this data frame. In your console, enter the following:
 
-```{r}
+
+``` r
 View(gcb_clean)
 names(gcb_clean)
+#> [1] "year"                "country_name"       
+#> [3] "gcb_ghg_territorial" "iso3c"              
+#> [5] "gcb_ghg_consumption" "gcb_ghg_transfers"
 ```
 
 *Comprehension check:* What is `names(data)` giving us for output?
 
 Let's see what years we have available (Note: Not all years will be available for all measures)
 
-```{r}
+
+``` r
 unique(gcb_clean$year)
+#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860
+#>  [12] 1861 1862 1863 1864 1865 1866 1867 1868 1869 1870 1871
+#>  [23] 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882
+#>  [34] 1883 1884 1885 1886 1887 1888 1889 1890 1891 1892 1893
+#>  [45] 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904
+#>  [56] 1905 1906 1907 1908 1909 1910 1911 1912 1913 1914 1915
+#>  [67] 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926
+#>  [78] 1927 1928 1929 1930 1931 1932 1933 1934 1935 1936 1937
+#>  [89] 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948
+#> [100] 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959
+#> [111] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970
+#> [122] 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981
+#> [133] 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992
+#> [144] 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
+#> [155] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014
+#> [166] 2015 2016 2017 2018 2019 2020 2021 2022
 ```
 
 
@@ -77,14 +96,16 @@ Let's plot territorial emissions for China for all the available years. This is 
 
 We want to make this a little more programmatic, though. Rather than inputting "China" everywhere, and then replacing it everywhere if we later want to plot something else, let's define at the top what we'd like:
 
-```{r}
+
+``` r
 chosen_country <- c("CHN")
 chosen_country_name <- "China"
 ```
 
 Let's create a data frame that just contains the data for China.
 
-```{r}
+
+``` r
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country)
 ```
 
@@ -96,7 +117,8 @@ In coding terms, what it says is, take the thing that came before (here `gcb_cle
 
 We could also have written 
 
-```{r}
+
+``` r
 data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
 ```
 
@@ -105,7 +127,8 @@ data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
 Writing `dplyr::filter` just tells R that the function `filter` comes with the `dplyr` package. There are several packages that have a `filter` function, so we specify *which* package's `filter` function we want here. We'll generally state the package for any function that isn't very basic within the vignettes.
 
 Look at the help for this function
-```{r}
+
+``` r
 ?filter
 ```
 
@@ -119,7 +142,8 @@ The reason for using `%>%` is that there may be many data manipulation operation
 
 If you click on this data frame, you'll notice a number of missing observations. Since we want to plot territorial emissions, we can add a condition to the filter:
 
-```{r}
+
+``` r
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 ```
 
@@ -127,7 +151,8 @@ We've added a condition, removing the values for which `gcb_ghg_territorial` is 
 
 Just for exposition purposes, let's see the `%>%` in action with a little more complexity. Since we're just plotting territorial emissions, let's keep only that column.
 
-```{r}
+
+``` r
 data_country <- gcb_clean %>% 
                 dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
                 dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
@@ -141,13 +166,15 @@ We're also going to use the package `ggrepel` to put labels on the graph. The wa
 
 For the purpose of our labels, we're going to select just a few:
 
-```{r}
+
+``` r
 years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
 ```
 
 Now let's generate a plot:
 
-```{r}
+
+``` r
 plot <- ggplot2::ggplot(data = data_country,
                ggplot2::aes(x = year)) +
   ggplot2::geom_point(ggplot2::aes(y =gcb_ghg_territorial, color = "Territorial Emissions")) +
@@ -178,8 +205,11 @@ plot <- ggplot2::ggplot(data = data_country,
 plot
 ```
 
+![plot of chunk unnamed-chunk-41](figure/unnamed-chunk-41-1.png)
+
 Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
-```{r}
+
+``` r
 ggsave_plot(output_folder = here::here("output","02_figures"),
          plotname = plot,
          filename = paste0("gcb_territorial_emissions_",chosen_country_name,".png"),
