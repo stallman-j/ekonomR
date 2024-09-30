@@ -89,8 +89,19 @@ theme_map_gif <- function(legend_text_size = 17,
 
 
 
-# save the map
-save_map <- function(output_folder = output_maps,
+#' Wraps around ggsave with default settings useful for a map
+#'
+#' @param output_folder the path to the output directory. defaults to here::here("output","03_maps")
+#' @param plotname the name of the plot that you generated
+#' @param filename the name of the output filename, e.g. "my-plot"
+#' @param width numeric, defaults to 9 (inches)
+#' @param height numeric, height, defaults to 5 (inches)
+#' @param dpi pixel count, defaults to 300
+#'
+#' @returns a saved png in the output folder
+#' @export
+#'
+ggsave_map <- function(output_folder = NULL,
                      plotname,
                      filename,
                      width = 9,
@@ -98,6 +109,11 @@ save_map <- function(output_folder = output_maps,
                      dpi    = 300)  {
 
   # create the output folder if it doesn't exist already
+
+  if (is.null(output_folder)){
+    output_folder <- here::here("output","03_maps")
+
+  }
   if (!dir.exists(output_folder)) dir.create(output_folder, recursive = TRUE) # recursive lets you create any needed subdirectories
 
 

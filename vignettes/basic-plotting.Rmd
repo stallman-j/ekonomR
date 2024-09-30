@@ -20,7 +20,9 @@ library(ekonomR)
 
 # Bring in the data
 
-We'll be plotting data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). This data exists in the package `ekonomR`. If you've already installed `ekonomR`, you'll want to go into the "Packages" tab and make sure that `ekonomR` is *unchecked* before you run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
+We'll be plotting data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
+
+This data has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR`, you'll want to go into the "Packages" tab and make sure that `ekonomR` is *unchecked* before you run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
 
 ``` r
 install.packages("remotes")
@@ -52,7 +54,7 @@ names(gcb_clean)
 
 *Comprehension check:* What is `names(data)` giving us for output?
 
-Let's see what years we have available (note not all years will be available for all measures)
+Let's see what years we have available (Note: Not all years will be available for all measures)
 
 ```{r}
 unique(gcb_clean$year)
@@ -62,7 +64,6 @@ unique(gcb_clean$year)
 *Exercise:* How many unique countries are present in this data frame?
 
 
-
 # Plot Cross Sections
 
 ```{r}
@@ -70,19 +71,29 @@ years <- c(1950:2019) # generates a sequence from 1950 to 2019, i.e 1950,1951, .
 chosen_years <- c(1950, 2019) # just 1950 and 2019
 ```
 
-We can easily set some nice colors. If 
-# set colors for a legend
-# https://community.rstudio.com/t/adding-manual-legend-to-ggplot2/41651/2
+I have a few HEX codes for Yale colors that get output with the following function:
 
-# I have set these yale_lblue in the file 00_startup_palette.R in folder code/00_startup
-# the HEX codes are taken from Yale's web services. It's unnecessarily fancy but a good default
-colors <- c("Life Expectancy at Birth"     = yale_lblue,
-            "Life Expectancy at Age 15"    = yale_blue,
-            "Life Expectancy at Age 65"    = yale_medblue)
+```{r}
+display_hex_colors()
+```
 
+You'll see four colors outputted. Set a few of them in your local environment with the following code :
 
-#y <- 2019 # uncomment this if you want to examine within the loop to see what's happening
-for (y in chosen_years) {
+```{r}
+yale_lblue     <- "#63aaff"
+yale_medblue   <- "#286dc0"
+yale_blue      <- "#00356b"
+```
+
+*Comprehension Exercise:* What's the other color that's available in `display_hex_colors()?`
+
+We're going to manually set the colors for our legend so that they look nice and Yaley. We do this by first defining a vector as below:
+
+```{r}
+colors <- c("Territorial Emissions"    = yale_lblue,
+            "Consumption Emissions"    = yale_blue,
+            "Emissions Transfers"      = yale_medblue)
+```
 
 labels_vec <- #unique(data$country_name) # uncomment to try to get all countries
   # if you want to use the ISO3 code instead so you can get more labels, use
@@ -90,6 +101,8 @@ labels_vec <- #unique(data$country_name) # uncomment to try to get all countries
   c("USA","Sweden","Germany","El Salvador","China","Chile")
 
 
+#y <- 2019 # uncomment this if you want to examine within the loop to see what's happening
+for (y in chosen_years) {
   # choose just the data for the current year
   data_year_y <- data %>% filter(year == y)
 
@@ -136,7 +149,7 @@ labels_vec <- #unique(data$country_name) # uncomment to try to get all countries
   # more often so it's less buggy at the moment
   # good example of "don't let the perfect be the enemy of the `it works by golly I'll take it`"
 
-  save_map(output_folder = file.path(output_figures,"GDP_LE"),
+  save_plot(output_folder = file.path(output_figures,"GDP_LE"),
            plotname = plot,
            filename = paste0("gdp_pc_le_",y,".png"),
            width = 9,
@@ -144,26 +157,6 @@ labels_vec <- #unique(data$country_name) # uncomment to try to get all countries
            dpi  = 400)
 
 }
-
-# using paste0() is a really nice way to get automated output if I'm changing things
-# in my code.
-# for instance, here if you put the following into the console, you'll see that it's
-# a character vector containing png names for all the years that you listed for the figure above.
-
-
-#my_figname <- paste0("gdp_pc_le_",chosen_years,".png")
-
-# path_to_pngs <- file.path(output_figures,"GDP_LE",paste0("gdp_pc_le_",chosen_years,".png"))
-#
-#
-# # make into a gif
-# gifski(png_files = path_to_pngs,
-#        gif_file = file.path(output_figures,
-#                             paste0("gdp_pc_le_",first(chosen_years),"_",last(chosen_years),".gif")
-#        ),
-#        width = 1500,
-#        height = 1000,
-#        delay = .5)
 
 # Plot One Country Over Time ----
 
