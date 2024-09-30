@@ -8,7 +8,7 @@ author_profile: true
 date: "2024-09-23"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{basic-plotting}
+  %\VignetteIndexEntry{vignettes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
