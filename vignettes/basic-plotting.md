@@ -204,9 +204,9 @@ my_plot <- ggplot2::ggplot(data = data_country,
   ggplot2::scale_x_continuous(limits = c(1899,2025))
 ```
 
-You can see the plot in your console by just typing `my_plot` in the console.
+You can see the plot in your console by typing `my_plot` in the console.
 
-![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true)
+![plot of chunk unnamed-chunk-16](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true)
 
 
 Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
@@ -220,8 +220,14 @@ ggsave_plot(output_folder = here::here("output","02_figures"),
          dpi  = 400)
 ```
 
+**Exercise:** For a country which is  *not* China, plot its greenhouse gas consumption over time with the following edits:
 
-         
+- Edit the y axis labels to contain the appropriate units. They currently say `Emissions (units here)`.
+    -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
+- Turn the legend off by using `legend_position = "none"` in the correct place in your version of the code chunk above ).
+- Correct the caption to contain the correct data attribution. It should be something like "Emissions data from GCB (2023)."
+
+
 <!-- # Plot Cross Sections -->
 
 <!-- ```{r} -->
