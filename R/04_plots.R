@@ -1,43 +1,74 @@
-#' Plot Themes
-
-theme_plot <- function(title_size = 25,
-                       axis_title_x = element_text(color = "black"), # element_blank() # to remove
-                       axis_title_y = element_text(color = "black"), # element_blank() # to remove
-                       axis_text_x  = element_text(color = "darkgrey"), # element_blank() # to remove
-                       axis_text_y  = element_text(color = "darkgrey"), # element_blank() # to remove
-                       ...) {
-  theme_minimal() +
-    theme(
+#' Plot Theme Defaults
+#' @description Wraps around ggplot2's theme_minimal with default settings that are nice and professional for basic plotting
+#' @param legend_text_size replaces
+#' @param legend_title_size
+#' @param legend_position
+#' @param axis_title_x
+#' @param axis_title_y
+#' @param axis_text_x
+#' @param axis_text_y
+#' @param ... additional options for ggplot2::theme()
+#'
+#' @return wrapper around ggplot2::theme_minimal() and theme()
+#' @export
+#'
+#' @examples
+theme_minimal_plot <- function(legend_text_size = 8,
+                              legend_title_size = 10,
+                              legend_position = c(0.2,0.3), # first term is LR, second up-down. "none" for no legend
+                              axis_title_x = element_text(color = "black"), # element_blank() # to remove
+                              axis_title_y = element_text(color = "black"), # element_blank() # to remove
+                              axis_text_x  = element_text(color = "darkgrey"), # element_blank() # to remove
+                              axis_text_y  = element_text(color = "darkgrey"), # element_blank() # to remove
+                              ...) {
+  ggplot2::theme_minimal() +
+    ggplot2::theme(
       text = element_text(color = "#22211d"),
-      # panel.grid.minor = element_line(color = "#ebebe5", size = 0.2),
-      panel.grid.major = element_blank(),
+      axis.line = element_blank(),
+      axis.text = element_blank(),
+      axis.text.x = axis_text_x,
+      axis.text.y = axis_text_y,
+      axis.ticks = element_blank(),
+      axis.ticks.length = unit(0, "pt"), #length of tick marks
+      #axis.ticks.x = element_blank(),
+      axis.title.x = axis_title_x,
+      axis.title.y = axis_title_y,
+
+      # Background Panels
+      # panel.grid.minor = element_line(color = "#ebebe5", linewidth = 0.2),
+      panel.grid.major = element_blank(), #element_line(color = "#ebebe5", linewidth = 0.2),
       panel.grid.minor = element_blank(),
       plot.background = element_rect(fill = "white", color = NA),
       panel.background = element_rect(fill = "white", color = NA),
-      legend.background = element_rect(fill = "white", color = NA),
       panel.border = element_blank(),
-      axis.ticks = element_blank(),
-      axis.title.x = axis_title_x,
-      axis.text.x = axis_text_x, # text on the x axis
-      axis.title.y = axis_title_y,
-      axis.text.y  = axis_text_y,
-      plot.title = element_text(size = title_size, face = "bold"),
+      #plot.caption = element_blank(),
+      #element_text(face = "italic", linewidth = 6,
+      #lineheight = 0.4),
+      # Legends
+      legend.background = element_rect(fill = "white", color = "#ebebe5", linewidth = 0.3),
+      legend.position = legend_position, # put inside the plot
+      legend.key.width = unit(.8, 'cm'), # legend box width,
+      legend.key.height = unit(.8,'cm'), # legend box height
+      legend.text = element_text(linewidth = legend_text_size),
+      #legend.title = element_text(linewidth = legend_title_size),
+      plot.margin = unit(c(0,0,0,0), "mm"), # T R BL
       ...
     )
+  # if the points on the legend are way too big
 }
 
 
-#' Share plot
-#'@param the column vector of a df, e.g. data$weight
-get_table <- function(data_call) {
-  my_table <-  as.data.frame(table(data_call)) %>%
-    arrange(desc(Freq)) %>%
-    mutate(year = 2022,
-           percentage = round(Freq/sum(Freq), digits = 3),
-           count      = Freq)
-
-  return(my_table)
-}
+#' #' Share plot
+#' #'@param the column vector of a df, e.g. data$weight
+#' get_table <- function(data_call) {
+#'   my_table <-  as.data.frame(table(data_call)) %>%
+#'     arrange(desc(Freq)) %>%
+#'     mutate(year = 2022,
+#'            percentage = round(Freq/sum(Freq), digits = 3),
+#'            count      = Freq)
+#'
+#'   return(my_table)
+#' }
 
 
 #' Share plot
@@ -229,47 +260,47 @@ make_histogram <- function(data_frame,
 #' plotting a regular observed outcome and bootstrapped outcomes
 
 
-density_plot_all_layers <- function(base_df,
-                                    plot_var_index,
-                                    layers_list,
-                                    where_text_y,
-                                    where_text_x,
-                                    ...) {
-
-  dx <- density(x = base_df[,plot_var_index])
-
-  plot(dx,
-       #prob = TRUE,
-       col  = yale_blue,
-       bty  = "l", # remove the box around
-       lwd = 4,
-       ...)
-
-
-  for (i in 1:length(layers_list)) {
-    lines(density(layers_list[[i]]),
-          col = rgb(.39,.67,1, alpha = 0.1))
-  }
-
-  abline(v = mean(base_df[,plot_var_index]),
-         col = yale_blue,
-         lty = "dashed")
-
-  text(x= quantile(base_df[,plot_var_index], where_text_x[1]),
-       y = where_text_y[1],
-       col = yale_blue,
-       labels = "Observed Density")
-
-  text(x= quantile(base_df[,plot_var_index], where_text_x[2]),
-       y = where_text_y[2],
-       col = yale_blue,
-       labels = "Observed Mean")
-
-
-  text(x= quantile(base_df[,plot_var_index], where_text_x[3]),
-       y = where_text_y[3],
-       col = yale_lblue,
-       labels = "Bootstrapped Densities")
-
-}
+# density_plot_all_layers <- function(base_df,
+#                                     plot_var_index,
+#                                     layers_list,
+#                                     where_text_y,
+#                                     where_text_x,
+#                                     ...) {
+#
+#   dx <- density(x = base_df[,plot_var_index])
+#
+#   plot(dx,
+#        #prob = TRUE,
+#        col  = yale_blue,
+#        bty  = "l", # remove the box around
+#        lwd = 4,
+#        ...)
+#
+#
+#   for (i in 1:length(layers_list)) {
+#     lines(density(layers_list[[i]]),
+#           col = rgb(.39,.67,1, alpha = 0.1))
+#   }
+#
+#   abline(v = mean(base_df[,plot_var_index]),
+#          col = yale_blue,
+#          lty = "dashed")
+#
+#   text(x= quantile(base_df[,plot_var_index], where_text_x[1]),
+#        y = where_text_y[1],
+#        col = yale_blue,
+#        labels = "Observed Density")
+#
+#   text(x= quantile(base_df[,plot_var_index], where_text_x[2]),
+#        y = where_text_y[2],
+#        col = yale_blue,
+#        labels = "Observed Mean")
+#
+#
+#   text(x= quantile(base_df[,plot_var_index], where_text_x[3]),
+#        y = where_text_y[3],
+#        col = yale_lblue,
+#        labels = "Bootstrapped Densities")
+#
+# }
 

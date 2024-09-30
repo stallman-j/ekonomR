@@ -1,7 +1,7 @@
 # _______________________________#
 # ECON-412
 # Plots 03: HW Assignment
-# 
+#
 # Stallman
 # Started: 2023-10-05
 # Last edited: 2023-10-09
@@ -9,13 +9,13 @@
 # added detail to plots
 # Edited: 2023-10-07
 # Edits made: added additional regressions and more description
-# 
+#
 #________________________________#
 
 
 # Startup
 
-# uncomment these three if you're running code file-by-file. comment them out if you're 
+# uncomment these three if you're running code file-by-file. comment them out if you're
 # running the whole thing from the master_run_of_show.R file
 
  #rm(list = ls())
@@ -26,15 +26,15 @@
 
 # packages ----
 
-if (!require("ggrepel")) install.packages("ggrepel")
-if (!require("gifski")) install.packages("gifski")
-if (!require("ggplot2")) install.packages("ggplot2")
-if (!require("fixest")) install.packages("fixest")
-
-library(fixest) # for fixed effect estimation
-library(ggplot2) # only the bestest plotting package ever
-library(ggrepel) # repel overlapping text labels away from each other in a plot
-library(gifski) # for making a gif
+# if (!require("ggrepel")) install.packages("ggrepel")
+# if (!require("gifski")) install.packages("gifski")
+# if (!require("ggplot2")) install.packages("ggplot2")
+# if (!require("fixest")) install.packages("fixest")
+#
+# library(fixest) # for fixed effect estimation
+# library(ggplot2) # only the bestest plotting package ever
+# library(ggrepel) # repel overlapping text labels away from each other in a plot
+# library(gifski) # for making a gif
 
 # bring in the data ----
 
@@ -78,10 +78,10 @@ colors <- c("Life Expectancy at Birth"     = yale_lblue,
 
 #y <- 2019 # uncomment this if you want to examine within the loop to see what's happening
 for (y in chosen_years) {
-  
+
   # choose just the data for the current year
   data_year_y <- data %>% filter(year == y)
-  
+
   plot <- ggplot(data = data_year_y,
                  aes(x = gdp_pc)) +
     geom_point(aes(y =le_birth, color = "Life Expectancy at Birth")) +
@@ -118,33 +118,33 @@ for (y in chosen_years) {
     scale_color_manual(values = colors) # this sets the legend colors as yale colors
   #scale_y_continuous(trans = "log10", limits = c(.05,50)) +
   #scale_linetype_manual("",values = c("Predicted Values"))
-  
+
   plot
-  
-  # I have a save_map and a save_plot function, but the save_map gets used 
+
+  # I have a save_map and a save_plot function, but the save_map gets used
   # more often so it's less buggy at the moment
   # good example of "don't let the perfect be the enemy of the `it works by golly I'll take it`"
-  
+
   save_map(output_folder = file.path(output_figures,"GDP_LE"),
            plotname = plot,
            filename = paste0("gdp_pc_le_",y,".png"),
            width = 9,
            height = 6,
            dpi  = 400)
-  
+
 }
 
-# using paste0() is a really nice way to get automated output if I'm changing things 
+# using paste0() is a really nice way to get automated output if I'm changing things
 # in my code.
-# for instance, here if you put the following into the console, you'll see that it's 
+# for instance, here if you put the following into the console, you'll see that it's
 # a character vector containing png names for all the years that you listed for the figure above.
 
 
 #my_figname <- paste0("gdp_pc_le_",chosen_years,".png")
 
 # path_to_pngs <- file.path(output_figures,"GDP_LE",paste0("gdp_pc_le_",chosen_years,".png"))
-# 
-# 
+#
+#
 # # make into a gif
 # gifski(png_files = path_to_pngs,
 #        gif_file = file.path(output_figures,
@@ -182,7 +182,7 @@ plot <- ggplot(data = data_country_c,
                       label = year),
                   max.overlaps = 17)+
   labs(title = paste0("Life Expectancy and GDP, ",chosen_country_name), # here's another good example of paste0
-       # to the rescue. If I wanted to select several countries and try them out before deciding, 
+       # to the rescue. If I wanted to select several countries and try them out before deciding,
        # I can just change "chosen_country_name" rather than having to do this all manually
        # Or if I wanted, I could make this a loop and loop over a bunch of different countries
        # if my interest was in comparing different countries
@@ -245,7 +245,7 @@ coeftest(twoway_model, cluster1 = "iso3c", cluster2 = "year")
 # that is, for each value of GDP per capita that we observed, have our model
 # generate a prediction
 
-# in order to generate high and low confidence bands, we can't use the fixed 
+# in order to generate high and low confidence bands, we can't use the fixed
 # effects from FEOLs, because part of what makes that code run so fast is that it
 # doesn't actually compute all those fixed effects
 
@@ -263,7 +263,7 @@ predicted_df <- cbind(predict(twoway_model_nonfe, interval = "conf", vcov = ~iso
                         data)
 
 names(predicted_df)
-# [1] "fit"     "se.fit"  "ci_low"  "ci_high" "gdp_pc" 
+# [1] "fit"     "se.fit"  "ci_low"  "ci_high" "gdp_pc"
 
 
 colors <- c("Cubic Line of fit"                = yale_blue,
@@ -287,7 +287,7 @@ plot <- ggplot() +
               formula = y~ x + I(x^2)+I(x^3),
               method  = lm)+
   # geom_ribbon(aes(x = gdp_pc,
-  #                 ymin =ci_low, 
+  #                 ymin =ci_low,
   #                 ymax = ci_high,
   #                 fill = "grey90",
   #                 color = "Confidence Bands"),

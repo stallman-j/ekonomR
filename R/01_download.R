@@ -192,7 +192,6 @@ download_data <- function(data_subfolder,
 #' @param url_index index of the col where urls will be
 #' @param filenames_vecname name you want for the vector
 #' @param url_vecname name for the url vec
-#' @export
 
 import_filenames_urls <- function(names_path,
                                   sheetname,

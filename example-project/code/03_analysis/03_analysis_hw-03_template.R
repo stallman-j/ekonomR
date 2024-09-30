@@ -1,7 +1,7 @@
 # _______________________________#
 # ECON-412
 # Analysis 03: HW Assignment
-# 
+#
 # Stallman
 # Started: 2023-10-05
 # Last edited: 2023-10-07
@@ -11,38 +11,38 @@
 
 # Startup
 
-# uncomment the three lines below if you're running file-by-file 
+# uncomment the three lines below if you're running file-by-file
 #rm(list = ls())
-# 
+#
 
 # SET THE BELOW TO BE WHATEVER YOUR HOME_FOLDER IS
 # ONCE YOU'VE FINISHED CODING YOU CAN COMMENT OUT THE HOME_FOLDER
 # AND JUST SET IT IN THE 00_master_run_of_show
-home_folder <- file.path("P:","Projects","ECON-412")
-source(file.path(home_folder,"code","00_startup_master.R"))
+# home_folder <- file.path("P:","Projects","ECON-412")
+# source(file.path(home_folder,"code","00_startup_master.R"))
 
 # startup -------------
 ## bring in the packages, folders, paths ----
 
-if (!require("AER")) install.packages("AER")
-if (!require("stargazer")) install.packages("stargazer")
-if (!require("modelsummary")) install.packages("modelsummary")
-if (!require("kableExtra")) install.packages("kableExtra")
-if (!require("ggrepel")) install.packages("ggrepel")
-if (!require("fixest")) install.packages("fixest")
-
-library(kableExtra) # use with modelsummary to output tables to latex
-library(ggrepel) # repel overlapping text labels away from each other in a plot
-library(AER) # for outputting nicely
-library(fixest) # for fixed effects estimation regressions
-# You can also use the package plm for panel linear models, but I was having a hard
-# time getting the correct standard errors to output to latex with that, plus fixest is faster
-# and the syntax seems a little cleaner to read out
-
-library(stargazer) # outputting to latex. less customizable than modelsummary but the 
-# help documentation is easier to use
-library(modelsummary) # more ability to customize to output to latex. use with kableExtra to output tables
-# to console, latex, Rmarkdown, html etc.
+# if (!require("AER")) install.packages("AER")
+# if (!require("stargazer")) install.packages("stargazer")
+# if (!require("modelsummary")) install.packages("modelsummary")
+# if (!require("kableExtra")) install.packages("kableExtra")
+# if (!require("ggrepel")) install.packages("ggrepel")
+# if (!require("fixest")) install.packages("fixest")
+#
+# library(kableExtra) # use with modelsummary to output tables to latex
+# library(ggrepel) # repel overlapping text labels away from each other in a plot
+# library(AER) # for outputting nicely
+# library(fixest) # for fixed effects estimation regressions
+# # You can also use the package plm for panel linear models, but I was having a hard
+# # time getting the correct standard errors to output to latex with that, plus fixest is faster
+# # and the syntax seems a little cleaner to read out
+#
+# library(stargazer) # outputting to latex. less customizable than modelsummary but the
+# # help documentation is easier to use
+# library(modelsummary) # more ability to customize to output to latex. use with kableExtra to output tables
+# # to console, latex, Rmarkdown, html etc.
 
 ## bring in the data ----
 
@@ -53,11 +53,11 @@ names(data)
 
 # Summary Statistics ----
 ## Select data to summarize ----
-# NOTE 
+# NOTE
 # if you use a gcb_ variable, you may run into problems with logs! Why is this?
 # you can still use the outcome, but you might not be able to run all the regressions
-# If you can use it without error, 
-# you might want to look in the 02_clean_gcb to see if there's anything weird about 
+# If you can use it without error,
+# you might want to look in the 02_clean_gcb to see if there's anything weird about
 # the variables in there.
 
 data_to_summarize <- data %>% select(le_birth,
@@ -85,7 +85,7 @@ var_labels <- c("Life Expectancy at birth",
 
 # you can also use datasummary() from the modelsummary package if you want more customizability
 
-stargazer(data_to_summarize, 
+stargazer(data_to_summarize,
           type = "text",
           style = "qje",
           summary = TRUE,
@@ -98,7 +98,7 @@ stargazer(data_to_summarize,
 out_path <- file.path(output_tables,"hw03_summary_stats.tex")
 
 # output to latex
-stargazer(data_to_summarize, 
+stargazer(data_to_summarize,
           type = "latex",
           style = "qje", # also has aer style
           out = out_path,
@@ -158,7 +158,7 @@ paste("my_outcome_variable", "var1 + var2 + var3", sep = " ~ ")
 # being the outcome variable for Equation (i)
 
 outcome_vars    <- c("le_birth","le_15","le_65","le_birth","le_birth")
-outcome_vars[1] 
+outcome_vars[1]
 # [1] "le_birth" # this means Life Expectancy at birth will be the outcome of the first regression
 
 # choose what variables to use to generate fixed effects
@@ -172,7 +172,7 @@ reg_3_vars  <- c("gdp000_pc") # NOTE this difference here, check out 02_merge.R 
 # if you get "zeros" for Eq 4 and 5 using gdp_pc, consider using gdp000_pc or even defining a gdp000000_pc below
 # but if you do that, explain why
 reg_4_vars  <- c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)") # note you could use poly(gdp_pc, 3) but that's hard to interpret
-reg_5_vars  <- c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)") 
+reg_5_vars  <- c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)")
 
 ## Set Covariate Labels ----
 # this is the variable labels you want for eqs 1 to 3 (i.e. Table 2)
@@ -190,16 +190,16 @@ cov_labels_4_to_5 <- c("Intercept","GDP (units) per (units) capita","(GDP(units)
 
 ## Create Regression Formulas ----
 # make the above vectors into a formula that can be sent to lm or feols
-# lets show the steps, 
+# lets show the steps,
 
 ### Step 1 Create a String ----
 # first make them a string or character vector that's the right format
 
 reg_1_string <- paste(outcome_vars[1],paste(reg_1_vars, collapse = " + "), sep = " ~ ")
 reg_2_string <- paste(outcome_vars[2],paste(reg_2_vars, collapse = " + "), sep = " ~ ")
-reg_3_string <- paste(outcome_vars[3],paste(reg_3_vars, collapse = " + "), sep = " ~ ") 
-reg_4_string <- paste(outcome_vars[4],paste(reg_4_vars, collapse = " + "), sep = " ~ ") 
-reg_5_string <- paste(outcome_vars[5],paste(reg_5_vars, collapse = " + "), sep = " ~ ") 
+reg_3_string <- paste(outcome_vars[3],paste(reg_3_vars, collapse = " + "), sep = " ~ ")
+reg_4_string <- paste(outcome_vars[4],paste(reg_4_vars, collapse = " + "), sep = " ~ ")
+reg_5_string <- paste(outcome_vars[5],paste(reg_5_vars, collapse = " + "), sep = " ~ ")
 
 # some examples
 
@@ -216,7 +216,7 @@ reg_3_form <- reg_3_string %>% as.formula()
 reg_4_form <- reg_4_string %>% as.formula()
 
 
-# Reg 5 asks for a twoway effects estimator, but it might make sense to also report the "within" 
+# Reg 5 asks for a twoway effects estimator, but it might make sense to also report the "within"
 # Below takes the reg_5_string and tacks on another thing at the end
 # to get the formatting for how package fixest asks you to put in fixed effects
 
@@ -237,24 +237,24 @@ reg_5_twoway_form # both entity and time fixed effects
 
 #' @param outcome_var a string vector with the outcome variable name
 #' @param regressor_vars a character vector with all the regressors (not fixed effects) variable names
-#' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of. 
+#' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of.
 #' defaults to null
 
 reg_equation <- function(outcome_var = "lge_15",
                          regressor_vars = c("gdp_pc","tfr"),
                          fe_vars        = NULL){
-  
+
   reg_string <- paste(outcome_var, paste(regressor_vars, collapse = " + "), sep = " ~ ")
-  
-  if (!is.null(fe_vars)){ 
+
+  if (!is.null(fe_vars)){
     reg_form <- paste(reg_string,paste(fe_vars,collapse = " + "), sep = "|") %>% as.formula()
   } else
-    
+
     reg_form   <- reg_string %>% as.formula()
-  
+
   return(reg_form)
-  
-  
+
+
 }
 
 # show an example of it
@@ -297,7 +297,7 @@ summary(my_lm)
   my_notes <- "Robust standard errors given in parentheses. Population and life expectancy are obtained from \\\\citet{undesaWorldPopulationProspects2022}. Gross domestic product (GDP) is (what units) from \\\\citet{feenstraNextGenerationPenn2015}."
 
 # https://modelsummary.com/articles/modelsummary.html
-  
+
   options(modelsummary_format_numeric_latex = "plain") # there was a "\num{}# argument wrapping around the latex tables
   options(modelsummary_factory_html = 'kableExtra')
 
@@ -306,11 +306,11 @@ summary(my_lm)
 models <- list(
   "(1)" = lm(reg_1_form, data = data_year_a),
   "(2)" = lm(reg_1_form, data = data_year_b),
-  
-  
+
+
   "(3)" = lm(reg_2_form, data = data_year_a),
   "(4)" = lm(reg_2_form, data = data_year_b),
-  
+
   "(5)" = lm(reg_3_form, data = data_year_a),
   "(6)" = lm(reg_3_form, data = data_year_b)
 )
@@ -349,7 +349,7 @@ coeftest(lm(le_65 ~ gdp_pc, data = data_year_a),   vcov. = vcovHC, type = "HC1")
 # IF YOU ARE GETTING MEAN NA IN YOUR OUTPUT, YOU NEED TO EXAMINE WHY
 # It's most likely that your data has log(x) for x<0 which does not exist
 # since log(0) -> -infinity
- 
+
 # get length of the number of unique regressors
 n_total_regressor_vars <- c(reg_1_vars,reg_2_vars,reg_3_vars) %>% unique() %>% length()
 
@@ -362,7 +362,7 @@ rows <- data.frame("term" = c("Mean"),
                    "(6)"  = c(round(mean(data_year_b[[outcome_vars[3]]]),2)))
 
 attr(rows, 'position') <- c(2*n_total_regressor_vars+4) # this should put it right after the number of observations
-# there are 2 rows per regressor var, plus the Number of Observations, plus 2 for the intercept, and then put the Num Obs at 
+# there are 2 rows per regressor var, plus the Number of Observations, plus 2 for the intercept, and then put the Num Obs at
 # the next one down
 
 
@@ -382,7 +382,7 @@ modelsummary(models,
              add_rows = rows,
              title = title_crosssection,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors" # omit several of the goodness of fit stats
-)   %>% 
+)   %>%
   add_header_above(c(" "=1, "1960" =1, "2019"=1, "1960"=1, "2019"=1, "1960"=1,"2019"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
   add_header_above(c(" "=1, "Birth"=2, "Age 15" = 2, "Age 65"=2))  # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
 
@@ -424,22 +424,22 @@ modelsummary(models,
   title_paneltab <- "Panel Regression, Life Expectancy \\label{tab:hw03regpanel}"
   notes_paneltab <- "Heteroskedascicity-robust standard errors clustered at the country (for within) and country and year (for twoways) levels given in parentheses. Population and life expectancy data are from \\\\citet{undesaWorldPopulationProspects2022}. Gross domestic product (GDP) is (what units) from \\\\citet{feenstraNextGenerationPenn2015}."
   n_total_regressor_vars <- c(reg_4_vars,reg_5_vars) %>% unique() %>% length()
-  
+
 ## set formulas ----
 
 
-  # test it out 
+  # test it out
   # feols: fixed effect ordinary least squares, from the fixest package
   reg_5_within_form
-  
+
   fe_ols_5 <- feols(reg_5_within_form,
                     data = data)
 
 # check that it squares away with what we think
-  fe_ols_5 
-  
+  fe_ols_5
+
   reg_5_twoway_form
-  
+
   fe_ols_6 <- feols(reg_5_twoway_form,
                     data = data)
 
@@ -452,7 +452,7 @@ modelsummary(models,
 
   fe_ols_6
 
-# how do we decide what to cluster? Look at the residuals plot and see what 
+# how do we decide what to cluster? Look at the residuals plot and see what
 # groups there's correlation within. If there's correlation in the residuals according
 # to country, then cluster by country
 
@@ -484,7 +484,7 @@ reg_5_twoway_form
 feols(reg_5_twoway_form,
       data = data)
 
-# declare some extra rows to add 
+# declare some extra rows to add
 rows <- data.frame("term" = c("Mean","Country FE", "Time FE"),
                    "(1)"  = c(round(mean(data_year_a[[outcome_vars[4]]]),2),"N","N"),
                    "(2)"  = c(round(mean(data_year_b[[outcome_vars[4]]]),2),"N","N"),
@@ -502,7 +502,7 @@ modelsummary(models,
              stars = FALSE,
              vcov =
              list("HC1","HC1",~iso3c,~iso3c+year),
-             # heteroskedasticity robust standard errors, for the first three clustered at the country, 
+             # heteroskedasticity robust standard errors, for the first three clustered at the country,
              # for the second three double clustered at country and time
              coef_rename = cov_labels_4_to_5,
              title = title_paneltab,
@@ -527,7 +527,7 @@ modelsummary(models,
              title = title_paneltab,
              add_rows = rows,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F" # omit several of the goodness of fit stats
-) %>% 
+) %>%
   kableExtra::footnote(escape = FALSE, # so that KableExtra knows to just pass through the \
            general= notes_paneltab,
            threeparttable = TRUE,
