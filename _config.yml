@@ -22,8 +22,8 @@ title_separator          : "-"
 subtitle                 : "The R Workflow Package for Economists" # site tagline that appears below site title in masthead
 name                     : "J Stallman"
 description              : "ekonomR R package for economists"
-url                      : "https://stallman-j.github.io/ekonomR" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-baseurl                  : # the subpath of your site, e.g. "/blog"
+url                      : "https://stallman-j.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+baseurl                  : "ekonomR" # the subpath of your site, e.g. "/blog"
 repository               : "stallman-j/ekonomR" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
@@ -115,16 +115,16 @@ analytics:
 author:
   name             : "Home"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : #"Frequent hearer of trees falling in forests, whimsical and geeky fledgeling economist."
+  bio              :
   location         : #"Hamden CT"
   email            :
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: #"mailto:name@mail.com"
+      url: "mailto:j.stallman@yale.edu"
     - label: "Link"
       icon: "fas fa-fw fa-link"
-      url: #"https://stallman-j.github.io"
+      url:  "https://stallman-j.github.io"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       # url: "https://twitter.com/"
@@ -133,7 +133,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: #https://github.com
+      url: "https://github.com/stallman-j/ekonomR"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"

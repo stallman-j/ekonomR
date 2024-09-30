@@ -309,4 +309,4 @@ If you have important articles to save, put them in `articles`. If you're workin
 
 # Vignettes
 
-[Basic Plotting](https://stallman-j.github.io/ekonomR/basic-plotting/)
+[Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/)

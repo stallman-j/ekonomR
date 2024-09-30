@@ -2,9 +2,9 @@
 main:
   - title: "Documentation"
     url: https://stallman-j.github.io/ekonomR/documentation/documentation/
+  - title: "Vignettes"
+    url: https://stallman-j.github.io/vignettes
   - title: "GitHub Repo"
     url: https://github.com/stallman-j/ekonomR
-  - title: "LaTekonomer"
-    url: https://stallman-j.github.io/LaTekonomer
-  - title: "ECON 412 LaTeX"
-    url: https://stallman-j.github.io/LaTekonomer/how-tos/ECON-412_overleaf/
+  - title: "Data"
+    url: https://stallman-j.github.io/how-tos/data/
