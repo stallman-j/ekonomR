@@ -69,22 +69,24 @@ Let's see what years we have available (Note: Not all years will be available fo
 
 ``` r
 unique(gcb_clean$year)
-#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860
-#>  [12] 1861 1862 1863 1864 1865 1866 1867 1868 1869 1870 1871
-#>  [23] 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882
-#>  [34] 1883 1884 1885 1886 1887 1888 1889 1890 1891 1892 1893
-#>  [45] 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904
-#>  [56] 1905 1906 1907 1908 1909 1910 1911 1912 1913 1914 1915
-#>  [67] 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926
-#>  [78] 1927 1928 1929 1930 1931 1932 1933 1934 1935 1936 1937
-#>  [89] 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948
-#> [100] 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959
-#> [111] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970
-#> [122] 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981
-#> [133] 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992
-#> [144] 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
-#> [155] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014
-#> [166] 2015 2016 2017 2018 2019 2020 2021 2022
+#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859
+#>  [11] 1860 1861 1862 1863 1864 1865 1866 1867 1868 1869
+#>  [21] 1870 1871 1872 1873 1874 1875 1876 1877 1878 1879
+#>  [31] 1880 1881 1882 1883 1884 1885 1886 1887 1888 1889
+#>  [41] 1890 1891 1892 1893 1894 1895 1896 1897 1898 1899
+#>  [51] 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909
+#>  [61] 1910 1911 1912 1913 1914 1915 1916 1917 1918 1919
+#>  [71] 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929
+#>  [81] 1930 1931 1932 1933 1934 1935 1936 1937 1938 1939
+#>  [91] 1940 1941 1942 1943 1944 1945 1946 1947 1948 1949
+#> [101] 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959
+#> [111] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969
+#> [121] 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979
+#> [131] 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989
+#> [141] 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999
+#> [151] 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009
+#> [161] 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019
+#> [171] 2020 2021 2022
 ```
 
 
@@ -175,7 +177,7 @@ Now let's generate a plot:
 
 
 ``` r
-plot <- ggplot2::ggplot(data = data_country,
+my_plot <- ggplot2::ggplot(data = data_country,
                ggplot2::aes(x = year)) +
   ggplot2::geom_point(ggplot2::aes(y =gcb_ghg_territorial, color = "Territorial Emissions")) +
   ggrepel::geom_text_repel(data = base::subset(data_country,year %in%years_to_show), # pick out just these years
@@ -200,18 +202,17 @@ plot <- ggplot2::ggplot(data = data_country,
   ) +
   #ggplot2::scale_y_continuous(trans = "log10", limits = c(400,100000)) +
   ggplot2::scale_x_continuous(limits = c(1899,2025))
-
-
-plot
 ```
 
-![plot of chunk unnamed-chunk-41](figure/unnamed-chunk-41-1.png)
+You can see the plot in your console by just typing `my_plot` in the console.
+
+![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png)
 
 Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
 
 ``` r
 ggsave_plot(output_folder = here::here("output","02_figures"),
-         plotname = plot,
+         plotname = my_plot,
          filename = paste0("gcb_territorial_emissions_",chosen_country_name,".png"),
          width = 8,
          height = 6,

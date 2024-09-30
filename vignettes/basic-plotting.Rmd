@@ -148,7 +148,7 @@ years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
 Now let's generate a plot:
 
 ```{r}
-plot <- ggplot2::ggplot(data = data_country,
+my_plot <- ggplot2::ggplot(data = data_country,
                ggplot2::aes(x = year)) +
   ggplot2::geom_point(ggplot2::aes(y =gcb_ghg_territorial, color = "Territorial Emissions")) +
   ggrepel::geom_text_repel(data = base::subset(data_country,year %in%years_to_show), # pick out just these years
@@ -174,14 +174,18 @@ plot <- ggplot2::ggplot(data = data_country,
   #ggplot2::scale_y_continuous(trans = "log10", limits = c(400,100000)) +
   ggplot2::scale_x_continuous(limits = c(1899,2025))
 
+```
 
-plot
+You can see the plot in your console by just typing `my_plot` in the console.
+
+```{r, echo = FALSE}
+knitr::include_graphics(path = "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png")
 ```
 
 Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
 ```{r}
 ggsave_plot(output_folder = here::here("output","02_figures"),
-         plotname = plot,
+         plotname = my_plot,
          filename = paste0("gcb_territorial_emissions_",chosen_country_name,".png"),
          width = 8,
          height = 6,
