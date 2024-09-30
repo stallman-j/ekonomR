@@ -294,7 +294,7 @@ For a country which is  *not* China, plot its greenhouse gas *consumption* (not 
   - If there are biases in the data, what direction do you think they would take?
 
 
-# The Next Vignette in this Series
+# Up Next: Intermediate Plotting
 
 See the next vignette on [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/) for more plotting examples including layered plots and finer-tuned settings.
 

@@ -13,12 +13,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 # Getting Started
 
@@ -32,27 +27,31 @@ First, go into the "Packages" tab in RStudio and make sure that `ekonomR` is *un
 
 Then run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
 
-``` {r install, results = "hide", eval = FALSE}
+
+``` r
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 ```
 
 Now bring the `ekonomR` package into your working library.
 
-```{r setup}
+
+``` r
 library(ekonomR)
 ```
 
 Let's tell R that we want to use the cleaned GCB data.
 
-```{r}
+
+``` r
 data(gcb_clean)
 ```
 
 
 For some housekeeping, let's also remove the scientific notation in our axes. Otherwise we get x and y axis as e^4 and this gets difficult to read. We'd rather take logs in most cases, or rescale the axes, instead of dealing with scientific notation in our plots.
 
-```{r}
+
+``` r
 options(scipen = 999)
 ```
 
