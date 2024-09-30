@@ -206,7 +206,7 @@ my_plot <- ggplot2::ggplot(data = data_country,
 
 You can see the plot in your console by just typing `my_plot` in the console.
 
-![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png)
+![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/output/02_figures/gcb_territorial_emissions_China.png)
 
 Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
 
