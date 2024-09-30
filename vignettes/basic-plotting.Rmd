@@ -1,5 +1,5 @@
 ---
-title: "Basic Plotting"
+title: "Simple Plotting with a Review of R Coding Basics"
 layout: single
 toc: true
 toc_label: "Contents"
@@ -24,41 +24,43 @@ knitr::opts_chunk$set(
 
 Throughout, exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If these checks aren't obvious to you, you should implement the code to figure them out.
 
-There's a more involved exercise at the very end that you're encouraged to build out on your own in an R script. If you're working with the `ekonomR` sequence and you've created a project 
+There's a more involved exercise at the very end that you're encouraged to build out on your own in an R script. If you're working with the `ekonomR` sequence and you've created a project using the `ekonomR` function `create_folders`, then you should copy the code chunks from this exercise into a file called, say, `basic-plotting-vignette.R` into the folder `code/scratch` so that you can refer back to it if you need.
+
+If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `basic-plotting.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/basic-plotting.Rmd) and save it into `code/scratch`.
 
 # Bring in the data
 
 We'll be plotting data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
 
 
+The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting your vignette, you'll need to re-install it correctly so that you can access this update.
 
-This data has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR`, you'll want to go into the "Packages" tab and make sure that `ekonomR` is *unchecked* before you run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
+First, go into the "Packages" tab in RStudio and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+
+Then run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
 
 ``` {r install, results = "hide", eval = FALSE}
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 ```
 
+Now bring the `ekonomR` package into your working library.
+
 ```{r setup}
 library(ekonomR)
 ```
 
-Let's tell R that we want to use this data.
+Let's tell R that we want to use the cleaned GCB data.
 
 ```{r}
 data(gcb_clean)
 ```
 
-Let's also remove the scientific notation in our axes. Otherwise we get x and y axis as e^4 and this gets difficult to read. We'd rather take logs in most cases, or rescale the axes, instead of dealing with scientific notation in our plots.
 
-```{r}
-options(scipen = 999)
-```
-(Future vignettes will go through the details of downloading and cleaning this data).
 
 # Data Exploration
 
-Let's look at this data. R calls it a data frame, which you can think of as a single sheet in an Excel workbook. 
+We won't go deep into data exploration for the purposes of this vignette. R calls most data a data frame, which you can think of as a single sheet in an Excel workbook. 
 
 In your console, enter the following:
 
@@ -67,7 +69,7 @@ View(gcb_clean)
 names(gcb_clean)
 ```
 
-*Comprehension check:* What is `names(gcb_clean)` giving us for output?
+*Comprehension check:* What is `names(gcb_clean)` giving us for output? What class is this object? (Hint: `class(names(gcb_clean))`.) What is the class of `gcb_clean`?
 
 Let's see what years we have available (Note: Not all years will be available for all measures)
 
@@ -76,35 +78,38 @@ unique(gcb_clean$year)
 ```
 
 
-*Exercise:* How many unique countries are present in this data frame?
+*Comprehension Exercise:* How many unique countries are present in this data frame?
 
 # Time Series Plot
 
 Let's plot territorial emissions for China for all the available years. This is a **time series**: we're showing the change in a single unit (here, a country), over time.
 
-We want to make our code-writing somewhat clever. Rather than inputting "China" everywhere, and then replacing it everywhere if we later want to plot something else, let's define at the top what we'd like:
+It's good coding practice to *soft-code* wherever you can. This means that rather than inputting "China" everywhere, and then replacing it everywhere if we later want to plot something else, let's try to define at the top of our scripts something that we only have to change up here and not throughout.
 
 ```{r}
 chosen_country <- c("CHN")
 chosen_country_name <- "China"
 ```
 
-These will show up in other code blocks throughout this vignette. Let's also create a data frame that just contains the data for China.
+These will show up in other code blocks throughout this vignette. 
+
+Let's also create a data frame that just contains the data for China.
 
 ```{r}
 data_country <- gcb_clean %>% 
                 dplyr::filter(iso3c == chosen_country)
 ```
 
+
 ## The Pipe Operator %>%
 
-If you're not familiar with the data cleaning and organizing packages included in what's called the `tidyverse`, you might be a little confused by the `%>%` symbol. This is called the "pipe operator": think of it as a funnel.
+If you're not familiar with the data cleaning and organizing packages included in what's called the `tidyverse` (which is just a collection of packages), you might be a little confused by the `%>%` symbol. This is called the "pipe operator." Think of it as a funnel.
 
 You take the stuff that came before the pipe, and funnel it through the pipe into the next function that comes below.
 
 In coding terms, what it says is, take the thing that came before (here `gcb_clean`) and insert it into the first argument of the function that comes next (here, `filter`). 
 
-We could also have written 
+We could also have written the following: 
 
 ```{r}
 data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
@@ -112,7 +117,9 @@ data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
 
 *Comprehension check:* What has the `filter` function done? How many rows exist in the data frame `data_country`?
 
-Writing `dplyr::filter` just tells R that the function `filter` comes with the `dplyr` package. There are several packages that have a `filter` function, so we specify *which* package's `filter` function we want here. We'll generally state the package for any function that isn't very basic within the vignettes.
+Writing `dplyr::filter` just tells R that the function `filter` comes with the `dplyr` package. There are several packages that have a `filter` function, so we specify *which* package's `filter` function we want here. 
+
+It's good practice to state the package that you're getting functions from. When someone else uses your code, or you use your own code on a different machine, or you update R, this will signal to R that it should install the latest version of those packages.
 
 Look at the help for this function
 ```{r}
@@ -148,9 +155,15 @@ Since we want to plot territorial emissions, we can add a condition to the filte
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 ```
 
-We've added a condition, which is removing the rows for which `gcb_ghg_territorial` is missing. `is.na()` will return `TRUE` if the row is missing (`NA`) in the column `gcb_ghg_territorial`.
+We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing. 
+
+## Logical (Boolean) Statements
+
+`is.na()` will return `TRUE` if the value is missing (`NA`) in the vector given inside of the parentheses.
 
 The `!` is a negation, so `!is.na()` now returns `TRUE` if the row is *not* missing, so that we keep the rows for which the territorial emissions *are* present.
+
+The vector that `!is.na()` is checking can also be written as `gcb_clean$gcb_ghg_territorial`: this denotes the column called `gcb_ghg_territorial` located in the data frame `gcb_clean`. Using `dplyr::filter` masks that a little bit because we already stated up at the top that we're looking inside the data frame `gcb_clean`.
 
 ## Multiple Pipes
 
