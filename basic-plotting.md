@@ -1,5 +1,13 @@
 ---
 title: "basic-plotting"
+#subtitle: Hopefully everything you need and lots of things you hopefully won't
+# https://bookdown.org/yihui/rmarkdown/html-document.html#floating-toc
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-09-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{basic-plotting}
