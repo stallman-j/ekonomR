@@ -186,9 +186,9 @@ my_plot <- ggplot2::ggplot(data = data_country,
                   max.overlaps = 17)+ # a lower number will give fewer total labels; higher will put more labels in
   ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
        caption = c("GDP from GCB (2023)"),
-       x ="GDP per capita (units here)" ,
-       y = "Life Expectancy (units here)",
-       color = "" # sets legend name
+       x ="" ,
+       y = "Emissions (units here)",
+       color = "Emissions" # sets legend name
   )+
   # xlab() +
   # ylab() +
@@ -206,16 +206,7 @@ my_plot <- ggplot2::ggplot(data = data_country,
 
 You can see the plot in your console by just typing `my_plot` in the console.
 
-
-``` r
-url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true"
-knitr::include_graphics(url)
-```
-
-<div class="figure">
-<img src="https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true" alt="plot of chunk unnamed-chunk-14" width="300px" />
-<p class="caption">plot of chunk unnamed-chunk-14</p>
-</div>
+![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true)
 
 
 Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults
