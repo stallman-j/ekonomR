@@ -1,18 +1,16 @@
 #' Map Theme
-#' @description Wraps around ggplot2's theme_minimal with default settings that are nice and professional
-#' @param legend_text_size replaces
-#' @param legend_title_size
-#' @param legend_position
-#' @param axis_title_x
-#' @param axis_title_y
-#' @param axis_text_x
-#' @param axis_text_y
+#' @description Wraps around ggplot2's theme_minimal with default settings that are nice and professional for maps
+#' @param legend_text_size replaces legend.text in theme() with legend.text = element_text(linewidth = legend_text_size. defaults to 8.)
+#' @param legend_title_size replaces legend.title = element_text(linewidth = legend_title_size), defaulting to 10
+#' @param legend_position replaces legend.position, using c(a,b) where the a and b are numbers in 0 to 1. a gives the left-right movement (.2 is mostly on the left) and b gives the up-down location. use legend_position = "none" for no legent.
+#' @param axis_title_x defaults to making axis title black. use axis_title_x = element_blank() to remove
+#' @param axis_title_y defaults to making axis title black. use axis_title_y = element_blank() to remove
+#' @param axis_text_x defaults to making the axis text a dark grey. use element_blank() to remove
+#' @param axis_text_y defaults to making axis text dark gray. use element_blank() to remove
 #' @param ... additional options for ggplot2::theme()
 #'
 #' @return wrapper around ggplot2::theme_minimal() and theme()
 #' @export
-#'
-#' @examples
 theme_minimal_map <- function(legend_text_size = 8,
                       legend_title_size = 10,
                       legend_position = c(0.2,0.3), # first term is LR, second up-down. "none" for no legend

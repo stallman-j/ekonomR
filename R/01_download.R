@@ -1,14 +1,14 @@
 #' Download Files
 #' @description Function for downloading multiple data files from a website
-#' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in
-#' @param data_raw location (file path) of raw data folder
+#' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder
+#' @param data_raw location (file path) of raw data folder. Defaults to here("data","01_raw")
 #' @param base_url the url of the folder to download
 #' @param sub_urls the additional endings to the base url that you'd like to download separately, a vector of characters
 #' @param filenames the names of files, without paths, to attach to those suburls.
 #' @param create_folder if TRUE, create a subfolder
 #' @export
-download_multiple_files <- function(data_subfolder,
-                                    data_raw,
+download_multiple_files <- function(data_subfolder = NULL,
+                                    data_raw = NULL,
                                     base_url,
                                     sub_urls,
                                     filenames,
@@ -17,9 +17,25 @@ download_multiple_files <- function(data_subfolder,
                                     username = NULL,
                                     password = NULL) {
 
-  extract_path <- file.path(data_raw,data_subfolder)
+  if (!is.null(data_raw)){
+    data_raw <- here::here("data","01_raw")
+  }
+  if (!is.null(data_subfolder)){
+    extract_path <- file.path(data_raw)
+
+  } else{
+    extract_path <- file.path(data_raw, data_subfolder)
+
+  }
 
 
+  # create folder if it doesn't already exist
+  if (file.exists(extract_path)) {
+    cat("The data subfolder",extract_path,"already exists. \n")
+  } else{
+    cat("Creating data subfolder",extract_path,".\n")
+    dir.create(extract_path)
+  }
   # create folder if it doesn't already exist
   if (file.exists(extract_path)) {
     cat("The data subfolder",extract_path,"already exists. \n")
@@ -94,16 +110,17 @@ download_multiple_files <- function(data_subfolder,
 
 
 
-#' Function for downloading data from a website, zip or password protected file
-#' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in
-#' @param data_raw location (file path) of raw data folder
+#' Function for downloading single data file from a website, zip or password protected file
+#' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder
+#' @param data_raw location (file path) of raw data folder. Defaults to here("data","01_raw")
 #' @param filename if not a zip file and need to use download.file, needs to provide a name for the ultimate file
 #' @param url the url of the folder to download
 #' @param zip_file TRUE or FALSE, if TRUE use file path of a zip folder
 #' @param pass_protected TRUE or FALSE, if TRUE you'll get prompted for username and password. if true you need to provide username = and password =
-
-download_data <- function(data_subfolder,
-                          data_raw = data_raw,
+#' @returns data file in the particular subfolder
+#' @export
+download_data <- function(data_subfolder = NULL,
+                          data_raw = NULL,
                           filename = NULL,
                           url,
                           zip_file = FALSE,
@@ -114,7 +131,17 @@ download_data <- function(data_subfolder,
   # this is where the data will live
   # if prompted, can either "" block out with quotes or just copy+paste directly, works with zip and passwords! for a single link
 
-  extract_path <- file.path(data_raw, data_subfolder)
+  if (!is.null(data_raw)){
+    data_raw <- here::here("data","01_raw")
+  }
+  if (!is.null(data_subfolder)){
+    extract_path <- file.path(data_raw)
+
+  } else{
+    extract_path <- file.path(data_raw, data_subfolder)
+
+  }
+
 
   # create folder if it doesn't already exist
   if (file.exists(extract_path)) {
