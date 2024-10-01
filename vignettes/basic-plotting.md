@@ -260,8 +260,7 @@ my_plot <- ggplot2::ggplot() +
   ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
        caption = c("GDP from GCB (2023)"),
        x ="" ,
-       y = "Emissions (units here)",
-       color = "Emissions" # sets legend name
+       y = "Emissions (units here)"
   )
 ```
 
@@ -281,8 +280,7 @@ my_plot <- ggplot2::ggplot() +
   ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
        caption = c("GDP from GCB (2023)"),
        x ="" ,
-       y = "Emissions (units here)",
-       color = "Emissions" # sets legend name
+       y = "Emissions (units here)"
   ) + 
   ggplot2::theme_minimal()
 
@@ -307,8 +305,7 @@ my_plot <- ggplot2::ggplot() +
   ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
        caption = c("GDP from GCB (2023)"),
        x ="" ,
-       y = "Emissions (units here)",
-       color = "Emissions" # sets legend name
+       y = "Emissions (units here)"
   ) + 
   ekonomR::theme_minimal_plot()
 ```
