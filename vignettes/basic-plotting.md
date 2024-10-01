@@ -237,16 +237,17 @@ my_plot <- ggplot2::ggplot() +
                       ggplot2::aes(x = year, 
                                    y =gcb_ghg_territorial)
                       )
-my_plot
 ```
 
-![plot of chunk unnamed-chunk-28](figure/unnamed-chunk-28-1.png)
+
+![plot of chunk unnamed-chunk-13](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-01.png?raw=true)
+You should input `my_plot` into the console of RStudio to see if the plot shows up in your plotting pane like you would expect. Try doing this after each instance that we change something in our plots.
 
 `ggplot2::ggplot()` just opens up a new, blank plot for us. Try putting just this in your console and see what happens.
 
 Under this, we add (with the plus sign) the following: `ggplot2::geom_point()`, which calls a scatter plot. The scatter plot uses the data from `data_country`, and sets as the x axis its variable `year` and its y axis the variable `gcb_ghg_territorial`.
 
-We can make this a little neater. Let's change the axis labels and add both a caption to cite our data and a title.
+We can make this a little neater. Let's change the axis labels and add both a caption to cite our data and a title. We add with another addition sign these options below our original plotting code.
 
 
 
@@ -262,12 +263,14 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)",
        color = "Emissions" # sets legend name
   )
-my_plot
 ```
 
-![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29-1.png)
 
-Better! But the grid lines are a little odd and why is the background grey? `ggplot2` has a bunch of themes. A nice one is `theme_minimal()`, which you can add on:
+![plot of chunk unnamed-chunk-16](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-02.png?raw=true)
+
+Better! We're getting somewhere. But the grid lines are a little odd and why is the background grey? 
+
+`ggplot2` has a bunch of themes. A nice one is `theme_minimal()`, which you can add on:
 
 ``` r
 my_plot <- ggplot2::ggplot() + 
@@ -283,11 +286,16 @@ my_plot <- ggplot2::ggplot() +
   ) + 
   ggplot2::theme_minimal()
 
-my_plot
 ```
 
-![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30-1.png)
-There are some settings I end up coming back to, which is why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme. That's why it's called `theme_minimal_plot()`. It explicitly lists a few of the options I end up calling often, but if you just want a nice, black-and-white plot that is pretty simple to change the labels on, just tack it on like so:
+
+
+![plot of chunk unnamed-chunk-19](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
+Still not loving the background.
+
+It was through tinkering with this process that I realized there are some settings I end up coming back to that would be nice if I just always *had* without having to go look up. 
+
+That's why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme to preserve those defaults. It's called `theme_minimal_plot()`. It explicitly lists a few of the options I end up changing often so that I can reference the more limited help functions they have rather than all of `ggplot2`'s documentation, but if you just want a nice, black-and-white plot that is pretty simple to change the labels on, just tack it on like so:
 
 
 ``` r
@@ -303,33 +311,23 @@ my_plot <- ggplot2::ggplot() +
        color = "Emissions" # sets legend name
   ) + 
   ekonomR::theme_minimal_plot()
-
-my_plot
 ```
 
-![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
+
+![plot of chunk unnamed-chunk-22](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
+
 This is nice and crisp. You can see more options I often end up changing with `?theme_minimal_plot`
 
-
-You can see the final plot in your console by typing `my_plot` in the console.
-
-![plot of chunk unnamed-chunk-32](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true)
 
 
 Now let's save the plot, with a function from `ekonomR` that similarly to the small adaptation I made to `theme_minimal()` slightly adapts ggplot2's `ggsave` with some useful defaults.
 
 
 
-``` r
-ggsave_plot(output_folder = here::here("output","02_figures"),
-         plotname = my_plot,
-         filename = paste0("gcb_territorial_emissions_",chosen_country_name,".png"),
-         width = 8,
-         height = 6,
-         dpi  = 400)
-```
 
-The `here::here()` function is amazing: it cleverly looks for where it thinks your home project folder is, and then defines directories relative to this folder. If you've got this code running in an R Project (which you should), then it will set "here" to be that project folder.
+You can see the plot in your console by typing `my_plot` in the console, but you should check and make sure that the PNG lives where you can find it.
+
+The `here::here()` function is amazing. Try typing it in your console, and it should output a file path for you. This function cleverly looks for where it thinks your home project folder is, and then defines directories relative to this folder. If you've got this code running in an R Project (which you should), then it will set "here" to be that project folder.
 
 We defined `chosen_country_name` way up at the top, and it's also coming in down here with the `paste0` function, which is also a very useful function. This means that if we went up to the top and changed *just* `chosen_country` and `chosen_country_name`, we could run through all this code without changing anything else, and get a plot for Chile or Kenya or the United States.
 
