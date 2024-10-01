@@ -298,9 +298,9 @@ my_plot <- ggplot2::ggplot() +
 ![plot of chunk unnamed-chunk-19](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
 Still not loving the background.
 
-We could keep doing this, finagling with elements. It was through tinkering with this process that I realized there are some settings I end up coming back to that would be nice if I just always *had* without having to go look up. 
+We could keep doing this, finagling with elements. It was through tinkering with this process that I realized there are some settings I would like to just *have* without having to go look up. 
 
-That's why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme to preserve those defaults. It's called `theme_minimal_plot()`. It explicitly lists a few of the options I end up changing often so that I can reference them easily rather than flipping through all of `ggplot2`'s documentation.
+That's why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme to preserve those defaults. It's called `theme_minimal_plot()`.
 
 If you just want a nice, black-and-white plot that is pretty simple to change the labels on, just tack it on like so:
 
@@ -325,18 +325,28 @@ my_plot <- ggplot2::ggplot() +
 That'll do, right? This plot is nice and crisp. The contrast is fairly high. The sizing is pretty good on titles and captions. We could keep tinkering, but the marginal returns are pretty low at this point. You can see more options I often end up changing with `?theme_minimal_plot` if you like.
 
 
-Now let's save the plot, with a function from `ekonomR` slightly adapts ggplot2's `ggsave` with some useful defaults.
+Now let's save the plot, with a function from `ekonomR` slightly adapting ggplot2's `ggsave` with some useful defaults.
 
 
 
+``` r
+ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
+         plotname = my_plot,
+         filename = paste0("gcb_territorial_emissions_",chosen_country_name,".png"),
+         width = 8,
+         height = 6,
+         dpi  = 400)
+```
 
-You can see the plot in your console by typing `my_plot` in the console, but you should check and make sure that the PNG lives where you can find it.
+You can see this final plot by typing `my_plot` in the console, but you should check and make sure that the PNG lives where you can find it.
 
-The `here::here()` function is amazing. Try typing it in your console, and it should output a file path for you. This function cleverly looks for where it thinks your home project folder is, and then defines directories relative to this folder. If you've got this code running in an R Project (which you should), then it will set "here" to be that project folder.
+The `here::here()` function is amazing. Try typing it in your console. It should output a file path for you. This function cleverly looks for where it thinks your home project folder is, and then defines directories relative to this folder. If you've got this code running in an R Project (which you should), then your output from `here::here()` should be that project folder's path.
 
-We defined `chosen_country_name` way up at the top, and it's also coming in down here with the `paste0` function, which is also a very useful function. This means that if we went up to the top and changed *just* `chosen_country` and `chosen_country_name`, we could run through all this code without changing anything else, and get a plot for Chile or Kenya or the United States.
+We defined `chosen_country_name` way up at the top. It's also coming in down here with the `paste0` function, which is also a very useful function. 
 
-*Comprehension Check:* What is `paste0` doing in the above code block? Plug `paste0("gcb_territorial_emissions_",chosen_country_name,".png")` into your console and see what gets outputted.
+This means that if we went up to the top and changed *just* `chosen_country` and `chosen_country_name`, we could run through all this code without changing anything else, and get a plot for Chile or Kenya or the United States rather than China. That's cool!
+
+*Comprehension Check:* What is `paste0` doing in the above code block? Plug `paste0("gcb_territorial_emissions_",chosen_country_name,".png")` into your console and see what gets outputted. If you're not sure, try making up something like `paste0("ekonomR ","is really really nerdy", "... ","but fun..."," in a very nerdy way")` and then toy around a bit with it.
 
 # Exercises
 
