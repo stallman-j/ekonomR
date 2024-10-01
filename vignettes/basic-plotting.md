@@ -17,18 +17,15 @@ vignette: >
 
 # Getting Started
 
-If you're working with the `ekonomR` sequence and you've created a project using the `ekonomR` function `create_folders`, you may want to copy the code from this exercise into a file called, say, `basic-plotting-vignette.R` into the folder `code/scratch` so that you can refer back to it if you need. 
+If you're working with the `ekonomR` sequence and you've created a project using the `ekonomR` function `create_folders`, you may want to copy the code from the end of this vignette into a file called, say, `basic-plotting-vignette.R` into the folder `code/scratch` so that you can edit and refer back to it.
 
 If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `basic-plotting.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/basic-plotting.Rmd) and save it into `code/scratch`.
 
-Exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If it's not obvious to you how you would write the code to answer these checks, you should puzzle around with the code in your console for a bit to figure them out.
+Exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If it's not obvious to you how you would write the code to answer these checks, you should puzzle around with the code in your console to figure them out.
 
-There's a more involved exercise at the very end that you're encouraged to build out on your own in an R script. 
-
-# Bring in the data
+There's a more involved exercise at the very end that you can build out on your own in an R script by modifying the code in here.
 
 We'll be plotting data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
-
 
 The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting your vignette, you'll need to re-install it correctly so that you can access this update.
 
@@ -49,6 +46,12 @@ Now bring the `ekonomR` package into your working library.
 library(ekonomR)
 ```
 
+Your R Session might ask you to download a bunch of packages. This is fine - if you're given the option, update packages from CRAN, the package repository for well-documented R packages. 
+
+This is also an advantage of using `ekonomR`: we're installing and loading most of the packages that you'll have to use anyways for an economic analysis, and hopefully not very many of the packages you won't need.
+
+# Data Exploration
+
 Let's tell R that we want to use the cleaned GCB data.
 
 
@@ -56,12 +59,12 @@ Let's tell R that we want to use the cleaned GCB data.
 data(gcb_clean)
 ```
 
+
 We're going to plot territorial emissions for China for all the available years. This is a **time series**: we'll be showing the change in a single unit (here, a country), over time.
 
+We won't go deep into data exploration for the purposes of this vignette, but another vignette will be out about the cleaning of this data and we'll explore some more in that one. R calls most data a data frame, which you can think of as a single sheet in an Excel workbook. 
 
-# Data Exploration
-
-We won't go deep into data exploration for the purposes of this vignette. R calls most data a data frame, which you can think of as a single sheet in an Excel workbook. 
+We need a very basic understanding of what the data look like, however.
 
 In your RStudio console, input the following:
 
@@ -150,7 +153,9 @@ and click on the `filter` function for `dplyr`.
 
 You'll see that the first thing that goes into the function is `.data`. `filter` takes a data frame, and keeps only the *rows* for which a condition holds (here, that the iso3c code is the same as we've listed for `chosen_country`.)
 
-The reason for using `%>%` is that there may be many data manipulation operations we'd like to do. Here, it's simple because we just want one thing to happen: we want to keep only the observations for China.
+The reason for using `%>%` is that there may be many data manipulation operations we'd like to do, and once you get used to it, piping makes your code pretty simple to write and very simple to follow. Here, it's a little unnecessary because we just want one thing to happen: we want to keep only the observations for China.
+
+**Nerd tip:** If you're used to SQL or interested in big data, you should be thinking hard about using the package `data.table` rather than the `tidyverse` packages including `dplyr`. `data.table` is just far, far faster than `dplyr` can manage once your data get big.
 
 ## == or =?
 
@@ -160,14 +165,14 @@ The double equals sign is a logical check: for certain elements, R is checking w
 
 A single equals sign would be setting the left-hand side equal to the right-hand side. There's a place that would have made sense to use this: We could have written `chosen_country = c("CHN")` to set the value for `chosen_country`. 
 
-In R it's common to use the left-facing arrow `<-` in your scripts to make that sort of assignment. "Set the thing on the right to be equal to the thing that it's pointing to". However, the equals sign, `=`, is commonly used for this sort of assignment in functions. 
+In R it's common to use the left-facing arrow `<-` in your scripts to make that sort of assignment. What a line with this arrow assignment means is: "Set the thing on the right to be equal to the thing that the arrow is pointing to". However, the equals sign, `=`, is commonly used for this sort of assignment in functions, and it's common to see it used in regular script by people who come to R from other languages like Python.
 
 In our context, `iso3c == "CHN"` will return `TRUE` if the row is for China, and `FALSE` if the observation is not for China. 
 
 
 ## Filtering with Multiple Conditions
 
-If you click on this data frame in your Environment tab in RStudio, you may notice a number of missing observations. 
+If you click on this data frame in your Environment tab in RStudio, you may notice a number of empty cells: these are missing observations. 
 
 Since we want to plot territorial emissions, we can add a condition to the filter so that we can ignore those missing values:
 
@@ -183,11 +188,9 @@ We've added a condition that has to be true: we are now removing the rows for wh
 
 A **logical** or **Boolean** statement is one which is either `TRUE` or `FALSE` (commonly also coded as `1` or `0`).
 
-`is.na()` is a function that asks a logical question: it will return `TRUE` if the value is missing (`NA`) in the vector given inside of the parentheses.
+`is.na()` is a function that asks a logical question: it creates a vector of the same length as the vector you feed it. In its output vector, it will return `TRUE` for the ith element of the vector it is examining if the spot of the ith element is missing (`NA`).
 
-The `!` is a negation, so `!is.na()` now returns `TRUE` if the row is *not* missing. This means that we keep the rows for which the territorial emissions *are* present.
-
-`is.na()` takes in a vector and evaluates whether each of its elements are missing or not. 
+The `!` is a negation, so `!is.na()` now returns `TRUE` if the element is *not* missing. This means in our context that we keep the rows for which the territorial emissions *are* present.
 
 It might be a little opaque what vector `!is.na()` is examining, but it's the column vector called `gcb_ghg_territorial` in the data frame `gcb_clean`.
 
@@ -226,9 +229,9 @@ Now let's get to plotting. The package `ggplot2` is a versatile plotting package
 
 There's a [whole ggplot2 book](https://ggplot2-book.org/) that you can use to get into the details, but I've found that I mostly end up tinkering with a few of these operations, and that's why `ekonomR` has a function called `theme_minimal_plot()` which wraps around the `ggplot2` functions `theme_minimal()` and `theme()` to give us a nicely formatted plot, in a good size for putting in a paper or a presentation, that we don't have to worry too much about.
 
-We're also going to use the package `ggrepel` to put labels on the graph. The way `ggplot2` typically works is that we start with the data (here, `data_country`), and then we add visual components in layers with each new call to something of the form `geom_xxx`. 
+The way `ggplot2` typically works is that we start with an empty plot, and then we add visual components in layers with each new call to something of the form `geom_xxx`, or we add on options about the captions or titles or visual elements.
 
-Now let's build up our plot. The skeleton of it is the following:
+Let's build up our plot. The skeleton of it is the following:
 
 
 ``` r
@@ -291,9 +294,11 @@ my_plot <- ggplot2::ggplot() +
 ![plot of chunk unnamed-chunk-19](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
 Still not loving the background.
 
-It was through tinkering with this process that I realized there are some settings I end up coming back to that would be nice if I just always *had* without having to go look up. 
+We could keep doing this, finagling with elements. It was through tinkering with this process that I realized there are some settings I end up coming back to that would be nice if I just always *had* without having to go look up. 
 
-That's why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme to preserve those defaults. It's called `theme_minimal_plot()`. It explicitly lists a few of the options I end up changing often so that I can reference the more limited help functions they have rather than all of `ggplot2`'s documentation, but if you just want a nice, black-and-white plot that is pretty simple to change the labels on, just tack it on like so:
+That's why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme to preserve those defaults. It's called `theme_minimal_plot()`. It explicitly lists a few of the options I end up changing often so that I can reference them easily rather than flipping through all of `ggplot2`'s documentation.
+
+If you just want a nice, black-and-white plot that is pretty simple to change the labels on, just tack it on like so:
 
 
 ``` r
@@ -313,11 +318,10 @@ my_plot <- ggplot2::ggplot() +
 
 ![plot of chunk unnamed-chunk-22](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
 
-This is nice and crisp. You can see more options I often end up changing with `?theme_minimal_plot`
+That'll do, right? This plot is nice and crisp. The contrast is fairly high. The sizing is pretty good on titles and captions. We could keep tinkering, but the marginal returns are pretty low at this point. You can see more options I often end up changing with `?theme_minimal_plot` if you like.
 
 
-
-Now let's save the plot, with a function from `ekonomR` that similarly to the small adaptation I made to `theme_minimal()` slightly adapts ggplot2's `ggsave` with some useful defaults.
+Now let's save the plot, with a function from `ekonomR` slightly adapts ggplot2's `ggsave` with some useful defaults.
 
 
 
