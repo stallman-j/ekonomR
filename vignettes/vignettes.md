@@ -19,13 +19,13 @@ vignette: >
 
 This is the list of vignettes that are coming up soon! See [the ekonomR documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) to get started.
 
-# Data Downloading Vignettes
+# Downloading Vignettes
 
 To add: downloading data with `httr` and `rvest`
 To add: downloading data without password protection
 To add: downloading data through a python API with `reticulate`
 
-# Data Cleaning Vignettes
+# Cleaning Vignettes
 
 To add: Cleaning examples 1, 2 and 3
 To add: Merging 
