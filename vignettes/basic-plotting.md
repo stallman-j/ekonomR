@@ -69,8 +69,8 @@ In your RStudio console, input the following:
 ``` r
 View(gcb_clean)
 names(gcb_clean)
-#> [1] "year"                "country_name"        "gcb_ghg_territorial"
-#> [4] "iso3c"               "gcb_ghg_consumption" "gcb_ghg_transfers"
+#> [1] "year"                "country_name"        "gcb_ghg_territorial" "iso3c"               "gcb_ghg_consumption"
+#> [6] "gcb_ghg_transfers"
 ```
 
 *Comprehension check:* What is `names(gcb_clean)` giving us for output? What class is this object? (Hint: `class(names(gcb_clean))`.) What is the class of `gcb_clean`?
@@ -80,17 +80,14 @@ Let's see what years we have available (Note: Not all years will be available fo
 
 ``` r
 unique(gcb_clean$year)
-#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860 1861 1862 1863 1864 1865
-#>  [17] 1866 1867 1868 1869 1870 1871 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881
-#>  [33] 1882 1883 1884 1885 1886 1887 1888 1889 1890 1891 1892 1893 1894 1895 1896 1897
-#>  [49] 1898 1899 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 1910 1911 1912 1913
-#>  [65] 1914 1915 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929
-#>  [81] 1930 1931 1932 1933 1934 1935 1936 1937 1938 1939 1940 1941 1942 1943 1944 1945
-#>  [97] 1946 1947 1948 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959 1960 1961
-#> [113] 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975 1976 1977
-#> [129] 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993
-#> [145] 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009
-#> [161] 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022
+#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860 1861 1862 1863 1864 1865 1866 1867 1868 1869 1870 1871
+#>  [23] 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882 1883 1884 1885 1886 1887 1888 1889 1890 1891 1892 1893
+#>  [45] 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 1910 1911 1912 1913 1914 1915
+#>  [67] 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929 1930 1931 1932 1933 1934 1935 1936 1937
+#>  [89] 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959
+#> [111] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981
+#> [133] 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
+#> [155] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022
 ```
 
 
@@ -223,7 +220,7 @@ In this case the order of what goes into the pipes won't matter. But in other ca
 
 *Comprehension check:* Create a new dataframe called `data_country2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`.
 
-# Plotting with ggplo2
+# Plotting with ggplot2
 
 Now let's get to plotting. The package `ggplot2` is a versatile plotting package that allows you to use a similar syntax for plotting all sorts of figures, from bar charts to complicated maps. 
 
@@ -231,49 +228,95 @@ There's a [whole ggplot2 book](https://ggplot2-book.org/) that you can use to ge
 
 We're also going to use the package `ggrepel` to put labels on the graph. The way `ggplot2` typically works is that we start with the data (here, `data_country`), and then we add visual components in layers with each new call to something of the form `geom_xxx`. 
 
-For the purpose of our labels, we're going to select just a few years to label:
+Now let's build up our plot. The skeleton of it is the following:
 
 
 ``` r
-years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      )
+my_plot
 ```
 
-Now let's generate a plot:
+![plot of chunk unnamed-chunk-28](figure/unnamed-chunk-28-1.png)
+
+`ggplot2::ggplot()` just opens up a new, blank plot for us. Try putting just this in your console and see what happens.
+
+Under this, we add (with the plus sign) the following: `ggplot2::geom_point()`, which calls a scatter plot. The scatter plot uses the data from `data_country`, and sets as the x axis its variable `year` and its y axis the variable `gcb_ghg_territorial`.
+
+We can make this a little neater. Let's change the axis labels and add both a caption to cite our data and a title.
+
 
 
 ``` r
-my_plot <- ggplot2::ggplot(data = data_country,
-               ggplot2::aes(x = year)) +
-  ggplot2::geom_point(ggplot2::aes(y =gcb_ghg_territorial, color = "Territorial Emissions")) +
-  ggrepel::geom_text_repel(data = base::subset(data_country,year %in%years_to_show), 
-                           ggplot2::aes(y = gcb_ghg_territorial,
-                                    label = year),
-                           max.overlaps = 17)+ # a lower number will give fewer total labels; higher will put more labels in
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
   ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
        caption = c("GDP from GCB (2023)"),
        x ="" ,
        y = "Emissions (units here)",
        color = "Emissions" # sets legend name
-  )+
-  theme_minimal_plot(#title_size = 20,
-             axis_title_x = ggplot2::element_text(color = "black",size = 15),
-             axis_title_y = ggplot2::element_text(color = "black", size = 15),
-             legend.key = ggplot2::element_rect(fill = "white", # box fill for the legend
-                                       colour = "white" # box outlines for the legend
-             ),
-             legend_position = c(.15,.85) # sets legend position, from [0,1] on X axis then [0,1] on y
-  ) +
-  ggplot2::scale_x_continuous(limits = c(1899,2025))
+  )
+my_plot
 ```
 
+![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29-1.png)
 
-You can see the plot in your console by typing `my_plot` in the console.
+Better! But the grid lines are a little odd and why is the background grey? `ggplot2` has a bunch of themes. A nice one is `theme_minimal()`, which you can add on:
 
-![plot of chunk unnamed-chunk-13](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true)
+``` r
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
+  ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
+       caption = c("GDP from GCB (2023)"),
+       x ="" ,
+       y = "Emissions (units here)",
+       color = "Emissions" # sets legend name
+  ) + 
+  ggplot2::theme_minimal()
 
-You should play around with commenting out lines using a `#` at the beginning of the line to see what changes, and changing text around to see what changes in the plot itself.
+my_plot
+```
 
-Now let's save the map, with a function from `ekonomR` that uses the ggplot2's `ggsave` with some simple defaults.
+![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30-1.png)
+There are some settings I end up coming back to, which is why `ekonomR` has a function that adds a little bit onto `ggplot2`'s minimal theme. That's why it's called `theme_minimal_plot()`. It explicitly lists a few of the options I end up calling often, but if you just want a nice, black-and-white plot that is pretty simple to change the labels on, just tack it on like so:
+
+
+``` r
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
+  ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
+       caption = c("GDP from GCB (2023)"),
+       x ="" ,
+       y = "Emissions (units here)",
+       color = "Emissions" # sets legend name
+  ) + 
+  ekonomR::theme_minimal_plot()
+
+my_plot
+```
+
+![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
+This is nice and crisp. You can see more options I often end up changing with `?theme_minimal_plot`
+
+
+You can see the final plot in your console by typing `my_plot` in the console.
+
+![plot of chunk unnamed-chunk-32](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China.png?raw=true)
+
+
+Now let's save the plot, with a function from `ekonomR` that similarly to the small adaptation I made to `theme_minimal()` slightly adapts ggplot2's `ggsave` with some useful defaults.
 
 
 
@@ -288,16 +331,19 @@ ggsave_plot(output_folder = here::here("output","02_figures"),
 
 The `here::here()` function is amazing: it cleverly looks for where it thinks your home project folder is, and then defines directories relative to this folder. If you've got this code running in an R Project (which you should), then it will set "here" to be that project folder.
 
+We defined `chosen_country_name` way up at the top, and it's also coming in down here with the `paste0` function, which is also a very useful function. This means that if we went up to the top and changed *just* `chosen_country` and `chosen_country_name`, we could run through all this code without changing anything else, and get a plot for Chile or Kenya or the United States.
+
+*Comprehension Check:* What is `paste0` doing in the above code block? Plug `paste0("gcb_territorial_emissions_",chosen_country_name,".png")` into your console and see what gets outputted.
+
 # Exercises
 
-For a country which is  *not* China, plot its greenhouse gas *consumption* (not territorial!) emissions over time with the following changes:
+For a country which is  *not* China, plot its greenhouse gas *consumption* (not territorial!) emissions over time with the following changes to your final product.
 
 - Edit the y axis labels to contain the appropriate units. They currently say `Emissions (units here)`.
     -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
     
-- Turn the legend off by using `legend_position = "none"` in the correct place in your version of the code chunk above. It's a little redundant to have a legend if you just plot one thing.
 - Correct the caption to contain the correct data attribution. It should be something like "Emissions data from GCB (2023)."
-- Change the title to reflect that you're now plotting emissions from consumption. You should also make sure that the country you're listing in the title is the country that you show data for.
+- Change the title to reflect that you're now plotting emissions from consumption. You should also make sure that the country you're listing in the title is the country that you show data for (note that we soft-coded that!).
 
 - Think about what you see from these trends relative to what you know about the history of the country.
 
@@ -311,7 +357,7 @@ For a country which is  *not* China, plot its greenhouse gas *consumption* (not 
   - If there are biases in the data, what direction do you think they would take?
 
 
-# The Next Vignette in this Series
+# Up Next: Intermediate Plotting
 
 See the next vignette on [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/) for more plotting examples including layered plots and finer-tuned settings.
 
@@ -359,29 +405,20 @@ years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
 
 # Plotting
 
-my_plot <- ggplot2::ggplot(data = data_country,
-               ggplot2::aes(x = year)) +
-  ggplot2::geom_point(ggplot2::aes(y =gcb_ghg_territorial, color = "Territorial Emissions")) +
-  ggrepel::geom_text_repel(data = base::subset(data_country,year %in%years_to_show), # pick out just these years
-                  ggplot2::aes(y = gcb_ghg_territorial,
-                      label = year),
-                  max.overlaps = 17)+ # a lower number will give fewer total labels; higher will put more labels in
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
   ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
        caption = c("GDP from GCB (2023)"),
        x ="" ,
        y = "Emissions (units here)",
        color = "Emissions" # sets legend name
-  )+
-  theme_minimal_plot(#title_size = 20,
-             axis_title_x = ggplot2::element_text(color = "black",size = 15),
-             axis_title_y = ggplot2::element_text(color = "black", size = 15),
-             legend.key = ggplot2::element_rect(fill = "white", # box fill for the legend
-                                       colour = "white" # box outlines for the legend
-             ),
-             legend_position = c(.15,.85) # sets legend position, from [0,1] on X axis then [0,1] on y
-  ) +
-  #ggplot2::scale_y_continuous(trans = "log10", limits = c(400,100000)) + # why doesn't this work? hint: log(0) = -inf
-  ggplot2::scale_x_continuous(limits = c(1899,2025))
+  ) + 
+  ekonomR::theme_minimal_plot()
+
+my_plot
 
 ggsave_plot(output_folder = here::here("output","02_figures"),
          plotname = my_plot,

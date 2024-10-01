@@ -64,4 +64,44 @@ options(scipen = 999)
 Here's what this vignette will cover:
 
 1. Plotting 
+  1. adding labels on your graph
+  
 
+Let's add a little bit more: sometimes we might want to put labels to make a part of the graph stand out. That's pretty easy to do with `ggrepel`.
+
+For the purpose of our labels, we're going to select a few years. What `ggrepel::geom_text_repel()` is going to do is restrict our data to contain only the years that we've requested. Then, at the y-axis value given by `gcb_ghg_territorial`, the x-axis value given by `year`, we'll put a label that just rewrites what that year is.
+
+```{r}
+years_to_show <- c(1958,1959,1960,1961,1978,1995,2000,2015,2019)
+```
+
+
+It sounds a little complicated, but we get the following:
+```{r}
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
+  ggrepel::geom_text_repel(data = base::subset(data_country,year %in%years_to_show), 
+                           ggplot2::aes(x = year,
+                                        y = gcb_ghg_territorial,
+                                    label = year),
+                           max.overlaps = 17)+ # a lower number will give fewer total labels; higher will put more labels in
+  ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
+       caption = c("GDP from GCB (2023)"),
+       x ="" ,
+       y = "Emissions (units here)",
+       color = "Emissions" # sets legend name
+  )+
+  theme_minimal_plot(#title_size = 20,
+             axis_title_x = ggplot2::element_text(color = "black",size = 15),
+             axis_title_y = ggplot2::element_text(color = "black", size = 15),
+             legend.key = ggplot2::element_rect(fill = "white", # box fill for the legend
+                                       colour = "white" # box outlines for the legend
+             ),
+             legend_position = c(.15,.85) # sets legend position, from [0,1] on X axis then [0,1] on y
+  )
+
+my_plot
+```
