@@ -22,6 +22,8 @@ Still under construction! Many of the functions as advertised are still not yet 
 
 Check out the [documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/).
 
+View the [vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/).
+
 View the [`ekonomR` GitHub Repository](https://github.com/stallman-j/ekonomR). The repo contains more sample code that hasn't yet been put into vignettes.
 
 
@@ -42,9 +44,7 @@ remotes::install_github("stallman-j/ekonomR")
 
 # Migration of Documentation
 
-**UPDATED AS OF 2024-09-23: Documentation including installing R and RStudio has been moved to the [ekonomR documentation website](https://stallman-j.github.io/ekonomR/documentation/documentation/).** 
-
-**If you're in ECON 412, go to this website for detailed tutorials on getting started with ekonomR**
+**UPDATED AS OF 2024-09-23: Documentation including installing R and RStudio has been moved to the [ekonomR documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and [vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/).** 
 
 # What's Included?
 

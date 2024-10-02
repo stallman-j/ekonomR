@@ -22,44 +22,46 @@ knitr::opts_chunk$set(
 
 # Getting Started
 
-If you're just starting your project, you can use `ekonomR` to create your project folders so that you have a tidy structure that can scale up if you take this project into the future and that stays tidy while you and your collaborators are working and adding files to it.
+If you're just starting your project, you can use `ekonomR` to create your project folders so that you have a tidy structure that can scale up and stay organized while you and your collaborators are working and adding files to it, or even adding collaborators.
 
-The folder structure that `ekonomR` creates has been adapted from the recommendations made by the [World Bank Development Impact Group (DIME) ](https://dimewiki.worldbank.org/Data_Management). DIME has built out a Wiki covering best practices for project structuring for impact evaluations of randomized controlled trials or policy changes. These impact evaluations tend to be large scale and expensive projects with many contributors.
+The folder structure that `ekonomR` creates has been adapted from the recommendations made by the [World Bank Development Impact Group (DIME) ](https://dimewiki.worldbank.org/Data_Management). DIME has built out a Wiki covering best practices for project structuring for impact evaluations of randomized controlled trials or policy changes. These impact evaluations tend to be large, complicated, and expensive projects with many contributors that change often (e.g. with adding or removing interns).
 
-Even if you don't have multiple collaborators or a large-budget operation, their setup is helpful for making your project clear and replicable, whether to your collaborators or your future self.
+Even if you don't have multiple collaborators or a large-budget operation, their setup is helpful for making your project clear and replicable, whether to your collaborators or just your future self.
 
-Unfortunately for R users, their tools are targeted towards Stata users. This perhaps begs the question, why use R at all?
+Unfortunately for R users, DIME's tools are targeted towards Stata users. This perhaps begs the question, why use R at all?
 
 ## Why R at All?
 
 Over the past decade or so, the fact of R being an open-source software with many contributors has allowed it to surpass Stata's capabilities in many areas, particularly in frontier applications like spatial analysis and network theory. 
 
-R users frequently make their own packages, which you can typically install either from [CRAN](https://cran.r-project.org/) (which requires that the developers follow a strict set of guidelines to make their packages usable across many platforms over time); or from Github (where the standards are laxer, but the innovation faster). I think this is a large advantage over Python, which has multiple sources for packages that can cause conflicts. 
+R users frequently make their own packages, which you can typically install either from [CRAN](https://cran.r-project.org/) (which requires that the developers follow a strict set of guidelines to make their packages usable across many platforms over time); or from Github (where the standards are laxer, but the innovation faster). I think essentially having two sources, one heavily structured and the other highly flexible, is an advantage of R over Python, where package sourcing often causes conflicts.
 
-R and Python seem to have largely converged in terms of usability and capability. Some users gravitate towards Python, so build out better functionality with better help and documentation there. Web scraping, as well as many [API calls](https://www.cloudflare.com/learning/security/api/what-is-api-call/), seem moderately more fleshed out with Python. Other users, including statisticians, have gravitated towards R, so for instance R's plotting capabilities seem more straightforward out of the box.
+R and Python seem to have largely converged in terms of usability and capability. Some users gravitate towards Python, so build out better functionality with better help and documentation there. Web scraping, as well as many [API calls](https://www.cloudflare.com/learning/security/api/what-is-api-call/), seem moderately more fleshed out with Python. Other users, including statisticians, have migrated towards R, so for instance R's data-plotting capabilities are quite advanced.
 
 Both R and Python are able to implement code from the other language. R's [`reticulate`](https://rstudio.github.io/reticulate/) package allows you either to translate Python to R and back, or just call Python from within your R project. (To do: link to a vignette that uses a Python API call within R).
 
 ## What's a package?
 
-`ekonomR` is an R package. Packages can fulfill a multitude of purposes. A package in R world is a bundle of a few things:
+`ekonomR` is an R package. A package in R world is a bundle of a few things:
 
 1. Functions: **functions** take inputs, do something to them, and produce an output. A math professor of mine is fond of saying, "Functions describe the world!"
 2. Documentation
 3. (Possibly) example data
-4. (Possibly) vignettes providing examples of the package in use.
+4. (Hopefully) vignettes providing examples of the package in use.
 
-My stylized view of how packages come about is from some developer spending quite a bit of time writing code to fulfill a particular purpose. Then, or simultaneously, if the developer was clever, this developer thought that this writing process was a fair bit of hassle, and that there would be other contexts in which they would like to use this type of code.^[You don't have to be a hardcore developer to build an R package, though. If you're familiar with R, it's really not hard. If you ever get to the point where you find yourself repeating very similar code in your scripts and having to scrounge around in your old files, you might want to consider trying to make your own package! [Here's](https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html) a great place to start if you decide to make that leap.] 
+My imagined view of how packages come about is the following: some developer spends quite a bit of time writing code to fulfill a particular purpose. 
 
-Wouldn't it be nice if they could re-use what they wrote without having to manually adjust everything? That's exactly what a package does.
+Then, or simultaneously, if the developer is clever, this developer muses, "Golly, this coding was a fair bit of hassle. But I can imagine other contexts in which I or others would like to use this type of code. Wouldn't it be nice if I could re-use what they wrote without having to manually adjust everything?"
+
+That's exactly what a package does.^[You don't have to be a hardcore developer to build an R package, though. If you're familiar with R, it's really not hard. If you ever get to the point where you find yourself repeating very similar code in your scripts and having to scrounge around in your old files, you might want to consider trying to make your own package! [Here's](https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html) a great place to start if you decide to make that leap.]
+
+R packages are very varied in their capabilities and scope.
 
 For example, the R package [`comtradr`](https://docs.ropensci.org/comtradr/index.html) allows you to access the API for the [UN-Comtrade database](https://comtradeplus.un.org/), a primary source of trade data.
 
-The R package [`causalToolbox`](https://github.com/forestry-labs/causalToolbox), on the other hand, allows the user to use frontier machine-learning techniques to estimate how the effects of a treatment can vary across the population that was treated.
+The R package [`causalToolbox`](https://github.com/forestry-labs/causalToolbox), on the other hand, allows you to use frontier machine-learning techniques to estimate how the effects of a treatment can vary across the population that was treated.
 
 The [`fishR` website](https://fishr-core-team.github.io/fishR/pages/packages.html) gives an example of the functions of a variety of fish-related R packages.
-
-
 
 # Getting the right R
 
@@ -75,7 +77,6 @@ Once you've done that, click on your RStudio icon to open a new session.
 
 Now decide what folder you'd like your project to live in. We'll create project folders in this home folder. 
 
-
 If you're coming from ECON 412, I highly recommend putting your project in your OneDrive, since Yale has free storage in there and you'll be able to collaborate with your group by syncing your folders remotely. 
 
 Unless your project is going to be data intensive, it's likely best that your data, code and output live all in the same place, which `ekonomR` calls the `home_folder`.
@@ -84,7 +85,7 @@ Log into your OneDrive (after installing if need be) and find the folder path to
 
 ## What if I'm not married to a particular cloud?
 
-If you're setting out into the brave new world of research and trying to decide what cloud to use (and you *absolutely* should be using one), I use [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale (and sales are frequent. Just sign up for the newsletter).
+If you're setting out into the brave new world of research and trying to decide what cloud to use (and you *absolutely* should be using one), I recommend considering [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale (and sales are frequent. Just sign up for the newsletter).
 
 If you're using big data, it's useful that pCloud only draws storage from the person who's the host of the data. Dropbox, on the other hand, counts storage against every user.
 
@@ -92,7 +93,7 @@ If you're using big data, it's useful that pCloud only draws storage from the pe
 
 In your RStudio session, click `File -> New Project`. 
 
-Choose the option `New Directory`, and then `New Project`. Creating an R project basically saves a bunch of your settings so that it's less hassle to use R, and lets you pull up your project files and folders easily.
+Choose the option `New Directory`, and then `New Project`. Creating an R project saves a bunch of your settings so that it's less hassle to use R, and lets you pull up your project files and folders easily.
 
 In `Directory name:`, write something like `ECON-412_your-initials`. When you ultimately share this project, you don't want everyone having the same name or you might have file path conflicts.
 
@@ -102,7 +103,7 @@ Then click `Create Project`.
 
 This should open your project in R.
 
-If you created the project and successfully browsed to the right folder, you should be able to access this file path with `getwd()`, which returns the file path of your **w**orking **d**irectory.^[Think of a directory as just a folder. There are differences to developers, but I'll almost always use the terms interchangeably.] 
+If you created the project and successfully browsed to the right folder, you should be able to access this file path with `getwd()`, which returns the file path of your **w**orking **d**irectory.^[Think of a directory as just a folder. There are differences, but I'll almost always use the terms interchangeably.] 
 
 Type in your console the following:
 
@@ -117,7 +118,7 @@ To see the path in full, type in the console:
 getwd()
 
 ```
-You can do this more cleverly with the `here` package, which tries to cleverly figure out where your home folder is. `ekonomR` loads the `here` package, so you should be able to inpu this command directly:
+You can do this more cleverly with the [`here` package](https://here.r-lib.org/), which tries to figure out where your home folder is and creates paths relative to this folder. `ekonomR` loads the `here` package when it's loaded, so you should be able to input this command directly:
 
 ``` {r, results = FALSE, eval = FALSE}
 here::here()
@@ -129,7 +130,7 @@ This should give you the same result as what you'd done with `getwd()`. You coul
 my_home_folder <- here::here()
 ```
 
-Using the `here()` function is a more robust way to write your home folder than using `getwd()`.
+Using the `here()` function is a more robust way to write your home folder than using `getwd()`, and it's portable across platforms (for instance if you have a PC and your collaborator has a Mac).
 
 
 You should probably save a shortcut to this folder somewhere that is easy to visualize, since you'll be clicking into this folder often. If you have a PC, right-clicking on the folder once you've navigated to it and then clicking `Pin to Quick Access` is a good way to make it easily accessible. Mac probably has something similar.

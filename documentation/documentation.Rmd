@@ -28,7 +28,9 @@ I *highly* recommend starting with the vignette [Getting Started with ekonomR](h
 
 # ekonomR's Assumed Project Structure
 
-The function in `ekonomR`'s default to saving your output (tables, plots, or maps) in a particular folder structure, which `ekonomR`'s `create_folders()` function will create for you. [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) goes over this in detail.
+The functions in `ekonomR` default to saving your output (tables, plots, or maps) in a particular folder structure, which `ekonomR`'s `create_folders()` function will create for you. [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) goes over this in detail.
+
+If you have a different structure for your project, you'll have to adapt the filepaths of many of the functions from their default so that `ekonomR`'s functions know where to find your data and where to send your output.
 
 This is the entire folder structure that gets created on your computer.
 

@@ -1,7 +1,12 @@
 ---
-layout: home
 title: ekonomR
 subtitle: The R workflow package for economists
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-10-02"
 ---
 
 
