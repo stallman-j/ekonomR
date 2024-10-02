@@ -19,9 +19,41 @@ vignette: >
 
 If you're just starting your project, you can use `ekonomR` to create your project folders so that you have a tidy structure that can scale up if you take this project into the future and that stays tidy while you and your collaborators are working and adding files to it.
 
-The folder structure that `ekonomR` creates has been adapted from the recommendations made by the [World Bank Development Impact Group (DIME) ](https://dimewiki.worldbank.org/Data_Management). DIME a large Wiki covering best practices for project structuring for impact evaluations of randomized controlled trials or policy changes. These impact evaluations tend to be large scale and expensive projects with many contributors.
+The folder structure that `ekonomR` creates has been adapted from the recommendations made by the [World Bank Development Impact Group (DIME) ](https://dimewiki.worldbank.org/Data_Management). DIME has built out a Wiki covering best practices for project structuring for impact evaluations of randomized controlled trials or policy changes. These impact evaluations tend to be large scale and expensive projects with many contributors.
 
 Even if you don't have multiple collaborators or a large-budget operation, their setup is helpful for making your project clear and replicable, whether to your collaborators or your future self.
+
+Unfortunately for R users, their tools are targeted towards Stata users. This perhaps begs the question, why use R at all?
+
+## Why R at All?
+
+Over the past decade or so, the fact of R being an open-source software with many contributors has allowed it to surpass Stata's capabilities in many areas, particularly in frontier applications like spatial analysis and network theory. 
+
+R users frequently make their own packages, which you can typically install either from [CRAN](https://cran.r-project.org/) (which requires that the developers follow a strict set of guidelines to make their packages usable across many platforms over time); or from Github (where the standards are laxer, but the innovation faster). I think this is a large advantage over Python, which has multiple sources for packages that can cause conflicts. 
+
+R and Python seem to have largely converged in terms of usability and capability. Some users gravitate towards Python, so build out better functionality with better help and documentation there. Web scraping, as well as many [API calls](https://www.cloudflare.com/learning/security/api/what-is-api-call/), seem moderately more fleshed out with Python. Other users, including statisticians, have gravitated towards R, so for instance R's plotting capabilities seem more straightforward out of the box.
+
+Both R and Python are able to implement code from the other language. R's [`reticulate`](https://rstudio.github.io/reticulate/) package allows you either to translate Python to R and back, or just call Python from within your R project. (To do: link to a vignette that uses a Python API call within R).
+
+## What's a package?
+
+`ekonomR` is an R package. Packages can fulfill a multitude of purposes. A package in R world is a bundle of a few things:
+
+1. Functions: **functions** take inputs, do something to them, and produce an output. A math professor of mine is fond of saying, "Functions describe the world!"
+2. Documentation
+3. (Possibly) example data
+4. (Possibly) vignettes providing examples of the package in use.
+
+My stylized view of how packages come about is from some developer spending quite a bit of time writing code to fulfill a particular purpose. Then, or simultaneously, if the developer was clever, this developer thought that this writing process was a fair bit of hassle, and that there would be other contexts in which they would like to use this type of code.^[You don't have to be a hardcore developer to build an R package, though. If you're familiar with R, it's really not hard. If you ever get to the point where you find yourself repeating very similar code in your scripts and having to scrounge around in your old files, you might want to consider trying to make your own package! [Here's](https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html) a great place to start if you decide to make that leap.] 
+
+Wouldn't it be nice if they could re-use what they wrote without having to manually adjust everything? That's exactly what a package does.
+
+For example, the R package [`comtradr`](https://docs.ropensci.org/comtradr/index.html) allows you to access the API for the [UN-Comtrade database](https://comtradeplus.un.org/), a primary source of trade data.
+
+The R package [`causalToolbox`](https://github.com/forestry-labs/causalToolbox), on the other hand, allows the user to use frontier machine-learning techniques to estimate how the effects of a treatment can vary across the population that was treated.
+
+The [`fishR` website](https://fishr-core-team.github.io/fishR/pages/packages.html) gives an example of the functions of a variety of fish-related R packages.
+
 
 
 # Getting the right R
@@ -41,21 +73,23 @@ Now decide what folder you'd like your project to live in. We'll create project 
 
 If you're coming from ECON 412, I highly recommend putting your project in your OneDrive, since Yale has free storage in there and you'll be able to collaborate with your group by syncing your folders remotely. 
 
-Unless your project is going to be hugely data intensive, it's likely best that your data, code and output live all in the same place, which we'll call your `home_folder`.
+Unless your project is going to be data intensive, it's likely best that your data, code and output live all in the same place, which `ekonomR` calls the `home_folder`.
 
 Log into your OneDrive (after installing if need be) and find the folder path to your OneDrive folder. Mine is `J - Yale University`, for instance. You might also use GoogleDrive or Dropbox, but be cautioned that your teammates may not have this software.
 
-If you're trying to decide what cloud to use, I use [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale. 
+## What if I'm not married to a particular cloud?
 
-If you're using big data, know that pCloud only draws storage from the person who's the host of the data. Dropbox, on the other hand, counts storage against every user.
+If you're setting out into the brave new world of research and trying to decide what cloud to use (and you *absolutely* should be using one), I use [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale (and sales are frequent. Just sign up for the newsletter).
 
-# Create a new RStudio Project
+If you're using big data, it's useful that pCloud only draws storage from the person who's the host of the data. Dropbox, on the other hand, counts storage against every user.
+
+# Create a New RStudio Project
 
 In your RStudio session, click `File -> New Project`. 
 
-Choose the option `New Directory`, and then `New Project`. Creating an R project basically saves the settings that you've got (e.g. what packages you're using now and where your home folder is) so that it's less hassle to use R.
+Choose the option `New Directory`, and then `New Project`. Creating an R project basically saves a bunch of your settings so that it's less hassle to use R, and lets you pull up your project files and folders easily.
 
-In `Directory name:`, use something like `ECON-412_your-initials`. When you ultimately share this project, you don't want everyone having the same name or you might have file path conflicts.
+In `Directory name:`, write something like `ECON-412_your-initials`. When you ultimately share this project, you don't want everyone having the same name or you might have file path conflicts.
 
 Click `Browse` and navigate to your OneDrive (or other folder on your device where you've decided your folder is living). A good place to put this would be under a file path that looks like `Your Name - Yale University/Projects`. You might have to create the `Projects` subfolder.
 
@@ -63,7 +97,7 @@ Then click `Create Project`.
 
 This should open your project in R.
 
-If you created the project and successfully browsed to the right folder, you should be able to do this with `getwd()` which returns the file path of your **w**orking **d**irectory. 
+If you created the project and successfully browsed to the right folder, you should be able to access this file path with `getwd()`, which returns the file path of your **w**orking **d**irectory.^[Think of a directory as just a folder. There are differences to developers, but I'll almost always use the terms interchangeably.] 
 
 Type in your console the following:
 
@@ -100,13 +134,14 @@ You should probably save a shortcut to this folder somewhere that is easy to vis
 
 # Installing ekonomR
 
-Now you want to install this `ekonomR` package. 
+Let's install this `ekonomR` package. 
 
 
 ## First-time Installation
-First, you need to install the package `remotes` from CRAN (which is where most standard R packages live) that allows you to install a package from GitHub (which is where `ekonomR` lives).
 
-Installing a package is like buying a Kindle book off Amazon, or buying an app off an app store. Different packages have different content that lets you do different things.
+If this is the first time you've installed `ekonomR`, you need to first install the package `remotes` from CRAN that allows you to install a package from GitHub (which is where `ekonomR` lives).
+
+Installing a package is like buying an app off an app store.
 
 You can do both of these with the following code:
 
@@ -115,7 +150,7 @@ install.packages("remotes")
 remotes::install_github("stallman-j/ekonomR")
 ```
 
-Then you'll want to bring the package into your library. Putting a package in your library is like downloading the book that you'd already purchased onto your Kindle so that you can read it when you want, or downloading an app that you've already bought onto a new device.
+Then you'll want to bring the package into your library. Putting a package in your library is like downloading an app that you've already bought onto a new device.
 
 
 ``` r
@@ -124,7 +159,7 @@ library(ekonomR)
 
 ## Re-installing 
 
-If you've installed `ekonomR` before, you should re-install the package again so that you can get access to updates. Go into RStudio in the `Packages` tab (which is in the same window as the tabs for `Files`, `Plots`, `Help`, and `Viewer`). Scroll down to the `ekonomR` row and make sure that the check box is **unchecked**. This will ensure that the re-installation doesn't conflict with files that currently exist.
+If you've installed `ekonomR` before, you should re-install the package again so that you can access the (frequent) updates. Go into RStudio in the `Packages` tab (which is in the same window as the tabs for `Files`, `Plots`, `Help`, and `Viewer`). Scroll down to the `ekonomR` row and make sure that the check box is **unchecked**. This will ensure that the re-installation doesn't conflict with files that currently exist.
 
 Then, do the following:
 
@@ -141,7 +176,7 @@ Now you can access the functions of the `ekonomR` package.
 
 If you're making a new project, you can use the `create_folders` function from `ekonomR` to create your project folders on your local device. 
 
-In the `my_home_folder` folder that you set, it's going to create a bunch of folders so that your stuff is easy to find.
+In the `my_home_folder` folder that you set, `create_folders` is, unsurprisingly, going to create a bunch of folders.
 
 To see the help documentation for this function, put the following in your RStudio console:
 
@@ -150,6 +185,7 @@ To see the help documentation for this function, put the following in your RStud
 ?create_folders
 
 ```
+
 Putting a question mark before the function name for any function accesses the function description and help files. If you get an error to this command, it's probably the case that the package that contains the function is either not installed on your computer, not loaded into your library, or both.
 
 To create your project folders, type the following into your RStudio console.
@@ -159,7 +195,8 @@ To create your project folders, type the following into your RStudio console.
 create_folders(home_folder = my_home_folder)
 
 ```
-Now take a look inside the `home_folder` and see what's been created. You should have a folder for code, a folder for data, a folder for output, and a few other collaboration folders, along with a `.Rproj` file that's storing your project settings.
+
+You should open up the folder `my_home_folder` and see what's been created. You should have a folder for code, a folder for data, a folder for output, and a few other collaboration folders, along with a `.Rproj` file that's storing your project settings.
 
 This is the entire folder structure that gets created on your computer.
 
@@ -204,12 +241,11 @@ This is the entire folder structure that gets created on your computer.
 │   └── 03_clean
 ```
 
-### Other Options
+## Other Options
 
-You can also set `output` and `data` to live in a different folder (for instance if you generate a lot of plots that take up space, or if you have a lot of data and just want to sync your code to GitHub) by setting a path for `output_folder` and `data_folder` respectively. If you don't set these file paths separately, they'll get created within `home_folder`.
+You can set `output` and `data` to live in a different folder than your `home_folder`. This may be a good option if you generate a lot of plots that take up space, or if you have a lot of data and just want to sync your code to GitHub. In this case, set a separate path for `output_folder` or `data_folder` If you don't set these file paths separately, they'll get created within `home_folder`.
 
 If you have sensitive information, you can also set `data_pii_folder` so that private data lives separately. If you have an external hard drive that, say, holds big data, you can set this with `data_external_folder`. If you don't set these, these folders don't get created.
-
 
 Instead of `my_home_folder` which we accessed as the working directory with `getwd()`, you can also set the file path manually by finding what folder on your device you'd like to use, and getting its full path.
 
@@ -229,6 +265,6 @@ Now you're ready to go with your project!
 
 # Next Steps
 
-If you'd like to walk through how `ekonomR` works through a whole project sequence, follow the [Vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)) in the order listed on the page. Many Vignettes are being written, and will be up soon.
+If you'd like to walk through how `ekonomR` works through a whole project sequence, follow the [Vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)) in the order listed on the page. **Many Vignettes are currently being written, and will be up soon.**
 
-If you're looking for something in particular (e.g. plotting), each vignette is self-contained, so you can pick and chose.
+Each vignette is self-contained, however, if you're looking for something in particular.
