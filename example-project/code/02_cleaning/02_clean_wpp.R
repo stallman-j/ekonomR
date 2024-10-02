@@ -29,9 +29,9 @@
 
 # https://www.rug.nl/ggdc/productivity/pwt/?lang=en
 
-path <- file.path(data_raw,"UN-WPP","WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx")
+path <- here::here("data","01_raw","UN-WPP","WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx")
 
-wpp <- read_xlsx(path = path,
+wpp <- readxl::read_xlsx(path = path,
                  sheet = "Estimates",
                  col_names = TRUE,
                  col_types = c("numeric",rep("text",times = 3),"numeric","text","text","numeric","text",

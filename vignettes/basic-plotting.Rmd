@@ -22,7 +22,9 @@ knitr::opts_chunk$set(
 
 # Getting Started
 
-If you're checking through this vignette with an eye towards starting your own project, I *highly* recommend checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) to get your entire project structure settled. Future self will thank you.
+If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/)) to get your entire project structure settled in a way that's scalable, sharable, and documentable. 
+
+You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
 
 If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `basic-plotting-vignette.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
 
@@ -379,7 +381,7 @@ This means that if we went up to the top and changed *just* `chosen_country` and
 For a country which is  *not* China, plot its greenhouse gas *consumption* (not territorial!) emissions over time with the following changes to your final product.
 
 - Edit the y axis labels to contain the appropriate units. They currently say `Emissions (units here)`.
-    -*Hint:* You may want to poke around in the [GCB](https://globalcarbonbudget.org/) page to figure out what the units should be.
+    -*Hint:* You may want to poke around in the [GCB page](https://globalcarbonbudget.org/) (the data page of which is [here](https://globalcarbonbudgetdata.org/latest-data.html) to figure out what the units should be.
     
 - Correct the caption to contain the correct data attribution. It should be something like "Emissions data from GCB (2023)."
 - Change the title to reflect that you're now plotting emissions from consumption. You should also make sure that the country you're listing in the title is the country that you show data for (note that we soft-coded that!).

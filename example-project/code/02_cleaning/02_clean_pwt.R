@@ -17,23 +17,14 @@
 # source(file.path(home_folder,"00_startup_master.R"))
 
 
-# bring in the packages, folders, paths ----
-
-  # if (!require("readxl")) install.packages("readxl")
-  # if (!require("countrycode")) install.packages("countrycode")
-  #
-  # library(readxl)  # read in excel format, use for read_xlsx
-  # library(countrycode) # for switching between different choices of countrynames, adding continents
-
-
 
 # bring in the data ----
 
  # https://www.rug.nl/ggdc/productivity/pwt/?lang=en
 
-  path <- file.path(data_raw,"PWT","pwt1001.xlsx")
+  path <- here::here("data","01_raw","PWT","pwt1001.xlsx")
 
-  pwt <- read_xlsx(path = path,
+  pwt <- readxl::read_xlsx(path = path,
                      sheet = "Data",
                      col_names = TRUE)
 
@@ -51,12 +42,12 @@
   names(pwt) # display the varnames
 
   pwt_clean <- pwt %>%
-               rename(iso3c = countrycode) %>%
-               select(iso3c, country, year, rgdpe)
+               dplyr::rename(iso3c = countrycode) %>%
+               dplyr::select(iso3c, country, year, rgdpe)
 
 # save as rds, csv and xlsx files
 
-  pwt_clean <- save_rds_csv(data = pwt_clean,
+  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
                           output_path   = file.path(data_clean,"PWT"),
                           output_filename = paste0("pwt_clean.rds"),
                           remove = FALSE,

@@ -22,9 +22,11 @@ knitr::opts_chunk$set(
 
 # Getting Started
 
-You're likely coming here from the vignette [Simple Plotting with a Review of R Coding Basics](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/). If you're not and the following seems sudden, check out that first!
+This vignette continues the vignette [Simple Plotting with a Review of R Coding Basics](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/), but explores more advanced plotting through an exploration of an economic hypothesis about the relationship between economic development and environmental quality known as the Environmental Kuznets Curve. 
 
-We'll be continuing that vignette with data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
+In essence, the hypothesis suggests that with very low incomes and economic development, environmental quality will be fairly good. As incomes rise, the environment would tend to take a backseat to development goals, but as incomes rise further, people start to prefer spending to improve their environmental amenities. This would suggest a hill-shaped relationship between environmental quality on the x axis and incomes on the y axis.
+
+We'll examine this relationship using emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/), data on gross domestic product from the Penn World Tables ([here](https://www.rug.nl/ggdc/productivity/pwt/?lang=en)), and population data from the World Population Prospects ([here](https://population.un.org/wpp/)). 
 
 The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting your vignette, you'll need to re-install it correctly so that you can access this update. (If you just did this in the last vignette, you can ignore this part).
 

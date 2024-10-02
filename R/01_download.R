@@ -1,12 +1,16 @@
 #' Download Files
-#' @description Function for downloading multiple data files from a website
+#' @description Function for downloading multiple data files from a website. Includes options for password protected sites, as well as options to unzip the files.
 #' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder
-#' @param data_raw location (file path) of raw data folder. Defaults to here("data","01_raw")
-#' @param base_url the url of the folder to download
-#' @param sub_urls the additional endings to the base url that you'd like to download separately, a vector of characters
-#' @param filenames the names of files, without paths, to attach to those suburls.
-#' @param create_folder if TRUE, create a subfolder
+#' @param data_raw location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")
+#' @param base_url the url of the folder to download. This is the thing that is common to all the URLs you're downloading.
+#' @param sub_urls the additional endings to the base url that you'd like to download separately, but which you don't want to go into the name of the file itself. Requires a vector of character strings. Could be empty with "".
+#' @param filenames vector of character strings. The names of files, without paths, to attach to the suburls
+#' @param pass_protected logical, default is FALSE. Set to TRUE if the data requires a simple username and login
+#' @param zip_file logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder of the same name as your download request. Default is FALSE.
+#' @param username if pass_protected is TRUE, you'll need to input the username. Default of NULL asks for user input. Note this is required for EACH URL you want to download. If you're planning to batch download, you can input your username as a character vector. Note that this is NOT secure. It's on the to-do list to add this in a secure way.
+#' @param password if pass_protected is TRUE, you need to input a password. Default of NULL asks for manual input. As this is required for EVERY URL you have, you can input a character vector to get around this. Note, however, that this is NOT a secure method of downloading data. Future updates will at some point fix this.
 #' @export
+#'
 download_multiple_files <- function(data_subfolder = NULL,
                                     data_raw = NULL,
                                     base_url,
@@ -47,12 +51,24 @@ download_multiple_files <- function(data_subfolder = NULL,
 
     # will need to check this later
     if(pass_protected == TRUE) {
-      username <-username # readline("Type the username:") # alternatively if you want user input. gets to be a hassle because the input form asks user+pass for each separate URL
-      password <- password # readline("Type the password:")
-      GET(url = paste0(base_url,"/",sub_urls[i]),
-          authenticate(user = username,
+
+      if (is.null(username)){
+        username <- base::readline("Type your username:")
+      } else {
+        username <- username
+      }
+
+      if (is.null(password)){
+        password <- base::readline("Type your password:")
+      } else {
+        password <- password
+      }
+
+
+      httr::GET(url = paste0(base_url,"/",sub_urls[i]),
+                httr::authenticate(user = username,
                        password = password),
-          write_disk(file_path, overwrite = TRUE))
+                httr::write_disk(file_path, overwrite = TRUE))
 
     }else if (pass_protected == FALSE) {
 
@@ -69,7 +85,7 @@ download_multiple_files <- function(data_subfolder = NULL,
       }
 
       # unzip the file
-      unzip(file_path,
+      httr::unzip(file_path,
             exdir = unzip_path,
             overwrite = FALSE)
 
@@ -79,12 +95,22 @@ download_multiple_files <- function(data_subfolder = NULL,
       file_path <- extract_path
 
       if(pass_protected == TRUE) {
-        username <- username
-        password <- password
-        GET(url = paste0(base_url,"/",sub_urls[i]),
-            authenticate(user = username,
+        if (is.null(username)){
+          username <- base::readline("Type your username:")
+        } else {
+          username <- username
+        }
+
+        if (is.null(password)){
+          password <- base::readline("Type your password:")
+        } else {
+          password <- password
+        }
+
+        httr::GET(url = paste0(base_url,"/",sub_urls[i]),
+            httr::authenticate(user = username,
                          password = password),
-            write_disk(path = file.path(data_raw,data_subfolder,filenames[i]),
+            httr::write_disk(path = file.path(data_raw,data_subfolder,filenames[i]),
                        overwrite = TRUE))
 
       }else{
@@ -104,14 +130,17 @@ download_multiple_files <- function(data_subfolder = NULL,
 
 
 
-
-#' Function for downloading single data file from a website, zip or password protected file
-#' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder
-#' @param data_raw location (file path) of raw data folder. Defaults to here("data","01_raw")
-#' @param filename if not a zip file and need to use download.file, needs to provide a name for the ultimate file
+#' Download a Single File
+#' @description download_data is a function for downloading a single file from a website, including zip or password protected file, with nice defaults of where to send the data and what to name it.
+#' @param data_subfolder  name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder. This will be created if it doesn't exist already.
+#' @param data_raw location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")
+#' #' @param filename a character vector
 #' @param url the url of the folder to download
-#' @param zip_file TRUE or FALSE, if TRUE use file path of a zip folder
-#' @param pass_protected TRUE or FALSE, if TRUE you'll get prompted for username and password. if true you need to provide username = and password =
+#' @param zip_file logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder of the same name as your download request. Default is FALSE.
+#' @param pass_protected logical, default is FALSE. Set to TRUE if the data requires a simple username and login
+#' @param username if pass_protected is TRUE, you'll need to input the username. Default of NULL asks for user input. Note this is required for EACH URL you want to download. If you're planning to batch download, you can input your username as a character vector. Note that this is NOT secure. It's on the to-do list to add this in a secure way.
+#' @param password if pass_protected is TRUE, you need to input a password. Default of NULL asks for manual input. As this is required for EVERY URL you have, you can input a character vector to get around this. Note, however, that this is NOT a secure method of downloading data. Future updates will at some point fix this.
+
 #' @returns data file in the particular subfolder
 #' @export
 download_data <- function(data_subfolder = NULL,
@@ -149,29 +178,35 @@ download_data <- function(data_subfolder = NULL,
   # if the file's a zip, make file_path a zip folder, then extract to its own folder
   # otherwise same as ultimate extraction path
   if(zip_file == TRUE){
+
     file_path <- file.path(data_raw, paste0(data_subfolder, ".zip"))
 
     if(pass_protected == TRUE) {
-      if (!require("httr")) install.packages("httr")
 
-      library(httr)
-      username <-username # readline("Type the username:") # alternatively if you want user input. gets to be a hassle because the input form asks user+pass for each separate URL
-      password <- password # readline("Type the password:")
+      if (is.null(username)){
+        username <- base::readline("Type your username:")
+      } else {
+        username <- username
+      }
 
-      # username <- readline("Type the username:")
-      # password <- readline("Type the password:")
-      GET(url = url,
-          authenticate(user = username,
+      if (is.null(password)){
+        password <- base::readline("Type your password:")
+      } else {
+        password <- password
+      }
+
+      httr::GET(url = url,
+          httr::authenticate(user = username,
                        password = password),
-          write_disk(file_path, overwrite = TRUE))
+          httr::write_disk(file_path, overwrite = TRUE))
 
     }else{ # if not password protected, just download
-      download.file(url = url,
+      utils::download.file(url = url,
                     destfile = file_path,
                     mode     = "wb")
     }
     # unzip the file
-    unzip(file_path,
+    utils::unzip(file_path,
           exdir = extract_path,
           overwrite = TRUE)
 
@@ -179,19 +214,24 @@ download_data <- function(data_subfolder = NULL,
     file_path <- file.path(extract_path,filename)
 
     if(pass_protected == TRUE) {
-      if (!require("httr")) install.packages("httr")
 
-      library(httr)
-      username <-username # readline("Type the username:") # alternatively if you want user input. gets to be a hassle because the input form asks user+pass for each separate URL
-      password <- password # readline("Type the password:")
+      if (is.null(username)){
+        username <- base::readline("Type your username:")
+      } else {
+        username <- username
+      }
+
+      if (is.null(password)){
+        password <- base::readline("Type your password:")
+      } else {
+        password <- password
+      }
 
 
-      # username <- readline("Type the username:")
-      # password <- readline("Type the password:")
-      GET(url = url,
-          authenticate(user = username,
+      httr::GET(url = url,
+          httr::authenticate(user = username,
                        password = password),
-          write_disk(file_path, overwrite = TRUE))
+          httr::write_disk(file_path, overwrite = TRUE))
 
     }else{
 

@@ -8,7 +8,7 @@
 
 url <- "https://globalcarbonbudgetdata.org/downloads/latest-data/National_Fossil_Carbon_Emissions_2023v1.0.xlsx"
 
-download_data(data_subfolder = "GCB",
+ekonomR::download_data(data_subfolder = "GCB",
               data_raw       = NULL,
               url            = url,
               filename       = "National_Fossil_Carbon_Emissions_2023v1.0.xlsx",
@@ -16,7 +16,7 @@ download_data(data_subfolder = "GCB",
               pass_protected = FALSE)
 
 
-path <- here("data","01_raw","GCB","National_Fossil_Carbon_Emissions_2023v1.0.xlsx")
+path <- here::here("data","01_raw","GCB","National_Fossil_Carbon_Emissions_2023v1.0.xlsx")
 
 sheets <- c("Territorial Emissions","Consumption Emissions","Emissions Transfers")
 short_name <- c("territorial","consumption","transfers")

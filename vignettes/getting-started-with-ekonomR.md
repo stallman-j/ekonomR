@@ -1,0 +1,234 @@
+---
+title: "Getting Started with ekonomR"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-09-23"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started-with-ekonomR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+# Getting Started
+
+If you're just starting your project, you can use `ekonomR` to create your project folders so that you have a tidy structure that can scale up if you take this project into the future and that stays tidy while you and your collaborators are working and adding files to it.
+
+The folder structure that `ekonomR` creates has been adapted from the recommendations made by the [World Bank Development Impact Group (DIME) ](https://dimewiki.worldbank.org/Data_Management). DIME a large Wiki covering best practices for project structuring for impact evaluations of randomized controlled trials or policy changes. These impact evaluations tend to be large scale and expensive projects with many contributors.
+
+Even if you don't have multiple collaborators or a large-budget operation, their setup is helpful for making your project clear and replicable, whether to your collaborators or your future self.
+
+
+# Getting the right R
+
+Sometimes functions stop working because you're using an older version of R. If you skip this step and use an outdated R, you might spend hours or days trying to fix your code when all you really needed was ten minutes to update R.
+
+If you last used R more than three months ago, uninstall R and R studio on your device and then reinstall from [here](https://posit.co/download/rstudio-desktop/). 
+
+First install R, and then install R Studio.
+
+Once you've done that, click on your RStudio icon to open a new session.
+
+# Choosing your home folder
+
+Now decide what folder you'd like your project to live in. We'll create project folders in this home folder. 
+
+
+If you're coming from ECON 412, I highly recommend putting your project in your OneDrive, since Yale has free storage in there and you'll be able to collaborate with your group by syncing your folders remotely. 
+
+Unless your project is going to be hugely data intensive, it's likely best that your data, code and output live all in the same place, which we'll call your `home_folder`.
+
+Log into your OneDrive (after installing if need be) and find the folder path to your OneDrive folder. Mine is `J - Yale University`, for instance. You might also use GoogleDrive or Dropbox, but be cautioned that your teammates may not have this software.
+
+If you're trying to decide what cloud to use, I use [pCloud](https://www.pcloud.com/), which offers lifetime plans and similar features to Dropbox. A 10 TB plan, for instance, beats Dropbox for price competitivity within 5 years if you get it on sale. 
+
+If you're using big data, know that pCloud only draws storage from the person who's the host of the data. Dropbox, on the other hand, counts storage against every user.
+
+# Create a new RStudio Project
+
+In your RStudio session, click `File -> New Project`. 
+
+Choose the option `New Directory`, and then `New Project`. Creating an R project basically saves the settings that you've got (e.g. what packages you're using now and where your home folder is) so that it's less hassle to use R.
+
+In `Directory name:`, use something like `ECON-412_your-initials`. When you ultimately share this project, you don't want everyone having the same name or you might have file path conflicts.
+
+Click `Browse` and navigate to your OneDrive (or other folder on your device where you've decided your folder is living). A good place to put this would be under a file path that looks like `Your Name - Yale University/Projects`. You might have to create the `Projects` subfolder.
+
+Then click `Create Project`.
+
+This should open your project in R.
+
+If you created the project and successfully browsed to the right folder, you should be able to do this with `getwd()` which returns the file path of your **w**orking **d**irectory. 
+
+Type in your console the following:
+
+``` r
+my_home_folder <- getwd()
+
+```
+
+To see the path in full, type in the console:
+
+
+``` r
+getwd()
+
+```
+You can do this more cleverly with the `here` package, which tries to cleverly figure out where your home folder is. `ekonomR` loads the `here` package, so you should be able to inpu this command directly:
+
+
+``` r
+here::here()
+```
+
+This should give you the same result as what you'd done with `getwd()`. You could therefore set 
+
+
+``` r
+my_home_folder <- here::here()
+```
+
+Using the `here()` function is a more robust way to write your home folder than using `getwd()`.
+
+
+You should probably save a shortcut to this folder somewhere that is easy to visualize, since you'll be clicking into this folder often. If you have a PC, right-clicking on the folder once you've navigated to it and then clicking `Pin to Quick Access` is a good way to make it easily accessible. Mac probably has something similar.
+
+# Installing ekonomR
+
+Now you want to install this `ekonomR` package. 
+
+
+## First-time Installation
+First, you need to install the package `remotes` from CRAN (which is where most standard R packages live) that allows you to install a package from GitHub (which is where `ekonomR` lives).
+
+Installing a package is like buying a Kindle book off Amazon, or buying an app off an app store. Different packages have different content that lets you do different things.
+
+You can do both of these with the following code:
+
+``` r
+install.packages("remotes")
+remotes::install_github("stallman-j/ekonomR")
+```
+
+Then you'll want to bring the package into your library. Putting a package in your library is like downloading the book that you'd already purchased onto your Kindle so that you can read it when you want, or downloading an app that you've already bought onto a new device.
+
+
+``` r
+library(ekonomR)
+```
+
+## Re-installing 
+
+If you've installed `ekonomR` before, you should re-install the package again so that you can get access to updates. Go into RStudio in the `Packages` tab (which is in the same window as the tabs for `Files`, `Plots`, `Help`, and `Viewer`). Scroll down to the `ekonomR` row and make sure that the check box is **unchecked**. This will ensure that the re-installation doesn't conflict with files that currently exist.
+
+Then, do the following:
+
+
+``` r
+remotes::install_github("stallman-j/ekonomR")
+library(ekonomR)
+```
+
+
+Now you can access the functions of the `ekonomR` package.
+
+# Create your project folders
+
+If you're making a new project, you can use the `create_folders` function from `ekonomR` to create your project folders on your local device. 
+
+In the `my_home_folder` folder that you set, it's going to create a bunch of folders so that your stuff is easy to find.
+
+To see the help documentation for this function, put the following in your RStudio console:
+
+
+``` r
+?create_folders
+
+```
+Putting a question mark before the function name for any function accesses the function description and help files. If you get an error to this command, it's probably the case that the package that contains the function is either not installed on your computer, not loaded into your library, or both.
+
+To create your project folders, type the following into your RStudio console.
+
+
+``` r
+create_folders(home_folder = my_home_folder)
+
+```
+Now take a look inside the `home_folder` and see what's been created. You should have a folder for code, a folder for data, a folder for output, and a few other collaboration folders, along with a `.Rproj` file that's storing your project settings.
+
+This is the entire folder structure that gets created on your computer.
+
+```bash
+. (home_folder)
+├── articles
+├── citations
+├── documents
+├── code
+│   └── 00_functions
+│   └── 01_download
+│   └── 02_cleaning
+│   └── 03_analysis
+│   └── 04_plots
+│   └── 05_simulations
+│   └── scratch
+├── output
+│   └── 01_tables
+│   └── 02_figures
+│   └── 03_maps
+│   └── x_manual-output
+│   └── scratch
+├── data
+│   └── 00_manually-downloaded
+│   └── 01_raw
+│   └── 02_temp
+│   └── 03_clean
+├── your-project-name.Rproj
+
+. data_external_folder (optional file path)
+├── data
+│   └── 00_manually-downloaded
+│   └── 01_raw
+│   └── 02_temp
+│   └── 03_clean
+
+. data_pii_folder (optional file path)
+├── data
+│   └── 00_manually-downloaded
+│   └── 01_raw
+│   └── 02_temp
+│   └── 03_clean
+```
+
+### Other Options
+
+You can also set `output` and `data` to live in a different folder (for instance if you generate a lot of plots that take up space, or if you have a lot of data and just want to sync your code to GitHub) by setting a path for `output_folder` and `data_folder` respectively. If you don't set these file paths separately, they'll get created within `home_folder`.
+
+If you have sensitive information, you can also set `data_pii_folder` so that private data lives separately. If you have an external hard drive that, say, holds big data, you can set this with `data_external_folder`. If you don't set these, these folders don't get created.
+
+
+Instead of `my_home_folder` which we accessed as the working directory with `getwd()`, you can also set the file path manually by finding what folder on your device you'd like to use, and getting its full path.
+
+The `file.path()` function in R allows you to ignore whether you're on a Mac or Windows (which have different backslash and forward slash conventions). So `J - Yale University/Projects` becomes `file.path("J - Yale University","Projects")`.
+
+In that case, you would input something like the following in your console:
+
+
+``` r
+create_folders(home_folder = file.path("J - Yale University","Projects","ECON-412_js"))
+
+```
+
+If the folder `ECON-412_js` doesn't already exist, the `create_folders` function will create it.
+
+Now you're ready to go with your project! 
+
+# Next Steps
+
+If you'd like to walk through how `ekonomR` works through a whole project sequence, follow the [Vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)) in the order listed on the page. Many Vignettes are being written, and will be up soon.
+
+If you're looking for something in particular (e.g. plotting), each vignette is self-contained, so you can pick and chose.

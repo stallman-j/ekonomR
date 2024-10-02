@@ -13,9 +13,11 @@ The package is intended as a template to avoid having to search in your old file
 
 ## Quick Links
 
-Check out the [documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/).
+Check out the [documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) to view the general workflow.
 
-View the [`ekonomR` GitHub Repository](https://github.com/stallman-j/ekonomR). The repo contains more sample code that hasn't yet been put into vignettes.
+Get familiar with what `ekonomR` provides and suggests by working through [the vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/).
+
+View the [`ekonomR` GitHub Repository](https://github.com/stallman-j/ekonomR). The repo contains sample code that hasn't yet been put into vignettes.
 
 
 ## Installation

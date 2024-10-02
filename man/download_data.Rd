@@ -2,7 +2,7 @@
 % Please edit documentation in R/01_download.R
 \name{download_data}
 \alias{download_data}
-\title{Function for downloading single data file from a website, zip or password protected file}
+\title{Download a Single File}
 \usage{
 download_data(
   data_subfolder = NULL,
@@ -16,21 +16,24 @@ download_data(
 )
 }
 \arguments{
-\item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder}
+\item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder. This will be created if it doesn't exist already.}
 
-\item{data_raw}{location (file path) of raw data folder. Defaults to here("data","01_raw")}
-
-\item{filename}{if not a zip file and need to use download.file, needs to provide a name for the ultimate file}
+\item{data_raw}{location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")
+#' @param filename a character vector}
 
 \item{url}{the url of the folder to download}
 
-\item{zip_file}{TRUE or FALSE, if TRUE use file path of a zip folder}
+\item{zip_file}{logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder of the same name as your download request. Default is FALSE.}
 
-\item{pass_protected}{TRUE or FALSE, if TRUE you'll get prompted for username and password. if true you need to provide username = and password =}
+\item{pass_protected}{logical, default is FALSE. Set to TRUE if the data requires a simple username and login}
+
+\item{username}{if pass_protected is TRUE, you'll need to input the username. Default of NULL asks for user input. Note this is required for EACH URL you want to download. If you're planning to batch download, you can input your username as a character vector. Note that this is NOT secure. It's on the to-do list to add this in a secure way.}
+
+\item{password}{if pass_protected is TRUE, you need to input a password. Default of NULL asks for manual input. As this is required for EVERY URL you have, you can input a character vector to get around this. Note, however, that this is NOT a secure method of downloading data. Future updates will at some point fix this.}
 }
 \value{
 data file in the particular subfolder
 }
 \description{
-Function for downloading single data file from a website, zip or password protected file
+download_data is a function for downloading a single file from a website, including zip or password protected file, with nice defaults of where to send the data and what to name it.
 }

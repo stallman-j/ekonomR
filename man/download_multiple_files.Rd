@@ -19,16 +19,22 @@ download_multiple_files(
 \arguments{
 \item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder}
 
-\item{data_raw}{location (file path) of raw data folder. Defaults to here("data","01_raw")}
+\item{data_raw}{location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")}
 
-\item{base_url}{the url of the folder to download}
+\item{base_url}{the url of the folder to download. This is the thing that is common to all the URLs you're downloading.}
 
-\item{sub_urls}{the additional endings to the base url that you'd like to download separately, a vector of characters}
+\item{sub_urls}{the additional endings to the base url that you'd like to download separately, but which you don't want to go into the name of the file itself. Requires a vector of character strings. Could be empty with "".}
 
-\item{filenames}{the names of files, without paths, to attach to those suburls.}
+\item{filenames}{vector of character strings. The names of files, without paths, to attach to the suburls}
 
-\item{create_folder}{if TRUE, create a subfolder}
+\item{pass_protected}{logical, default is FALSE. Set to TRUE if the data requires a simple username and login}
+
+\item{zip_file}{logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder of the same name as your download request. Default is FALSE.}
+
+\item{username}{if pass_protected is TRUE, you'll need to input the username. Default of NULL asks for user input. Note this is required for EACH URL you want to download. If you're planning to batch download, you can input your username as a character vector. Note that this is NOT secure. It's on the to-do list to add this in a secure way.}
+
+\item{password}{if pass_protected is TRUE, you need to input a password. Default of NULL asks for manual input. As this is required for EVERY URL you have, you can input a character vector to get around this. Note, however, that this is NOT a secure method of downloading data. Future updates will at some point fix this.}
 }
 \description{
-Function for downloading multiple data files from a website
+Function for downloading multiple data files from a website. Includes options for password protected sites, as well as options to unzip the files.
 }

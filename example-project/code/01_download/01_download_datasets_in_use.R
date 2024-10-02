@@ -33,7 +33,7 @@ pacman::p_load(
 
   url <- "https://dataverse.nl/api/access/datafile/354095"
 
-  download_data(data_subfolder = "PWT",
+  ekonomR::download_data(data_subfolder = "PWT",
                 data_raw       = data_raw,
                 url            = url,
                 filename       = "pwt1001.xlsx",
@@ -45,14 +45,16 @@ pacman::p_load(
   # https://population.un.org/wpp/Download/Standard/MostUsed/
 
   #
-  url <- "https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_General/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx"
+  url <- "https://population.un.org/wpp/Download/Files/1_Indicator%20(Standard)/EXCEL_FILES/1_General/WPP2024_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx"
 
-  download_data(data_subfolder = "UN-WPP",
-                data_raw       = data_raw,
-                url            = url,
-                filename       = "WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx",
-                zip_file       = FALSE,
-                pass_protected = FALSE)
+
+
+  ekonomR::download_data(data_subfolder = "UN-WPP",
+                          data_raw       = NULL,
+                          url            = url,
+                          filename       = "WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx",
+                          zip_file       = FALSE,
+                          pass_protected = FALSE)
 
 # IEA Greenhouse Gas Emissions from Energy Highlights ----
 
