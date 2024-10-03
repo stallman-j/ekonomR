@@ -17,7 +17,7 @@ vignette: >
 
 # Getting Started
 
-If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/)) to get your entire project structure settled in a way that's scalable, sharable, and documentable. 
+If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
 
 You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
 
@@ -29,13 +29,13 @@ Exercises called *comprehension check* will be those that you may understand jus
 
 There's a more involved exercise at the very end that you can build out on your own in an R script by modifying the code in here.
 
-We'll be plotting country-level emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
+We'll be plotting country-level emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). (To add: Proper data citation)
 
-The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
+The data we'll use has been cleaned and loaded into the package `ekonomR`. 
 
-First, go into the "Packages" tab in RStudio and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+## New Installation 
 
-Then run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
+Run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
 
 
 ``` r
@@ -43,18 +43,35 @@ install.packages("remotes")
 remotes::install_github("stallman-j/ekonomR")
 ```
 
-Now bring the `ekonomR` package into your working library.
+## Re-installation 
+
+If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
+
+First, go into the "Packages" tab in RStudio (it's in the window that's shared with tabs for `Files`, `Packages`, `Help`, `Viewer`, and `Presentation`) and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+
+Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
+
+
+``` r
+install.packages("remotes") 
+remotes::install_github("stallman-j/ekonomR")
+```
+
+Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
 
 
 ``` r
 library(ekonomR)
 ```
 
-Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but this package is being frequently updated so you might have the bad luck of installing it when it's not behaving or some other issue.
+Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but because `ekonomR` is getting updated so frequently, you might run into trouble.
 
 If you're given the option, update packages from CRAN, the package repository for well-documented R packages. If your R crashes, run the above sequence but then instruct R *not* to update the packages and see how things go. If you're still having trouble, try uninstalling and reinstalling R and R Studio and then coming back. If you're still having trouble, email me.
 
-This is also an advantage of using `ekonomR`: we're installing and loading most of the packages that you'll have to use anyways for an economic analysis, and hopefully not very many of the packages you won't need.
+Why is `ekonomR` doing this? 
+
+  - `ekonomR` is installing and loading most of the packages that you'll have to use anyways for an economic analysis. These are its **dependencies**: the packages and other files `ekonomR` itself relies on to run properly.
+  - Hopefully we're *not* installing a bunch of the packages you won't need, though.
 
 # Data Exploration
 
@@ -63,8 +80,6 @@ Let's tell R that we want to use the cleaned GCB data.
 
 ``` r
 data(gcb_clean)
-#> Warning in data(gcb_clean): data set 'gcb_clean' not
-#> found
 ```
 
 
@@ -79,9 +94,9 @@ In your RStudio console, input the following:
 
 ``` r
 View(gcb_clean)
-#> Error in View : object 'gcb_clean' not found
 names(gcb_clean)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+#> [1] "year"                "country_name"        "gcb_ghg_territorial" "iso3c"               "gcb_ghg_consumption"
+#> [6] "gcb_ghg_transfers"
 ```
 
 *Comprehension check:* What is `names(gcb_clean)` giving us for output? What class is this object? (Hint: `class(names(gcb_clean))`.) What is the class of `gcb_clean`?
@@ -91,7 +106,14 @@ Let's see what years we have available (Note: Not all years will be available fo
 
 ``` r
 unique(gcb_clean$year)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860 1861 1862 1863 1864 1865 1866 1867 1868 1869 1870 1871
+#>  [23] 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882 1883 1884 1885 1886 1887 1888 1889 1890 1891 1892 1893
+#>  [45] 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 1910 1911 1912 1913 1914 1915
+#>  [67] 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929 1930 1931 1932 1933 1934 1935 1936 1937
+#>  [89] 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959
+#> [111] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981
+#> [133] 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
+#> [155] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022
 ```
 
 
@@ -135,7 +157,6 @@ We could also have written the following:
 
 ``` r
 data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 *Comprehension check:* What has the `filter` function done? How many rows exist in the data frame `data_country`?
@@ -245,14 +266,13 @@ my_plot <- ggplot2::ggplot() +
                       ggplot2::aes(x = year, 
                                    y =gcb_ghg_territorial)
                       )
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 ```
-#> Error in ggsave_plot(output_folder = here::here("output", "02_figures"), : could not find function "ggsave_plot"
+#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
 ```
 
-![plot of chunk unnamed-chunk-13](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-01.png?raw=true)
+![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-01.png?raw=true)
 You should input `my_plot` into the console of RStudio to see if the plot shows up in your plotting pane like you would expect. Try doing this after each instance that we change something in our plots.
 
 `ggplot2::ggplot()` just opens up a new, blank plot for us. Try putting just this in your console and see what happens.
@@ -274,14 +294,13 @@ my_plot <- ggplot2::ggplot() +
        x ="" ,
        y = "Emissions (units here)"
   )
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 ```
-#> Error in ggsave_plot(output_folder = here::here("output", "02_figures"), : could not find function "ggsave_plot"
+#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
 ```
 
-![plot of chunk unnamed-chunk-16](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-02.png?raw=true)
+![plot of chunk unnamed-chunk-17](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-02.png?raw=true)
 
 Better! We're getting somewhere. But the grid lines are a little odd and why is the background grey? 
 
@@ -299,15 +318,15 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)"
   ) + 
   ggplot2::theme_minimal()
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
+
 ```
 
 
 ```
-#> Error in ggsave_plot(output_folder = here::here("output", "02_figures"), : could not find function "ggsave_plot"
+#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
 ```
 
-![plot of chunk unnamed-chunk-19](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
+![plot of chunk unnamed-chunk-20](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
 Still not loving the background.
 
 We could keep doing this, finagling with elements. It was through tinkering with this process that I realized there are some settings I would like to just *have* without having to go look up. 
@@ -329,14 +348,13 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)"
   ) + 
   ekonomR::theme_minimal_plot()
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 ```
-#> Error in ggsave_plot(output_folder = here::here("output", "02_figures"), : could not find function "ggsave_plot"
+#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
 ```
 
-![plot of chunk unnamed-chunk-22](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
+![plot of chunk unnamed-chunk-23](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
 
 That'll do, right? This plot is nice and crisp. The contrast is fairly high. The sizing is pretty good on titles and captions. We could keep tinkering, but the marginal returns are pretty low at this point. You can see more options I often end up changing with `?theme_minimal_plot` if you like.
 
@@ -352,7 +370,7 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
          width = 8,
          height = 6,
          dpi  = 400)
-#> Error: 'ggsave_plot' is not an exported object from 'namespace:ekonomR'
+#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
 ```
 
 You can see this final plot by typing `my_plot` in the console, but you should check and make sure that the PNG lives where you can find it.

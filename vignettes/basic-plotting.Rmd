@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 # Getting Started
 
-If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/)) to get your entire project structure settled in a way that's scalable, sharable, and documentable. 
+If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
 
 You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
 
@@ -34,30 +34,46 @@ Exercises called *comprehension check* will be those that you may understand jus
 
 There's a more involved exercise at the very end that you can build out on your own in an R script by modifying the code in here.
 
-We'll be plotting country-level emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). 
+We'll be plotting country-level emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). (To add: Proper data citation)
 
-The data we'll use has been cleaned and loaded into the package `ekonomR`. If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
+The data we'll use has been cleaned and loaded into the package `ekonomR`. 
 
-First, go into the "Packages" tab in RStudio and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+## New Installation 
 
-Then run the next two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library.
+Run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
 
-``` {r install, results = "hide", eval = FALSE}
+``` {r install, results = FALSE, eval = FALSE}
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 ```
 
-Now bring the `ekonomR` package into your working library.
+## Re-installation 
+
+If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
+
+First, go into the "Packages" tab in RStudio (it's in the window that's shared with tabs for `Files`, `Packages`, `Help`, `Viewer`, and `Presentation`) and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+
+Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
+
+``` {r, results = FALSE, eval = FALSE}
+install.packages("remotes") 
+remotes::install_github("stallman-j/ekonomR")
+```
+
+Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
 
 ```{r setup}
 library(ekonomR)
 ```
 
-Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but this package is being frequently updated so you might have the bad luck of installing it when it's not behaving or some other issue.
+Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but because `ekonomR` is getting updated so frequently, you might run into trouble.
 
 If you're given the option, update packages from CRAN, the package repository for well-documented R packages. If your R crashes, run the above sequence but then instruct R *not* to update the packages and see how things go. If you're still having trouble, try uninstalling and reinstalling R and R Studio and then coming back. If you're still having trouble, email me.
 
-This is also an advantage of using `ekonomR`: we're installing and loading most of the packages that you'll have to use anyways for an economic analysis, and hopefully not very many of the packages you won't need.
+Why is `ekonomR` doing this? 
+
+  - `ekonomR` is installing and loading most of the packages that you'll have to use anyways for an economic analysis. These are its **dependencies**: the packages and other files `ekonomR` itself relies on to run properly.
+  - Hopefully we're *not* installing a bunch of the packages you won't need, though.
 
 # Data Exploration
 
