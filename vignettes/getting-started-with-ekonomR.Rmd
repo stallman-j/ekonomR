@@ -264,4 +264,6 @@ Now you're ready to go with your project!
 
 If you'd like to walk through how `ekonomR` works through a whole project sequence, follow the [Vignettes](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)) in the order listed on the page. **Many Vignettes are currently being written, and will be up soon.**
 
+A good place to get a feel for how `ekonomR` tries to get you thinking about the research process is [Simple Plotting with a Review of R Coding Basics](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/).
+
 Each vignette is self-contained, however, if you're looking for something in particular.
