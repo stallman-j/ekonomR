@@ -18,12 +18,12 @@
   # code_folder <- file.path("P:","Projects","ECON-412","code")
   # source(file.path(code_folder,"00_startup_master.R"))
   #
-# packages ----
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(
-  httr, # for inputting username + password into a static site
-  rvest  # for getting urls
-  )
+# # packages ----
+# if (!require("pacman")) install.packages("pacman")
+# pacman::p_load(
+#   httr, # for inputting username + password into a static site
+#   rvest  # for getting urls
+#   )
 
 
 # Penn World Tables PWT: GDP data ----

@@ -1,0 +1,226 @@
+---
+title: "Basic Cleaning: Global Carbon Budget"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-09-23"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basic-cleaning}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+# Getting Started
+
+If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the [package documentation](https://stallman-j.github.io/ekonomR/documentation/documentation/) and the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
+
+You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
+
+If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `basic-cleaning_gcb.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
+
+If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `basic-cleaning_gcb.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/basic-cleaning_gcb.Rmd) and save it into `code/scratch`.
+
+Exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If it's not obvious to you how you would write the code to answer these checks, you should puzzle around with the code in your console to figure them out.
+
+
+The data we'll use has been cleaned and loaded into the package `ekonomR`. 
+
+## New Installation 
+
+Run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
+
+
+``` r
+install.packages("remotes") 
+remotes::install_github("stallman-j/ekonomR")
+```
+
+## Re-installation 
+
+If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
+
+First, go into the "Packages" tab in RStudio (it's in the window that's shared with tabs for `Files`, `Packages`, `Help`, `Viewer`, and `Presentation`) and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+
+Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
+
+
+``` {r, results = FALSE}
+install.packages("remotes") 
+remotes::install_github("stallman-j/ekonomR")
+```
+
+Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
+
+
+``` {r}
+library(ekonomR)
+```
+
+Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but because `ekonomR` is getting updated so frequently, you might run into trouble.
+
+If you're given the option, update packages from CRAN, the package repository for well-documented R packages. If your R crashes, run the above sequence but then instruct R *not* to update the packages and see how things go. If you're still having trouble, try uninstalling and reinstalling R and R Studio and then coming back. If you're still having trouble, email me.
+
+Why is `ekonomR` doing this? 
+
+  - `ekonomR` is installing and loading most of the packages that you'll have to use anyways for an economic analysis. These are its **dependencies**: the packages and other files `ekonomR` itself relies on to run properly.
+  - Hopefully we're *not* installing a bunch of the packages you won't need, though.
+
+# Data Exploration
+
+We'll be downloading and cleaning country-level emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/). (To add: Proper data citation)
+
+``` {r}
+  url <- "https://globalcarbonbudgetdata.org/downloads/latest-data/National_Fossil_Carbon_Emissions_2023v1.0.xlsx"
+
+  ekonomR::download_data(data_subfolder = "GCB",
+                data_raw       = here::here("data","01_raw"),
+                url            = url,
+                filename       = "National_Fossil_Carbon_Emissions_2023v1.0.xlsx",
+                zip_file       = FALSE,
+                pass_protected = FALSE)
+                
+
+```
+
+
+We're going to plot territorial emissions for China for all the available years. This is a **time series**: we'll be showing the change in a single unit (here, a country), over time.
+
+We won't go deep into data exploration for the purposes of this vignette, but another vignette will be out about the cleaning of this data and we'll explore some more in that one. R calls most data a data frame, which you can think of as a single sheet in an Excel workbook. 
+
+We need a very basic understanding of what the data look like, however.
+
+In your RStudio console, input the following:
+
+
+``` r
+View(gcb_raw)
+names(gcb_raw)
+```
+
+The raw data was originally downloaded as an excel sheet. It's since been saved as an RDA file, which you can think of as the file type that R uses for a spreadsheet. If you're familiar with Stata, it's like a `.dta` file.
+
+
+sheets <- c("Territorial Emissions","Consumption Emissions","Emissions Transfers")
+short_name <- c("territorial","consumption","transfers")
+
+# for each of the three sheets, bring in the data, rearrange it so
+# we can analyze it, and save a temp version. We'll end up merging them all together in a sec
+
+# to test, set i = some number and go through line by line
+# i <- 1
+for (i in 1:length(sheets)) {
+
+  # the number of cols we need to skip varies based on the sheet
+  # use a little ifelse statement to get the correct skip
+  ifelse(i==1,
+         yes = skip_val <- 11,
+         no  = skip_val <- 8
+         )
+
+  gcb <- read_xlsx(path = path,
+                   sheet = sheets[i],
+                   col_names = TRUE,
+                   skip = skip_val
+  )  %>%
+    rename(year = "...1")
+  # currently data are of the form
+  # year Afghanistan Albania ...
+  # 1850
+  # 1850
+  # ...
+
+  # alternatively
+  # gcb <- rename(gcb,
+  #               year = "...1")
+  #
+
+  # we need of the form:
+  # country      year territorial_emissions
+  # Afghanistan  1850 NA
+  # Afghanistan  1850 NA
+  # ...
+
+  # to do this, pivot longer:
+  # https://medium.com/the-codehub/beginners-guide-to-pivoting-data-frames-in-r-1de608e914b6
+
+  gcb_temp <- gcb %>%
+              pivot_longer(-c(year),
+                           names_to = "country_name",
+                           values_to = paste0("gcb_ghg_",short_name[i]))%>%
+              arrange(country_name,year) %>%
+              mutate(iso3c = countrycode(country_name,
+                                         origin = "country.name",
+                                         destination = "iso3c"
+                                          )) %>% # create a 3-letter country name
+            filter(!is.na(iso3c)) # keep only the units that have an iso3c code, i.e. the countries
+            # that are actual countries
+
+
+# add iso3 codes with R package "countrycode"
+# https://joenoonan.se/post/country-code-tutorial/
+
+# because regional aggregates are in here, the iso3c code doesn't always match
+# Warning: Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
+
+# how many countries do we have:
+# length(unique(gcb_temp$iso3c))
+# [1] 218
+
+# save
+
+ gcb_temp <- save_rds_csv(data =gcb_temp,
+                    output_path   = file.path(data_temp,"GCB"),
+                    output_filename = paste0("gcb_emissions_",short_name[i],".rds"),
+                    remove = FALSE,
+                    csv_vars = names(gcb_temp),
+                    format   = "neither")
+
+rm(gcb,gcb_temp) # clear out
+
+}
+
+
+
+# merge all three together ----
+
+# start with the territorial emissions because it has the most years
+
+  # this creates a vector of 3 paths, one to each of the three sheets that
+  # we just stored
+
+  paths <- file.path(data_temp,"GCB", paste0("gcb_emissions_",short_name,".rds"))
+
+
+  gcb_clean <- readRDS(file = paths[1]) %>% # read in the first one, territory, which has the most years
+                  left_join(readRDS(file = paths[2]),
+                            by = c("iso3c","year","country_name")) %>% # join on the second df, it'll default to using year
+                  left_join(readRDS(file = paths[3]),
+                            by = c("iso3c","year","country_name")) # join the third
+
+  # THIS FILTER ALLOWS YOU TO TAKE LOGS BUT WHY IS IT PROBLEMATIC?
+
+  # log(1)=0, log(x) for x<1 is a negative number
+  # and lim_{x-> 0} log(x) = -infinity
+  # so log(x) for x<0 doesn't make sense
+
+  # UNCOMMENT IF YOU WANT TO MAKE A RESTRICTION OF WHAT OBSERVATIONS YOU KEEP FOR PURPOSES OF HAVING LOG(GHGPC)
+  gcb_clean <- gcb_clean %>%
+               filter(gcb_ghg_territorial >0)
+
+  # Why does it really really not make sense that we would do the same filter
+  # for consumption emissions and emissions transfers?
+
+  gcb_clean <- save_rds_csv(data = gcb_clean,
+                            output_path = file.path(data_clean,"GCB"),
+                            output_filename = "gcb_clean.rds",
+                            remove = FALSE,
+                            csv_vars = names(gcb_clean),
+                            format = "both")
+
+
+

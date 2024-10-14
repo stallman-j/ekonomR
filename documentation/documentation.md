@@ -75,7 +75,7 @@ Here's the way a typical project analysis should go and how the folder structure
 
 In the simplest case, the paths mentioned below are all taken relative to the project folder you set as `home_folder`. For example, if your R Project is stored in `C:/Projects/ECON-412_js`, then when you see `data/01_raw` you should think of this as meaning the file path `C:/Projects/ECON-412_js/data/01_raw`.
 
-[Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/)) discusses the more complicated case.
+[Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) discusses more complicated cases.
 
 
 ## Decide your research question

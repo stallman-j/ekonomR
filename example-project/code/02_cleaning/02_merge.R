@@ -41,13 +41,13 @@
   # gcb is the one with the most country-year obs so start with that
 
   merged_data <- gcb %>%
-                  left_join(wpp, by = c("year","iso3c")) %>%
-                  left_join(pwt, by = c("iso3c","year")) %>%
-                  left_join(iea, by = c("iso3c","year","country_name")) %>%
-                  relocate(where(is.numeric), .after = where(is.character)) %>% # rearrange columns so countrynames are first
-                  filter(!is.na(rgdpe) & !is.na(pop_000)) %>% # keep only if the GDP and population data are there
-                  arrange(iso3c,year) %>% # arrange by country-year
-                  mutate(pop = pop_000*1000,
+                  dplyr::left_join(wpp, by = c("year","iso3c")) %>%
+    dplyr::left_join(pwt, by = c("iso3c","year")) %>%
+    dplyr::left_join(iea, by = c("iso3c","year","country_name")) %>%
+                  dplyr::relocate(where(is.numeric), .after = tidyselect::where(is.character)) %>% # rearrange columns so countrynames are first
+    dplyr::filter(!is.na(rgdpe) & !is.na(pop_000)) %>% # keep only if the GDP and population data are there
+    dplyr::arrange(iso3c,year) %>% # arrange by country-year
+    dplyr::mutate(pop = pop_000*1000,
                          gdp_pc = (rgdpe*1000000) / pop,
                          gcb_ghg_territorial_pc = (gcb_ghg_territorial*1000000)/pop,
                          gcb_ghg_consumption_pc = gcb_ghg_consumption*1000000/pop,
@@ -72,7 +72,7 @@
   #summary(merged_data$log_gcb_ghg_consumption_pc)
 
 
-  merged_data <- save_rds_csv(data = merged_data,
+  merged_data <- ekonomR::save_rds_csv(data = merged_data,
                           output_path   = file.path(data_clean),
                           output_filename = paste0("ghg_pop_gdp.rds"),
                           remove = FALSE,

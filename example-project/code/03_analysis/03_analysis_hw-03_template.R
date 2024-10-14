@@ -60,7 +60,7 @@ names(data)
 # you might want to look in the 02_clean_gcb to see if there's anything weird about
 # the variables in there.
 
-data_to_summarize <- data %>% select(le_birth,
+data_to_summarize <- data %>% dplyr::select(le_birth,
                                      le_15,
                                      le_65,
                                      tfr,
@@ -85,7 +85,7 @@ var_labels <- c("Life Expectancy at birth",
 
 # you can also use datasummary() from the modelsummary package if you want more customizability
 
-stargazer(data_to_summarize,
+stargazer::stargazer(data_to_summarize,
           type = "text",
           style = "qje",
           summary = TRUE,
@@ -98,7 +98,7 @@ stargazer(data_to_summarize,
 out_path <- file.path(output_tables,"hw03_summary_stats.tex")
 
 # output to latex
-stargazer(data_to_summarize,
+stargazer::stargazer(data_to_summarize,
           type = "latex",
           style = "qje", # also has aer style
           out = out_path,
@@ -133,8 +133,8 @@ stargazer(data_to_summarize,
 year_a <- 1960
 year_b <- 2019
 
-data_year_a  <- data %>% filter(year == year_a)
-data_year_b  <- data %>% filter(year == year_b)
+data_year_a  <- data %>% dplyr::filter(year == year_a)
+data_year_b  <- data %>% dplyr::filter(year == year_b)
 
 ## set up regression formulas ----
 
@@ -393,7 +393,7 @@ modelsummary(models,
 #out_path <- file.path(output_tables,"le_reg_cross_sections.tex")
 out_path <- file.path(output_tables,"hw03_reg_cross_sections.tex")
 
-modelsummary(models,
+modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1", # stata's robust standard errors
              #statistic = "conf.int",
@@ -547,9 +547,9 @@ modelsummary(models,
 # We need a different package to output to Word
 # See help here: https://ardata-fr.github.io/flextable-book/
 
-if (!require("flextable")) install.packages("flextable")
-
-library(flextable)
+# if (!require("flextable")) install.packages("flextable")
+#
+# library(flextable)
 
 out_path <- file.path(output_tables,"le_reg_panel.docx")
 

@@ -13,7 +13,7 @@
 
  # if you're running multiple scripts from the master, comment this out
 # it removes everything in the environment
-  rm(list = ls())
+  #rm(list = ls())
 
 
 # bring in the packages, folders, paths ----

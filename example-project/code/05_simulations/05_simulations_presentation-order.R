@@ -31,7 +31,7 @@
   randomization_seed <- 14
 
 
-  set.seed(randomization_seed)
+  #set.seed(randomization_seed)
 
 
 

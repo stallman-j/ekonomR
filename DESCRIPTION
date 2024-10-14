@@ -12,12 +12,18 @@ RoxygenNote: 7.3.2
 Imports: 
     countrycode,
     dplyr,
+    fixest,
+    flextable,
     ggplot2,
     ggrepel,
     here,
     httr,
+    kableExtra,
+    modelsummary,
     readr,
     sandwich,
+    stargazer,
+    stats,
     tidyr,
     writexl
 Depends: 

@@ -46,21 +46,21 @@ wpp <- readxl::read_xlsx(path = path,
 
 names(wpp)
 
-wpp_temp <- rename(wpp, iso3c = "ISO3 Alpha-code" )
+wpp_temp <- dplyr::rename(wpp, iso3c = "ISO3 Alpha-code" )
 wpp_clean <- wpp %>%
-            rename(iso3c = "ISO3 Alpha-code",
+            dplyr::rename(iso3c = "ISO3 Alpha-code",
                    year = "Year",
                    pop_000 = "Total Population, as of 1 January (thousands)",
                    le_birth = "Life Expectancy at Birth, both sexes (years)",
                    le_15    = "Life Expectancy at Age 15, both sexes (years)",
                    le_65    = "Life Expectancy at Age 65, both sexes (years)",
                    tfr      = "Total Fertility Rate (live births per woman)") %>%
-            filter(!is.na(iso3c)) %>% # this takes out all regions and just leaves countries
-            select(iso3c, year, pop_000,le_birth,le_15,le_65,tfr)
+            dplyr::filter(!is.na(iso3c)) %>% # this takes out all regions and just leaves countries
+            dplyr::select(iso3c, year, pop_000,le_birth,le_15,le_65,tfr)
 
 # save as rds, csv and xlsx files
 
-wpp_clean <- save_rds_csv(data = wpp_clean,
+wpp_clean <- ekonomR::save_rds_csv(data = wpp_clean,
                           output_path   = file.path(data_clean,"WPP"),
                           output_filename = paste0("wpp_clean.rds"),
                           remove = FALSE,
