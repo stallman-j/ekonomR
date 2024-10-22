@@ -299,13 +299,15 @@ Here's the whole cleaning process in one go:
 
 View(gcb)
 ```
-It turns out that this process is almost exactly the same for the other sheets, so let's get ourselves a for loop to avoid having to type out the code three times.
+It turns out that this process is almost exactly the same for the other sheets, so let's get ourselves a for loop to avoid having to type out the code three times. This'll also allow us to discuss a few things coders tend to do, regardless of what programming language they're using.
 
 # A few things coders commonly do
 
-Coding in any language makes heavy use of drafting and then refining; if-else statements; and for loops. 
+Coding in any language makes heavy use of drafting and editing; if-else statements; and for loops. Think of any software update or any software security breach that you've heard of that gets patched. That's essentially coders revising their drafts to make your device run better (or worse, who knows, depends on their goals and where the money is), and revising their old drafts to fix issues that came up.
 
-If you're familiar with another coding language but not R, these concepts will all be familiar to you, and you just need to learn R's syntax. If coding is new to you, these might take a little time to get used to, and that's natural.
+If you're familiar with another coding language but not R, these concepts will all be familiar to you, and you just need to learn R's syntax. 
+
+If coding is new to you, these might take a little time to get used to, and that's natural.
 
 ## Write drafts
 
@@ -329,11 +331,13 @@ Just like for writing, the editing process is an important part of becoming a be
 
 There's one key difference, though, between an essay and a coding script. Unlike for writing, in coding it's vital to get your code to actually run! One important way you get good at getting your code to run is by spending time troubleshooting your code that doesn't run, so you can see how it works and what you tend to flub!
 
-If you're new to R or coding, prioritze getting your code to work. Don't worry about pretty, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have an ugly thing that gets what you want or almost what you want than pretty code that doesn't work.
+If you're new to R or coding, prioritze getting your code to work. Don't worry about pretty, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have something that gets what you want or almost what you want than perfectly indented code that doesn't work.
+
+Also, if you're getting bogged down, consider paying a little more for higher random access memory (RAM) when purchasing your next laptop or PC. Less than 16G of RAM starts to bite real fast these days. R uses RAM intensively when you're doing data manipulation and analysis. RAM is also part of what helps to keep a Zoom meeting running smooth, Tiktok scrolling fast, or your Zelda game showing you all those worldbuilding details without lagging.
 
 While "pretty" is often in the eyes of the beholder, in programming, pretty code is usually code that's quick to run, straightforward to replicate, and easy to understand for someone with passing familiarity with your coding language but who has no clue what you're trying to achieve with your script. 
 
-Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it, is at or a ways below your level of familiarity with the coding language, and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
+Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it; is at or a ways below your level of familiarity with the coding language; and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
 
 Head-turningly hot code is if you've additionally turned your stuff into functions or written a package out of it, but now we're getting off track.
 
