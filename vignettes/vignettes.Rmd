@@ -5,8 +5,8 @@ toc: true
 toc_label: "Contents"
 toc_sticky: true
 author_profile: true
-date: "2024-09-30"
-output: rmarkdown::html_vignette
+date: "2024-10-22"
+output: rmarkdown::html_notebook
 vignette: >
   %\VignetteIndexEntry{vignettes}
   %\VignetteEngine{knitr::rmarkdown}
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
-
+C:/Projects/ekonomR/vignettes/basic-cleaning_wpp.Rmd
 This is the list of vignettes (most of which are coming out soon) for the workflow package `ekonomR`. 
 
 To view the code behind all this check out the [ekonomR repository](https://github.com/stallman-j/ekonomR).
@@ -79,29 +79,34 @@ Any functions that save output (like tables and figures) and into a folder will 
 
 
 - [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/).
+- [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/)
 
 # Downloading Vignettes
 
+- [Basic Data Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-data-downloading/)
 - To add: downloading data with `httr` and `rvest`
-- To add: downloading data without password protection
 - To add: downloading data through a python API with `reticulate`
 
 # Cleaning Vignettes
 
-- To add: Cleaning examples 1, 2 and 3
-- To add: Merging 
+- [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/)
+- [Basic Cleaning: Penn World Tables](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_pwt/)
+- [Basic Cleaning: World Population Prospects](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_wpp/)
+- [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/)
+
 - To add: Extracting Rasters to Vectors
 
 # Analysis Vignettes
 
-- To add: Basic regression
-- To add: Fixed Effects Estimation
-- To add: Making spatial buffers
+- [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/)
+- [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation/)
+- [Event Study Regression](https://stallman-j.github.io/ekonomR/vignettes/event-study/)
+
 
 # Plotting Vignettes
 
 
-- [Simple Plotting with a Review of R Coding Basics](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/)
+- [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/)
 - [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/)
 
 

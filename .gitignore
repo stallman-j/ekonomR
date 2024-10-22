@@ -8,3 +8,6 @@
 .quarto
 inst/doc
 example-project
+data/01_raw
+data/02_temp
+data/03_clean

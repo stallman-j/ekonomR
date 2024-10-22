@@ -8,6 +8,7 @@
 #' @param remove defaults to TRUE in which case the data are removed after being saved, if FALSE returns the data to memory
 #' @param format defaults to "both" which is both csv and xlsx (and .rds). Otherwise can use just "csv" or "xlsx" for output format. The RDS always gets saved.
 #' @returns a CSV or XLSX file along with a RDS file saved in the location of output_path, and the original data back to you as a data frame
+#' @export
 save_rds_csv <- function(data,
                          output_path = NULL,
                          date = "",
@@ -17,9 +18,9 @@ save_rds_csv <- function(data,
                          format   = "both"){
 
 
+
   if (is.null(output_path)){
     output_path <- here::here("data","02_temp")
-    cat("You haven't specified a place to put your data, so it's going into ",output_path,", which will be created if it isn't already. \n")
   }
 
   if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE) # recursive lets you create any needed subdirectories
@@ -41,8 +42,6 @@ save_rds_csv <- function(data,
 
 
   if (format == "both"){
-    if (!require("readr")) install.packages("readr")
-    library(readr)
     readr::write_csv(csv_data,
                      file =csv_path)
 
@@ -66,6 +65,9 @@ save_rds_csv <- function(data,
     print("Not saving to CSV or XLSX, just saved RDS file.")
   }
 
+  if (is.null(output_path)){
+    cat("You haven't specified a place to put your data, so it's going into ",output_path,", which will be created if it isn't already. \n")
+  }
 
   if (remove == TRUE){
     rm(data,csv_data)
