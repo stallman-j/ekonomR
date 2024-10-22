@@ -30,7 +30,9 @@ If you've already created a project using the `ekonomR` function `create_folders
 
 If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `summary-statistics.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/summary-statistics.Rmd) and save it into `code/scratch`.
 
-## New Installation 
+# Installation 
+
+## New Installation
 
 If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
 
@@ -69,3 +71,74 @@ If you're given the option, update packages from CRAN, the package repository fo
 # Prerequisites
 
 If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations we'll be assuming you know.
+
+``` {r, eval = FALSE}
+## bring in the data ----
+
+data <- readRDS(file = file.path(data_clean,"ghg_pop_gdp.rds"))
+
+# see the varnames we have here
+names(data)
+
+# Summary Statistics ----
+## Select data to summarize ----
+# NOTE
+# if you use a gcb_ variable, you may run into problems with logs! Why is this?
+# you can still use the outcome, but you might not be able to run all the regressions
+# If you can use it without error,
+# you might want to look in the 02_clean_gcb to see if there's anything weird about
+# the variables in there.
+
+data_to_summarize <- data %>% dplyr::select(le_birth,
+                                     le_15,
+                                     le_65,
+                                     tfr,
+                                     pop_000,
+                                     rgdpe,
+                                     gdp_pc,
+                                     gdp000_pc) %>% as.data.frame()
+
+## FIND UNITS FOR GDP PER CAPITA IN THE 02_clean_merge file
+var_labels <- c("Life Expectancy at birth",
+                "Life Expectancy, Age 15",
+                "Life Expectancy, Age 65",
+                "Total Fertility Rate",
+                "Population (insert units)",
+                "GDP (insert units here)",
+                "GDP per capita (units)",
+                "GDP (units) per (units) capita")
+
+## generate summary statistics table ----
+
+# https://www.jakeruss.com/cheatsheets/stargazer/#the-default-summary-statistics-table
+
+# you can also use datasummary() from the modelsummary package if you want more customizability
+
+stargazer::stargazer(data_to_summarize,
+          type = "text",
+          style = "qje",
+          summary = TRUE,
+          covariate.labels = var_labels,
+          summary.stat = c("n","min","mean","median","max","sd"),
+          digits = 2 # round to 2 digits
+)
+
+#out_path <- file.path(output_tables,"le_summary_stats.tex")
+out_path <- file.path(output_tables,"hw03_summary_stats.tex")
+
+# output to latex
+stargazer::stargazer(data_to_summarize,
+          type = "latex",
+          style = "qje", # also has aer style
+          out = out_path,
+          summary = TRUE,
+          covariate.labels = var_labels,
+          summary.stat = c("n","min","mean","median","max","sd"),
+          digits = 2, # round to 2 digits
+          title = "Summary Statistics",
+          label = "tab:le_sumstats", # this label now redundant with float = FALSE
+          float = FALSE # do this so I can use threeparttable in latex
+          # and have very pretty notes
+          # this removes the exterior "table" environment
+)
+```
