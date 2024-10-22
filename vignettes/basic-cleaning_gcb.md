@@ -15,13 +15,13 @@ vignette: >
 
 
 
-Make sure you've got the latest version of `ekonomR`, since it's getting updated frequently. If you're not sure if your `ekonomR` is up to date or you're new to `ekonomR`, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) and then come back here.
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
 
 # Prerequisites
 
-If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
-
-Bring `ekonomR` into your working library.
+First, bring `ekonomR` into your working library.
 
 
 ``` r
@@ -32,9 +32,9 @@ library(ekonomR)
 
 # Download
 
-We'll be downloading and cleaning country-level emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/).
+We'll be downloading and cleaning country-level greenhouse gas emissions data from the Global Carbon Budget, which you can learn about [here](https://globalcarbonbudget.org/).
 
-It's often helpful to list the filename explicitly and then paste together the rest of the URL for downloading. This allows you to just define the filename up at the top and *soft-code* (by referring to `gcb_filename` rather than the actual text string) than copying and pasting everywhere we need it.
+It's often helpful to list the filename explicitly and then paste together the rest of the URL for downloading. This allows you to just define the filename up at the top and *soft-code* (by referring to `gcb_filename` rather than the actual text string) than copying and pasting all over the place.
 
 
 
@@ -45,7 +45,7 @@ gcb_filename <- "National_Fossil_Carbon_Emissions_2023v1.0.xlsx"
 my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-data/",gcb_filename)
 ```
 
-`ekonomr` has a handy download function that wraps around base R's `download.file`.
+`ekonomr` has a handy download function that wraps around base R's `download.file()`. Because `download_data()` creates the folder from the file path `here::here("data","01_raw","GCB")`, it'll tell you if the path already exists or you had to create it. This also lets you know where on your device to look for your downloaded file.
 
 
 ``` r
@@ -56,59 +56,60 @@ my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-d
                 
 ```
 
-This downloads the raw data as an excel workbook. You should open up the excel workbook we just downloaded in Excel or a similar software. In general, when you're exploring your data, you should know what the units of analysis are (here, countries), how frequent your data are (here, annual), and what units your measures are in.
+Great, we now have the raw data as an excel workbook. You should open up the excel workbook we just downloaded in Excel or a similar software.
 
-You should also think critically about how reasonable the data you're getting are. Here are some questions you should be asking whenever you're presented with data.
+When you're exploring your data, you should know what the units of analysis are (here, countries), how frequent your data are (here, annual), and what units your measures are in.
+
+You should also think critically about how reasonable the data you're getting are. Here are some useful questions to consider whenever you're presented with something someone's calling "data."
 
 ## Questions to Ask About Data {#data-questions}
 
 - Is the data documenting facts, making estimates or inferences, or in some way presenting opinions as numbers? If either of the latter, what methods are they using and how could this be done in a trustworthy way?
-- Does the data they're presenting seem to square with what I would expect from data like this?
-- Is there missing data? If data are missing, are they missing randomly? Is there some pattern to the data that are missing that could influence my interpretation of results achieved from this data?
-- Do the creators of the data have any reason to be biased in how they're presenting this data? Might anyone benefit from fudging the numbers in one direction or another?
+- Does the data they're presenting seem to square with what you would expect from data like this?
+- Is there missing data? If data are missing, are they missing randomly? Is there some pattern to the data that are missing that could influence my interpretation of results obtained from analyzing this data?
+- Do the creators of the data have any reason to be biased in how they're presenting this data? Might anyone who could be involved in handling this data before its publication benefit from fudging the numbers in one direction or another?
 - If the data are measured, is there likely to be error in the measurement? Is this error likely to be random, or more likely to be larger or smaller for certain units?
 
 
 # Bring in Data by Sheet
 
-There are three sheets with data that we're interested in: territorial emissions, emissions from consumption, and emissions transfers.
+There are three sheets with data that we're interested in: territorial emissions, emissions from consumption, and emissions transfers. The Global Carbon Budget has also listed a bunch of its documentation along with the download, which is a good practice.
 
 Here's what we're going to do for each sheet:
 
 1. Bring the sheet into R, lopping off the extra rows at the top
 2. Turn the sheet into a long data frame. By **long data**, we mean data in which an observation is a unique unit (here a country) at a unique point in time (a year).
+3. Tidy up the columns and create variables as necessary so that it'll be easy to merge the sheets together into a single data frame and then eventually with other data.
 
-Then at the end, we'll merge each of those temp files together to make each of territorial emissions, consumption emissions, and transfers a column in our data set.
+Once we've done that, we'll merge each of those temp files together to make each of territorial emissions, consumption emissions, and transfers a column in our data set.
 
 The sheets have particular names, which we'll need in order to read in the sheet. I've put those names in the vector `sheets`. We'll want each sheet to correspond to a shorter name, which will become the variable name, so I've also made a vector called `short_name` that contains in the same location in the vector the short phrasing for the sheet. 
 
 
 ``` r
-sheets <- c("Territorial Emissions","Consumption Emissions","Emissions Transfers")
+sheets     <- c("Territorial Emissions","Consumption Emissions","Emissions Transfers")
 short_name <- c("territorial","consumption","transfers")
 ```
 
-For instance, "Territorial Emissions" is the first element of `sheets` and "territorial" is the first element of `short_name`. This is done a little cleverly because any time I look at a repeated pattern, like there being three sheets, I know that if possible I'm going to want to use a for loop to loop through all three sheets. 
+For instance, "Territorial Emissions" is the first element of `sheets` and "territorial" is the first element of `short_name`. 
 
-If the pattern of cleaning each sheet is similar, this saves me a lot of time because once I've done one sheet, the mechanism will be the same for the other sheets, although maybe with a quirk or two.
-
-*Comprehension check*: What's the main difference between all these measures? You might want to look at the abstracts of the articles cited in the Excel sheet. Which measure would you expect to be measured with most and least error?
+This is intentional. Any time I look at a repeated pattern, like there being three sheets all structured similarly, in my mind I'm thinkin' "for loop?" Wouldn't it be nice to save on code space and effort if I could just loop through the three sheets and do basically the same thing to clean each sheet?
 
 Here's what the first few rows and columns of the "Territorial Emissions" sheet looks like:
 
-               | Afghanistan    | Albania   | Algeria
--------------------------------------------------------
-1850           |                |           |
-1851           |                |           | 
+|               | Afghanistan    | Albania   | Algeria   |
+|---------------|----------------|-----------|---------- |
+|1850           |                |           |           |
+|1851           |                |           |           |
 
 We want to morph the data instead to look like the following:
 
 
-country             | year     | territorial | consumption | transfers
--------------------------------------------------------
-Afghanistan         |  1850    |             |             |
-Afghanistan         |  1851    |             |             |
-...                 | ...      | ....        | ...         |
+|country             | year     | territorial | consumption | transfers|
+|-----------------------------------------------------------|----------|
+|Afghanistan         |  1850    |             |             |          |
+|Afghanistan         |  1851    |             |             |          |
+|...                 | ...      | ....        | ...         |          |
 
 Let's go through an example with a single sheet, and then we'll do all the sheets together in a `for` loop.
 
@@ -569,9 +570,13 @@ Congratulations! This data is ready to analyze.
 
 You will likely need to consult Google and/or ChatGPT to answer some of the following questions.
 
-1. What are the units of territorial emissions? How do you convert between tonnes of carbon and tonnes of carbon dioxide? What's the difference between using tonnes of carbon or carbon dioxide?
+1. Define emissions from consumption, emissions transfers, and territorial emissions in language that a grandparent or someone of a similar role in your life who doesn't already know these things would understand. You might want to look at the abstracts of the articles cited in the Excel sheet. (Encouraged, but not obligatory: Now go tell that person what you came up with and why we might care about these measures!)
 
-2. Let's look at the `paste0` function, which is one of the most useful functions R's got. `paste0()` is named after `paste`, a function that concatenates strings together, but puts a separator like an empty space in between the elements. `paste0` omits the space, and since in practice we often don't want it, it makes life much easier for a programmer.
+a. Which of these three would you expect to be measured with most and least error?
+
+2. What are the units of territorial emissions? How do you convert between tonnes of carbon and tonnes of carbon dioxide? What's the difference between using tonnes of carbon or carbon dioxide?
+
+3. Let's look at the `paste0` function. `paste0()` is named after `paste`, a function that concatenates strings together, but `paste` defaults to putting a separator like an empty space in between the elements while `paste0` omits the space. This is really nice for a programmer, but if you don't see why you should care, don't worry about it. 
 
 
 ``` r
@@ -590,9 +595,9 @@ out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
   a. What's the result of putting `out_message` in your console and then hitting enter?
   b. Make up another message that would make sense to a human with `vec_a` through `vec_g` and using `paste0`.
   
-3. Give a brief assessment of the questions listed in [questions about data](#data-questions) as pertains to this Global Carbon Budget data.
+4. Give a brief assessment of the questions listed in [questions about data](#data-questions) as pertains to this Global Carbon Budget data.
 
-4. What did the code `length(unique(gcb_temp4$iso3c))` give us? 
+5. What did the code `length(unique(gcb_temp4$iso3c))` give us? 
 
 - Using the function `nrow()` (**n**umber of **row**s), how many observations do we have in `gcb_clean`? 
 - How many of these observations are with non-missing values?
