@@ -1,5 +1,5 @@
 ---
-title: "Basic Regression"
+title: "Summary Statistics"
 layout: single
 toc: true
 toc_label: "Contents"
@@ -8,39 +8,28 @@ author_profile: true
 date: "2024-10-22"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{basic-regression}
+  %\VignetteIndexEntry{summary-statistics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 
-library(dplyr)
-```
 
 
 If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
 
 You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
 
-If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `basic-cleaning_gcb.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
+If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `summary-statistics.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
 
-If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `basic-regression.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/basic-cleaning_gcb.Rmd) and save it into `code/scratch`.
-
-Exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If it's not obvious to you how you would write the code to answer these checks, you should puzzle around with the code in your console to figure them out.
-
-
-The data we'll use has been cleaned and loaded into the package `ekonomR`. 
+If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `summary-statistics.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/summary-statistics.Rmd) and save it into `code/scratch`.
 
 ## New Installation 
 
-Run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
+If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
 
 
-``` {r, eval = FALSE, results = FALSE}
+
+``` r
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 ```
@@ -54,7 +43,8 @@ First, go into the "Packages" tab in RStudio (it's in the window that's shared w
 Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
 
 
-``` {r, results = FALSE, eval = FALSE}
+
+``` r
 install.packages("remotes") 
 remotes::install_github("stallman-j/ekonomR")
 ```
@@ -62,7 +52,8 @@ remotes::install_github("stallman-j/ekonomR")
 Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
 
 
-``` {r}
+
+``` r
 library(ekonomR)
 ```
 
@@ -74,4 +65,3 @@ If you're given the option, update packages from CRAN, the package repository fo
 # Prerequisites
 
 If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations we'll be assuming you know.
-
