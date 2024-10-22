@@ -27,7 +27,7 @@ If you're not sure if your `ekonomR` is up to date or you're new to the woods, y
 
 # Prerequisites
 
-First, bring `ekonomR` into your working library. Let's also bring in `dplyr` explicitly so that the pipe operator comes through easily.
+First, bring `ekonomR` into your working library.
 
 ``` {r}
 library(ekonomR)
@@ -59,7 +59,7 @@ my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-d
 
 ```
 
-Great, we now have the raw data as an excel workbook. You should open up the excel workbook we just downloaded in Excel or a similar software.
+Great, we now have the raw data as an excel workbook. You should open up the excel workbook we just downloaded in Excel or a similar software to get a gander at the treasure you've just found.
 
 When you're exploring your data, you should know what the units of analysis are (here, countries), how frequent your data are (here, annual), and what units your measures are in.
 
@@ -70,8 +70,8 @@ You should also think critically, perhaps almost philosophically, about your dat
 - Is the data documenting facts, making estimates or inferences, or in some way presenting opinions as numbers? If either of the latter, what methods are they using and how could this be done in a trustworthy way?
 - Does the data they're presenting seem to square with what you would expect from data like this?
 - Is there missing data? If data are missing, are they missing randomly? Is there some pattern to the data that are missing that could influence your interpretation of results obtained from analyzing this data?
-- Do the creators of the data have any reason to be biased in how they're presenting this data? Might anyone who could be involved in handling this data before its publication benefit from fudging the numbers in one direction or another?
-- If the data are measured, is there likely to be error in the measurement? Is this error likely to be random, or more likely to be larger or smaller for certain units?
+- Do the creators of the data have any reason to be biased in how they're presenting this data? Might anyone who could be involved in handling this data before its publication benefit from fudging the numbers?
+- Is there likely to be error in the measurement of this data? Is this error likely to be random, or more likely to be larger or smaller for certain units?
 
 
 # Clean a Single Sheet
@@ -182,28 +182,30 @@ We want the columns in our old data frame to become a variable, like `country_na
 
 We want the values in the cells to get turned into a column, which we'll call `gcb_ghg_territorial` in this case. (Short for "Global Carbon Budget Greenhouse Gases, Territorial"). In order to anticipate the `for` loop, let's write this as `paste0("gcb_ghg_",short_name[1])`.
 
+You can see another tutorial of the pivot functions [here](https://medium.com/the-codehub/beginners-guide-to-pivoting-data-frames-in-r-1de608e914b6). The dplyr package also comes with its own vignette, which you can access by typing `vignette("pivot")` in your console.
+
 
 ``` {r, results = FALSE}
 gcb_temp <- gcb %>%
-              tidyr::pivot_longer(cols = names(.),
+              tidyr::pivot_longer(cols = -c(year),
                            names_to = "country_name",
                            values_to = paste0("gcb_ghg_",short_name[1]))
 View(gcb_temp)
 ```
 
-*Comprehension check*: What would happen if we told `pivot_longer()` to use *all* the columns, and didn't omit `year`? (If you're not sure, try it out with `cols = names(.)`.
+*Comprehension check*: What would happen if we told `pivot_longer()` to use *all* the columns, and didn't omit `year`? (If you're not sure, try it out by replacing `cols = -c(year)` with `cols = names(.)`.
 
 ## The placeholder period in dplyr
 
 The `.` comes from how dplyr works with the pipe operator `%>%`. 
 
-It's a place-holder that says "Hey, that thing that came before the pipe? Also insert it here where this period is." 
+It's a place-holder that says "Hey, that thing that came before the last pipe you saw? Also insert it here where this period is, thanks." 
 
 What we want is `names(gcb)` to see the column names of the `gcb` data frame. The `.` tells the `names()` function to take it from up top. 
 
-You can see another tutorial of the pivot functions [here](https://medium.com/the-codehub/beginners-guide-to-pivoting-data-frames-in-r-1de608e914b6). The dplyr package also comes with its own vignette, which you can access by typing `vignette("pivot")` in your console.
 
-## Adjust data aesthetics with `dplyr::arrange()`
+
+## Adjust row order with `arrange()`
 
 It might be easier to look at the data if, rather than being alphabetical by country, the first rows were all Afghanistan from 1850 to 2022, and then we went down to Albania from 1850 to 2022, and so on. The `arrange()` function from `dplyr` will do this for us.
 
@@ -214,15 +216,19 @@ gcb_temp2 <- gcb_temp %>%
 View(gcb_temp2)
 ```
 
-## Harmonize country names with `countrycode::countrycode()`
+## Harmonize country names with `countrycode()`
 
-Country names are a little messy because different languages have different naming conventions for different places. ISO3C codes are a standardized way to refer to countries, although there are many more methodologies. The package `countrycode` has a function also called `countrycode()` that does this conversion for us. If you're doing a serious project, you should be careful to check that this is working as you intend. 
+Country names are a little messy because different languages have different naming conventions for different places. ISO3C codes are a standardized way to refer to countries, although there are many more methodologies. The package `countrycode` has a function also called `countrycode()` that does this conversion for us. 
+
+**Semi-pro tip**: If you're doing a serious project, you should be careful to check that this conversion is working as you intend. 
 
 For instance, Hong Kong's official name is "Hong Kong Special Administrative Region of the People's Republic of China (PRC)", and `countrycode` tends to look for just the name "China", so you might sometimes need to manually adjust the naming that you convert from to avoid information getting lost or misread.
 
-## Create/edit variables with `dplyr::mutate()`
+## Create/edit variables with `mutate()`
 
-We can create a new variable with `dplyr`'s `mutate()` function, which sounds like X-Men but really just gets used any time we want to create or change a variable's values. Within the `mutate()` function, we call the `countrycode()` function, saying to take the value from the country name that we got from `country_name`, and generate for us the ISO3C code which corresponds to it.
+We can create a new variable with `dplyr`'s `mutate()` function, which sounds like X-Men but really just gets used any time we want to create or change a variable's values. 
+
+Within the `mutate()` function, we call the `countrycode()` function, saying to take the value from the country name that we got from `country_name`, and generate for us the ISO3C code which corresponds to it.
 
 You can find more about `countrycode` [here](https://joenoonan.se/post/country-code-tutorial/).
 
@@ -437,7 +443,7 @@ for (i in 1:3){
 
 Omitting this output can be a little inconvenient if you're coding pretty interactively (i.e. switching between testing out commands in your console and then adding the command to your script). This is a *very* nice thing if you're running code with lots of lines and asking R to do lots of things, because otherwise your output console would just become a mess.
 
-## A plug for the apply functions in R
+# A plug for the apply functions in R
 
 R also has a lovely suite of operations called `apply()` functions that do the same basic thing as a for loop. 
 
@@ -501,7 +507,7 @@ rm(gcb)
 
 *Comprehension check*: What is `rm(gcb)` doing? What would happen to the `gcb` that's being created when `i=1` if we didn't have `rm(gcb)` in our code?
 
-# Merging the data frames
+# Merging
 
 Now that we've got our temp files, let's merge all three together into a cleaned data frame.
 
@@ -522,11 +528,13 @@ paths
 ```
 R's functions that can accept inputs of vectors are computationally super fast, so if your option is between something that accepts vectors and doing a for loop, the vector option's usually going to be faster. It's not necessarily intuitive to realize when you could use them, though.
 
-When we do a merge, it's often helpful to start from the biggest data frame, and then merge on the smaller ones. In this case, territorial emissions has the most years.
+When we do a merge, it's often helpful to start from the biggest data frame, and then merge on the smaller ones afterwards. In this case, territorial emissions has the most years.
 
-The `left_join` from `dplyr` is a nice function to use when you're merging. The syntax is `left_join(main_data,data_to_merge)`, so that you're starting with the `main_data` on the left, and then adding on the merging data to the right, keeping all the data from the left dataset and throwing out the observations in the right that didn't match.
+The `left_join()` from `dplyr` is a nice function to use when you're merging. The syntax is `left_join(main_data,data_to_merge)`, so that you're starting with the `main_data` on the left, and then adding on the merging data to the right, keeping all the data from the left dataset and throwing out the observations in the right that didn't match. 
 
-There are other more complex joins if `left_join` isn't what you wanted. There's a [great explanation from dplyr](https://dplyr.tidyverse.org/reference/mutate-joins.html) if you find yourself needing something else.
+This is also why I wanted to start with the biggest data frame: with a left join, if we started with a data frame with fewer years, the extra years of the data frame on the right would just disappear.
+
+There are other more complex joins if `left_join()` isn't what you wanted. There's a [great explanation from dplyr](https://dplyr.tidyverse.org/reference/mutate-joins.html) if you find yourself needing something else. Here we could've also used an `outer_join()`, for instance.
 
 Dplyr allows you to state `by` which variables you're doing the join (i.e. what variables are you requiring to match). If you don't state it explicitly, dplyr will try to figure out what you were joining by, and then will kick back a warning of what it assumes you're doing. It's often easier to just state it if you know that multiple variables (here, the year, country name and iso3c code) should all be the same.
 
