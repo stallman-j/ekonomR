@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-library(dplyr)
+
 
 ```
 
@@ -29,7 +29,7 @@ If you're not sure if your `ekonomR` is up to date or you're new to the woods, y
 
 # Prerequisites
 
-First, bring `ekonomR` into your working library.
+First, bring `ekonomR` into your working library. Let's also bring in `dplyr` explicitly so that the pipe operator comes through easily.
 
 ``` {r}
 library(ekonomR)
@@ -45,7 +45,6 @@ It's often helpful to list the filename explicitly and then paste together the r
 
 
 ``` {r, results = FALSE}
-
 gcb_filename <- "National_Fossil_Carbon_Emissions_2023v1.0.xlsx"
 
 my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-data/",gcb_filename)
@@ -53,7 +52,7 @@ my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-d
 
 `ekonomr` has a handy download function that wraps around base R's `download.file()`. Because `download_data()` creates the folder from the file path `here::here("data","01_raw","GCB")`, it'll tell you if the path already exists or you had to create it. This also lets you know where on your device to look for your downloaded file.
 
-``` {r, results = FALSE}
+``` {r}
   ekonomR::download_data(data_subfolder = "GCB",
                          data_raw       = here::here("data","01_raw"),
                          url            = my_url,
@@ -66,13 +65,13 @@ Great, we now have the raw data as an excel workbook. You should open up the exc
 
 When you're exploring your data, you should know what the units of analysis are (here, countries), how frequent your data are (here, annual), and what units your measures are in.
 
-You should also think critically about how reasonable the data you're getting are. Here are some useful questions to consider whenever you're presented with something someone's calling "data."
+You should also think critically, perhaps almost philosophically, about your data. Here are some questions to consider whenever you're presented with something someone's calling "data."
 
 ## Questions to Ask About Data {#data-questions}
 
 - Is the data documenting facts, making estimates or inferences, or in some way presenting opinions as numbers? If either of the latter, what methods are they using and how could this be done in a trustworthy way?
 - Does the data they're presenting seem to square with what you would expect from data like this?
-- Is there missing data? If data are missing, are they missing randomly? Is there some pattern to the data that are missing that could influence my interpretation of results obtained from analyzing this data?
+- Is there missing data? If data are missing, are they missing randomly? Is there some pattern to the data that are missing that could influence your interpretation of results obtained from analyzing this data?
 - Do the creators of the data have any reason to be biased in how they're presenting this data? Might anyone who could be involved in handling this data before its publication benefit from fudging the numbers in one direction or another?
 - If the data are measured, is there likely to be error in the measurement? Is this error likely to be random, or more likely to be larger or smaller for certain units?
 
@@ -84,7 +83,7 @@ There are three sheets with data that we're interested in: territorial emissions
 Here's what we're going to do for each sheet:
 
 1. Bring the sheet into R, lopping off the extra rows at the top
-2. Turn the sheet into a long data frame. By **long data**, we mean data in which an observation is a unique unit (here a country) at a unique point in time (a year).
+2. Turn the sheet into a long data frame. By **long data** here, we mean data in which an observation is a unique unit (here a country) at a unique point in time (a year). That makes the data frame have lots of rows, so it's, well, long.
 3. Tidy up the columns and create variables as necessary so that it'll be easy to merge the sheets together into a single data frame and then eventually with other data.
 
 Once we've done that, we'll merge each of those temp files together to make each of territorial emissions, consumption emissions, and transfers a column in our data set.
@@ -106,26 +105,26 @@ Here's what the first few rows and columns of the "Territorial Emissions" sheet 
 |---------------|----------------|-----------|---------- |
 |1850           |                |           |           |
 |1851           |                |           |           |
+|...            | ...            | ....      | ...       |
 
-We want to morph the data instead to look like the following:
+We want to morph the data instead to look something like the following:
 
 
 |country             | year     | territorial | consumption | transfers|
 |-----------------------------------------------------------|----------|
 |Afghanistan         |  1850    |             |             |          |
 |Afghanistan         |  1851    |             |             |          |
-|...                 | ...      | ....        | ...         |          |
+|...                 | ...      | ....        | ...         |...       |
 
-Let's go through an example with a single sheet, and then we'll do all the sheets together in a `for` loop.
+Let's go through an example with a single sheet.
 
-First set the path to where we downloaded the data.
+First set the input path to where we downloaded the data.
 
 ``` {r}
-
 in_path <- here::here("data","01_raw","GCB",gcb_filename)
 ```
 
-The first sheet has 11 rows of explanation before it gets to the good stuff. Fortunately, the `read_xlsx` function from the package `readxl` allows you to read in an excel sheet and skip over some rows with the option `skip`. So let's simply set `skip_val` to be 11 rows.
+The first sheet has 11 rows of explanation before it gets to the good stuff. Fortunately, the `read_xlsx()` function from the package `readxl` allows you to read in an excel sheet and skip over some rows with the option `skip`. So let's set a variable `skip_val` to be 11 rows.
 
 ``` {r}
 skip_val <- 11
@@ -133,13 +132,14 @@ skip_val <- 11
 
 Read in the data.
 
-``` {r, results = FALSE}
+``` {r}
   gcb <- readxl::read_xlsx(path = in_path,
                    sheet = sheets[1],
                    col_names = TRUE,
                    skip = skip_val
   )
 ```
+The comment afterwards is saying that a period or blank space got turned to `...1`. We'll see what that's about in a sec.
 
 Because I'm anticipating a `for` loop coming up, I've already set `sheet` as `sheets[1]`, or the first element of the vector sheets. We could've also written `sheet = "Territorial Emissions"`.
 
@@ -158,11 +158,13 @@ gcb2 <- gcb %>%
        dplyr::rename(year = "...1")
 ```
 
-I'm using the pipe operator (`%>%`) here, although `gcb2 <- dplyr::rename(gcb,year = "...1")` would have done the same thing. This is also in anticipation of future piping to avoid having a bunch of temp data frames. 
+I'm using the pipe operator (`%>%`) here, although `gcb2 <- dplyr::rename(gcb,year = "...1")` would have done the same thing. This is also in anticipation of future piping. 
 
-I created this other dataset `gcb2`, but actually, we could've written:
+At this point it's just a habit that whenever I call a `dplyr` function, I put the data that I'm operating on up top ahead of a pipe, since it's often the case that I'll want more pipes below it and it makes it faster to modify my code into a single long sequence once I've figured out all the steps.
 
-``` {r, results = FALSE}
+We created this other dataset `gcb2`, but actually, we could've already piped this up:
+
+``` {r}
   gcb <- readxl::read_xlsx(path = in_path,
                    sheet = sheets[1],
                    col_names = TRUE,
@@ -170,8 +172,7 @@ I created this other dataset `gcb2`, but actually, we could've written:
   ) %>%
   dplyr::rename(year = "...1")
 ```
-
-Putting that all together, we get this:
+Now let's make a long data frame.
 
 ## Pivoting Longer
 
@@ -192,7 +193,9 @@ gcb_temp <- gcb %>%
 View(gcb_temp)
 ```
 
-*Comprehension check*: What would happen if we told `pivot_longer()` to use *all* the columns, and didn't omit `year`? (If you're not sure, try it with `cols = names(.)`.
+*Comprehension check*: What would happen if we told `pivot_longer()` to use *all* the columns, and didn't omit `year`? (If you're not sure, try it out with `cols = names(.)`.
+
+## The placeholder period in dplyr
 
 The `.` comes from how dplyr works with the pipe operator `%>%`. 
 
@@ -201,6 +204,8 @@ It's a place-holder that says "Hey, that thing that came before the pipe? Also i
 What we want is `names(gcb)` to see the column names of the `gcb` data frame. The `.` tells the `names()` function to take it from up top. 
 
 You can see another tutorial of the pivot functions [here](https://medium.com/the-codehub/beginners-guide-to-pivoting-data-frames-in-r-1de608e914b6). The dplyr package also comes with its own vignette, which you can access by typing `vignette("pivot")` in your console.
+
+## Adjust data aesthetics with `dplyr::arrange()`
 
 It might be easier to look at the data if, rather than being alphabetical by country, the first rows were all Afghanistan from 1850 to 2022, and then we went down to Albania from 1850 to 2022, and so on. The `arrange()` function from `dplyr` will do this for us.
 
@@ -211,9 +216,15 @@ gcb_temp2 <- gcb_temp %>%
 View(gcb_temp2)
 ```
 
-Country names are a little messy because different languages have different naming conventions for different places. ISO3C codes are a standardized way to refer to countries, although there are many more methodologies. The package `countrycode` has a function also called `countrycode` that does this conversion for us.
+## Harmonize country names with `countrycode::countrycode()`
 
-We can create a variable with `dplyr`'s `mutate()` function, which sounds like X-Men but really just gets used any time we want to create or change a variable's values. Within the `mutate()` function, we call the `countrycode()` function, saying to take the value from the country name that we got from `country_name`, and generate for us the ISO3C code. 
+Country names are a little messy because different languages have different naming conventions for different places. ISO3C codes are a standardized way to refer to countries, although there are many more methodologies. The package `countrycode` has a function also called `countrycode()` that does this conversion for us. If you're doing a serious project, you should be careful to check that this is working as you intend. 
+
+For instance, Hong Kong's official name is "Hong Kong Special Administrative Region of the People's Republic of China (PRC)", and `countrycode` tends to look for just the name "China", so you might sometimes need to manually adjust the naming that you convert from to avoid information getting lost or misread.
+
+## Create/edit variables with `dplyr::mutate()`
+
+We can create a new variable with `dplyr`'s `mutate()` function, which sounds like X-Men but really just gets used any time we want to create or change a variable's values. Within the `mutate()` function, we call the `countrycode()` function, saying to take the value from the country name that we got from `country_name`, and generate for us the ISO3C code which corresponds to it.
 
 You can find more about `countrycode` [here](https://joenoonan.se/post/country-code-tutorial/).
 
@@ -286,9 +297,13 @@ View(gcb)
 ```
 It turns out that this process is almost exactly the same for the other sheets, so let's get ourselves a for loop to avoid having to type out the code three times.
 
-# A Few Coding Tangents
+# A few things coders commonly do
 
-## Drafts in Coding
+Coding in any language makes heavy use of drafting and then refining; if-else statements; and for loops. 
+
+If you're familiar with another coding language, these concepts will all be familiar to you, and you just need to learn the syntax. If coding is new to you, these might take a little time to get used to, and that's natural.
+
+## Write drafts
 
 It's often the case when I'm doing data cleaning that I make a bunch of intermediate data sets and temp data sets while I'm figuring out what to do. 
 
@@ -324,7 +339,7 @@ We'd like to iterate through all three sheets, but there's one little detail tha
 Rather than abandon the for loop for the sake of this minor inconvenience, we can add in a little `ifelse` statement instead.
 
 
-## Ifelse statements in R
+## Employ ifelse statements
 
 R has a few common ways of implementing an "if.. then (do some thing), otherwise.. then (do the other thing)." The one we'll use right now is the `ifelse` function, since there are only two options here.
 
@@ -372,7 +387,7 @@ ifelse(my_sheet=="territorial",
 
 skip_val
 ```
-## For Loops
+## Rely on for loops
 
 Sometimes you'll hear that R doesn't work quickly in for loops and you should "vectorize". Sometimes, particularly when you're doing something computationally intensive, this makes a big difference.
 
@@ -423,7 +438,7 @@ for (i in 1:3){
 }
 ```
 
-## A plug for the apply functions
+## A plug for the apply functions in R
 
 R also has a lovely suite of operations called `apply()` functions that do the same basic thing as a for loop. 
 
