@@ -20,6 +20,31 @@ lm_model <- function(df,
   return(lm)
 }
 
+#' Get Regression Equation
+#' @param outcome_var a string vector with the outcome variable name
+#' @param regressor_vars a character vector with all the regressors (not fixed effects) variable names
+#' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of.
+#' @returns A regression formula that can either be used as an input to the lm function or fixest::feols if fe_vars is not null
+#' @export
+#' defaults to null
+
+reg_equation <- function(outcome_var = "lge_15",
+                         regressor_vars = c("gdp_pc","tfr"),
+                         fe_vars        = NULL){
+
+  reg_string <- paste(outcome_var, paste(regressor_vars, collapse = " + "), sep = " ~ ")
+
+  if (!is.null(fe_vars)){
+    reg_form <- paste(reg_string,paste(fe_vars,collapse = " + "), sep = "|") %>% as.formula()
+  } else
+
+    reg_form   <- reg_string %>% as.formula()
+
+  return(reg_form)
+
+
+}
+
 #' Function for getting robust ses, requires sandwich package
 #' @param lm_model the lm model, output of lm_model or just a function arrived at via lm()
 #' @param type type of SEs, for stata robust it's "HC1"

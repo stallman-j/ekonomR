@@ -76,3 +76,52 @@ If you're given the option, update packages from CRAN, the package repository fo
 # Prerequisites
 
 If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations we'll be assuming you know.
+
+``` {r}
+
+  url <- "https://dataverse.nl/api/access/datafile/354095"
+
+  ekonomR::download_data(data_subfolder = "PWT",
+                data_raw       = data_raw,
+                url            = url,
+                filename       = "pwt1001.xlsx",
+                zip_file       = FALSE,
+                pass_protected = FALSE)
+
+# bring in the data ----
+
+ # https://www.rug.nl/ggdc/productivity/pwt/?lang=en
+
+  path <- here::here("data","01_raw","PWT","pwt1001.xlsx")
+
+  pwt <- readxl::read_xlsx(path = path,
+                     sheet = "Data",
+                     col_names = TRUE)
+
+  # looking at definitions, looks like RGDPe is the closest to what we want:
+  # Expenditure-side real GDP at chained PPPs, to compare relative living standards
+  # across countries and over time
+  # example: Living standards of China today compared to the US at some point in the past
+
+  # countrycode: 3-letter ISO country code
+  # rgdpe: Expenditure-side real GDP at chained PPPs (in mil. 2017US$)
+
+
+  # keep just the vars we need to merge with the rest of the data:
+
+  names(pwt) # display the varnames
+
+  pwt_clean <- pwt %>%
+               dplyr::rename(iso3c = countrycode) %>%
+               dplyr::select(iso3c, country, year, rgdpe)
+
+# save as rds, csv and xlsx files
+
+  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+                          output_path   = file.path(data_clean,"PWT"),
+                          output_filename = paste0("pwt_clean.rds"),
+                          remove = FALSE,
+                          csv_vars = names(pwt_clean),
+                          format   = "both")
+
+```

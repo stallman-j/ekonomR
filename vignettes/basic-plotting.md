@@ -260,7 +260,7 @@ The way `ggplot2` typically works is that we start with an empty plot, and then 
 Let's build up our plot. The skeleton of it is the following:
 
 
-``` r
+``` {r}
 my_plot <- ggplot2::ggplot() + 
   ggplot2::geom_point(data = data_country,
                       ggplot2::aes(x = year, 

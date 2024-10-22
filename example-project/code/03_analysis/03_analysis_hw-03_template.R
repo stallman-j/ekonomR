@@ -231,41 +231,17 @@ reg_5_twoway_form # both entity and time fixed effects
 
 
 
-# Regression Equation Function ----
-# creating regression equations was really formulaic, if we want we can make a function
-# that does it for us
 
-#' @param outcome_var a string vector with the outcome variable name
-#' @param regressor_vars a character vector with all the regressors (not fixed effects) variable names
-#' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of.
-#' defaults to null
-
-reg_equation <- function(outcome_var = "lge_15",
-                         regressor_vars = c("gdp_pc","tfr"),
-                         fe_vars        = NULL){
-
-  reg_string <- paste(outcome_var, paste(regressor_vars, collapse = " + "), sep = " ~ ")
-
-  if (!is.null(fe_vars)){
-    reg_form <- paste(reg_string,paste(fe_vars,collapse = " + "), sep = "|") %>% as.formula()
-  } else
-
-    reg_form   <- reg_string %>% as.formula()
-
-  return(reg_form)
-
-
-}
 
 # show an example of it
-reg_form_example <- reg_equation(outcome_var = "le_65",
+reg_form_example <- ekonomR::reg_equation(outcome_var = "le_65",
                               regressor_vars = c("gdp_pc","le_birth","tfr","I(gdp_pc)^2"),
                                  fe_vars     = c("iso3c"))
 
 reg_form_example
 
 # and without FEs
-reg_form_2 <- reg_equation(outcome_var = "le_15",
+reg_form_2 <- ekonomR::reg_equation(outcome_var = "le_15",
              regressor_vars = c("gdp_pc","tfr"))
 
 ## Cross SEction Regressions ----
@@ -328,15 +304,15 @@ lm(reg_3_form, data = data_year_b)
 
 # check that we're getting standard errors right
 # this should be column (6)
-coeftest(lm(reg_1_form, data = data_year_a),   vcov. = vcovHC, type = "HC1")
-coeftest(lm(reg_1_form, data = data_year_b),   vcov. = vcovHC, type = "HC1")
-coeftest(lm(reg_2_form, data = data_year_a),   vcov. = vcovHC, type = "HC1")
-coeftest(lm(reg_2_form, data = data_year_b),   vcov. = vcovHC, type = "HC1")
-coeftest(lm(reg_3_form, data = data_year_a),   vcov. = vcovHC, type = "HC1")
-coeftest(lm(reg_3_form, data = data_year_b),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(reg_1_form, data = data_year_a),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(reg_1_form, data = data_year_b),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(reg_2_form, data = data_year_a),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(reg_2_form, data = data_year_b),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(reg_3_form, data = data_year_a),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(reg_3_form, data = data_year_b),   vcov. = vcovHC, type = "HC1")
 
 
-coeftest(lm(le_65 ~ gdp_pc, data = data_year_a),   vcov. = vcovHC, type = "HC1")
+lmtest::coeftest(lm(le_65 ~ gdp_pc, data = data_year_a),   vcov. = vcovHC, type = "HC1")
 
 
 # it's good practice to put in the mean of the outcome variable
@@ -373,7 +349,7 @@ attr(rows, 'position') <- c(2*n_total_regressor_vars+4) # this should put it rig
 
 
 
-modelsummary(models,
+modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1", # stata's heteroskedasticity robust standard errors
              #statistic = "conf.int",
@@ -383,8 +359,8 @@ modelsummary(models,
              title = title_crosssection,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors" # omit several of the goodness of fit stats
 )   %>%
-  add_header_above(c(" "=1, "1960" =1, "2019"=1, "1960"=1, "2019"=1, "1960"=1,"2019"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
-  add_header_above(c(" "=1, "Birth"=2, "Age 15" = 2, "Age 65"=2))  # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
+  kableExtra::add_header_above(c(" "=1, "1960" =1, "2019"=1, "1960"=1, "2019"=1, "1960"=1,"2019"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
+  kableExtra::add_header_above(c(" "=1, "Birth"=2, "Age 15" = 2, "Age 65"=2))  # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
 
 
 
@@ -408,10 +384,10 @@ modelsummary::modelsummary(models,
            threeparttable = TRUE,
            general_title = "Notes: "
   )%>%
-  add_header_above(c(" "=1, "1960" =1, "2019"=1, "1960"=1, "2019"=1, "1960"=1,"2019"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
+  kableExtra::add_header_above(c(" "=1, "1960" =1, "2019"=1, "1960"=1, "2019"=1, "1960"=1,"2019"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
   add_header_above(c(" "=1, "Birth"=2, "Age 15" = 2, "Age 65"=2)) %>%  # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
-  kable_styling(latex_options = "HOLD_position") %>% # changes the latex placement to [H] (here), put this table in the latex doc where I say it goes
-  save_kable(
+  kableExtra::kable_styling(latex_options = "HOLD_position") %>% # changes the latex placement to [H] (here), put this table in the latex doc where I say it goes
+  kableExtra::save_kable(
     file = out_path,
     format = "latex"
   )
@@ -478,10 +454,10 @@ lm(reg_4_form,
 lm(reg_4_form,
    data = data_year_b)
 reg_5_within_form
-feols(reg_5_within_form,
+fixest::feols(reg_5_within_form,
       data = data)
 reg_5_twoway_form
-feols(reg_5_twoway_form,
+fixest::feols(reg_5_twoway_form,
       data = data)
 
 # declare some extra rows to add
@@ -498,7 +474,7 @@ attr(rows, 'position') <- c(2*n_total_regressor_vars+3,2*n_total_regressor_vars+
 
 # output to console to make sure we've got the right placement
 
-modelsummary(models,
+modelsummary::modelsummary(models,
              stars = FALSE,
              vcov =
              list("HC1","HC1",~iso3c,~iso3c+year),
@@ -533,10 +509,10 @@ modelsummary(models,
            threeparttable = TRUE,
            general_title = "Notes: "
   )%>%
-  add_header_above(c(" "=1, "1960"=1, "2019" = 1, "Within"=1,"Twoway"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
-  add_header_above(c(" "=1, "Life Expectancy at Birth"=4)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
-  kable_styling(latex_options = "HOLD_position") %>% # changes the latex placement to [H] (here), put this table in the latex doc where I say it goes
-  save_kable(
+  kableExtra::add_header_above(c(" "=1, "1960"=1, "2019" = 1, "Within"=1,"Twoway"=1)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
+  kableExtra::add_header_above(c(" "=1, "Life Expectancy at Birth"=4)) %>% # add a header that gives the years, a blank over the varnames then the other two spanning 3 columns
+  kableExtra::kable_styling(latex_options = "HOLD_position") %>% # changes the latex placement to [H] (here), put this table in the latex doc where I say it goes
+  kableExtra::save_kable(
     file = out_path,
     format = "latex"
   )
@@ -553,7 +529,7 @@ modelsummary(models,
 
 out_path <- file.path(output_tables,"le_reg_panel.docx")
 
-modelsummary(models,
+modelsummary::modelsummary(models,
              stars = FALSE,
              vcov =
                list("HC1","HC1",~iso3c,~iso3c+year),

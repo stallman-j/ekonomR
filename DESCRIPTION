@@ -19,6 +19,8 @@ Imports:
     here,
     httr,
     kableExtra,
+    lmtest,
+    lubridate,
     magrittr,
     modelsummary,
     readr,
