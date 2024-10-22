@@ -328,15 +328,15 @@ It turns out that this process is almost exactly the same for the other sheets, 
 
 Coding in any language makes heavy use of drafting and then refining; if-else statements; and for loops. 
 
-If you're familiar with another coding language, these concepts will all be familiar to you, and you just need to learn the syntax. If coding is new to you, these might take a little time to get used to, and that's natural.
+If you're familiar with another coding language but not R, these concepts will all be familiar to you, and you just need to learn R's syntax. If coding is new to you, these might take a little time to get used to, and that's natural.
 
 ## Write drafts
 
 It's often the case when I'm doing data cleaning that I make a bunch of intermediate data sets and temp data sets while I'm figuring out what to do. 
 
-Once I've gotten to where I want, I go back and use pipes to make things basically one operation so that the code runs faster and uses less memory the next time I have to run it, and I don't have temp files all around my environment.
+Once I've gotten to where I want, I go back and use pipes to make all that mess one or a couple operations so that the code runs faster and uses less memory the next time I have to run it, and I don't have temp files hogging my environment rows.
 
-Because the pipe operation is easy to read once you get used to it, the code is still readable, but it avoids creating all these intermediate data frames.
+Because the pipe operation is easy to read once you get your head around what it's doing, the code is still readable, but it avoids creating all these intermediate data frames.
 
 It's the same basic process as drafting an essay: first you write a rough draft that gets your ideas on paper. 
 
@@ -350,18 +350,17 @@ As you get more practice at writing or coding, your first drafts of later projec
 
 Just like for writing, the editing process is an important part of becoming a better coder, but oftentimes when we just want the darn thing to run, we don't manage to get in an editing phase. Just like, sometimes, when a deadline is looming, we might submit an essay that was actually the first draft. We've all done it.
 
-There's one key difference, though, between an essay and a coding script. Unlike for writing, in coding it's vital to get your code to actually run! 
+There's one key difference, though, between an essay and a coding script. Unlike for writing, in coding it's vital to get your code to actually run! One important way you get good at getting your code to run is by spending time troubleshooting your code that doesn't run, so you can see how it works and what you tend to flub!
 
 If you're new to R or coding, prioritze getting your code to work. Don't worry about pretty, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have an ugly thing that gets what you want or almost what you want than pretty code that doesn't work.
 
-Also, while "pretty" is in the eyes of the beholder, in programming, pretty code is code that's quick to run, replicable, and easy to understand for someone with passing familiarity with your coding language but who has no clue what you're trying to achieve with your script. 
+While "pretty" is often in the eyes of the beholder, in programming, pretty code is usually code that's quick to run, straightforward to replicate, and easy to understand for someone with passing familiarity with your coding language but who has no clue what you're trying to achieve with your script. 
 
-Gorgeous, stunningly hot code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it, is at or a ways below your level of familiarity with the coding language, and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
+Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it, is at or a ways below your level of familiarity with the coding language, and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
 
-Head-turning supermodel code is if you've additionally turned your stuff into functions or written a package out of it, but now we're getting off track.
+Head-turningly hot code is if you've additionally turned your stuff into functions or written a package out of it, but now we're getting off track.
 
-
-We'd like to iterate through all three sheets, but there's one little detail that differs across the sheets. There are different buffer rows with explanations and documentation that are above the actual data. 
+We'd like to eventually iterate through all three sheets, but there's one little detail that differs across the sheets: there are different numbers of buffer rows with explanations and documentation that are above the actual data. 
 
 Rather than abandon the for loop for the sake of this minor inconvenience, we can add in a little `ifelse` statement instead.
 
@@ -372,7 +371,7 @@ R has a few common ways of implementing an "if.. then (do some thing), otherwise
 
 `ifelse()` takes in as its first argument something which must be `TRUE` or `FALSE`. You define what to do if the condition evaluates to `TRUE` or to `FALSE`.
 
-In this case, what we want to get is if the sheet is `Territorial Emissions`, then tell `read_xlsx` to skip 11 lines. If it's one of the other two sheets, we want `read_xlsx` to only skip 8 lines.
+In this case, what we want to get is if the sheet is `Territorial Emissions`, then tell `read_xlsx()` to skip 11 lines when it reads in the .xlsx file. If it's one of the other two sheets, we want `read_xlsx()` to only skip 8 lines.
 
 Here's one way to do that.
 
@@ -422,11 +421,11 @@ ifelse(my_sheet=="territorial",
 skip_val
 #> [1] 8
 ```
-## Rely on for loops
+## Rely (heavily) on for loops
 
-Sometimes you'll hear that R doesn't work quickly in for loops and you should "vectorize". Sometimes, particularly when you're doing something computationally intensive, this makes a big difference.
+If you spend enough time on Stack Exchange trying to figure out how to code something, you'll likely read that R doesn't work quickly in for loops and you should "vectorize". Sometimes, particularly when you're doing something computationally intensive, this makes a big difference.
 
-For many practical uses, though, what's going to take you time is your time to *code*, not your time to *run*. For loops happen to be pretty easy to code and pretty universally popular among programming languages, and that's usually good enough.
+For many practical uses, though, what's going to take you time is your time to *code*, not your time to *run*. For loops happen to be pretty easy to code and pretty universally popular among programming languages, and that's often good enough.
 
 The basic syntax of a for loop in R is the following:
 
@@ -478,6 +477,8 @@ for (i in 1:3){
   skip_val
 }
 ```
+
+Omitting this output can be a little inconvenient if you're coding pretty interactively (i.e. switching between testing out commands in your console and then adding the command to your script). This is a *very* nice thing if you're running code with lots of lines and asking R to do lots of things, because otherwise your output console would just become a mess.
 
 ## A plug for the apply functions in R
 
