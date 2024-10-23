@@ -105,7 +105,6 @@ Finally, let's save it all with the function `save_rds_csv()` from `ekonomR` to 
                           remove = FALSE,
                           csv_vars = names(pwt_clean),
                           format   = "xlsx")
-#> Error: 'save_rds_csv' is not an exported object from 'namespace:ekonomR'
 ```
 
 That's all there is to it! 
@@ -127,7 +126,6 @@ library(ekonomR)
                 data_raw       = here::here("data","01_raw"),
                 url            = url,
                 filename       = "pwt1001.xlsx")
-#> The data subfolder C:/Projects/ekonomR/data/01_raw/PWT already exists.
   
 # Read in the data
   
@@ -149,5 +147,5 @@ library(ekonomR)
                           remove = FALSE,
                           csv_vars = names(pwt_clean),
                           format   = "xlsx")
-#> Error: 'save_rds_csv' is not an exported object from 'namespace:ekonomR'
+  
 ```

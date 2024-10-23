@@ -102,7 +102,7 @@ This is one way you can see that the PWT are used a lot by economists: we could 
 
 # Just the code, please
 
-```{r}
+```{r, eval = FALSE}
 # bring in ekonomR to the library
 library(ekonomR)
 

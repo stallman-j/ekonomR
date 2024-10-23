@@ -87,7 +87,7 @@ wpp <- readxl::read_xlsx(path = here::here("data","01_raw","UN-WPP",my_filename)
                  col_types = my_col_types,
                  skip = 16
                  )
-#> Error in eval(expr, envir, enclos): object 'my_col_types' not found
+#> Error in eval(expr, envir, enclos): object 'my_filename' not found
 ```
 
 The astute reader might notice that here, I just wrote `skip = 16` whereas in the case of the Global Carbon Budget, I defined a variable called `skip_val` and let it alternate across sheets.
@@ -136,7 +136,6 @@ wpp_clean <- ekonomR::save_rds_csv(data = wpp_clean,
                           remove = FALSE,
                           csv_vars = names(wpp_clean),
                           format   = "both")
-#> Error: 'save_rds_csv' is not an exported object from 'namespace:ekonomR'
 ```
 
 # Just the code, please
