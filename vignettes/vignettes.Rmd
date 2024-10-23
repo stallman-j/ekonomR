@@ -139,6 +139,9 @@ If you'd like to see something faster than "the next time this package maintaine
 - To add: Proselytizing for Parallelization
 - To add: Avoiding engaging too deeply with Python by using `reticulate`
 - To add: Random Forest stuff
-- To add: ML stuff with Keras and TensorFlow which by the way only really use Python as their **interface**. Actually it all goes down to C++ because C++ is fast and Python is not inherently fast, so doing this with R is going to **exactly the same place Python does so please stop saying R can't do neural nets please I'm begging these lies are hurtful.**
+- To add: ML stuff with Keras and TensorFlow which by the way only really use Python as their **interface**. 
+
+    - Actually it all goes down to C++ because C++ is fast and Python is not inherently fast, so doing this with R is going to **exactly the same place Python does so please stop saying R can't do neural nets please I'm begging these lies are hurtful.**
+    
 - To add: Cool propensity score matching stuff
 - To add: Cool network theory stuff

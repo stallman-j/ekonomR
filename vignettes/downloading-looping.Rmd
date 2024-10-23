@@ -1,0 +1,85 @@
+---
+title: "Basic Cleaning: World Population Prospects"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-10-22"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basic-cleaning_wpp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(dplyr)
+```
+
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
+
+# Prerequisites
+
+In this vignette, I'm going to assume that you already know everything we covered in [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/), so you might want to go there first. 
+
+If you're just looking for a script that cleans the World Population Prospects because the WPP are generally considered by economists to be the highest quality population data we can get across multiple countries, you've also come to the right place and you might want to just copy the final code at the end.
+
+First, bring `ekonomR` into your working library.
+
+``` {r}
+library(ekonomR)
+```
+
+# Download
+
+In this vignette, we're going to download and clean the latest version of the [World Population Prospects](https://population.un.org/wpp/Download/Standard/MostUsed/) (WPP), provided by the United Nations. Eventually, this vignette series is aiming to look at the relationship between greenhouse gas emissions per capita and income per capita, measured as gross domestic product (GDP) per capita.
+
+In order to take those per-capita measures, we need to have a measure of population, and that's where the WPP come in.
+
+Let's go ahead and download the data. `ekonomR` has a `download_data()` function that allows for pretty easy downloading and decompressing of common formats. 
+
+Because it's already been two or three years that I've downloaded the latest versions of this data, I know that the URL link only changes in the year. This year it's `2024`. Last year it was `2023`. Next year it would be nice to just change `2024` to `2025` and then change nothing else in this script and see if it runs just as well next year.
+
+To do that, let's just make a variable that holds the current year, and then make copious use of `paste0` to get all the character strings ready to go.
+
+``` {r, eval = FALSE}
+current_year <- 2024
+
+my_filename     <- paste0("WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  url <- paste0("https://population.un.org/wpp/Download/Files/1_Indicator%20(Standard)/EXCEL_FILES/1_General/WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  ekonomR::download_data(data_subfolder = "UN-WPP",
+                          data_raw       = here::here("data","01_raw"),
+                          url            = url,
+                          filename       = my_filename)
+```
+
+We have a little hypothesis that the UN has been changing around its estimates of high and low population in a slow way to reflect that fertility is falling faster than originally predicted. It would be really cool if we could get this excel sheet for all the years to examine that hypothesis. 
+
+This is a job for a for loop! Let's make a vector that counts down from 2024 to 2000, and just try the download link and see if it still works for previous years. 
+
+``` {r, eval = FALSE}
+
+years_vec <- 2024:2000
+
+for (current_year in years_vec) {
+
+my_filename     <- paste0("WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  url <- paste0("https://population.un.org/wpp/Download/Files/1_Indicator%20(Standard)/EXCEL_FILES/1_General/WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  ekonomR::download_data(data_subfolder = "UN-WPP",
+                          data_raw       = here::here("data","01_raw"),
+                          url            = url,
+                          filename       = my_filename)
+}
+
+```

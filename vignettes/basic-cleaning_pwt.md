@@ -5,7 +5,7 @@ toc: true
 toc_label: "Contents"
 toc_sticky: true
 author_profile: true
-date: "2024-10-22"
+date: "2024-10-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{basic-cleaning_pwt}
@@ -15,60 +15,139 @@ vignette: >
 
 
 
-# Getting Started
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
 
-If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
 
-You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
+# Prerequisites
 
-If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `basic-cleaning_gcb.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
+In this vignette, I'm going to assume that you already know everything we covered in [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/), so you might want to go there first. 
 
-If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `basic-cleaning_gcb.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/basic-cleaning_gcb.Rmd) and save it into `code/scratch`.
+If you're just looking for a script that cleans the Penn World Tables because that's a very common GDP measure, you've also come to the right place and you might want to just copy the final code at the end.
 
-Exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If it's not obvious to you how you would write the code to answer these checks, you should puzzle around with the code in your console to figure them out.
-
-
-The data we'll use has been cleaned and loaded into the package `ekonomR`. 
-
-## New Installation 
-
-Run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
-
-
-
-``` r
-install.packages("remotes") 
-remotes::install_github("stallman-j/ekonomR")
-```
-
-## Re-installation 
-
-If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
-
-First, go into the "Packages" tab in RStudio (it's in the window that's shared with tabs for `Files`, `Packages`, `Help`, `Viewer`, and `Presentation`) and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
-
-Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
-
-
-
-``` r
-install.packages("remotes") 
-remotes::install_github("stallman-j/ekonomR")
-```
-
-Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
-
+First, bring `ekonomR` into your working library.
 
 
 ``` r
 library(ekonomR)
 ```
 
-Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but because `ekonomR` is getting updated so frequently, you might run into trouble.
+# Download
 
-If you're given the option, update packages from CRAN, the package repository for well-documented R packages. If your R crashes, run the above sequence but then instruct R *not* to update the packages and see how things go. If you're still having trouble, try uninstalling and reinstalling R and R Studio and then coming back. If you're still having trouble, email me.
+In this vignette, we're going to download and clean the latest version of the [Penn World Tables](https://www.rug.nl/ggdc/productivity/pwt/?lang=en) (PWT). The PWT are perhaps the most highly regarded source for data on gross domestic product among economists. 
+
+Let's go ahead and download the data. `ekonomR` has a `download_data()` function that allows for pretty easy downloading and decompressing of common formats that we would get data for.
 
 
-# Prerequisites
+``` r
 
-If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations we'll be assuming you know.
+  url <- "https://dataverse.nl/api/access/datafile/354095"
+
+  ekonomR::download_data(data_subfolder = "PWT",
+                data_raw       = here::here("data","01_raw"),
+                url            = url,
+                filename       = "pwt1001.xlsx")
+#> The data subfolder C:/Projects/ekonomR/data/01_raw/PWT already exists.
+```
+
+You can look in the file path given by `here::here("data","01_raw","PWT")` to see where the excel file has gone. In it, there's a sheet called "Data" that we should bring in.
+
+
+
+``` r
+
+  pwt <- readxl::read_xlsx(path = here::here("data","01_raw","PWT","pwt1001.xlsx"),
+                     sheet = "Data",
+                     col_names = TRUE)
+```
+
+If you check the [Penn World Tables page](https://www.rug.nl/ggdc/productivity/pwt/?lang=en), you'll see that there are a whole bunch of measures that all, ostensibly, could be considered as gross domestic product (GDP). 
+
+For this particular project, we ultimately want to look at real GDP. This vignette series is loosely based around assessing the hypothesis that as countries grow richer, their environmental quality first worsens, and then improves. This is what's known as the hypothesis of the Environmental Kuznets Curve.
+
+However, since we're looking over decades, we want *real* GDP which takes out the impact of inflation, and allows us to compare the living standards across countries, and over time.
+
+The measure that comes closest to that is described as RGDPe, and it's inputted in the PWT in millions of 2017 US dollars. 
+
+To keep things simple, we'll just keep the variable names that we want for this particular analysis. Let's also rename the variable `countrycode` to be `iso3c`. That'll allow us to merge with the emissions data more easily.
+
+Putting this all together:
+
+
+``` r
+  names(pwt)
+#>  [1] "countrycode"   "country"       "currency_unit" "year"         
+#>  [5] "rgdpe"         "rgdpo"         "pop"           "emp"          
+#>  [9] "avh"           "hc"            "ccon"          "cda"          
+#> [13] "cgdpe"         "cgdpo"         "cn"            "ck"           
+#> [17] "ctfp"          "cwtfp"         "rgdpna"        "rconna"       
+#> [21] "rdana"         "rnna"          "rkna"          "rtfpna"       
+#> [25] "rwtfpna"       "labsh"         "irr"           "delta"        
+#> [29] "xr"            "pl_con"        "pl_da"         "pl_gdpo"      
+#> [33] "i_cig"         "i_xm"          "i_xr"          "i_outlier"    
+#> [37] "i_irr"         "cor_exp"       "statcap"       "csh_c"        
+#> [41] "csh_i"         "csh_g"         "csh_x"         "csh_m"        
+#> [45] "csh_r"         "pl_c"          "pl_i"          "pl_g"         
+#> [49] "pl_x"          "pl_m"          "pl_n"          "pl_k"
+
+  pwt_clean <- pwt %>%
+               dplyr::rename(iso3c = countrycode) %>%
+               dplyr::select(iso3c, country, year, rgdpe)
+```
+
+Finally, let's save it all with the function `save_rds_csv()` from `ekonomR` to get both an excel version and an RDS version of this file.
+
+
+``` r
+  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+                          output_path   = here::here("data","03_clean","PWT"),
+                          output_filename = paste0("pwt_clean.rds"),
+                          remove = FALSE,
+                          csv_vars = names(pwt_clean),
+                          format   = "xlsx")
+#> Error: 'save_rds_csv' is not an exported object from 'namespace:ekonomR'
+```
+
+That's all there is to it! 
+
+This is one way you can see that the PWT are used a lot by economists: we could pretty much load this dataset into R and start doing analysis with it right away. The code required for cleaning is very minimal.
+
+# Just the code, please
+
+
+``` r
+# bring in ekonomR to the library
+library(ekonomR)
+
+# Download the data
+
+  url <- "https://dataverse.nl/api/access/datafile/354095"
+
+  ekonomR::download_data(data_subfolder = "PWT",
+                data_raw       = here::here("data","01_raw"),
+                url            = url,
+                filename       = "pwt1001.xlsx")
+#> The data subfolder C:/Projects/ekonomR/data/01_raw/PWT already exists.
+  
+# Read in the data
+  
+  pwt <- readxl::read_xlsx(path = here::here("data","01_raw","PWT","pwt1001.xlsx"),
+                     sheet = "Data",
+                     col_names = TRUE)
+  
+# Choose our variables of interest
+  
+  pwt_clean <- pwt %>%
+               dplyr::rename(iso3c = countrycode) %>%
+               dplyr::select(iso3c, country, year, rgdpe)
+  
+# Save the cleaned data
+
+  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+                          output_path   = here::here("data","03_clean","PWT"),
+                          output_filename = paste0("pwt_clean.rds"),
+                          remove = FALSE,
+                          csv_vars = names(pwt_clean),
+                          format   = "xlsx")
+#> Error: 'save_rds_csv' is not an exported object from 'namespace:ekonomR'
+```
