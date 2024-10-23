@@ -74,21 +74,16 @@ Putting this all together:
 
 ``` r
   names(pwt)
-#>  [1] "countrycode"   "country"       "currency_unit" "year"         
-#>  [5] "rgdpe"         "rgdpo"         "pop"           "emp"          
-#>  [9] "avh"           "hc"            "ccon"          "cda"          
-#> [13] "cgdpe"         "cgdpo"         "cn"            "ck"           
-#> [17] "ctfp"          "cwtfp"         "rgdpna"        "rconna"       
-#> [21] "rdana"         "rnna"          "rkna"          "rtfpna"       
-#> [25] "rwtfpna"       "labsh"         "irr"           "delta"        
-#> [29] "xr"            "pl_con"        "pl_da"         "pl_gdpo"      
-#> [33] "i_cig"         "i_xm"          "i_xr"          "i_outlier"    
-#> [37] "i_irr"         "cor_exp"       "statcap"       "csh_c"        
-#> [41] "csh_i"         "csh_g"         "csh_x"         "csh_m"        
-#> [45] "csh_r"         "pl_c"          "pl_i"          "pl_g"         
-#> [49] "pl_x"          "pl_m"          "pl_n"          "pl_k"
+#>  [1] "countrycode"   "country"       "currency_unit" "year"          "rgdpe"         "rgdpo"         "pop"          
+#>  [8] "emp"           "avh"           "hc"            "ccon"          "cda"           "cgdpe"         "cgdpo"        
+#> [15] "cn"            "ck"            "ctfp"          "cwtfp"         "rgdpna"        "rconna"        "rdana"        
+#> [22] "rnna"          "rkna"          "rtfpna"        "rwtfpna"       "labsh"         "irr"           "delta"        
+#> [29] "xr"            "pl_con"        "pl_da"         "pl_gdpo"       "i_cig"         "i_xm"          "i_xr"         
+#> [36] "i_outlier"     "i_irr"         "cor_exp"       "statcap"       "csh_c"         "csh_i"         "csh_g"        
+#> [43] "csh_x"         "csh_m"         "csh_r"         "pl_c"          "pl_i"          "pl_g"          "pl_x"         
+#> [50] "pl_m"          "pl_n"          "pl_k"
 
-  pwt_clean <- pwt %>%
+  pwt <- pwt %>%
                dplyr::rename(iso3c = countrycode) %>%
                dplyr::select(iso3c, country, year, rgdpe)
 ```
@@ -97,11 +92,11 @@ Finally, let's save it all with the function `save_rds_csv()` from `ekonomR` to 
 
 
 ``` r
-  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+  pwt <- ekonomR::save_rds_csv(data = pwt,
                           output_path   = here::here("data","03_clean","PWT"),
-                          output_filename = paste0("pwt_clean.rds"),
+                          output_filename = paste0("pwt"),
                           remove = FALSE,
-                          csv_vars = names(pwt_clean),
+                          csv_vars = names(pwt),
                           format   = "xlsx")
 ```
 
@@ -133,17 +128,17 @@ library(ekonomR)
   
 # Choose our variables of interest
   
-  pwt_clean <- pwt %>%
+  pwt <- pwt %>%
                dplyr::rename(iso3c = countrycode) %>%
                dplyr::select(iso3c, country, year, rgdpe)
   
 # Save the cleaned data
 
-  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+  pwt <- ekonomR::save_rds_csv(data = pwt,
                           output_path   = here::here("data","03_clean","PWT"),
-                          output_filename = paste0("pwt_clean.rds"),
+                          output_filename = paste0("pwt"),
                           remove = FALSE,
-                          csv_vars = names(pwt_clean),
+                          csv_vars = names(pwt),
                           format   = "xlsx")
   
 ```

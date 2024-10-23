@@ -76,7 +76,7 @@ Putting this all together:
 ``` {r}
   names(pwt)
 
-  pwt_clean <- pwt %>%
+  pwt <- pwt %>%
                dplyr::rename(iso3c = countrycode) %>%
                dplyr::select(iso3c, country, year, rgdpe)
 ```
@@ -84,11 +84,11 @@ Putting this all together:
 Finally, let's save it all with the function `save_rds_csv()` from `ekonomR` to get both an excel version and an RDS version of this file.
 
 ```{r}
-  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+  pwt <- ekonomR::save_rds_csv(data = pwt,
                           output_path   = here::here("data","03_clean","PWT"),
-                          output_filename = paste0("pwt_clean.rds"),
+                          output_filename = paste0("pwt"),
                           remove = FALSE,
-                          csv_vars = names(pwt_clean),
+                          csv_vars = names(pwt),
                           format   = "xlsx")
 
 ```
@@ -120,17 +120,17 @@ library(ekonomR)
   
 # Choose our variables of interest
   
-  pwt_clean <- pwt %>%
+  pwt <- pwt %>%
                dplyr::rename(iso3c = countrycode) %>%
                dplyr::select(iso3c, country, year, rgdpe)
   
 # Save the cleaned data
 
-  pwt_clean <- ekonomR::save_rds_csv(data = pwt_clean,
+  pwt <- ekonomR::save_rds_csv(data = pwt,
                           output_path   = here::here("data","03_clean","PWT"),
-                          output_filename = paste0("pwt_clean.rds"),
+                          output_filename = paste0("pwt"),
                           remove = FALSE,
-                          csv_vars = names(pwt_clean),
+                          csv_vars = names(pwt),
                           format   = "xlsx")
   
 ```

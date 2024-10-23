@@ -80,6 +80,7 @@ Let's tell R that we want to use the cleaned GCB data.
 
 ``` r
 data(gcb_clean)
+#> Warning in data(gcb_clean): data set 'gcb_clean' not found
 ```
 
 
@@ -94,9 +95,9 @@ In your RStudio console, input the following:
 
 ``` r
 View(gcb_clean)
+#> Error in View : object 'gcb_clean' not found
 names(gcb_clean)
-#> [1] "year"                "country_name"        "gcb_ghg_territorial" "iso3c"               "gcb_ghg_consumption"
-#> [6] "gcb_ghg_transfers"
+#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 *Comprehension check:* What is `names(gcb_clean)` giving us for output? What class is this object? (Hint: `class(names(gcb_clean))`.) What is the class of `gcb_clean`?
@@ -106,14 +107,7 @@ Let's see what years we have available (Note: Not all years will be available fo
 
 ``` r
 unique(gcb_clean$year)
-#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860 1861 1862 1863 1864 1865 1866 1867 1868 1869 1870 1871
-#>  [23] 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882 1883 1884 1885 1886 1887 1888 1889 1890 1891 1892 1893
-#>  [45] 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 1910 1911 1912 1913 1914 1915
-#>  [67] 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929 1930 1931 1932 1933 1934 1935 1936 1937
-#>  [89] 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959
-#> [111] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981
-#> [133] 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
-#> [155] 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022
+#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 
@@ -140,7 +134,7 @@ Let's also create a data frame that just contains the data for China.
 ``` r
 data_country <- gcb_clean %>% 
                 dplyr::filter(iso3c == chosen_country)
-#> Error in gcb_clean %>% dplyr::filter(iso3c == chosen_country): could not find function "%>%"
+#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 
@@ -157,6 +151,7 @@ We could also have written the following:
 
 ``` r
 data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
+#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 *Comprehension check:* What has the `filter` function done? How many rows exist in the data frame `data_country`?
@@ -203,7 +198,7 @@ Since we want to plot territorial emissions, we can add a condition to the filte
 
 ``` r
 data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
-#> Error in gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)): could not find function "%>%"
+#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing. We've also *replaced* the old `data_country` with our new one.
@@ -232,7 +227,7 @@ Let's see the `%>%` in action with a little more complexity. Since we're just pl
 data_country <- gcb_clean %>% 
                 dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
                 dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
-#> Error in gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>% : could not find function "%>%"
+#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 **Note:** if you're using the pipe, you have to make sure that it goes at the end of the line, not the beginning.
@@ -260,19 +255,20 @@ The way `ggplot2` typically works is that we start with an empty plot, and then 
 Let's build up our plot. The skeleton of it is the following:
 
 
-``` {r}
+``` r
 my_plot <- ggplot2::ggplot() + 
   ggplot2::geom_point(data = data_country,
                       ggplot2::aes(x = year, 
                                    y =gcb_ghg_territorial)
                       )
+#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 ```
-#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
+#> Error in eval(expr, envir, enclos): object 'my_plot' not found
 ```
 
-![plot of chunk unnamed-chunk-14](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-01.png?raw=true)
+![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-01.png?raw=true)
 You should input `my_plot` into the console of RStudio to see if the plot shows up in your plotting pane like you would expect. Try doing this after each instance that we change something in our plots.
 
 `ggplot2::ggplot()` just opens up a new, blank plot for us. Try putting just this in your console and see what happens.
@@ -294,13 +290,14 @@ my_plot <- ggplot2::ggplot() +
        x ="" ,
        y = "Emissions (units here)"
   )
+#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 ```
-#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
+#> Error in eval(expr, envir, enclos): object 'my_plot' not found
 ```
 
-![plot of chunk unnamed-chunk-17](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-02.png?raw=true)
+![plot of chunk unnamed-chunk-18](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-02.png?raw=true)
 
 Better! We're getting somewhere. But the grid lines are a little odd and why is the background grey? 
 
@@ -318,15 +315,15 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)"
   ) + 
   ggplot2::theme_minimal()
-
+#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 
 ```
-#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
+#> Error in eval(expr, envir, enclos): object 'my_plot' not found
 ```
 
-![plot of chunk unnamed-chunk-20](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
+![plot of chunk unnamed-chunk-21](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
 Still not loving the background.
 
 We could keep doing this, finagling with elements. It was through tinkering with this process that I realized there are some settings I would like to just *have* without having to go look up. 
@@ -348,13 +345,14 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)"
   ) + 
   ekonomR::theme_minimal_plot()
+#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
 ```
-#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
+#> Error in eval(expr, envir, enclos): object 'my_plot' not found
 ```
 
-![plot of chunk unnamed-chunk-23](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
+![plot of chunk unnamed-chunk-24](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
 
 That'll do, right? This plot is nice and crisp. The contrast is fairly high. The sizing is pretty good on titles and captions. We could keep tinkering, but the marginal returns are pretty low at this point. You can see more options I often end up changing with `?theme_minimal_plot` if you like.
 
@@ -370,7 +368,7 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
          width = 8,
          height = 6,
          dpi  = 400)
-#> Warning: Removed 51 rows containing missing values or values outside the scale range (`geom_point()`).
+#> Error in eval(expr, envir, enclos): object 'my_plot' not found
 ```
 
 You can see this final plot by typing `my_plot` in the console, but you should check and make sure that the PNG lives where you can find it.

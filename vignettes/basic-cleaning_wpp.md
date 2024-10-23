@@ -20,7 +20,7 @@ If you're not sure if your `ekonomR` is up to date or you're new to the woods, y
 
 # Prerequisites
 
-In this vignette, I'm going to assume that you already know everything we covered in [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/), so you might want to go there first. 
+In this vignette, I'm going to assume that you already know everything we covered in [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/), so you might want to go there first if you haven't already and you're new to the R neck of the woods.
 
 If you're just looking for a script that cleans the World Population Prospects because the WPP are generally considered by economists to be the highest quality population data we can get across multiple countries, you've also come to the right place and you might want to just copy the final code at the end.
 
@@ -111,7 +111,7 @@ Here are the steps that the below pipes perform:
 
 names(wpp)
 
-wpp_clean <- wpp %>%
+wpp <- wpp %>%
             dplyr::rename(iso3c = "ISO3 Alpha-code",
                            year = "Year",
                         pop_000 = "Total Population, as of 1 January (thousands)",
@@ -128,11 +128,11 @@ That's all we need. The data are already in long format. The UN recognizes that 
 Now we just need to save the cleaned data, and we're good to go.
 
 ``` r
-wpp_clean <- ekonomR::save_rds_csv(data = wpp_clean,
+wpp <- ekonomR::save_rds_csv(data = wpp,
                           output_path   = here::here("data","03_clean","WPP"),
-                          output_filename = "wpp_clean.rds",
+                          output_filename = "wpp",
                           remove = FALSE,
-                          csv_vars = names(wpp_clean),
+                          csv_vars = names(wpp),
                           format   = "both")
 ```
 
@@ -169,7 +169,7 @@ wpp <- readxl::read_xlsx(path = here::here("data","01_raw","UN-WPP",my_filename)
 # Clean the data by filtering rows and selecting columns
 names(wpp)
 
-wpp_clean <- wpp %>%
+wpp <- wpp %>%
             dplyr::rename(iso3c = "ISO3 Alpha-code",
                            year = "Year",
                         pop_000 = "Total Population, as of 1 January (thousands)",
@@ -182,11 +182,11 @@ wpp_clean <- wpp %>%
 
 # Save the cleaned data
 
-wpp_clean <- ekonomR::save_rds_csv(data = wpp_clean,
+wpp <- ekonomR::save_rds_csv(data = wpp,
                           output_path   = here::here("data","03_clean","WPP"),
-                          output_filename = "wpp_clean.rds",
+                          output_filename = "wpp",
                           remove = FALSE,
-                          csv_vars = names(wpp_clean),
+                          csv_vars = names(wpp),
                           format   = "both")
 
 ```

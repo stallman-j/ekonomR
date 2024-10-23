@@ -1,0 +1,89 @@
+---
+title: ekonomR Documentation
+#subtitle: Hopefully everything you need and lots of things you hopefully won't
+# https://bookdown.org/yihui/rmarkdown/html-document.html#floating-toc
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-09-23"
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/documentation/",
+  out.width = "100%"
+)
+```
+
+# Git Commands
+
+To push to git, do this in a gitbash terminal (e.g. the R Terminal with Git enabled)
+
+``` {r, eval = FALSE}
+git add .
+git commit -m "commit message here"
+git push -u origin main
+
+```
+# Knit Commands
+
+## README
+``` {r}
+knitr::knit(input = here::here("README.Rmd"), output = here::here("README.md"))
+```
+
+## Documentation 
+
+``` {r}
+knitr::knit(input = here::here("documentation","documentation.Rmd"), output = here::here("documentation","documentation.md"))
+```
+
+## Vignettes
+
+``` {r}
+knitr::knit(input = here::here("vignettes","vignettes.Rmd"), output = here::here("vignettes","vignettes.md"))
+
+```
+
+### Downloading Vignettes
+
+
+### Startup Vignettes
+
+``` {r}
+knitr::knit(input = here::here("vignettes","getting-started-with-ekonomR.Rmd"), output = here::here("vignettes","getting-started-with-ekonomR.md"))
+knitr::knit(input = here::here("vignettes","coding-review.Rmd"), output = here::here("vignettes","coding-review.md"))
+
+```
+
+### Cleaning Vignettes
+``` {r}
+knitr::knit(input = here::here("vignettes","basic-cleaning_gcb.Rmd"), output = here::here("vignettes","basic-cleaning_gcb.md"))
+knitr::knit(input = here::here("vignettes","basic-cleaning_pwt.Rmd"), output = here::here("vignettes","basic-cleaning_pwt.md"))
+knitr::knit(input = here::here("vignettes","basic-cleaning_wpp.Rmd"), output = here::here("vignettes","basic-cleaning_wpp.md"))
+#knitr::knit(input = here::here("vignettes","basic-merging.Rmd"), output = here::here("vignettes","basic-merging.md"))
+
+```
+
+### Plotting Vignettes
+
+``` {r}
+knitr::knit(input = here::here("vignettes","basic-plotting.Rmd"), output = here::here("vignettes","basic-plotting.md"))
+knitr::knit(input = here::here("vignettes","intermediate-plotting.Rmd"), output = here::here("vignettes","intermediate-plotting.md"))
+
+```
+
+### Analysis Vignettes
+
+``` {r}
+knitr::knit(input = here::here("vignettes","summary-statistics.Rmd"), output = here::here("vignettes","summary-statistics.md"))
+knitr::knit(input = here::here("vignettes","basic-regression.Rmd"), output = here::here("vignettes","basic-regression.md"))
+
+```
+
+

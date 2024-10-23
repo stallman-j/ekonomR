@@ -2,10 +2,10 @@
 
 
 
+<!-- The README.md is the thing that goes on the Github REPO page Here: https://github.com/stallman-j/ekonomR. The index.md  goes here: https://stallman-j.github.io/ekonomR/. Are they basically the same document? yes.-->
+
 # ekonomR
 
-<!-- badges: start -->
-<!-- badges: end -->
 
 This package provides a typical workflow for economists, particularly those working with spatial data.
 

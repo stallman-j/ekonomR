@@ -624,7 +624,7 @@ Incidentally, among regular cat-skinners, [there are only so many ways that are 
 
 
 ``` r
-  gcb_clean <- readRDS(file = paths[1]) %>% 
+  gcb <- readRDS(file = paths[1]) %>% 
                   dplyr::left_join(readRDS(file = paths[2]),
                             by = c("iso3c","year","country_name")) %>% 
                   dplyr::left_join(readRDS(file = paths[3]),
@@ -639,11 +639,11 @@ Now let's save both an RDS and CSV of the cleaned data.
 
 
 ``` r
-  gcb_clean <- ekonomR::save_rds_csv(data = gcb_clean,
+  gcb <- ekonomR::save_rds_csv(data = gcb,
                             output_path = here::here("data","03_clean","GCB"),
-                            output_filename = "gcb_clean.rds",
+                            output_filename = "gcb",
                             remove = FALSE,
-                            csv_vars = names(gcb_clean),
+                            csv_vars = names(gcb),
                             format = "xlsx")
 ```
 
@@ -687,7 +687,7 @@ You will likely need to consult Google and/or ChatGPT to answer some of the foll
 
 5. What did the code `length(unique(gcb_temp4$iso3c))` give us? 
 
-    - Using the function `nrow()` (**n**umber of **row**s), how many observations do we have in `gcb_clean`? 
+    - Using the function `nrow()` (**n**umber of **row**s), how many observations do we have in `gcb`? 
     
     - How many of these observations (for territorial emissions) are with non-missing values?
 
@@ -728,6 +728,7 @@ ekonomR::download_data(data_subfolder = "GCB",
 sheets     <- c("Territorial Emissions","Consumption Emissions","Emissions Transfers")
 short_name <- c("territorial","consumption","transfers")
 in_path <- here::here("data","01_raw","GCB",gcb_filename)
+skip_val <- 11
 
 gcb <- readxl::read_xlsx(path = in_path,
                          sheet = sheets[1],
@@ -784,17 +785,17 @@ for (i in 1:length(sheets)) {
 
 # Merge sheets together
 paths <- here::here("data","02_temp","GCB", paste0("gcb_emissions_",short_name,".rds"))
-gcb_clean <- readRDS(file = paths[1]) %>% 
+gcb <- readRDS(file = paths[1]) %>% 
   dplyr::left_join(readRDS(file = paths[2]),
                    by = c("iso3c","year","country_name")) %>% 
   dplyr::left_join(readRDS(file = paths[3]),
                    by = c("iso3c","year","country_name")) 
 
 # Save the cleaned data
-gcb_clean <- ekonomR::save_rds_csv(data = gcb_clean,
+gcb <- ekonomR::save_rds_csv(data = gcb,
                                    output_path = here::here("data","03_clean","GCB"),
-                                   output_filename = "gcb_clean.rds",
+                                   output_filename = "gcb",
                                    remove = FALSE,
-                                   csv_vars = names(gcb_clean),
+                                   csv_vars = names(gcb),
                                    format = "xlsx")
 ```

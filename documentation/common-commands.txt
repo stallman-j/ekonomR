@@ -9,3 +9,6 @@ library(knitr)
 knitr::knit(input = "README.Rmd", output = "README.md")
 
 knitr::knit(input = file.path("documentation","documentation.Rmd"), output = file.path("documentation","documentation.md"))
+
+
+knitr::knit(input = here::here("vignettes","basic-cleaning_wpp.Rmd"), output = here::here("vignettes","basic-cleaning_wpp.md"))

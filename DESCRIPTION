@@ -30,6 +30,7 @@ Imports:
     stargazer,
     stats,
     tidyr,
+    tidyselect,
     writexl
 Depends: 
     R (>= 2.10)

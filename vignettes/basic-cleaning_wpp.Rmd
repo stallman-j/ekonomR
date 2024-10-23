@@ -111,7 +111,7 @@ Here are the steps that the below pipes perform:
 
 names(wpp)
 
-wpp_clean <- wpp %>%
+wpp <- wpp %>%
             dplyr::rename(iso3c = "ISO3 Alpha-code",
                            year = "Year",
                         pop_000 = "Total Population, as of 1 January (thousands)",
@@ -127,11 +127,11 @@ That's all we need. The data are already in long format. The UN recognizes that 
 
 Now we just need to save the cleaned data, and we're good to go.
 ```{r}
-wpp_clean <- ekonomR::save_rds_csv(data = wpp_clean,
+wpp <- ekonomR::save_rds_csv(data = wpp,
                           output_path   = here::here("data","03_clean","WPP"),
-                          output_filename = "wpp_clean.rds",
+                          output_filename = "wpp",
                           remove = FALSE,
-                          csv_vars = names(wpp_clean),
+                          csv_vars = names(wpp),
                           format   = "both")
 
 ```
@@ -168,7 +168,7 @@ wpp <- readxl::read_xlsx(path = here::here("data","01_raw","UN-WPP",my_filename)
 # Clean the data by filtering rows and selecting columns
 names(wpp)
 
-wpp_clean <- wpp %>%
+wpp <- wpp %>%
             dplyr::rename(iso3c = "ISO3 Alpha-code",
                            year = "Year",
                         pop_000 = "Total Population, as of 1 January (thousands)",
@@ -181,11 +181,11 @@ wpp_clean <- wpp %>%
 
 # Save the cleaned data
 
-wpp_clean <- ekonomR::save_rds_csv(data = wpp_clean,
+wpp <- ekonomR::save_rds_csv(data = wpp,
                           output_path   = here::here("data","03_clean","WPP"),
-                          output_filename = "wpp_clean.rds",
+                          output_filename = "wpp",
                           remove = FALSE,
-                          csv_vars = names(wpp_clean),
+                          csv_vars = names(wpp),
                           format   = "both")
 
 ```

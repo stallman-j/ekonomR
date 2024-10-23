@@ -72,6 +72,10 @@ If you're given the option, update packages from CRAN, the package repository fo
 data(gcb_clean)
 ```
 
+```
+## Warning in data(gcb_clean): data set 'gcb_clean' not found
+```
+
 
 We're going to plot territorial emissions for China for all the available years. This is a **time series**: we'll be showing the change in a single unit (here, a country), over time.
 
@@ -86,6 +90,10 @@ In your RStudio console, input the following to first make the
 ``` r
 View(gcb_clean)
 names(gcb_clean)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 # Coding Review
@@ -111,6 +119,10 @@ data_country <- gcb_clean %>%
                 dplyr::filter(iso3c == chosen_country)
 ```
 
+```
+## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+```
+
 
 ## The Pipe Operator %>%
 
@@ -128,6 +140,10 @@ We could also have written the following:
 data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
 ```
 
+```
+## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+```
+
 R is pretty clever about recognizing when the coding commands you set have come to a conclusion. For instance, you could also split the *arguments* of the function `filter` across two lines if you wanted to make this code more readable.
 
 
@@ -136,10 +152,14 @@ data_country <- dplyr::filter(gcb_clean,
                               iso3c == chosen_country)
 ```
 
+```
+## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+```
 
-*Comprehension check:* What has the `filter` function done? How many rows exist in the data frame `data_country`?
 
-Answer: this says, "for the data frame `gcb_clean`, keep only the rows such that `iso3c` is equal to `chosen_country`.
+*Comprehension check:* How many rows exist in the data frame `data_country`?
+
+The `filter` function says, "for the data frame `gcb_clean`, keep only the rows such that `iso3c` is equal to `chosen_country`.
 
 Writing `dplyr::filter` just tells R that the function `filter` comes with the `dplyr` package. There are several packages that have a `filter` function, so we specify *which* package's `filter` function we want here. 
 
@@ -188,6 +208,10 @@ data_country <- gcb_clean %>%
                 dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 ```
 
+```
+## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+```
+
 We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing. Note that each time we run a code block like this, we also *replace* the old `data_country` with our new one.
 
 
@@ -217,6 +241,10 @@ data_country <- gcb_clean %>%
                 dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
 ```
 
+```
+## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+```
+
 **Note:** if you're using the pipe, you have to make sure that it goes at the end of the line, not the beginning. If you put the pipe at the beginning of a line, R reads the prior line as the end of the command. If you forget that you have a pipe at the end of the line, you're leaving R hanging and it's waiting for another operation: that's like sending water through a funnel without a bucket at the end to catch the water going through.
 
 This code block is saying the following:
@@ -229,4 +257,24 @@ There are many ways we could write a script in R to get to this result. Just wit
 
 In this case the order of what goes into the pipes won't matter. But in other cases, with more complicated cleaning, the order that you do these operations may well make a difference.
 
-*Comprehension check:* Create a new dataframe called `data_country_2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`. You might for instance change the order of `filter` and `select` or split `filter` into two lines. You can check your work with `identical(data_country,data_country_2)`
+# Exercises
+
+1. Let's look at the `paste0` function, which is one of the most useful functions R's got. `paste0()` is named after `paste`, a function that concatenates strings together, but puts a separator like an empty space in between the elements. `paste0` omits the space, and since in practice we often don't want it, it makes life much easier for a programmer.
+
+
+``` r
+vec_a <- "can "
+vec_b <- "really "
+vec_c <- "learn "
+vec_d <- "R "
+vec_e <- "I "
+vec_f <- "!"
+vec_g <- "?"
+
+out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
+```
+
+  a. What's the result of putting `out_message` in your console?
+  b. Make up another legible message with `vec_a` through `vec_g` and using `paste0`.
+  
+2. Create a new dataframe called `data_country_2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`. You might for instance change the order of `filter` and `select` or split `filter` into two lines. You can check your work with `identical(data_country,data_country_2)`
