@@ -662,25 +662,24 @@ You will likely need to consult Google and/or ChatGPT to answer some of the foll
 3. Let's look at the `paste0` function. 
 
     `paste0()` is named after `paste`, a function that concatenates strings together, but `paste` defaults to putting a separator like an empty space in between the elements while `paste0` omits the space. This is really nice for a programmer, but if you don't see why you should care, don't worry about it. May you be blessed with enough programming in your future that you one day see the light.
-
-
-``` r
-
-vec_a <- "can "
-vec_b <- "really "
-vec_c <- "learn "
-vec_d <- "R "
-vec_e <- "I "
-vec_f <- "!"
-vec_g <- "?"
-
-out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
-```
-
-Just to explore a little...
-
+    
     a. What's the result of putting `out_message` in your console and then hitting enter?
     b. Make up another message that would make sense to a human with `vec_a` through `vec_g` and using `paste0`.
+
+    
+    ``` r
+    
+    vec_a <- "can "
+    vec_b <- "really "
+    vec_c <- "learn "
+    vec_d <- "R "
+    vec_e <- "I "
+    vec_f <- "!"
+    vec_g <- "?"
+    
+    out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
+    ```
+
   
 4. Give a brief assessment of the questions listed in [questions about data](#data-questions) as pertains to this Global Carbon Budget data.
 
