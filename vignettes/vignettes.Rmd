@@ -97,7 +97,7 @@ If you'd like to see something faster than "the next time this package maintaine
 - [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/).
 - [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/)
 
-# Downloading
+## Downloading
 
 - [Basic Data Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-data-downloading/)
 - To add: downloading data with `httr` and `rvest`
