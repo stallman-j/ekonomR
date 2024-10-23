@@ -59,7 +59,7 @@ my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-d
 
 ```
 
-Great, we now have the raw data as an excel workbook. You should open up the excel workbook we just downloaded in Excel or a similar software to get a gander at the treasure you've just found.
+Great, we now have the raw data as an excel workbook. You should open up the excel workbook we just downloaded in Excel or a similar software to gander at the treasure now upon your computer.
 
 When you're exploring your data, you should know what the units of analysis are (here, countries), how frequent your data are (here, annual), and what units your measures are in.
 
@@ -523,11 +523,11 @@ rm(gcb)
 
 Now that we've got our temp files, let's merge all three together into a cleaned data frame.
 
+This also gives us a chance to look at what I meant by "vectorizing" something in R. 
+
 ## Vectorizing
 
-This gives us a chance to look at what I meant by "vectorizing" something in R. 
-
-R has a lot of functions that can take in a single input (like a single name), but that can *also* take in multiple inputs (in the form of a vector), and perform the same operation on them at the same time, and then present to you multiple outputs.
+R has a lot of functions that can accept a single input (like a single name) and return you a single output, but that can *also* take in multiple inputs (in the form of a vector), and perform the same operation on them at the same time, and then present to you multiple outputs.
 
 Here, because `short_name` is a vector of 3 elements, when we set `paths`, what we'll get back is a three-element character vector. The `here` function (which creates a path relative to your project home folder), and `paste0` function are all able to work with vectors rather than just single units.
 
