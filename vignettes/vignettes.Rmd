@@ -5,7 +5,7 @@ toc: true
 toc_label: "Contents"
 toc_sticky: true
 author_profile: true
-date: "2024-10-22"
+date: "2024-10-23"
 output: rmarkdown::html_notebook
 vignette: >
   %\VignetteIndexEntry{vignettes}
@@ -20,74 +20,84 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
-C:/Projects/ekonomR/vignettes/basic-cleaning_wpp.Rmd
-This is the list of vignettes (most of which are coming out soon) for the workflow package `ekonomR`. 
+This is the list of vignettes for the workflow package `ekonomR`. 
 
 To view the code behind all this check out the [ekonomR repository](https://github.com/stallman-j/ekonomR).
 
+# Who's this package for?
 
-`ekonomR` will be most useful for you if you're using a project structure similar to the one we assume you're working within. It's therefore highly recommended that you begin with the [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) vignette.
+## For new researchers
+If you're new to the research process **or** new to R (even if you're experienced in research), I recommend starting with the vignettes listed under **Getting Started**, and then following the vignettes that start with the word "Basic" in the order they're listed on this page, followed by the ones prefaced with "Intermediate".
 
-You can of course still make use of many of `ekonomR`'s convenience functions if your project is already up and running. 
+The basic and intermediate vignettes delve into the workflow of data analysis and research, and discuss both general coding practices and coding in R in particular. They follow the general workflow that a research project of your own would follow. Functions and packages are explained in depth the first time they're used, and then in later vignettes it's assumed that you're already familiar with them.
 
-Any functions that save output (like tables and figures) and into a folder will default to saving files within the following folder structure. The folders will be created if they don't exist already, so you'll just want to make sure that you're overriding the default output paths.
+These vignettes can be run independently if you're looking for something specific, but the explanations are targeted to an audience that would include an undergraduate researcher embarking on their first empirical project, a research assistant who's looking to branch out, or a pre-doctoral fellow trying to decide if research is for them. 
 
-```bash
-. (home_folder)
-├── articles
-├── citations
-├── documents
-├── code
-│   └── 00_functions
-│   └── 01_download
-│   └── 02_cleaning
-│   └── 03_analysis
-│   └── 04_plots
-│   └── 05_simulations
-│   └── scratch
-├── output
-│   └── 01_tables
-│   └── 02_figures
-│   └── 03_maps
-│   └── x_manual-output
-│   └── scratch
-├── data
-│   └── 00_manually-downloaded
-│   └── 01_raw
-│   └── 02_temp
-│   └── 03_clean
-├── your-project-name.Rproj
+## For the experienced researchers transitioning to R
 
-. data_external_folder (optional file path)
-├── data
-│   └── 00_manually-downloaded
-│   └── 01_raw
-│   └── 02_temp
-│   └── 03_clean
+Established researchers who might be interested in transitioning to R from Stata or other software are the secondary audience for these basic and intermediate vignettes. Taken together, this series composes a fairly complete empirical exercise. I frequently borrow from the code of these vignettes and functions in `ekonomR` in my own work to save time. You might find all the research suggestions wordy, but I've tried to block those discussions off into clearly labeled sections that an experienced researcher can just skip past (or read and tell me if you have suggestions for improvement!). 
 
-. data_pii_folder (optional file path)
-├── data
-│   └── 00_manually-downloaded
-│   └── 01_raw
-│   └── 02_temp
-│   └── 03_clean
-```
+In the beginner vignettes, there are some comments I make with advanced researchers transitioning to R in mind. In particular, I flag when it's the case that I've employed a different function or package than I describe in the beginner vignettes due to their higher speed of computation. 
 
+Some blazing fast functions are less intuitive if you're just transitioning to R. If you're getting frustrated because your code is running slowly, these are the functions that'll largely (if not entirely) make up the difference between R and whatever software you were using before. Some of the functions will flat-out surpass whatever you were using. I'm still waiting on hard evidence that Python these days is somehow "faster" than R across the board. I suspect it's just a bit of a "I heard someone who seems to know both say that, and other people have said that, and now 'they' just say that."
 
-# Getting Started
+Some packages are more intuitive depending on where you're coming from. For instance, if you're comfortable with SQL or Python, you should probably be using `data.table` rather than the `dplyr` package for data cleaning. Because a lot of collaborators in R use `dplyr` and in general the package suite called the `tidyverse` (because the syntax is super readable), it's still beneficial to know how to read it, but I wouldn't put much time into learning it if you're working with large datasets and you're well versed in SQL or Python already.
+
+## For R wizards with research battle wounds who want templates
+
+Any vignettes not titled with "Basic" or "Intermediate" are entirely standalone and assume a high level of competency in R. 
+
+`ekonomR` is still for you if you're an old hat at R and here looking for vignettes that cover the workflow of more complicated topics like:
+
+- extracting raster data to vectors and then creating long data frames that can be analyzed.
+
+    - environmental economists, we do this all the time, let's just have functions in a package do the whole shebang for us and not everyone have to reinvent this stuff?
+    - best packages: `exactextractr`, `sf`, `terra`
+    
+- running your code in parallel to get *yuge* speed gains
+
+    - really it's nuts. I've had code go from 8 hours in serial to 80 seconds in parallel
+    - main package: `parallel`
+    
+- coding up data downloads behind a password-protected wall 
+
+    - it's weirdly simple but sounds like a boss move. 
+    - the main packages: `httr` and `rvest`
+    
+- using Python-coded API calls within R to get your workflow all in one place
+
+    - guys guys guys, R can just use Python code, it's silly cool. Also you can tell Python through R to just use a virtual environment so you don't have weird things about packages conflicting that you get sometimes
+    - package: `reticulate`
+    
+- or web scraping dynamically with R 
+
+    - I fooled a news website that had anti-bot trackers and blocked my IP address
+    - After that happened, first I got me a VPN. No, it wasn't my university's, but I was tempted.
+    - Then the next time I started scraping, I randomly picked a number of seconds from a list of like `1,1,3,4,6,12,32`, and that was how long the program would pause on each page before clicking the "next" button
+    - In this way, I scraped all their news articles in a particular category back to 1992
+    - Oh, and I also had to click on drop-down menus to get into the category. 
+    - This was done with the `RSelenium` package and a Docker desktop software. 
+    - While you're not asking, uhm. That paper is not yet a paper because the project is not job-market-paper material, but I'll come back to it someday and email me if you're curious what the project is.
+
+In summary, as I end up needing to revisit my old workflows, I make them into vignettes here in `ekonomR` so they're easier for me to find next time, and I convert whatever I can from those workflows to functions.
+
+If you'd like to see something faster than "the next time this package maintainer needs this thing and gets around to it", [[shoot me an email](mailto:j.stallman@yale.edu)] and I'll bump it up the priority list.
+
+# The vignette list
+
+## Getting started
 
 
 - [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/).
 - [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/)
 
-# Downloading Vignettes
+# Downloading
 
 - [Basic Data Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-data-downloading/)
 - To add: downloading data with `httr` and `rvest`
 - To add: downloading data through a python API with `reticulate`
 
-# Cleaning Vignettes
+## Cleaning
 
 - [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/)
 - [Basic Cleaning: Penn World Tables](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_pwt/)
@@ -96,20 +106,33 @@ Any functions that save output (like tables and figures) and into a folder will 
 
 - To add: Extracting Rasters to Vectors
 
-# Analysis Vignettes
+## Analysis
 
 - [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/)
+- [Summary Statistics](https://stallman-j.github.io/ekonomR/vignettes/summary-statistics/)
 - [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation/)
 - [Event Study Regression](https://stallman-j.github.io/ekonomR/vignettes/event-study/)
 
 
-# Plotting Vignettes
+## Plotting
 
 
 - [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/)
 - [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/)
 
 
-# Mapping Vignettes
+## Spatial analysis
 
 - To add: Mapping
+- to add: getting climate rasters down to vectors and ready for analysis
+
+
+## Varia
+
+- To add: Rselenium shenanigans
+- To add: Proselytizing for Parallelization
+- To add: Avoiding engaging too deeply with Python by using `reticulate`
+- To add: Random Forest stuff
+- To add: ML stuff with Keras and TensorFlow which by the way only really use Python as their **interface**. Actually it all goes down to C++ because C++ is fast and Python is not inherently fast, so doing this with R is going to **exactly the same place Python does so please stop saying R can't do neural nets please I'm begging these lies are hurtful.**
+- To add: Cool propensity score matching stuff
+- To add: Cool network theory stuff
