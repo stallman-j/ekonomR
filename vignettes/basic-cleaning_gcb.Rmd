@@ -310,13 +310,15 @@ It turns out that this process is almost exactly the same for the other sheets, 
 
 # A few things coders commonly do
 
-Coding in any language makes heavy use of drafting and editing; if-else statements; and for loops. Think of any software update or any software security breach that you've heard of that gets patched. That's essentially coders revising their drafts to make your device run better (or worse, who knows, depends on their goals and where the money is), and revising their old drafts to fix issues that came up.
+Coding in any language makes heavy use of drafting and editing; if-else statements; and for loops. 
 
 If you're familiar with another coding language but not R, these concepts will all be familiar to you, and you just need to learn R's syntax. 
 
 If coding is new to you, these might take a little time to get used to, and that's natural.
 
 ## Write drafts
+
+Think of any software update or any software security breach that you've heard of that gets patched. That's essentially coders revising their drafts to make your device run better (or worse, who knows, depends on their goals and where the money is), and revising their old drafts to fix issues that came up.
 
 It's often the case when I'm doing data cleaning that I make a bunch of intermediate data sets and temp data sets while I'm figuring out what to do. 
 
