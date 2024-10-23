@@ -655,7 +655,7 @@ You will likely need to consult Google and/or ChatGPT to answer some of the foll
 
 1. Define emissions from consumption, emissions transfers, and territorial emissions in language that a grandparent or someone of a similar role in your life who doesn't already know these things would understand. You might want to look at the abstracts of the articles cited in the Excel sheet. (Encouraged, but not obligatory: Now go tell that person what you came up with and why we might care about these measures!)
 
-    a. Which of these three would you expect to be measured with most and least error?
+  a. Which of these three would you expect to be measured with most and least error?
 
 2. What are the units of territorial emissions? How do you convert between tonnes of carbon and tonnes of carbon dioxide? What's the difference between using tonnes of carbon or carbon dioxide?
 
@@ -677,15 +677,15 @@ vec_g <- "?"
 out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
 ```
 
-    a. What's the result of putting `out_message` in your console and then hitting enter?
-    b. Make up another message that would make sense to a human with `vec_a` through `vec_g` and using `paste0`.
+  a. What's the result of putting `out_message` in your console and then hitting enter?
+  b. Make up another message that would make sense to a human with `vec_a` through `vec_g` and using `paste0`.
   
 4. Give a brief assessment of the questions listed in [questions about data](#data-questions) as pertains to this Global Carbon Budget data.
 
 5. What did the code `length(unique(gcb_temp4$iso3c))` give us? 
 
-    a. Using the function `nrow()` (**n**umber of **row**s), how many observations do we have in `gcb_clean`? 
-    b. How many of these observations (for territorial emissions) are with non-missing values?
+  a. Using the function `nrow()` (**n**umber of **row**s), how many observations do we have in `gcb_clean`? 
+  b. How many of these observations (for territorial emissions) are with non-missing values?
 
 6. Outside of a for loop, clean the second sheet, "Consumption Emissions", calling the data frame `gcb_consumption`. What is the value of consumption emissions for Chile in 2000 and 2001?
 
