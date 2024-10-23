@@ -20,6 +20,11 @@ This is the list of vignettes for the workflow package `ekonomR`.
 To view the code behind all this check out the [ekonomR repository](https://github.com/stallman-j/ekonomR).
 
 # Who's this package for?
+You may be wondering if `ekonomR` is really a useful package for you. The answer is... possibly?
+
+If you're doing economics research and you don't already have a replicable workflow set up, or you don't happen to have coding templates set up, then probably.
+
+If you're doing economics research and you have code that does the things I list here, email me and be a contributor! Write a vignette! Tell me so I can link to your stuff and don't have to write it myself!
 
 ## For new researchers
 If you're new to the research process **or** new to R (even if you're experienced in research), I recommend starting with the vignettes listed under **Getting Started**, and then following the vignettes that start with the word "Basic" in the order they're listed on this page, followed by the ones prefaced with "Intermediate".
@@ -66,13 +71,14 @@ Any vignettes not titled with "Basic" or "Intermediate" are entirely standalone 
     
 - or web scraping dynamically with R 
 
-    - I fooled a news website that had anti-bot trackers and blocked my IP address
-    - After that happened, first I got me a VPN. No, it wasn't my university's, but I was tempted.
-    - Then the next time I started scraping, I randomly picked a number of seconds from a list of like `1,1,3,4,6,12,32`, and that was how long the program would pause on each page before clicking the "next" button
+    - I fooled a news website that had anti-bot trackers and blocked my IP address. Now I understand why people set up APIs. They're not to make life easier for you (well, maybe they are), but they're also to stop you scraping their stuff and overloading their servers.
+    - After that happened (oops, it wasn't malicious!), first I got me a VPN. No, it wasn't my university's, but I was tempted.
+    - Then the next time I started scraping, I randomly picked a number of seconds from a vector of numbers like `1,1,3,4,6,12,32,...,468`, and that was how long the program would pause on each page before clicking the "next" button. 468 is 7.8 hours and that was supposed to simulate calling it a night and going to bed.
     - In this way, I scraped all their news articles in a particular category back to 1992
     - Oh, and I also had to click on drop-down menus to get into the category. 
     - This was done with the `RSelenium` package and a Docker desktop software. 
-    - While you're not asking, uhm. That paper is not yet a paper because the project is not job-market-paper material, but I'll come back to it someday and email me if you're curious what the project is.
+    - While you're not asking, uhm. That paper is not yet a paper because the project does not have the necessary components to be job-market-paper material, but I'll come back to it someday and email me if you're curious what the project is.
+    - P.S. No, I'm not writing crimes on the internet. I had a subscription and I read their terms of service and I was not using anything to train a machine learning algorithm and I got my choice of seconds by timing the average length it took me to click through, copy the articles, and paste them into an Excel file, averaged over several hours at different days. I was being an *ethical* bot. I think. I hope.
 
 In summary, as I end up needing to revisit my old workflows, I make them into vignettes here in `ekonomR` so they're easier for me to find next time, and I convert whatever I can from those workflows to functions.
 
