@@ -17,79 +17,58 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
-library(dplyr)
 ```
 
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
 
-If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
 
-You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
+# Prerequisites
 
-If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `summary-statistics.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
-
-If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `summary-statistics.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/summary-statistics.Rmd) and save it into `code/scratch`.
-
-# Installation 
-
-## New Installation
-
-If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
-
-
-``` {r, eval = FALSE, results = FALSE}
-install.packages("remotes") 
-remotes::install_github("stallman-j/ekonomR")
-```
-
-## Re-installation 
-
-If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
-
-First, go into the "Packages" tab in RStudio (it's in the window that's shared with tabs for `Files`, `Packages`, `Help`, `Viewer`, and `Presentation`) and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
-
-Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
-
-
-``` {r, results = FALSE, eval = FALSE}
-install.packages("remotes") 
-remotes::install_github("stallman-j/ekonomR")
-```
-
-Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
-
+First, bring `ekonomR` into your working library.
 
 ``` {r}
 library(ekonomR)
 ```
 
-Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but because `ekonomR` is getting updated so frequently, you might run into trouble.
 
-If you're given the option, update packages from CRAN, the package repository for well-documented R packages. If your R crashes, run the above sequence but then instruct R *not* to update the packages and see how things go. If you're still having trouble, try uninstalling and reinstalling R and R Studio and then coming back. If you're still having trouble, email me.
+# Bring in the data
 
+Let's bring in the data, and have a look at the columns that the merged data contains.
 
-# Prerequisites
+``` {r}
 
-If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations we'll be assuming you know.
+data(ghg_pop_gdp)
 
-``` {r, eval = FALSE}
-## bring in the data ----
+names(ghg_pop_gdp)
+```
 
-data <- readRDS(file = file.path(data_clean,"ghg_pop_gdp.rds"))
+**To do:** Add exploration of the data, extreme values and missing values, with the `skimr` package.
 
-# see the varnames we have here
-names(data)
+# Generate summary statistics
 
-# Summary Statistics ----
-## Select data to summarize ----
-# NOTE
-# if you use a gcb_ variable, you may run into problems with logs! Why is this?
-# you can still use the outcome, but you might not be able to run all the regressions
-# If you can use it without error,
-# you might want to look in the 02_clean_gcb to see if there's anything weird about
-# the variables in there.
+## The `stargazer` package: pretty good for lots of cases
 
-data_to_summarize <- data %>% dplyr::select(le_birth,
+The `stargazer` package is a useful package for generating summary statistics tables and regression tables that you plan to output to LateX, HTML, or straight text. It has pretty straightforward syntax, and the tables it generates are pretty nice.
+
+If you want to see a great overview of using `stargazer` and modifying it to its extent possible, check out [Jack Russ's Stargazer cheatsheets](https://www.jakeruss.com/cheatsheets/stargazer/).
+
+## Ultimate customizability: `modelsummary`
+
+Another package, `modelsummary`, allows for more modification of tables (and really, whatever customization you want), but it is also a bit more complicated to deal with.
+
+Most of the time, `stargazer` is just fine for what I want for summary statistics. With `modelsummary` the corresponding function would be `datasummary()`. **To add:** example of `modelsummary` for summary statistics.
+
+I tend to need more flexibility with regression output, so it's been a while since I've used `stargazer` to generate regression output. I spent a long while one time finagling with `modelsummary`, and then now I just use the template I had and copy it over to new regressions and adapt it slightly and I'm good to go.
+
+## Setting up data to summarize
+
+There are surely more space-efficient ways to do this, but I like to make a subset of the data that I intend to summarize with all the columns I want in my summary statistics table. 
+
+This way, it's really straightforward to tell what I want the variable labels to be, and I can get output quickly and easily write the variable labels in a more concise way if my sum stats table is getting too wide for the page.
+
+```{r}
+data_to_summarize <- ghg_pop_gdp %>% dplyr::select(le_birth,
                                      le_15,
                                      le_65,
                                      tfr,
@@ -98,22 +77,20 @@ data_to_summarize <- data %>% dplyr::select(le_birth,
                                      gdp_pc,
                                      gdp000_pc) %>% as.data.frame()
 
-## FIND UNITS FOR GDP PER CAPITA IN THE 02_clean_merge file
 var_labels <- c("Life Expectancy at birth",
                 "Life Expectancy, Age 15",
                 "Life Expectancy, Age 65",
                 "Total Fertility Rate",
-                "Population (insert units)",
-                "GDP (insert units here)",
-                "GDP per capita (units)",
-                "GDP (units) per (units) capita")
+                "Population ('000s)",
+                "GDP (million 2017USD PPP)",
+                "GDP per capita (2017USD PPP)",
+                "GDP pc ('000 2017USD PPP)")
 
-## generate summary statistics table ----
+```
 
-# https://www.jakeruss.com/cheatsheets/stargazer/#the-default-summary-statistics-table
+Once I have those good to go, I generate a table in text format. This outputs directly to the console, so we can take a closer look at it.
 
-# you can also use datasummary() from the modelsummary package if you want more customizability
-
+```{r}
 stargazer::stargazer(data_to_summarize,
           type = "text",
           style = "qje",
@@ -122,9 +99,20 @@ stargazer::stargazer(data_to_summarize,
           summary.stat = c("n","min","mean","median","max","sd"),
           digits = 2 # round to 2 digits
 )
+```
 
-#out_path <- file.path(output_tables,"le_summary_stats.tex")
-out_path <- file.path(output_tables,"hw03_summary_stats.tex")
+Once I've gone back and forth between selecting columns to summarize, adjusting the variable label length to make the table look good, and choosing the summary statistics and digits to show, then we can generate a table that goes to a fancier output formal like LaTeX or HTML.
+
+In your final writeup, you should have footnotes under this type of table citing the data sources and writing out in longer form the units of each of your measures.
+
+**To add:** Summary statistics that look nice in Microsoft Word. 
+
+If it looks all right, we can now output externally to LaTex with the following commands. You'll have to change the `out_path` if you're not using a different folder structure than what `ekonomR` assumes, since `stargazer` won't create the output folder automatically for you.
+
+**To add:** Put the template for the surrounding environment of LaTex in the ECON 412 Overleaf Templates and the Latekonomer Overleaf and this RMarkdown file.
+
+```{r}
+out_path <- here::here("example-project","output","01_tables","summary_stats.tex")
 
 # output to latex
 stargazer::stargazer(data_to_summarize,
@@ -136,7 +124,7 @@ stargazer::stargazer(data_to_summarize,
           summary.stat = c("n","min","mean","median","max","sd"),
           digits = 2, # round to 2 digits
           title = "Summary Statistics",
-          label = "tab:le_sumstats", # this label now redundant with float = FALSE
+          label = "tab:le_sumstats", # this label is now redundant with float = FALSE
           float = FALSE # do this so I can use threeparttable in latex
           # and have very pretty notes
           # this removes the exterior "table" environment
