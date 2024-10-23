@@ -26,7 +26,6 @@ lm_model <- function(df,
 #' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of.
 #' @returns A regression formula that can either be used as an input to the lm function or fixest::feols if fe_vars is not null
 #' @export
-#' defaults to null
 
 reg_equation <- function(outcome_var = "lge_15",
                          regressor_vars = c("gdp_pc","tfr"),
