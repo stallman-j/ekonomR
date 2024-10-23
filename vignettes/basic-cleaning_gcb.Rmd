@@ -65,7 +65,7 @@ When you're exploring your data, you should know what the units of analysis are 
 
 You should also think critically, perhaps almost philosophically, about your data. Here are some questions to consider whenever you're presented with something someone's calling "data."
 
-## Questions to Ask About Data {#data-questions}
+## Questions to ask about data {#data-questions}
 
 - Is the data documenting facts, making estimates or inferences, or in some way presenting opinions as numbers? If either of the latter, what methods are they using and how could this be done in a trustworthy way?
 - Does the data they're presenting seem to square with what you would expect from data like this?
@@ -74,7 +74,7 @@ You should also think critically, perhaps almost philosophically, about your dat
 - Is there likely to be error in the measurement of this data? Is this error likely to be random, or more likely to be larger or smaller for certain units?
 
 
-# Clean a Single Sheet
+# Clean a single sheet
 
 There are three sheets with data that we're interested in: territorial emissions, emissions from consumption, and emissions transfers. The Global Carbon Budget has also listed a bunch of its documentation along with the download, which is a good practice.
 
@@ -467,7 +467,7 @@ If you find yourself doing something very repetitive, though, inside of a for lo
 2. You might want to put that function into an `apply()` rather than a for loop.
 
 
-# The Full Cleaning Sequence
+# Fully cleaning one sheet
 
 We'll loop through `i` in `1:length(sheets)` which is a fancy way of writing `1:3` in this case. 
 
@@ -540,7 +540,7 @@ R's functions that can accept inputs of vectors are computationally super fast, 
 
 Just try to pay attention to when something accepted multiple inputs and immediately spit out multiple outputs, and you'll start to get a feel for how this vectorization thing works.
 
-## Left Joins
+## Left joins
 
 When we do a merge, it's often helpful to start from the biggest data frame, and then merge on the smaller ones afterwards. In this case, territorial emissions has the most years.
 
@@ -632,7 +632,7 @@ out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
 
 6. Outside of a for loop, clean the second sheet, "Consumption Emissions", calling the data frame `gcb_consumption`. What is the value of consumption emissions for Chile in 2000 and 2001?
 
-7. Describe what the if-else statement below is doing. Find a way to modify this code so that when `i` is 33, we would see the output `"It's a mod!"` but that for `i` of 44 we would have `"It's not a mod!"
+7. Describe what the if-else statement below is doing. Find a way to modify this code so that when `i` is 33, we would see the output `"It's a mod!"` but that for `i` of 44 we would have `"It's not a mod!"`
 
 ``` {r, results = FALSE}
 for (i in 1:100){
@@ -646,3 +646,92 @@ for (i in 1:100){
 ```
 
 
+# Just the code, please
+
+``` {r, eval = FALSE}
+library(ekonomR)
+
+# Download Data
+gcb_filename <- "National_Fossil_Carbon_Emissions_2023v1.0.xlsx"
+
+my_url          <- paste0("https://globalcarbonbudgetdata.org/downloads/latest-data/",gcb_filename)
+
+ekonomR::download_data(data_subfolder = "GCB",
+                       data_raw       = here::here("data","01_raw"),
+                       url            = my_url,
+                       filename       = gcb_filename)
+
+# Clean a single sheet
+sheets     <- c("Territorial Emissions","Consumption Emissions","Emissions Transfers")
+short_name <- c("territorial","consumption","transfers")
+in_path <- here::here("data","01_raw","GCB",gcb_filename)
+
+gcb <- readxl::read_xlsx(path = in_path,
+                         sheet = sheets[1],
+                         col_names = TRUE,
+                         skip = skip_val
+) %>%
+  dplyr::rename(year = "...1") %>%
+  tidyr::pivot_longer(cols = -c(year),
+                      names_to = "country_name",
+                      values_to = paste0("gcb_ghg_",short_name[1])) %>%
+  dplyr::arrange(country_name,year) %>%
+  dplyr::mutate(iso3c = countrycode::countrycode(country_name,
+                                                 origin = "country.name",
+                                                 destination = "iso3c"
+  )) %>%
+  dplyr::filter(!is.na(iso3c))
+
+View(gcb)
+
+# Clean sheets in a for loop
+for (i in 1:length(sheets)) {
+  
+  ifelse(i==1,
+         yes = skip_val <- 11,
+         no  = skip_val <- 8
+  )
+  
+  gcb <- readxl::read_xlsx(path = in_path,
+                           sheet = sheets[i],
+                           col_names = TRUE,
+                           skip = skip_val
+  )  %>%
+    dplyr::rename(year = "...1")%>%
+    tidyr::pivot_longer(cols = -c(year),
+                        names_to = "country_name",
+                        values_to = paste0("gcb_ghg_",short_name[i]))%>%
+    dplyr::arrange(country_name,year) %>%
+    dplyr::mutate(iso3c = countrycode::countrycode(country_name,
+                                                   origin = "country.name",
+                                                   destination = "iso3c"
+    )) %>% 
+    dplyr::filter(!is.na(iso3c)) 
+  
+  ekonomR::save_rds_csv(data =gcb,
+                        output_path   = here::here("data","02_temp","GCB"),
+                        output_filename = paste0("gcb_emissions_",short_name[i]),
+                        remove = FALSE,
+                        csv_vars = names(gcb),
+                        format   = "xlsx")
+  
+  rm(gcb)
+  
+}
+
+# Merge sheets together
+paths <- here::here("data","02_temp","GCB", paste0("gcb_emissions_",short_name,".rds"))
+gcb_clean <- readRDS(file = paths[1]) %>% 
+  dplyr::left_join(readRDS(file = paths[2]),
+                   by = c("iso3c","year","country_name")) %>% 
+  dplyr::left_join(readRDS(file = paths[3]),
+                   by = c("iso3c","year","country_name")) 
+
+# Save the cleaned data
+gcb_clean <- ekonomR::save_rds_csv(data = gcb_clean,
+                                   output_path = here::here("data","03_clean","GCB"),
+                                   output_filename = "gcb_clean.rds",
+                                   remove = FALSE,
+                                   csv_vars = names(gcb_clean),
+                                   format = "xlsx")
+```
