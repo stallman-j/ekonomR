@@ -158,7 +158,6 @@ The first column really should be called "year", but it got inputted as `"...1"`
 ``` r
 gcb2 <- gcb %>%
        dplyr::rename(year = "...1")
-#> Error in gcb %>% dplyr::rename(year = "...1"): could not find function "%>%"
 ```
 
 I'm using the pipe operator (`%>%`) here, although `gcb2 <- dplyr::rename(gcb,year = "...1")` would have done the same thing. This is also in anticipation of future piping. 
@@ -175,7 +174,8 @@ We created this other dataset `gcb2`, but actually, we could've already piped th
                    skip = skip_val
   ) %>%
   dplyr::rename(year = "...1")
-#> Error in readxl::read_xlsx(path = in_path, sheet = sheets[1], col_names = TRUE, : could not find function "%>%"
+#> New names:
+#> • `` -> `...1`
 ```
 Now let's make a long data frame.
 
@@ -198,7 +198,6 @@ gcb_temp <- gcb %>%
               tidyr::pivot_longer(cols = -c(year),
                            names_to = "country_name",
                            values_to = paste0("gcb_ghg_",short_name[1]))
-#> Error in gcb %>% tidyr::pivot_longer(cols = -c(year), names_to = "country_name", : could not find function "%>%"
 View(gcb_temp)
 ```
 
@@ -224,7 +223,6 @@ It might be easier to look at the data if, rather than being alphabetical by cou
 ``` r
 gcb_temp2 <- gcb_temp %>%
               dplyr::arrange(country_name,year)
-#> Error in gcb_temp %>% dplyr::arrange(country_name, year): could not find function "%>%"
 
 View(gcb_temp2)
 ```
@@ -254,7 +252,10 @@ gcb_temp3 <- gcb_temp2 %>%
                                          origin = "country.name",
                                          destination = "iso3c"
                                           ))
-#> Error in gcb_temp2 %>% dplyr::mutate(iso3c = countrycode::countrycode(country_name, : could not find function "%>%"
+#> Warning: There was 1 warning in `dplyr::mutate()`.
+#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> Caused by warning:
+#> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 
 View(gcb_temp3)
 ```
@@ -274,12 +275,10 @@ We're not interested in those for now, so let's just drop them. We can do this b
 ``` r
 gcb_temp4 <- gcb_temp3 %>%
                dplyr::filter(!is.na(iso3c))
-#> Error in gcb_temp3 %>% dplyr::filter(!is.na(iso3c)): could not find function "%>%"
 
 View(gcb_temp4)
 
 length(unique(gcb_temp4$iso3c))
-#> Error in eval(expr, envir, enclos): object 'gcb_temp4' not found
 ```
 That'll do, folks, that'll do. 
 
@@ -290,14 +289,6 @@ First, let us remove all the data sets from the environment so we can start fres
 
 ``` r
 rm(gcb,gcb_temp,gcb_temp2,gcb_temp3,gcb_temp4)
-#> Warning in rm(gcb, gcb_temp, gcb_temp2, gcb_temp3, gcb_temp4): object
-#> 'gcb_temp' not found
-#> Warning in rm(gcb, gcb_temp, gcb_temp2, gcb_temp3, gcb_temp4): object
-#> 'gcb_temp2' not found
-#> Warning in rm(gcb, gcb_temp, gcb_temp2, gcb_temp3, gcb_temp4): object
-#> 'gcb_temp3' not found
-#> Warning in rm(gcb, gcb_temp, gcb_temp2, gcb_temp3, gcb_temp4): object
-#> 'gcb_temp4' not found
 
 gc()
 ```
@@ -329,7 +320,12 @@ Here's the whole cleaning process in one go:
                                          destination = "iso3c"
                                           )) %>%
   dplyr::filter(!is.na(iso3c))
-#> Error in readxl::read_xlsx(path = in_path, sheet = sheets[1], col_names = TRUE, : could not find function "%>%"
+#> New names:
+#> • `` -> `...1`
+#> Warning: There was 1 warning in `dplyr::mutate()`.
+#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> Caused by warning:
+#> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 
 View(gcb)
 ```
@@ -557,7 +553,24 @@ for (i in 1:length(sheets)) {
 rm(gcb)
 
 }
-#> Error in readxl::read_xlsx(path = in_path, sheet = sheets[i], col_names = TRUE, : could not find function "%>%"
+#> New names:
+#> • `` -> `...1`
+#> Warning: There was 1 warning in `dplyr::mutate()`.
+#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> Caused by warning:
+#> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
+#> New names:
+#> • `` -> `...1`
+#> Warning: There was 1 warning in `dplyr::mutate()`.
+#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> Caused by warning:
+#> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
+#> New names:
+#> • `` -> `...1`
+#> Warning: There was 1 warning in `dplyr::mutate()`.
+#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> Caused by warning:
+#> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 ```
 
 *Comprehension check*: What is `rm(gcb)` doing? What would happen to the `gcb` that's being created when `i=1` if we didn't have `rm(gcb)` in our code?
@@ -616,7 +629,6 @@ Incidentally, among regular cat-skinners, [there are only so many ways that are 
                             by = c("iso3c","year","country_name")) %>% 
                   dplyr::left_join(readRDS(file = paths[3]),
                             by = c("iso3c","year","country_name")) 
-#> Error in readRDS(file = paths[1]) %>% dplyr::left_join(readRDS(file = paths[2]), : could not find function "%>%"
 ```
 
 *Comprehension check*: What is the name of the first dataset that we're bringing in when we call `paths[1]`? Which datasets are `paths[2]` and `paths[3]` referring to?
