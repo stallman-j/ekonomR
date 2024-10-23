@@ -137,7 +137,7 @@ Read in the data.
                    skip = skip_val
   )
 #> New names:
-#> • `` -> `...1`
+#> * `` -> `...1`
 ```
 The comment afterwards is saying that a period or blank space got turned to `...1`. We'll see what that's about in a sec.
 
@@ -175,7 +175,7 @@ We created this other dataset `gcb2`, but actually, we could've already piped th
   ) %>%
   dplyr::rename(year = "...1")
 #> New names:
-#> • `` -> `...1`
+#> * `` -> `...1`
 ```
 Now let's make a long data frame.
 
@@ -253,7 +253,7 @@ gcb_temp3 <- gcb_temp2 %>%
                                          destination = "iso3c"
                                           ))
 #> Warning: There was 1 warning in `dplyr::mutate()`.
-#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> i In argument: `iso3c = countrycode::countrycode(...)`.
 #> Caused by warning:
 #> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 
@@ -321,9 +321,9 @@ Here's the whole cleaning process in one go:
                                           )) %>%
   dplyr::filter(!is.na(iso3c))
 #> New names:
-#> • `` -> `...1`
+#> * `` -> `...1`
 #> Warning: There was 1 warning in `dplyr::mutate()`.
-#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> i In argument: `iso3c = countrycode::countrycode(...)`.
 #> Caused by warning:
 #> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 
@@ -554,21 +554,21 @@ rm(gcb)
 
 }
 #> New names:
-#> • `` -> `...1`
+#> * `` -> `...1`
 #> Warning: There was 1 warning in `dplyr::mutate()`.
-#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> i In argument: `iso3c = countrycode::countrycode(...)`.
 #> Caused by warning:
 #> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 #> New names:
-#> • `` -> `...1`
+#> * `` -> `...1`
 #> Warning: There was 1 warning in `dplyr::mutate()`.
-#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> i In argument: `iso3c = countrycode::countrycode(...)`.
 #> Caused by warning:
 #> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 #> New names:
-#> • `` -> `...1`
+#> * `` -> `...1`
 #> Warning: There was 1 warning in `dplyr::mutate()`.
-#> ℹ In argument: `iso3c = countrycode::countrycode(...)`.
+#> i In argument: `iso3c = countrycode::countrycode(...)`.
 #> Caused by warning:
 #> ! Some values were not matched unambiguously: Africa, Asia, Bunkers, Central America, EU27, Europe, Kosovo, KP Annex B, Middle East, Non-OECD, Non KP Annex B, North America, Oceania, OECD, South America, Statistical Difference, World
 ```

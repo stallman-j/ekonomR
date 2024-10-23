@@ -55,6 +55,7 @@ my_filename     <- paste0("WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_CO
                           data_raw       = here::here("data","01_raw"),
                           url            = url,
                           filename       = my_filename)
+#> The data subfolder C:/Projects/ekonomR/data/01_raw/UN-WPP already exists.
 ```
 
 You can look in the file path given by `here::here("data","01_raw","WPP")` to see where the excel file has gone. In it, there's a sheet called "Estimates" that contains what we're looking for.
@@ -87,7 +88,6 @@ wpp <- readxl::read_xlsx(path = here::here("data","01_raw","UN-WPP",my_filename)
                  col_types = my_col_types,
                  skip = 16
                  )
-#> Error in eval(expr, envir, enclos): object 'my_filename' not found
 ```
 
 The astute reader might notice that here, I just wrote `skip = 16` whereas in the case of the Global Carbon Budget, I defined a variable called `skip_val` and let it alternate across sheets.
@@ -110,7 +110,6 @@ Here are the steps that the below pipes perform:
 ``` r
 
 names(wpp)
-#> Error in eval(expr, envir, enclos): object 'wpp' not found
 
 wpp_clean <- wpp %>%
             dplyr::rename(iso3c = "ISO3 Alpha-code",
@@ -122,7 +121,6 @@ wpp_clean <- wpp %>%
                        tfr      = "Total Fertility Rate (live births per woman)") %>%
             dplyr::filter(!is.na(iso3c)) %>% # this takes out all regions and just leaves countries
             dplyr::select(iso3c, year, pop_000,le_birth,le_15,le_65,tfr)
-#> Error in eval(expr, envir, enclos): object 'wpp' not found
 ```
 
 That's all we need. The data are already in long format. The UN recognizes that a lot of people use their data for more advanced analysis, so they have it stored in a way that doesn't require much cleaning. Thanks, UN!

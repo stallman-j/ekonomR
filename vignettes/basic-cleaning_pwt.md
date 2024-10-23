@@ -40,7 +40,6 @@ Let's go ahead and download the data. `ekonomR` has a `download_data()` function
 
 
 ``` r
-
   url <- "https://dataverse.nl/api/access/datafile/354095"
 
   ekonomR::download_data(data_subfolder = "PWT",
@@ -55,7 +54,6 @@ You can look in the file path given by `here::here("data","01_raw","PWT")` to se
 
 
 ``` r
-
   pwt <- readxl::read_xlsx(path = here::here("data","01_raw","PWT","pwt1001.xlsx"),
                      sheet = "Data",
                      col_names = TRUE)
