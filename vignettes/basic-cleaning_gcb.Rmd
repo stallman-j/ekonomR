@@ -594,13 +594,13 @@ You will likely need to consult Google and/or ChatGPT to answer some of the foll
 
 1. Define emissions from consumption, emissions transfers, and territorial emissions in language that a grandparent or someone of a similar role in your life who doesn't already know these things would understand. You might want to look at the abstracts of the articles cited in the Excel sheet. (Encouraged, but not obligatory: Now go tell that person what you came up with and why we might care about these measures!)
 
-  1. Which of these three would you expect to be measured with most and least error?
+    1. Which of these three would you expect to be measured with most and least error?
 
 2. What are the units of territorial emissions? How do you convert between tonnes of carbon and tonnes of carbon dioxide? What's the difference between using tonnes of carbon or carbon dioxide?
 
 3. Let's look at the `paste0` function. 
 
-`paste0()` is named after `paste`, a function that concatenates strings together, but `paste` defaults to putting a separator like an empty space in between the elements while `paste0` omits the space. This is really nice for a programmer, but if you don't see why you should care, don't worry about it. May you be blessed with enough programming in your future that you one day see the light.
+    `paste0()` is named after `paste`, a function that concatenates strings together, but `paste` defaults to putting a separator like an empty space in between the elements while `paste0` omits the space. This is really nice for a programmer, but if you don't see why you should care, don't worry about it. May you be blessed with enough programming in your future that you one day see the light.
 
 ``` {r, results = FALSE}
 
