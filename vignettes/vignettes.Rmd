@@ -30,14 +30,15 @@ How you might want to go through these vignettes depends on your background comi
 
 By the way, if you're doing economics research and you have code that does the things I list here, email me and be a contributor! Write a vignette! Tell me so I can link to your stuff and don't have to write it myself and can give you props for stuff you've already done!
 
-## For new researchers
+## For new researchers and transitioning researchers
+
 If you're new to the research process **or** new to R (even if you're experienced in research), I recommend starting with the vignettes listed under **Getting Started**, and then following the vignettes that start with the word "Basic" in the order they're listed on this page, followed by the ones prefaced with "Intermediate".
 
 The basic and intermediate vignettes delve into the workflow of data analysis and research, and discuss both general coding practices and coding in R in particular. They follow the general workflow that a research project of your own would follow. Functions and packages are explained in depth the first time they're used, and then in later vignettes it's assumed that you're already familiar with them.
 
 These vignettes can be run independently if you're looking for something specific, but the explanations are targeted to an audience that would include an undergraduate researcher embarking on their first empirical project, a research assistant who's looking to branch out, or a pre-doctoral fellow trying to decide if research is for them. 
 
-## For the experienced researchers transitioning to R
+### For the experienced researchers transitioning to R
 
 Established researchers who might be interested in transitioning to R from Stata or other software are the secondary audience for these basic and intermediate vignettes. Taken together, this series composes a fairly complete empirical exercise. I frequently borrow from the code of these vignettes and functions in `ekonomR` in my own work to save time. You might find all the research suggestions wordy, but I've tried to block those discussions off into clearly labeled sections that an experienced researcher can just skip past (or read and tell me if you have suggestions for improvement!). 
 
