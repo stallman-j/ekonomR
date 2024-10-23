@@ -77,7 +77,7 @@ There are three sheets with data that we're interested in: territorial emissions
 Here's what we're going to do for each sheet:
 
 1. Bring the sheet into R, lopping off the extra rows at the top
-2. Turn the sheet into a long data frame. By **long data** here, we mean data in which an observation is a unique unit (here a country) at a unique point in time (a year). That makes the data frame have lots of rows, so it's, well, long.
+2. Turn the sheet into a long data frame. By **long data**, I mean data in which an observation is a unique unit (here a country) at a unique point in time (a year). This type of organization makes the data frame have lots of rows, so it's, well, long.
 3. Tidy up the columns and create variables as necessary so that it'll be easy to merge the sheets together into a single data frame and then eventually with other data.
 
 Once we've done that, we'll merge each of those temp files together to make each of territorial emissions, consumption emissions, and transfers a column in our data set.
@@ -205,13 +205,15 @@ View(gcb_temp)
 
 ## The placeholder period in dplyr
 
-The `.` comes from how dplyr works with the pipe operator `%>%`. 
+The `.` I wrote in `names(.)` comes from how dplyr works with the pipe operator `%>%`. 
 
 It's a place-holder that says "Hey, that thing that came before the last pipe you saw? Also insert it here where this period is, thanks." 
 
-What we want is `names(gcb)` to see the column names of the `gcb` data frame. The `.` tells the `names()` function to take it from up top. 
+There are lots of columns in the wide version of the data. It was easy to say "pivot all the columns except for `year`", and then not even bother with how many columns there were. If I have to tell `pivot_longer()` explicitly which columns to choose, it's easiest to just say all of them with `names()`. That would normally be a call to `names(gcb)` to see the column names of the `gcb` data frame. 
 
+The `.` tells the `names()` function to take the names of the thing that came before the pipe.
 
+*Comprehension check* (a little tricky): The code of the last comprehension check would've run just fine if I wrote `cols=names(gcb)`. Why might you not want to do that as a general practice if you're working with a sequence of pipe after pipe?
 
 ## Adjust row order with `arrange()`
 
@@ -227,11 +229,13 @@ View(gcb_temp2)
 
 ## Harmonize country names with `countrycode()`
 
-Country names are a little messy because different languages have different naming conventions for different places. ISO3C codes are a standardized way to refer to countries, although there are many more methodologies. The package `countrycode` has a function also called `countrycode()` that does this conversion for us. 
+Country names are a little messy because different languages have different naming conventions for different places. ISO3C codes are a standardized way to refer to countries, although there are other standardized ways... so the standardization isn't even standardized.
+
+Thankfully, the package `countrycode` has a function also called `countrycode()` that takes care of this conversion for us. 
 
 **Semi-pro tip**: If you're doing a serious project, you should be careful to check that this conversion is working as you intend. 
 
-For instance, Hong Kong's official name is "Hong Kong Special Administrative Region of the People's Republic of China (PRC)", and `countrycode` tends to look for just the name "China", so you might sometimes need to manually adjust the naming that you convert from to avoid information getting lost or misread.
+For instance, Hong Kong's official name is "Hong Kong Special Administrative Region of the People's Republic of China (PRC)", and `countrycode` tends to look for just the name "China". You might sometimes need to manually adjust the naming that you convert from to avoid information getting lost or altered.
 
 ## Create/edit variables with `mutate()`
 
@@ -255,6 +259,7 @@ gcb_temp3 <- gcb_temp2 %>%
 
 View(gcb_temp3)
 ```
+## Drop rows with `filter()`
 
 We've got a lovely little warning there. Don't ignore the warnings! They're often helpful. 
 
@@ -264,7 +269,7 @@ We're not interested in those for now, so let's just drop them. We can do this b
 
 `dplyr` has the `filter()` function that'll do the trick. 
 
-(Note: `filter()` is for filtering out rows. `select()` choses columns. It's easy to mix up, but your output will be pretty obvious if you've chosen the wrong one.)
+(**Note:** `filter()` is for filtering out rows. `select()` choses columns. It's easy to conflate these, but usually if you do you'll get a pretty obvious error.)
 
 
 ``` r
@@ -277,9 +282,9 @@ length(unique(gcb_temp4$iso3c))
 ```
 That'll do, folks, that'll do. 
 
-If we repeated this process for all three sheets, we would have 5 extra data frames generated for each, and we'd be running around with 15 objects clogging up our environment. Now that we know how this works, though, and you've had a chance to evaluate each step, let's run this all as a single operation, using `dplyr` pipes.
+If we repeated this process for all three sheets, we would have 5 extra data frames generated for each, and we'd be running around with 15 objects clogging up our environment. Now that we know how this works, and you've had a chance to evaluate each step, let's edit those code to run this all as a single operation, using `dplyr` pipes.
 
-First, how about we remove all the data sets from the environment, and start fresh.
+First, let us remove all the data sets from the environment so we can start fresh.
 
 
 ``` r
@@ -288,9 +293,11 @@ rm(gcb,gcb_temp,gcb_temp2,gcb_temp3,gcb_temp4)
 gc()
 ```
 
-If you notice that your memory (in the Environment tab) is getting bogged down (it'll start to look yellow and then red when that's happening in RStudio), you can also run a **g**arbage **c**leanup with `gc()`. If your data are large or you're running a lot of computations and tests, garbage cleanup will help make your R session more workable. Sometimes, though, it's the case that just restarting your R session will be the best fix.
+If you notice that your memory (in the Environment tab) is getting bogged down (a little pie chart will start to look yellow and then red when that's happening in RStudio), you can also run a **g**arbage **c**leanup with `gc()`. If your data are large or you're running a lot of computations and tests, garbage cleanup will help make your R session more workable. Sometimes, though, it's the case that just restarting your R session will be the best fix.
 
-A good goal for your coding is to have your code to be such that you can allow the R session to terminate and run the code from top to bottom and be none the worse. Better still if you could delete your temp data and clean data folders and without needing to manually edit anything in your scripts, run all the way through your cleaning from the raw data files. 
+A good goal for your coding is to have your code to be such that you can allow the R session to terminate and run the code from top to bottom and be none the worse. 
+
+Better still if you could delete your temp data and clean data folders and without needing to manually edit anything in your scripts, run all the way through your cleaning from the raw data files. 
 
 If you're consistently finding yourself bouncing around selecting lines to run within a script and then avoiding others, and jumping from early in the script to late and back, your code could probably use some cleaning up.
 
@@ -352,17 +359,21 @@ As you get more practice at writing or coding, your first drafts of later projec
 
 Just like for writing, the editing process is an important part of becoming a better coder, but oftentimes when we just want the darn thing to run, we don't manage to get in an editing phase. Just like, sometimes, when a deadline is looming, we might submit an essay that was actually the first draft. We've all done it.
 
-There's one key difference, though, between an essay and a coding script. Unlike for writing, in coding it's vital to get your code to actually run! One important way you get good at getting your code to run is by spending time troubleshooting your code that doesn't run, so you can see how it works and what you tend to flub!
+There's one key difference, though, between an essay and a coding script. Unlike for writing, in coding it's vital to get your code to actually run! Writing doesn't have a comparably clear "success-failure" margin, but an important way you get good at getting your code to run is by spending time troubleshooting your code that doesn't run, so you can see how it works and what you tend to flub.
 
-If you're new to R or coding, prioritze getting your code to work. Don't worry about pretty, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have something that gets what you want or almost what you want than perfectly indented code that doesn't work.
+If you're new to R or coding, prioritze getting your code to work. Don't worry about writing pretty code, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have something that gets what you want or almost what you want than perfectly indented code that doesn't work. 
 
-Also, if you're getting bogged down, consider paying a little more for higher random access memory (RAM) when purchasing your next laptop or PC. Less than 16G of RAM starts to bite real fast these days. R uses RAM intensively when you're doing data manipulation and analysis. RAM is also part of what helps to keep a Zoom meeting running smooth, Tiktok scrolling fast, or your Zelda game showing you all those worldbuilding details without lagging.
+That said, if you keep in mind the coding practices that I keep proselytizing in these vignettes and try implementing them as you can, you'll have an easier time writing prettier code that runs better over time.
 
-While "pretty" is often in the eyes of the beholder, in programming, pretty code is usually code that's quick to run, straightforward to replicate, and easy to understand for someone with passing familiarity with your coding language but who has no clue what you're trying to achieve with your script. 
+Also, if you're getting bogged down in R memory, consider paying a little more for higher random access memory (RAM) when purchasing your next laptop or PC. Less than 16G of RAM starts to bite real fast these days. R uses RAM intensively when you're doing data manipulation and analysis. RAM is also part of what helps to keep a Zoom meeting running smooth, Tiktok scrolling fast, or your Zelda game showing you all those worldbuilding details without lagging.
 
-Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it; is at or a ways below your level of familiarity with the coding language; and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
+### What even is "pretty" code?
 
-Head-turningly hot code is if you've additionally turned your stuff into functions or written a package out of it, but now we're getting off track.
+While "pretty" is often in the eyes of the beholder, in programming, I might describe pretty code as code that's quick to run, straightforward to replicate, and easy to understand for someone with passing familiarity with your coding language but who has no clue what you're trying to achieve with your script. 
+
+Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if or how you achieve it; is at or a ways below your level of familiarity with the coding language; and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
+
+Head-turningly hot code is if you've additionally turned your stuff into functions or written a package out of it and it's well documented so that someone can use your code for stuff you never even conceived of, but now we're getting off track and my palms are a little sweaty.
 
 We'd like to eventually iterate through all three sheets, but there's one little detail that differs across the sheets: there are different numbers of buffer rows with explanations and documentation that are above the actual data. 
 
