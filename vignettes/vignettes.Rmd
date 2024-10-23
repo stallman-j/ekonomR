@@ -24,12 +24,11 @@ This is the list of vignettes for the workflow package `ekonomR`.
 
 To view the code behind all this check out the [ekonomR repository](https://github.com/stallman-j/ekonomR).
 
-# Who's this package for?
-You may be wondering if `ekonomR` is really a useful package for you. The answer is... possibly?
+# How to use these vignettes
 
-If you're doing economics research and you don't already have a replicable workflow set up, or you don't happen to have coding templates set up, then probably.
+How you might want to go through these vignettes depends on your background coming in.
 
-If you're doing economics research and you have code that does the things I list here, email me and be a contributor! Write a vignette! Tell me so I can link to your stuff and don't have to write it myself!
+By the way, if you're doing economics research and you have code that does the things I list here, email me and be a contributor! Write a vignette! Tell me so I can link to your stuff and don't have to write it myself and can give you props for stuff you've already done!
 
 ## For new researchers
 If you're new to the research process **or** new to R (even if you're experienced in research), I recommend starting with the vignettes listed under **Getting Started**, and then following the vignettes that start with the word "Basic" in the order they're listed on this page, followed by the ones prefaced with "Intermediate".
