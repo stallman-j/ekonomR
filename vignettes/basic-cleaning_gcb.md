@@ -322,13 +322,15 @@ Here's the whole cleaning process in one go:
 
 View(gcb)
 ```
-It turns out that this process is almost exactly the same for the other sheets, so let's get ourselves a for loop to avoid having to type out the code three times.
+It turns out that this process is almost exactly the same for the other sheets, so let's get ourselves a for loop to avoid having to type out the code three times. This'll also allow us to discuss a few things coders tend to do, regardless of what programming language they're using.
 
 # A few things coders commonly do
 
-Coding in any language makes heavy use of drafting and then refining; if-else statements; and for loops. 
+Coding in any language makes heavy use of drafting and editing; if-else statements; and for loops. Think of any software update or any software security breach that you've heard of that gets patched. That's essentially coders revising their drafts to make your device run better (or worse, who knows, depends on their goals and where the money is), and revising their old drafts to fix issues that came up.
 
-If you're familiar with another coding language but not R, these concepts will all be familiar to you, and you just need to learn R's syntax. If coding is new to you, these might take a little time to get used to, and that's natural.
+If you're familiar with another coding language but not R, these concepts will all be familiar to you, and you just need to learn R's syntax. 
+
+If coding is new to you, these might take a little time to get used to, and that's natural.
 
 ## Write drafts
 
@@ -352,11 +354,13 @@ Just like for writing, the editing process is an important part of becoming a be
 
 There's one key difference, though, between an essay and a coding script. Unlike for writing, in coding it's vital to get your code to actually run! One important way you get good at getting your code to run is by spending time troubleshooting your code that doesn't run, so you can see how it works and what you tend to flub!
 
-If you're new to R or coding, prioritze getting your code to work. Don't worry about pretty, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have an ugly thing that gets what you want or almost what you want than pretty code that doesn't work.
+If you're new to R or coding, prioritze getting your code to work. Don't worry about pretty, and don't worry about computational intensivity unless your computer is bogging you down. Just get the darn thing to run first. Better to have something that gets what you want or almost what you want than perfectly indented code that doesn't work.
+
+Also, if you're getting bogged down, consider paying a little more for higher random access memory (RAM) when purchasing your next laptop or PC. Less than 16G of RAM starts to bite real fast these days. R uses RAM intensively when you're doing data manipulation and analysis. RAM is also part of what helps to keep a Zoom meeting running smooth, Tiktok scrolling fast, or your Zelda game showing you all those worldbuilding details without lagging.
 
 While "pretty" is often in the eyes of the beholder, in programming, pretty code is usually code that's quick to run, straightforward to replicate, and easy to understand for someone with passing familiarity with your coding language but who has no clue what you're trying to achieve with your script. 
 
-Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it, is at or a ways below your level of familiarity with the coding language, and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
+Gorgeous code is code that's additionally easy to adapt by someone who may know what you're trying to achieve but doesn't personally care if you achieve it; is at or a ways below your level of familiarity with the coding language; and only wants to modify your code to do something somewhat similar but had no role in writing this particular script themselves. 
 
 Head-turningly hot code is if you've additionally turned your stuff into functions or written a package out of it, but now we're getting off track.
 
@@ -367,7 +371,7 @@ Rather than abandon the for loop for the sake of this minor inconvenience, we ca
 
 ## Employ ifelse statements
 
-R has a few common ways of implementing an "if.. then (do some thing), otherwise.. then (do the other thing)." The one we'll use right now is the `ifelse` function, since there are only two options here.
+R has a few ways of implementing code of the flavor "if (some condition holds).. then (do some thing), otherwise (if some other condition holds).. then (do the other thing)." The one we'll use right now is the `ifelse` function.
 
 `ifelse()` takes in as its first argument something which must be `TRUE` or `FALSE`. You define what to do if the condition evaluates to `TRUE` or to `FALSE`.
 
@@ -377,7 +381,6 @@ Here's one way to do that.
 
 
 ``` r
-
 my_sheet <- "territorial"
 
 ifelse(my_sheet=="territorial",
@@ -391,7 +394,6 @@ skip_val
 Suppose now that we change the value of `my_sheet`:
 
 ``` r
-
 my_sheet <- "consumption"
 
 my_sheet
@@ -400,19 +402,17 @@ my_sheet
 What happens to the value of `skip_val`?
 
 ``` r
-
 skip_val
 #> [1] 11
 ```
 It stays as 11. That's because, with the exception of a few packages like `data.table`, R doesn't generally re-evaluate objects in place. 
 
-You set a if-else condition, the condition happened to be `TRUE`, so in the if-else statement, `skip_val` was set to 11. 
+We set an if-else condition, and the condition happened to be `TRUE`, so in the if-else statement, `skip_val` was set to 11. 
 
-Then you changed things so that the condition is `FALSE`, but you haven't re-evaluated the if-else statement. When we re-evaluate it, we'll get the right answer:
+Then we changed things so that the condition is `FALSE`, but we haven't re-evaluated the if-else statement. When we re-evaluate it, we'll get the right answer:
 
 
 ``` r
-
 ifelse(my_sheet=="territorial",
        yes = skip_val <- 11,
        no  = skip_val <- 8)
@@ -431,16 +431,15 @@ The basic syntax of a for loop in R is the following:
 
 
 ``` r
-
 for (running_variable in running_set){
   
-  perform some operation on [running_variable]
+  perform some operation on running_variable
 }
 ```
 
 I say `running_set` because it's common to loop over both vectors and lists. If you're not familiar with lists, that's okay, we'll deal with it another day.
 
-Let's see a simple example of a for loop using our `ifelse` condition. the running variable `i` will pass through each element of the vector `1:3` which is the same thing as `c(1,2,3)`, in that order.
+Let's see a simple example of a for loop using our `ifelse` condition. The running variable `i` will pass through each element of the vector `1:3`, which is the same thing as `c(1,2,3)`, in that order.
 
 If `i` is 1, then the `ifelse` condition will set `skip_val` to 11. If `i` is not 1 (in this case, if it's 2 or 3), the `ifelse` condition will set `skip_val` to 8.
 
@@ -463,7 +462,7 @@ Notice here that I had to use `print` to make the value of `skip_val` appear in 
 
 If we do the following, without `print()`, then the calculation would still run, but we just wouldn't see any output. 
 
-That's because for loops and functions by default perform their calculations without output to the console in R. They'll only send feedback to you the programmer if something goes wrong (in which case you get an error), if something seems sketchy (in which case you get a warning) or you explicitly tell the for loop or function to give you feedback (with a function like `print()` or `sprintf()`.)
+That's because for loops and functions by default perform their calculations without output to the console in R. They'll only send feedback to you the programmer if something goes wrong (in which case you get an error), if something seems sketchy (in which case you get a warning) or you explicitly tell the for loop or function to give you feedback (with a function like `print()` or a print function with fancy formatting like `sprintf()`.)
 
 
 ``` r
@@ -478,9 +477,9 @@ for (i in 1:3){
 }
 ```
 
-Omitting this output can be a little inconvenient if you're coding pretty interactively (i.e. switching between testing out commands in your console and then adding the command to your script). This is a *very* nice thing if you're running code with lots of lines and asking R to do lots of things, because otherwise your output console would just become a mess.
+Omitting this output can be a little inconvenient if you're coding interactively (i.e. switching between testing out commands in your console and then adding the command to your script). This is a *very* nice thing if you're running code with lots of lines and asking R to do lots of things, because otherwise your output console would just become a mess.
 
-# A plug for the apply functions in R
+# A plug for `apply()`
 
 R also has a lovely suite of operations called `apply()` functions that do the same basic thing as a for loop. 
 
@@ -567,7 +566,6 @@ rm(gcb)
 
 Now that we've got our temp files, let's merge all three together into a cleaned data frame.
 
-
 ## Vectorizing
 
 This gives us a chance to look at what I meant by "vectorizing" something in R. 
@@ -578,7 +576,6 @@ Here, because `short_name` is a vector of 3 elements, when we set `paths`, what 
 
 
 ``` r
-
   paths <- here::here("data","02_temp","GCB", paste0("gcb_emissions_",short_name,".rds"))
 
 paths
@@ -588,6 +585,10 @@ paths
 ```
 R's functions that can accept inputs of vectors are computationally super fast, so if your option is between something that accepts vectors and doing a for loop, the vector option's usually going to be faster. It's not necessarily intuitive to realize when you could use them, though.
 
+Just try to pay attention to when something accepted multiple inputs and immediately spit out multiple outputs, and you'll start to get a feel for how this vectorization thing works.
+
+## Left Joins
+
 When we do a merge, it's often helpful to start from the biggest data frame, and then merge on the smaller ones afterwards. In this case, territorial emissions has the most years.
 
 The `left_join()` from `dplyr` is a nice function to use when you're merging. The syntax is `left_join(main_data,data_to_merge)`, so that you're starting with the `main_data` on the left, and then adding on the merging data to the right, keeping all the data from the left dataset and throwing out the observations in the right that didn't match. 
@@ -596,7 +597,7 @@ This is also why I wanted to start with the biggest data frame: with a left join
 
 There are other more complex joins if `left_join()` isn't what you wanted. There's a [great explanation from dplyr](https://dplyr.tidyverse.org/reference/mutate-joins.html) if you find yourself needing something else. Here we could've also used an `outer_join()`, for instance.
 
-Dplyr allows you to state `by` which variables you're doing the join (i.e. what variables are you requiring to match). If you don't state it explicitly, dplyr will try to figure out what you were joining by, and then will kick back a warning of what it assumes you're doing. It's often easier to just state it if you know that multiple variables (here, the year, country name and iso3c code) should all be the same.
+Dplyr allows you to state `by` which variables you're doing the join (i.e. what variables are you requiring to match). If you don't state it explicitly, dplyr will try to figure out what you were joining by, and then will kick back a message of what it did to check that it's what you'd wanted. It's often easier to just state it if you know that multiple variables (here, the year, country name and iso3c code) should all be the same.
 
 If the names of the joining variables vary across datasets, you can still do the join, but you would have to specify that. For instance, if the variable was called `country` in the big dataset and `country_name` in the small one, you could write `by = c("iso3c" = "iso3c", "year" = "year", "country"="country_name")`
 
@@ -611,9 +612,9 @@ You can either use `by = dplyr::join_by(year, country_name, iso3c)` or what we d
                             by = c("iso3c","year","country_name")) 
 ```
 
-*Comprehension check*: What is the name of the first dataset that we're bringing in when we call `paths[1]`? Which dataset is `paths[2]` and `paths[3]` referring to?
+*Comprehension check*: What is the name of the first dataset that we're bringing in when we call `paths[1]`? Which datasets are `paths[2]` and `paths[3]` referring to?
 
-*Comprehension check*: Describe in words what the code chunk above is doing.
+*Comprehension check*: Describe in words an eighth grader could understand what the code chunk above is doing.
 
 Now let's save both an RDS and CSV of the cleaned data.
 
@@ -627,7 +628,7 @@ Now let's save both an RDS and CSV of the cleaned data.
                             format = "xlsx")
 ```
 
-Congratulations! This data is ready to analyze.
+Congratulations! This data is ready to analyze or get merged onwards.
 
 # Exercises
 
@@ -635,11 +636,13 @@ You will likely need to consult Google and/or ChatGPT to answer some of the foll
 
 1. Define emissions from consumption, emissions transfers, and territorial emissions in language that a grandparent or someone of a similar role in your life who doesn't already know these things would understand. You might want to look at the abstracts of the articles cited in the Excel sheet. (Encouraged, but not obligatory: Now go tell that person what you came up with and why we might care about these measures!)
 
-a. Which of these three would you expect to be measured with most and least error?
+- Which of these three would you expect to be measured with most and least error?
 
 2. What are the units of territorial emissions? How do you convert between tonnes of carbon and tonnes of carbon dioxide? What's the difference between using tonnes of carbon or carbon dioxide?
 
-3. Let's look at the `paste0` function. `paste0()` is named after `paste`, a function that concatenates strings together, but `paste` defaults to putting a separator like an empty space in between the elements while `paste0` omits the space. This is really nice for a programmer, but if you don't see why you should care, don't worry about it. 
+3. Let's look at the `paste0` function. 
+
+`paste0()` is named after `paste`, a function that concatenates strings together, but `paste` defaults to putting a separator like an empty space in between the elements while `paste0` omits the space. This is really nice for a programmer, but if you don't see why you should care, don't worry about it. May you be blessed with enough programming in your future that you one day see the light.
 
 
 ``` r
@@ -655,19 +658,19 @@ vec_g <- "?"
 out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
 ```
 
-  a. What's the result of putting `out_message` in your console and then hitting enter?
-  b. Make up another message that would make sense to a human with `vec_a` through `vec_g` and using `paste0`.
+- What's the result of putting `out_message` in your console and then hitting enter?
+- Make up another message that would make sense to a human with `vec_a` through `vec_g` and using `paste0`.
   
 4. Give a brief assessment of the questions listed in [questions about data](#data-questions) as pertains to this Global Carbon Budget data.
 
 5. What did the code `length(unique(gcb_temp4$iso3c))` give us? 
 
 - Using the function `nrow()` (**n**umber of **row**s), how many observations do we have in `gcb_clean`? 
-- How many of these observations are with non-missing values?
+- How many of these observations (for territorial emissions) are with non-missing values?
 
-5. Outside of a for loop, clean the second sheet, "Consumption Emissions", calling the data frame `gcb_consumption`.
+5. Outside of a for loop, clean the second sheet, "Consumption Emissions", calling the data frame `gcb_consumption`. What is the value of consumption emissions for Chile in 2000 and 2001?
 
-6. Figure out what the if-else statement below is doing, and then find a way to change this code so that when `i` is 33, we would see the output `"It's a mod!"` but that for `i` of 44 we would have `"It's not a mod!"
+6. Describe what the if-else statement below is doing. Find a way to modify this code so that when `i` is 33, we would see the output `"It's a mod!"` but that for `i` of 44 we would have `"It's not a mod!"
 
 
 ``` r
