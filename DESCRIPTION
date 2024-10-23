@@ -27,6 +27,7 @@ Imports:
     readr,
     readxl,
     sandwich,
+    skimr,
     stargazer,
     stats,
     tidyr,

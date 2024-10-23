@@ -19,6 +19,65 @@ This is the list of vignettes for the workflow package `ekonomR`.
 
 To view the code behind all this check out the [ekonomR repository](https://github.com/stallman-j/ekonomR).
 
+I'll list the vignettes first, and then in the following section will explain who I envision would use what vignettes in what way.
+
+# The vignette list
+
+## Getting started
+
+
+- [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/).
+- [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/)
+
+## Downloading
+
+- [Basic Data Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-data-downloading/)
+- To add: downloading data with `httr` and `rvest`
+- To add: downloading data through a python API with `reticulate`
+
+## Cleaning
+
+- [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/)
+- [Basic Cleaning: Penn World Tables](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_pwt/)
+- [Basic Cleaning: World Population Prospects](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_wpp/)
+- [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/)
+
+- To add: Extracting Rasters to Vectors
+
+## Analysis
+
+- [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/)
+- [Summary Statistics](https://stallman-j.github.io/ekonomR/vignettes/summary-statistics/)
+- [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation/)
+- [Event Study Regression](https://stallman-j.github.io/ekonomR/vignettes/event-study/)
+
+
+## Plotting
+
+
+- [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/)
+- [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/)
+
+
+## Spatial analysis
+
+- To add: Mapping
+- to add: getting climate rasters down to vectors and ready for analysis
+
+
+## Varia
+
+- To add: Rselenium shenanigans
+- To add: Proselytizing for Parallelization
+- To add: Avoiding engaging too deeply with Python by using `reticulate`
+- To add: Random Forest stuff
+- To add: ML stuff with Keras and TensorFlow which by the way only really use Python as their **interface**. 
+
+    - Actually it all goes down to C++ because C++ is fast and Python is not inherently fast, so doing this with R is going to **exactly the same place Python does so please stop saying R can't do neural nets please I'm begging these lies are hurtful.**
+    
+- To add: Cool propensity score matching stuff
+- To add: Cool network theory stuff
+
 # How to use these vignettes
 
 How you might want to go through these vignettes depends on your background coming in.
@@ -83,60 +142,3 @@ Any vignettes not titled with "Basic" or "Intermediate" are entirely standalone 
 In summary, as I end up needing to revisit my old workflows, I make them into vignettes here in `ekonomR` so they're easier for me to find next time, and I convert whatever I can from those workflows to functions.
 
 If you'd like to see something faster than "the next time this package maintainer needs this thing and gets around to it", [[shoot me an email](mailto:j.stallman@yale.edu)] and I'll bump it up the priority list.
-
-# The vignette list
-
-## Getting started
-
-
-- [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/).
-- [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/)
-
-## Downloading
-
-- [Basic Data Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-data-downloading/)
-- To add: downloading data with `httr` and `rvest`
-- To add: downloading data through a python API with `reticulate`
-
-## Cleaning
-
-- [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/)
-- [Basic Cleaning: Penn World Tables](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_pwt/)
-- [Basic Cleaning: World Population Prospects](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_wpp/)
-- [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/)
-
-- To add: Extracting Rasters to Vectors
-
-## Analysis
-
-- [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/)
-- [Summary Statistics](https://stallman-j.github.io/ekonomR/vignettes/summary-statistics/)
-- [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation/)
-- [Event Study Regression](https://stallman-j.github.io/ekonomR/vignettes/event-study/)
-
-
-## Plotting
-
-
-- [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/)
-- [Intermediate Plotting](https://stallman-j.github.io/ekonomR/vignettes/intermediate-plotting/)
-
-
-## Spatial analysis
-
-- To add: Mapping
-- to add: getting climate rasters down to vectors and ready for analysis
-
-
-## Varia
-
-- To add: Rselenium shenanigans
-- To add: Proselytizing for Parallelization
-- To add: Avoiding engaging too deeply with Python by using `reticulate`
-- To add: Random Forest stuff
-- To add: ML stuff with Keras and TensorFlow which by the way only really use Python as their **interface**. 
-
-    - Actually it all goes down to C++ because C++ is fast and Python is not inherently fast, so doing this with R is going to **exactly the same place Python does so please stop saying R can't do neural nets please I'm begging these lies are hurtful.**
-    
-- To add: Cool propensity score matching stuff
-- To add: Cool network theory stuff

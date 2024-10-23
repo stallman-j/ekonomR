@@ -13,6 +13,23 @@ date: "2024-09-23"
 
 
 
+# Installation
+
+You can install the development version of `ekonomR` from GitHub:
+
+
+``` r
+install.packages("remotes")
+remotes::install_github("stallman-j/ekonomR")
+```
+
+It's updated regularly, with large changes in between updates. A simple way to get the updates is to go into your `Packages` tab in RStudio, uncheck the `ekonomR` package, and then in your R console re-run the installation:
+
+
+``` r
+remotes::install_github("stallman-j/ekonomR")
+```
+
 # Start a New Project
 
 If you're just starting your project, you can use `ekonomR` to create your project folders so that you have a tidy structure that can scale up if you take this project into the future and that stays tidy while you and your collaborators are working and adding files to it.
@@ -202,8 +219,8 @@ If you're using a citation manager like Zotero with a software like LaTex/Overle
 
 If you have important articles to save, put them in `articles`. If you're working with Zotero, though, you can access these at any time through Zotero instead.
 
-# Vignettes
+# Next Steps
 
 To see the list of vignettes, check out the [Vignettes Page](https://stallman-j.github.io/ekonomR/vignettes/vignettes/). 
 
-A good place to get a feel for how `ekonomR` tries to get you thinking about the research process is [Simple Plotting with a Review of R Coding Basics](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/).
+To see how `ekonomR` thinks about project setup and workflow, check out the vignette [Getting started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/).
