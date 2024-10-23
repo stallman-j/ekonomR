@@ -48,7 +48,7 @@ Because it's already been two or three years that I've downloaded the latest ver
 
 To do that, let's just make a variable that holds the current year, and then make copious use of `paste0` to get all the character strings ready to go.
 
-``` {r, eval = FALSE}
+``` {r}
 current_year <- 2024
 
 my_filename     <- paste0("WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
@@ -73,7 +73,7 @@ In order to get this read in well, then, we need to tell `read_xlsx()` what "typ
 
 That suggests that we can write the following. Note the `rep()` function (for **rep**licate). This just repeats a particular thing (in this case, the word `"text"` or the word `"numeric"` for a certain number of `times` (3 and then, I counted it out, 56 times, respectively)) 
 
-``` {r, eval = FALSE}
+``` {r}
 my_col_types <- c("numeric",rep("text",times = 3),"numeric","text","text","numeric","text",
                                rep("numeric",times = 56))
 ```
