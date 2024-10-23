@@ -614,6 +614,12 @@ If the names of the joining variables vary across datasets, you can still do the
 
 You can either use `by = dplyr::join_by(year, country_name, iso3c)` or what we did with writing the variable names as characters.
 
+My point with telling you all these options is that there are often many ways to get to the same result. You'll land on particular practices that you like, but it's nice to recognize that other people will have different habits that get to the same place. Usually, you can still tell what they're doing if their code is reasonably well written.
+
+Sometimes, one or the other of these practices are "better" for readability or speed, but sometimes it's just down to habit.
+
+Incidentally, among regular cat-skinners, [there are only so many ways that are efficient](https://www.vice.com/en/article/how-many-ways-are-there-to-skin-a-cat/).
+
 
 ``` r
   gcb_clean <- readRDS(file = paths[1]) %>% 
