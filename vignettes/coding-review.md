@@ -69,11 +69,7 @@ If you're given the option, update packages from CRAN, the package repository fo
 
 
 ``` r
-data(gcb_clean)
-```
-
-```
-## Warning in data(gcb_clean): data set 'gcb_clean' not found
+data(gcb)
 ```
 
 
@@ -88,12 +84,8 @@ In your RStudio console, input the following to first make the
 
 
 ``` r
-View(gcb_clean)
-names(gcb_clean)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+View(gcb)
+names(gcb)
 ```
 
 # Coding Review
@@ -115,12 +107,8 @@ Let's create a data frame that just contains the data for China.
 
 
 ``` r
-data_country <- gcb_clean %>% 
+data_country <- gcb %>% 
                 dplyr::filter(iso3c == chosen_country)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 
@@ -130,36 +118,28 @@ If you're not familiar with the data cleaning and organizing packages included i
 
 You take the stuff that came before the pipe, and funnel it through the pipe into the next function that comes below.
 
-In coding terms, what it says is, take the thing that came before (here `gcb_clean`) and insert it into the first argument of the function that comes next (here, `filter`). 
+In coding terms, what it says is, take the thing that came before (here `gcb`) and insert it into the first argument of the function that comes next (here, `filter`). 
 
 We could also have written the following: 
 
 
 
 ``` r
-data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+data_country <- dplyr::filter(gcb, iso3c == chosen_country)
 ```
 
 R is pretty clever about recognizing when the coding commands you set have come to a conclusion. For instance, you could also split the *arguments* of the function `filter` across two lines if you wanted to make this code more readable.
 
 
 ``` r
-data_country <- dplyr::filter(gcb_clean, 
+data_country <- dplyr::filter(gcb, 
                               iso3c == chosen_country)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 
 *Comprehension check:* How many rows exist in the data frame `data_country`?
 
-The `filter` function says, "for the data frame `gcb_clean`, keep only the rows such that `iso3c` is equal to `chosen_country`.
+The `filter` function says, "for the data frame `gcb`, keep only the rows such that `iso3c` is equal to `chosen_country`.
 
 Writing `dplyr::filter` just tells R that the function `filter` comes with the `dplyr` package. There are several packages that have a `filter` function, so we specify *which* package's `filter` function we want here. 
 
@@ -204,12 +184,8 @@ Since we want to plot territorial emissions, we can add a condition to the filte
 
 
 ``` r
-data_country <- gcb_clean %>% 
+data_country <- gcb %>% 
                 dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing. Note that each time we run a code block like this, we also *replace* the old `data_country` with our new one.
@@ -223,11 +199,11 @@ A **logical** or **Boolean** statement is one which is either `TRUE` or `FALSE` 
 
 The `!` is a negation, so `!is.na()` now returns `TRUE` if the element is *not* missing. This means in our context that we keep the rows for which the territorial emissions *are* present.
 
-It might be a little opaque what vector `!is.na()` is examining, but it's the column vector called `gcb_ghg_territorial` in the data frame `gcb_clean`.
+It might be a little opaque what vector `!is.na()` is examining, but it's the column vector called `gcb_ghg_territorial` in the data frame `gcb`.
 
-We could write that vector as `gcb_clean$gcb_ghg_territorial`. 
+We could write that vector as `gcb$gcb_ghg_territorial`. 
 
-Using `dplyr::filter` masks that a little bit because we already stated up at the beginning that we're looking inside the data frame `gcb_clean`.
+Using `dplyr::filter` masks that a little bit because we already stated up at the beginning that we're looking inside the data frame `gcb`.
 
 ## Multiple Pipes
 
@@ -236,20 +212,16 @@ Let's see the `%>%` in action with a little more complexity. Since we're just pl
 
 
 ``` r
-data_country <- gcb_clean %>% 
+data_country <- gcb %>% 
                 dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
                 dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 **Note:** if you're using the pipe, you have to make sure that it goes at the end of the line, not the beginning. If you put the pipe at the beginning of a line, R reads the prior line as the end of the command. If you forget that you have a pipe at the end of the line, you're leaving R hanging and it's waiting for another operation: that's like sending water through a funnel without a bucket at the end to catch the water going through.
 
 This code block is saying the following:
 
-1. First take the data frame `gcb_clean` (that's what goes before the first pipe). 
+1. First take the data frame `gcb` (that's what goes before the first pipe). 
 2. Then, take only the rows where the `iso3c` is equal to `CHN` and also the `gcb_ghg_territorial` is not missing (the second line, before the second pipe)
 3. Once you've done that, keep only the columns `year`, `country_name`, `iso3c`, and `gcb_ghg_territorial`. 
 
@@ -277,4 +249,4 @@ out_message <- paste0(vec_e,vec_b,vec_a,vec_c,vec_d,vec_f)
   a. What's the result of putting `out_message` in your console?
   b. Make up another legible message with `vec_a` through `vec_g` and using `paste0`.
   
-2. Create a new dataframe called `data_country_2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`. You might for instance change the order of `filter` and `select` or split `filter` into two lines. You can check your work with `identical(data_country,data_country_2)`
+2. Create a new dataframe called `data_country_2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb`. You might for instance change the order of `filter` and `select` or split `filter` into two lines. You can check your work with `identical(data_country,data_country_2)`

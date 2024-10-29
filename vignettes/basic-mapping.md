@@ -41,6 +41,10 @@ We're going to set the path that we want to download the GADM data into.
 
 
 
+``` r
+data_raw_path <- here::here("data","01_raw")
+# data_raw_path <- file.path("E:","data","01_raw")
+```
 
 Clicking `Ecuador` in the dropdown on the [GADM site](https://gadm.org/download_country.html), we can see that the path to the country-level geopackage is `https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg`.
 
@@ -48,14 +52,19 @@ Clicking `Ecuador` in the dropdown on the [GADM site](https://gadm.org/download_
 Let's also set the following:
 
 1. The country by its ISO3c code (a standard abbreviation for countries)
-2. The level of administrative unit that we're interested in (the cantons or *municipios* are administrative level 2)
-3. The filename that we want as a pasting of the country and the typical format that GADM uses to write the filenames
-4. The complete input path
-5. The column name that we want to sample from to create labels (which here is going to be called `NAME_2`). 
-6. The number of localities to sample
+2. The way we want the name of that country written
+3. A color to shade the localities we choose on the map
+4. The level of administrative unit that we're interested in (the cantons are administrative level 2)
+5. The filename that we want, created by concatenating the country and the typical format that GADM uses to write the filenames
+6. The complete input path
+7. The column name that we want to sample from to create labels (which here is going to be called `NAME_2`). 
+8. The number of localities to sample
 
-This way this code is very easy to adapt if we want, say, a different administrative level or different country. If we want to randomly choose a province from Kenya, for instance, we could change `country <- "KEN"`, `level <- 1` and `name_var` to be `NAME_1`. `locality_color` provides the HEX color codes for a medium Yale blue, which we'll use for our mapping.
+This way this code is very easy to adapt.
 
+If we want to randomly choose a province from Kenya, for instance, we could change `country <- "KEN"`, `level <- 1` and `name_var` to be `NAME_1`. 
+
+`locality_color` provides the HEX color codes for a medium Yale blue, which we'll use for mapping.
 
 
 ``` r
@@ -193,10 +202,10 @@ We're also including `theme_minimal_map()` as the wraparound theme for a simple 
 ``` r
   ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
            plotname = map,
-           filename = paste0(country_name,"_map-of_",locality_name,".png"),
+           filename = paste0(country_name, "_with_",num_localities,"_at-level_",level,"_randomly-chosen.png"),
            width = 9,
            height = 5,
            dpi  = 300)
 ```
 
-![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_map-of_Buena Fé.png?raw=true)
+![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_with_1_at-level_2_randomly-chosen.png?raw=true)
