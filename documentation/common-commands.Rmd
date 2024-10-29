@@ -31,6 +31,40 @@ git commit -m "commit message here"
 git push -u origin main
 
 ```
+
+# Adding the URL of a figure
+
+```{r, results = "hide", echo = FALSE, eval = FALSE}
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
+  ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
+       caption = c("GDP from GCB (2023)"),
+       x ="" ,
+       y = "Emissions (units here)"
+  ) + 
+  ggplot2::theme_minimal()
+
+
+```
+
+```{r, echo = FALSE, results = "hide"}
+ggsave_plot(output_folder = here::here("output","02_figures"),
+         plotname = my_plot,
+         filename = paste0("gcb_territorial_emissions_",chosen_country_name,"_plot-03.png"),
+         width = 8,
+         height = 6,
+         dpi  = 400)
+```
+
+```{r, echo = FALSE}
+url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true"
+knitr::include_graphics(url)
+
+```
+
 # Knit Commands
 
 ## README

@@ -1,5 +1,5 @@
 ---
-title: "Randomization"
+title: "Basic Mapping"
 layout: single
 toc: true
 toc_label: "Contents"
@@ -8,7 +8,7 @@ author_profile: true
 date: "2024-10-22"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{randomization}
+  %\VignetteIndexEntry{basic-mapping}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -161,7 +161,7 @@ I usually make my maps by setting the first line as `ggplot2::ggplot()` which op
 
 We're also including `theme_minimal_map()` as the wraparound theme for a simple mapping theme that generally looks nice.
 
-```{r}
+```{r, results = "hide"}
   map <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = country_gpgk,
           color = "gray70",
@@ -180,9 +180,9 @@ We're also including `theme_minimal_map()` as the wraparound theme for a simple 
          caption = c("Data from GADM (2024)")) +
     ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
                                axis_title_y = ggplot2::element_blank())
-map
 
 ```
+
 
 ```{r}
   ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
@@ -191,4 +191,10 @@ map
            width = 9,
            height = 5,
            dpi  = 300)
+```
+
+```{r, echo = FALSE}
+url <- "https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_map-of_Buena Fé.png?raw=true"
+knitr::include_graphics(url)
+
 ```

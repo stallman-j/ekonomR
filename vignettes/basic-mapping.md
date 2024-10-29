@@ -1,5 +1,5 @@
 ---
-title: "Randomization"
+title: "Basic Mapping"
 layout: single
 toc: true
 toc_label: "Contents"
@@ -8,7 +8,7 @@ author_profile: true
 date: "2024-10-22"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{randomization}
+  %\VignetteIndexEntry{basic-mapping}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -79,7 +79,7 @@ If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `dow
                           data_raw = data_raw_path,
                           url = "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg",
                           filename = filename)
-#> Creating data subfolder C:/Projects/ekonomR/data/01_raw/GADM .
+#> The data subfolder C:/Projects/ekonomR/data/01_raw/GADM already exists.
 ```
 
 Let's examine the layers that this geopackage contains. We see there are 4 layers; the admin level 0 is a country-level shapefile. There are 24 provinces in Ecuador, which is administrative level 1. There are 221 cantons or municipalities officially, but we see that there are 223 listed for us. The level 3 is called *parroquia*, which are like counties.
@@ -186,10 +186,8 @@ We're also including `theme_minimal_map()` as the wraparound theme for a simple 
          caption = c("Data from GADM (2024)")) +
     ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
                                axis_title_y = ggplot2::element_blank())
-map
 ```
 
-![plot of chunk unnamed-chunk-81](figure/unnamed-chunk-81-1.png)
 
 
 ``` r
@@ -200,3 +198,5 @@ map
            height = 5,
            dpi  = 300)
 ```
+
+![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_map-of_Buena Fé.png?raw=true)
