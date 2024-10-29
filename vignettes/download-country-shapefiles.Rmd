@@ -1,0 +1,218 @@
+---
+title: "Randomization"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-10-22"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{randomization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
+
+
+
+# Agenda
+
+We're going to download all the global administrative areas (GADM) which you can learn about [here](https://uwaterloo.ca/library/geospatial/collections/us-and-world-geospatial-data-resources/global-administrative-areas-gadm). 
+
+See the vignette [Basic Mapping](https://stallman-j.github.io/ekonomR/vignettes/basic-mapping/) for an example that generates plots with this data.
+
+
+# Prerequisites
+
+First, bring `ekonomR` into your working library.
+
+``` {r}
+library(ekonomR)
+```
+
+
+```{r}
+
+  # https://gadm.org/download_world.html
+  
+  # https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip
+  # https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gdb.zip
+  # https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip
+  
+  # the geopackage is the standard format
+  
+  filenames <- c("gadm_410-gpkg","gadm_410-gdb","gadm_410-levels")
+  
+  sub_urls <- paste0(filenames,".zip")
+  
+  ekonomR::download_multiple_files(data_subfolder = "GADM",
+                          data_raw = data_external_raw,
+                          base_url = "https://geodata.ucdavis.edu/gadm/gadm4.1",
+                          sub_urls = sub_urls,
+                          filename = filenames,
+                          zip_file = TRUE,
+                          pass_protected = FALSE)`
+```
+
+  # lots and lots of data, takes quite some time to run
+  
+
+
+Let's go ahead and download the data. `ekonomR` has a `download_data()` function that allows for pretty easy downloading and decompressing of common formats. 
+
+Because it's already been two or three years that I've downloaded the latest versions of this data, I know that the URL link only changes in the year. This year it's `2024`. Last year it was `2023`. Next year it would be nice to just change `2024` to `2025` and then change nothing else in this script and see if it runs just as well next year.
+
+To do that, let's just make a variable that holds the current year, and then make copious use of `paste0` to get all the character strings ready to go.
+
+``` {r}
+current_year <- 2024
+
+my_filename     <- paste0("WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  url <- paste0("https://population.un.org/wpp/Download/Files/1_Indicator%20(Standard)/EXCEL_FILES/1_General/WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  ekonomR::download_data(data_subfolder = "UN-WPP",
+                          data_raw       = here::here("data","01_raw"),
+                          url            = url,
+                          filename       = my_filename)
+```
+
+You can look in the file path given by `here::here("data","01_raw","WPP")` to see where the excel file has gone. In it, there's a sheet called "Estimates" that contains what we're looking for.
+
+This reading in is a bit messy. `read_xlsx()` allows you to skip the 16 lines of header at the top, and that's fine, but it's breaking down a bit at trying to define the ISO3C code. We wouldn't care if it mis-specified the Notes column, but the first rows provide estimates for the world, which does not have an ISO3C code as it's not actually a country.
+
+So when `read_xlsx()` is trying to figure out what *type* of column the column called "ISO3 Alpha-code" is, it sees all these empty values and thinks that it's dealing with a logical vector or who knows what, rather than a character vector.
+
+There are a bunch of columns, though, and most of them I don't really care what type they are for this particular analysis, although a scan of the columns starting at "Year" suggests that everything to the right is all numeric. 
+
+In order to get this read in well, then, we need to tell `read_xlsx()` what "types" of columns it should expect. The column "Index" is numeric, the next three are all characters so "text", the "Location code" looks numeric, then the ISO3 and ISO2 codes are text, SDMX code is numeric, the "Type" is text, and then everything else can go through as numeric.
+
+That suggests that we can write the following. Note the `rep()` function (for **rep**licate). This just repeats a particular thing (in this case, the word `"text"` or the word `"numeric"` for a certain number of `times` (3 and then, I counted it out, 56 times, respectively)) 
+
+``` {r}
+my_col_types <- c("numeric",rep("text",times = 3),"numeric","text","text","numeric","text",
+                               rep("numeric",times = 56))
+```
+
+Then we can input this into the `read_xlsx()` function. People will differ.. if you only use this vector `my_col_types` once, it might make sense to just write `col_types = c("numeric",rep("text",times = 3),"numeric","text","text","numeric","text", rep("numeric",times = 56))` directly in the function `read_xlsx()`. 
+
+I assigned it to a variable separately so that if you're not sure what it's doing, you can put `my_col_types` into the console and see for yourself.
+
+```{r, results = FALSE, message = FALSE, warning = FALSE}
+wpp <- readxl::read_xlsx(path = here::here("data","01_raw","UN-WPP",my_filename),
+                 sheet = "Estimates",
+                 col_names = TRUE,
+                 col_types = my_col_types,
+                 skip = 16
+                 )
+```
+
+The astute reader might notice that here, I just wrote `skip = 16` whereas in the case of the Global Carbon Budget, I defined a variable called `skip_val` and let it alternate across sheets.
+
+If you wanted to do an analysis including the World Population Division's *estimates* of population trends into the future, it would make sense to also do something similar here. However, since we're only bringing in the estimates of population and not the projections, we're only doing one sheet, and there's also a cost to defining too *many* variables up front if you're never going to change them and they only show up once, I think it's fine.
+
+Programmers will vary, though. If I end up bringing in the other sheet, I would revise this code. Sometimes it's not worth it to have *everything* be soft-coded, because that takes time to think through and type up as well.
+
+Now let's look at the columns we have. There are lots of variables here about fertility and population. 
+
+We did something similar to this while cleaning the Global Carbon Budget, so instead of going through all the steps of the pipes let's just do this in one go.
+
+Here are the steps that the below pipes perform:
+
+1. Rename the variables we want to keep so that they're easy to call
+2. Filter out any observations where the ISO3C code is missing, leaving us with just the identified countries and not world or regional aggregates
+3. Select only the columns we're interested in
+
+``` {r, results = FALSE}
+
+names(wpp)
+
+wpp <- wpp %>%
+            dplyr::rename(iso3c = "ISO3 Alpha-code",
+                           year = "Year",
+                        pop_000 = "Total Population, as of 1 January (thousands)",
+                       le_birth = "Life Expectancy at Birth, both sexes (years)",
+                       le_15    = "Life Expectancy at Age 15, both sexes (years)",
+                       le_65    = "Life Expectancy at Age 65, both sexes (years)",
+                       tfr      = "Total Fertility Rate (live births per woman)") %>%
+            dplyr::filter(!is.na(iso3c)) %>% # this takes out all regions and just leaves countries
+            dplyr::select(iso3c, year, pop_000,le_birth,le_15,le_65,tfr)
+```
+
+That's all we need. The data are already in long format. The UN recognizes that a lot of people use their data for more advanced analysis, so they have it stored in a way that doesn't require much cleaning. Thanks, UN!
+
+Now we just need to save the cleaned data, and we're good to go.
+```{r}
+wpp <- ekonomR::save_rds_csv(data = wpp,
+                          output_path   = here::here("data","03_clean","WPP"),
+                          output_filename = "wpp",
+                          remove = FALSE,
+                          csv_vars = names(wpp),
+                          format   = "both")
+
+```
+
+# Just the code, please
+
+```{r, eval = FALSE}
+library(ekonomR)
+
+# Download the data
+current_year <- 2024
+
+my_filename     <- paste0("WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+url <- paste0("https://population.un.org/wpp/Download/Files/1_Indicator%20(Standard)/EXCEL_FILES/1_General/WPP",current_year,"_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT.xlsx")
+
+  ekonomR::download_data(data_subfolder = "UN-WPP",
+                          data_raw       = here::here("data","01_raw"),
+                          url            = url,
+                          filename       = my_filename)
+  
+# Bring the Excel data into R
+  
+my_col_types <- c("numeric",rep("text",times = 3),"numeric","text","text","numeric","text",
+                               rep("numeric",times = 56))
+
+wpp <- readxl::read_xlsx(path = here::here("data","01_raw","UN-WPP",my_filename),
+                 sheet = "Estimates",
+                 col_names = TRUE,
+                 col_types = my_col_types,
+                 skip = 16
+                 )
+
+# Clean the data by filtering rows and selecting columns
+names(wpp)
+
+wpp <- wpp %>%
+            dplyr::rename(iso3c = "ISO3 Alpha-code",
+                           year = "Year",
+                        pop_000 = "Total Population, as of 1 January (thousands)",
+                       le_birth = "Life Expectancy at Birth, both sexes (years)",
+                       le_15    = "Life Expectancy at Age 15, both sexes (years)",
+                       le_65    = "Life Expectancy at Age 65, both sexes (years)",
+                       tfr      = "Total Fertility Rate (live births per woman)") %>%
+            dplyr::filter(!is.na(iso3c)) %>% # this takes out all regions and just leaves countries
+            dplyr::select(iso3c, year, pop_000,le_birth,le_15,le_65,tfr)
+
+# Save the cleaned data
+
+wpp <- ekonomR::save_rds_csv(data = wpp,
+                          output_path   = here::here("data","03_clean","WPP"),
+                          output_filename = "wpp",
+                          remove = FALSE,
+                          csv_vars = names(wpp),
+                          format   = "both")
+
+```

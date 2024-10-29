@@ -119,13 +119,13 @@ stargazer::stargazer(data_to_summarize,
 
 Once I've gone back and forth between selecting columns to summarize, adjusting the variable label length to make the table look good, and choosing the summary statistics and digits to show, then we can generate a table that goes to a fancier output formal like LaTeX or HTML.
 
-In your final writeup, you should have footnotes under this type of table citing the data sources and writing out in longer form the units of each of your measures.
+In any final writeup, you'll want to have notes under this type of table citing the data sources and writing out in longer form the units of each of your measures.
 
 **To add:** Summary statistics that look nice in Microsoft Word. 
 
-If it looks all right, we can now output externally to LaTex with the following commands. You'll have to change the `out_path` if you're not using a different folder structure than what `ekonomR` assumes, since `stargazer` won't create the output folder automatically for you.
+If it looks all right, we can now output externally to LaTex with the following commands. You'll have to change the `out_path` if you're using a different folder structure than what `ekonomR` assumes, since `stargazer` won't create the output folder automatically for you.
 
-**To add:** Put the template for the surrounding environment of LaTex in the ECON 412 Overleaf Templates and the Latekonomer Overleaf.
+**To add:** Put the template for the surrounding environment of LaTex in the ECON 412 Overleaf Templates and the Latekonomer Overleaf and this RMarkdown file.
 
 
 ``` r
@@ -148,7 +148,7 @@ stargazer::stargazer(data_to_summarize,
 )
 #> 
 #> % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
-#> % Date and time: Wed, Oct 23, 2024 - 8:18:29 AM
+#> % Date and time: Wed, Oct 23, 2024 - 8:23:13 AM
 #> \begin{tabular}{@{\extracolsep{5pt}}lcccccc} 
 #> \\[-1.8ex]\hline \\[-1.8ex] 
 #> Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Max} & \multicolumn{1}{c}{St. Dev.} \\ 

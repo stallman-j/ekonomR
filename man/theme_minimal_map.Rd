@@ -8,10 +8,10 @@ theme_minimal_map(
   legend_text_size = 8,
   legend_title_size = 10,
   legend_position = c(0.2, 0.3),
-  axis_title_x = element_text(color = "black"),
-  axis_title_y = element_text(color = "black"),
-  axis_text_x = element_text(color = "darkgrey"),
-  axis_text_y = element_text(color = "darkgrey"),
+  axis_title_x = ggplot2::element_text(color = "black"),
+  axis_title_y = ggplot2::element_text(color = "black"),
+  axis_text_x = ggplot2::element_text(color = "darkgrey"),
+  axis_text_y = ggplot2::element_text(color = "darkgrey"),
   ...
 )
 }

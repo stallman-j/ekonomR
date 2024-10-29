@@ -1,0 +1,194 @@
+---
+title: "Randomization"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-10-22"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{randomization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
+
+# Agenda
+
+We're going to download a geopackage file for Ecuador from the global administrative areas (GADM) which you can learn about [here](https://uwaterloo.ca/library/geospatial/collections/us-and-world-geospatial-data-resources/global-administrative-areas-gadm). 
+
+We'll then randomly pick a municipality from Ecuador, and plot Ecuador with that municipality shaded.
+
+
+# Prerequisites
+
+First, bring `ekonomR` into your working library.
+
+``` {r}
+library(ekonomR)
+```
+
+# Set Parameters
+
+We're going to set the path that we want to download the GADM data into. 
+
+```{r, eval = FALSE, results = FALSE, echo = FALSE}
+data_raw_path <- file.path("E:","data","01_raw")
+
+```
+
+```{r, eval = TRUE, results = FALSE, echo = FALSE}
+data_raw_path <- here::here("data","01_raw")
+# data_raw_path <- file.path("E:","data","01_raw")
+
+```
+
+Clicking `Ecuador` in the dropdown on the [GADM site](https://gadm.org/download_country.html), we can see that the path to the country-level geopackage is `https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg`.
+
+
+Let's also set the following:
+
+1. The country by its ISO3c code (a standard abbreviation for countries)
+2. The level of administrative unit that we're interested in (the cantons or *municipios* are administrative level 2)
+3. The filename that we want as a pasting of the country and the typical format that GADM uses to write the filenames
+4. The complete input path
+5. The column name that we want to sample from to create labels (which here is going to be called `NAME_2`). 
+6. The number of localities to sample
+
+This way this code is very easy to adapt if we want, say, a different administrative level or different country. If we want to randomly choose a province from Kenya, for instance, we could change `country <- "KEN"`, `level <- 1` and `name_var` to be `NAME_1`. `locality_color` provides the HEX color codes for a medium Yale blue, which we'll use for our mapping.
+
+
+```{r}
+  country        <- "ECU"
+  country_name   <- "Ecuador"
+  locality_color <- "#286dc0"
+  level          <- 2
+  filename       <- paste0("gadm41_",country,".gpkg")
+  in_path        <- file.path(data_raw_path,"GADM",filename)
+  name_var       <- "NAME_2"
+  num_localities <- 1
+```
+
+# Download data
+
+If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `download_data()` function from `ekonomR` will create the folder path for you. 
+
+```{r}
+  ekonomR::download_data(data_subfolder = "GADM",
+                          data_raw = data_raw_path,
+                          url = "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg",
+                          filename = filename)
+```
+
+Let's examine the layers that this geopackage contains. We see there are 4 layers; the admin level 0 is a country-level shapefile. There are 24 provinces in Ecuador, which is administrative level 1. There are 221 cantons or municipalities officially, but we see that there are 223 listed for us. The level 3 is called *parroquia*, which are like counties.
+
+The Coordinate Reference System (CRS) is [WGS 84](https://gisgeography.com/wgs84-world-geodetic-system/), which is likely the most common CRS available for global mapping. It's very important to understand what CRS you're using at any time you're doing mapping=. If you get this wrong your maps and any spatial analysis you do will not make sense.
+
+```{r}
+sf::st_layers(in_path)
+```
+Let's read in the layer at administrative level 2. The final line tries to make the geometries valid if possible.
+
+```{r}
+country_gpgk <- sf::st_read(dsn = in_path,
+                            layer = paste0("ADM_ADM_",level)) %>%
+                sf::st_make_valid()
+```
+`MULTIPOLYGON` as a geometry type suggests that some municipalities contain more than one polygon, for instance if they're islands. If every row (canton) contained a single closed polygon,  `Geometry type` would be `POLYGON`.
+
+# Randomly choose a locality
+
+I'd like to randomly select one of these municipalities. 
+
+When we're doing a randomization, we need to set a *seed*: this is what makes the randomization replicable. If there's no seed set, you can't recover the randomization you did. 
+
+**Always set a randomization seed (if you care about the results)**.
+
+I repeat: **always set a seed when you randomize (if you even possibly want to replicate the process).**
+
+Third time's a charm. **Always, always, well, for any randomization you hold dear, set a seed.**
+
+```{r}
+set.seed(seed = 16)
+```
+
+R's `sample()` function takes a sample of size `size`, with or without replacement (defaulting to without), according to some probability vector. See [Brad Duthie's discussion of randomization methods in R](https://bradduthie.github.io/blog/randomisation-methods-in-r/) if you want to get fancy.
+
+We're going to ask R to sample from a vector that runs from 1 up to the number of rows in the `country_gpgk` frame, and then set `my_name` as the row that equals `my_choice` (9), and the column that equals `name_var`. To get this to output as a string, we drop the geometry feature, and then force the output into a character.
+
+If 
+
+```{r}
+sampled_indices <- sample(1:nrow(country_gpgk), size = num_localities )
+
+locality_name   <- country_gpgk[sampled_indices,name_var] %>% sf::st_drop_geometry() %>% as.character()
+
+my_localities   <- country_gpgk[sampled_indices,]
+```
+
+# Map the locality
+
+Now let's put this on a map!
+
+## Get centroid coordinates
+
+I'd also like to put the name over the locality, but there's an issue: the GADM data don't include lat-long coordinates that I can use to center them. 
+
+Borrowing from [the ggplot2 spatial tutorial at r-spatial](https://r-spatial.org/r/2018/10/25/ggplot2-sf-2.html), we see we can make a little data frame of the localities we want.
+
+Let's get the centroids of the polygons, extract the coordinates, and make a new little spatial data frame with just the polygon(s) we want to label that starts with the data in `my_localities` and then adds columns for the coordinates of the centroids of the polygons.
+
+```{r}
+my_localities <- cbind(my_localities,
+                       sf::st_coordinates(sf::st_centroid(my_localities)))
+```
+## Actually do the map
+
+I usually make my maps by setting the first line as `ggplot2::ggplot()` which opens up a blank figure. You could also write your data in there, but if you're pulling from several data frames it's usually easier to set the data in each row.
+
+`geom_sf()` adds a `sf` (spatial) layer to the map. We're going to make the first layer be all the provinces with a medium grey outline and very light gray interior. The second layer's going to be the locality (or localities, if you changed `num_localities` to be greater than 1) of our choosing. The third layer is going to overlay the text of the localities we sampled on the map at the centroid of that locality.
+
+We're also including `theme_minimal_map()` as the wraparound theme for a simple mapping theme that generally looks nice.
+
+```{r}
+  map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = country_gpgk,
+          color = "gray70",
+          fill = "gray99",
+          alpha = 0.5,
+          linewidth = .1) +
+    ggplot2::geom_sf(data = my_localities,
+            alpha = .3,
+            fill  = locality_color,
+            color = locality_color,
+            linewidth = .4) +
+    ggplot2::geom_text(data = my_localities,
+                       ggplot2::aes(X,Y, label = NAME_2),
+                       size = 5) +
+    ggplot2::labs(title = paste0(country_name," with ",num_localities," canton randomly chosen"),
+         caption = c("Data from GADM (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+map
+
+```
+
+```{r}
+  ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
+           plotname = map,
+           filename = paste0(country_name,"_map-of_",locality_name,".png"),
+           width = 9,
+           height = 5,
+           dpi  = 300)
+```

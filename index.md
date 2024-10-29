@@ -67,6 +67,6 @@ If you're not interested in LaTex (which is what **LaTekonomer** uses) but are i
 
 This README, for instance, is composed with Markdown. 
 
-If you're interested in Markdown and R, check out [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/). The upfront costs of Markdown are much lower than LaTex, and the ubiquity and readability of the Markdown style has made it a compelling alternative to LaTex in many situations.
+If you're interested in Markdown and R, check out [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) and [Brad Duthie's R Markdown Notes](https://stirlingcodingclub.github.io/Manuscripts_in_Rmarkdown/Rmarkdown_notes.html). The upfront costs of Markdown are much lower than LaTex, and the ubiquity and readability of the Markdown style has made it a compelling alternative to LaTex in many situations. 
 
 View [the ekonomR GitHub Pages website](https://stallman-j.github.io/ekonomR) or the ekonomR repository directly on [GitHub](https://github.com/stallman-j/ekonomR)

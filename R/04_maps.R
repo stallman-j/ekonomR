@@ -8,48 +8,47 @@
 #' @param axis_text_x defaults to making the axis text a dark grey. use element_blank() to remove
 #' @param axis_text_y defaults to making axis text dark gray. use element_blank() to remove
 #' @param ... additional options for ggplot2::theme()
-#'
 #' @return wrapper around ggplot2::theme_minimal() and theme()
 #' @export
 theme_minimal_map <- function(legend_text_size = 8,
                       legend_title_size = 10,
                       legend_position = c(0.2,0.3), # first term is LR, second up-down. "none" for no legend
-                      axis_title_x = element_text(color = "black"), # element_blank() # to remove
-                      axis_title_y = element_text(color = "black"), # element_blank() # to remove
-                      axis_text_x  = element_text(color = "darkgrey"), # element_blank() # to remove
-                      axis_text_y  = element_text(color = "darkgrey"), # element_blank() # to remove
+                      axis_title_x = ggplot2::element_text(color = "black"), # element_blank() # to remove
+                      axis_title_y = ggplot2::element_text(color = "black"), # element_blank() # to remove
+                      axis_text_x  = ggplot2::element_text(color = "darkgrey"), # element_blank() # to remove
+                      axis_text_y  = ggplot2::element_text(color = "darkgrey"), # element_blank() # to remove
                       ...) {
   ggplot2::theme_minimal() +
     ggplot2::theme(
-      text = element_text(color = "#22211d"),
-      axis.line = element_blank(),
-      axis.text = element_blank(),
+      text = ggplot2::element_text(color = "#22211d"),
+      axis.line = ggplot2::element_blank(),
+      axis.text = ggplot2::element_blank(),
       axis.text.x = axis_text_x,
       axis.text.y = axis_text_y,
-      axis.ticks = element_blank(),
-      axis.ticks.length = unit(0, "pt"), #length of tick marks
+      axis.ticks = ggplot2::element_blank(),
+      axis.ticks.length = ggplot2::unit(0, "pt"), #length of tick marks
       #axis.ticks.x = element_blank(),
       axis.title.x = axis_title_x,
       axis.title.y = axis_title_y,
 
       # Background Panels
       # panel.grid.minor = element_line(color = "#ebebe5", linewidth = 0.2),
-      panel.grid.major = element_blank(), #element_line(color = "#ebebe5", linewidth = 0.2),
-      panel.grid.minor = element_blank(),
-      plot.background = element_rect(fill = "white", color = NA),
-      panel.background = element_rect(fill = "white", color = NA),
-      panel.border = element_blank(),
+      panel.grid.major = ggplot2::element_blank(), #element_line(color = "#ebebe5", linewidth = 0.2),
+      panel.grid.minor = ggplot2::element_blank(),
+      plot.background = ggplot2::element_rect(fill = "white", color = NA),
+      panel.background = ggplot2::element_rect(fill = "white", color = NA),
+      panel.border = ggplot2::element_blank(),
       #plot.caption = element_blank(),
                                   #element_text(face = "italic", linewidth = 6,
                                   #lineheight = 0.4),
       # Legends
-      legend.background = element_rect(fill = "white", color = "#ebebe5", linewidth = 0.3),
+      legend.background = ggplot2::element_rect(fill = "white", color = "#ebebe5", linewidth = 0.3),
       legend.position = legend_position, # put inside the plot
-      legend.key.width = unit(.8, 'cm'), # legend box width,
-      legend.key.height = unit(.8,'cm'), # legend box height
-      legend.text = element_text(linewidth = legend_text_size),
+      legend.key.width = ggplot2::unit(.8, 'cm'), # legend box width,
+      legend.key.height = ggplot2::unit(.8,'cm'), # legend box height
+      legend.text = ggplot2::element_text(size = legend_text_size),
       #legend.title = element_text(linewidth = legend_title_size),
-      plot.margin = unit(c(0,0,0,0), "mm"), # T R BL
+      plot.margin = ggplot2::unit(c(0,0,0,0), "mm"), # T R BL
       ...
     )
   # if the points on the legend are way too big
@@ -117,7 +116,7 @@ ggsave_map <- function(output_folder = NULL,
   if (!dir.exists(output_folder)) dir.create(output_folder, recursive = TRUE) # recursive lets you create any needed subdirectories
 
 
-  ggsave(filename = file.path(output_folder,filename),
+  ggplot2::ggsave(filename = file.path(output_folder,filename),
          plot = plotname,
          device = png,
          width = width,

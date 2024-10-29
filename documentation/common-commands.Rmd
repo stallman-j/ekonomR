@@ -87,4 +87,9 @@ knitr::knit(input = here::here("vignettes","basic-regression.Rmd"), output = her
 
 ```
 
+### Mapping vignettes
 
+``` {r}
+knitr::knit(input = here::here("vignettes","basic-mapping.Rmd"), output = here::here("vignettes","basic-mapping.md"))
+
+```
