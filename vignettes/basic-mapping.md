@@ -44,6 +44,7 @@ We're going to set the path that we want to download the GADM data into.
 ``` r
 data_raw_path <- here::here("data","01_raw")
 # data_raw_path <- file.path("E:","data","01_raw")
+
 ```
 
 Clicking `Ecuador` in the dropdown on the [GADM site](https://gadm.org/download_country.html), we can see that the path to the country-level geopackage is `https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg`.
@@ -88,7 +89,7 @@ If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `dow
                           data_raw = data_raw_path,
                           url = "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg",
                           filename = filename)
-#> The data subfolder C:/Projects/ekonomR/data/01_raw/GADM already exists.
+#> The data subfolder E:/data/01_raw/GADM already exists.
 ```
 
 Let's examine the layers that this geopackage contains. We see there are 4 layers; the admin level 0 is a country-level shapefile. There are 24 provinces in Ecuador, which is administrative level 1. There are 221 cantons or municipalities officially, but we see that there are 223 listed for us. The level 3 is called *parroquia*, which are like counties.
@@ -108,7 +109,7 @@ Let's read in the layer at administrative level 2. The final line tries to make 
 country_gpgk <- sf::st_read(dsn = in_path,
                             layer = paste0("ADM_ADM_",level)) %>%
                 sf::st_make_valid()
-#> Reading layer `ADM_ADM_2' from data source `C:\Projects\ekonomR\data\01_raw\GADM\gadm41_ECU.gpkg' using driver `GPKG'
+#> Reading layer `ADM_ADM_2' from data source `E:\data\01_raw\GADM\gadm41_ECU.gpkg' using driver `GPKG'
 #> Simple feature collection with 223 features and 13 fields
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
@@ -202,10 +203,95 @@ We're also including `theme_minimal_map()` as the wraparound theme for a simple 
 ``` r
   ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
            plotname = map,
-           filename = paste0(country_name, "_with_",num_localities,"_at-level_",level,"_randomly-chosen.png"),
+           filename = paste0(country_name, "_with_",num_localities,"_at-gadm-level_",level,"_randomly-chosen.png"),
            width = 9,
            height = 5,
            dpi  = 300)
 ```
 
-![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_with_1_at-level_2_randomly-chosen.png?raw=true)
+![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_with_1_at-gadm-level_2_randomly-chosen.png?raw=true)
+
+# Exercises
+
+1. Replicate the above 
+
+# Just the code, please
+
+
+``` r
+library(ekonomR)
+
+# Set the path to download the data on your local machine
+data_raw_path <- here::here("data","01_raw")
+
+# Set Parameters
+  country        <- "ECU"
+  country_name   <- "Ecuador"
+  locality_color <- "#286dc0"
+  level          <- 2
+  filename       <- paste0("gadm41_",country,".gpkg")
+  in_path        <- file.path(data_raw_path,"GADM",filename)
+  name_var       <- "NAME_2"
+  num_localities <- 1
+  
+# Download Data
+  ekonomR::download_data(data_subfolder = "GADM",
+                          data_raw = data_raw_path,
+                          url = "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg",
+                          filename = filename)
+
+# examine layers
+  sf::st_layers(in_path)
+
+# Read in spatial data
+country_gpgk <- sf::st_read(dsn = in_path,
+                            layer = paste0("ADM_ADM_",level)) %>%
+                sf::st_make_valid()
+
+# Randomly sample
+
+# set randomization seed
+set.seed(seed = 16)
+
+# sample localities
+
+sampled_indices <- sample(1:nrow(country_gpgk), size = num_localities )
+
+locality_name   <- country_gpgk[sampled_indices,name_var] %>% sf::st_drop_geometry() %>% as.character()
+
+my_localities   <- country_gpgk[sampled_indices,]
+
+# get polygon centroids for labeling
+my_localities <- cbind(my_localities,
+                       sf::st_coordinates(sf::st_centroid(my_localities)))
+
+# generate map
+  map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = country_gpgk,
+          color = "gray70",
+          fill = "gray99",
+          alpha = 0.5,
+          linewidth = .1) +
+    ggplot2::geom_sf(data = my_localities,
+            alpha = .3,
+            fill  = locality_color,
+            color = locality_color,
+            linewidth = .4) +
+    ggplot2::geom_text(data = my_localities,
+                       ggplot2::aes(X,Y, label = NAME_2),
+                       size = 5) +
+    ggplot2::labs(title = paste0(country_name," with ",num_localities," canton randomly chosen"),
+         caption = c("Data from GADM (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+  
+map
+
+# save map
+  ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
+           plotname = map,
+           filename = paste0(country_name, "_with_",num_localities,"_at-gadm-level_",level,"_randomly-chosen.png"),
+           width = 9,
+           height = 5,
+           dpi  = 300)
+```
