@@ -117,5 +117,13 @@ paste0("Groups with a number under or equal to ",ceiling(num_groups/2), " will p
 
 knitr::kable(groups_with_order, format="html")
 
+groups_with_rep <- groups_with_order %>%
+                   dplyr::group_by(Group)%>%
+                   dplyr::filter(dplyr::row_number() == 1) %>%
+                   dplyr::rename(Representative = Name)
+
+knitr::kable(groups_with_rep, format="html")
+
+
 
 ```

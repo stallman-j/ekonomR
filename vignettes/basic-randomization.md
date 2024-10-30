@@ -456,3 +456,112 @@ knitr::kable(groups_with_order, format="html")
 </table>
 
 
+
+``` r
+
+groups_with_rep <- groups_with_order %>%
+                   dplyr::group_by(Group)%>%
+                   dplyr::filter(dplyr::row_number() == 1) %>%
+                   dplyr::rename(Representative = Name)
+
+knitr::kable(groups_with_rep, format="html")
+```
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Representative </th>
+   <th style="text-align:left;"> Group </th>
+   <th style="text-align:right;"> Order </th>
+   <th style="text-align:left;"> Date </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Felipe Muller Schwartz </td>
+   <td style="text-align:left;"> Team 8 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Michael Yao </td>
+   <td style="text-align:left;"> Lone Wolf 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Luke Renforth </td>
+   <td style="text-align:left;"> Team 4 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ben Mann </td>
+   <td style="text-align:left;"> Team 7 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yasin Aly </td>
+   <td style="text-align:left;"> Team 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Elisabetta Formenton </td>
+   <td style="text-align:left;"> Team 3 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Emmery Korfmacher </td>
+   <td style="text-align:left;"> Team 5 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:left;"> Monday Nov 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Caroline Solomon </td>
+   <td style="text-align:left;"> Team 9 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Kirill Putin </td>
+   <td style="text-align:left;"> Lone Wolf 3 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Shou Bernier </td>
+   <td style="text-align:left;"> Team 1 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jason He </td>
+   <td style="text-align:left;"> Lone Wolf 2 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ethan Olim </td>
+   <td style="text-align:left;"> Lone Wolf 5 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Eleri Phillips </td>
+   <td style="text-align:left;"> Lone Wolf 4 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sandor Pelle </td>
+   <td style="text-align:left;"> Team 6 </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:left;"> Wednesday Nov 6 </td>
+  </tr>
+</tbody>
+</table>
+
+
