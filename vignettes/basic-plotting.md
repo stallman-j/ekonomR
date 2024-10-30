@@ -79,8 +79,7 @@ Let's tell R that we want to use the cleaned GCB data.
 
 
 ``` r
-data(gcb_clean)
-#> Warning in data(gcb_clean): data set 'gcb_clean' not found
+data(gcb)
 ```
 
 
@@ -94,20 +93,28 @@ In your RStudio console, input the following:
 
 
 ``` r
-View(gcb_clean)
-#> Error in View : object 'gcb_clean' not found
-names(gcb_clean)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+View(gcb)
+names(gcb)
+#> [1] "year"                "country_name"        "gcb_ghg_territorial" "iso3c"              
+#> [5] "gcb_ghg_consumption" "gcb_ghg_transfers"
 ```
 
-*Comprehension check:* What is `names(gcb_clean)` giving us for output? What class is this object? (Hint: `class(names(gcb_clean))`.) What is the class of `gcb_clean`?
+*Comprehension check:* What is `names(gcb)` giving us for output? What class is this object? (Hint: `class(names(gcb))`.) What is the class of `gcb`?
 
 Let's see what years we have available (Note: Not all years will be available for all measures)
 
 
 ``` r
-unique(gcb_clean$year)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+unique(gcb$year)
+#>   [1] 1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860 1861 1862 1863 1864 1865 1866 1867 1868 1869 1870
+#>  [22] 1871 1872 1873 1874 1875 1876 1877 1878 1879 1880 1881 1882 1883 1884 1885 1886 1887 1888 1889 1890 1891
+#>  [43] 1892 1893 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 1910 1911 1912
+#>  [64] 1913 1914 1915 1916 1917 1918 1919 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929 1930 1931 1932 1933
+#>  [85] 1934 1935 1936 1937 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948 1949 1950 1951 1952 1953 1954
+#> [106] 1955 1956 1957 1958 1959 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975
+#> [127] 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996
+#> [148] 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017
+#> [169] 2018 2019 2020 2021 2022
 ```
 
 
@@ -132,9 +139,8 @@ Let's also create a data frame that just contains the data for China.
 
 
 ``` r
-data_country <- gcb_clean %>% 
+data_country <- gcb %>% 
                 dplyr::filter(iso3c == chosen_country)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 
@@ -144,14 +150,13 @@ If you're not familiar with the data cleaning and organizing packages included i
 
 You take the stuff that came before the pipe, and funnel it through the pipe into the next function that comes below.
 
-In coding terms, what it says is, take the thing that came before (here `gcb_clean`) and insert it into the first argument of the function that comes next (here, `filter`). 
+In coding terms, what it says is, take the thing that came before (here `gcb`) and insert it into the first argument of the function that comes next (here, `filter`). 
 
 We could also have written the following: 
 
 
 ``` r
-data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+data_country <- dplyr::filter(gcb, iso3c == chosen_country)
 ```
 
 *Comprehension check:* What has the `filter` function done? How many rows exist in the data frame `data_country`?
@@ -197,8 +202,7 @@ Since we want to plot territorial emissions, we can add a condition to the filte
 
 
 ``` r
-data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
+data_country <- gcb %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 ```
 
 We've added a condition that has to be true: we are now removing the rows for which `gcb_ghg_territorial` is missing. We've also *replaced* the old `data_country` with our new one.
@@ -212,11 +216,11 @@ A **logical** or **Boolean** statement is one which is either `TRUE` or `FALSE` 
 
 The `!` is a negation, so `!is.na()` now returns `TRUE` if the element is *not* missing. This means in our context that we keep the rows for which the territorial emissions *are* present.
 
-It might be a little opaque what vector `!is.na()` is examining, but it's the column vector called `gcb_ghg_territorial` in the data frame `gcb_clean`.
+It might be a little opaque what vector `!is.na()` is examining, but it's the column vector called `gcb_ghg_territorial` in the data frame `gcb`.
 
-We could write that vector as `gcb_clean$gcb_ghg_territorial`. 
+We could write that vector as `gcb$gcb_ghg_territorial`. 
 
-Using `dplyr::filter` masks that a little bit because we already stated up at the beginning that we're looking inside the data frame `gcb_clean`.
+Using `dplyr::filter` masks that a little bit because we already stated up at the beginning that we're looking inside the data frame `gcb`.
 
 ## Multiple Pipes
 
@@ -224,17 +228,16 @@ Let's see the `%>%` in action with a little more complexity. Since we're just pl
 
 
 ``` r
-data_country <- gcb_clean %>% 
+data_country <- gcb %>% 
                 dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
                 dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
-#> Error in eval(expr, envir, enclos): object 'gcb_clean' not found
 ```
 
 **Note:** if you're using the pipe, you have to make sure that it goes at the end of the line, not the beginning.
 
 This code block is saying the following:
 
-1. First take the data frame `gcb_clean` (that's what goes before the first pipe). 
+1. First take the data frame `gcb` (that's what goes before the first pipe). 
 2. Then, take only the rows where the `iso3c` is equal to `CHN` and also the `gcb_ghg_territorial` is not missing (the second line, before the second pipe)
 3. Once you've done that, keep only the columns `year`, `country_name`, `iso3c`, and `gcb_ghg_territorial`. 
 
@@ -242,7 +245,7 @@ There are many ways we could write a script in R to get to this result. Just wit
 
 In this case the order of what goes into the pipes won't matter. But in other cases, with more complicated cleaning, the order that you do these operations may well make a difference.
 
-*Comprehension check:* Create a new dataframe called `data_country2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb_clean`.
+*Comprehension check:* Create a new dataframe called `data_country2` that's exactly the same as `data_country` but uses a slightly different way of writing the command to get there from `gcb`.
 
 # Plotting with ggplot2
 
@@ -261,12 +264,8 @@ my_plot <- ggplot2::ggplot() +
                       ggplot2::aes(x = year, 
                                    y =gcb_ghg_territorial)
                       )
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
-```
-#> Error in eval(expr, envir, enclos): object 'my_plot' not found
-```
 
 ![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-01.png?raw=true)
 You should input `my_plot` into the console of RStudio to see if the plot shows up in your plotting pane like you would expect. Try doing this after each instance that we change something in our plots.
@@ -290,12 +289,8 @@ my_plot <- ggplot2::ggplot() +
        x ="" ,
        y = "Emissions (units here)"
   )
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
-```
-#> Error in eval(expr, envir, enclos): object 'my_plot' not found
-```
 
 ![plot of chunk unnamed-chunk-18](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-02.png?raw=true)
 
@@ -315,13 +310,10 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)"
   ) + 
   ggplot2::theme_minimal()
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
+
 ```
 
 
-```
-#> Error in eval(expr, envir, enclos): object 'my_plot' not found
-```
 
 ![plot of chunk unnamed-chunk-21](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true)
 Still not loving the background.
@@ -345,12 +337,8 @@ my_plot <- ggplot2::ggplot() +
        y = "Emissions (units here)"
   ) + 
   ekonomR::theme_minimal_plot()
-#> Error in eval(expr, envir, enclos): object 'data_country' not found
 ```
 
-```
-#> Error in eval(expr, envir, enclos): object 'my_plot' not found
-```
 
 ![plot of chunk unnamed-chunk-24](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-04.png?raw=true)
 
@@ -368,7 +356,6 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
          width = 8,
          height = 6,
          dpi  = 400)
-#> Error in eval(expr, envir, enclos): object 'my_plot' not found
 ```
 
 You can see this final plot by typing `my_plot` in the console, but you should check and make sure that the PNG lives where you can find it.
@@ -424,26 +411,26 @@ remotes::install_github("stallman-j/ekonomR")
 library(ekonomR)
 
 # Data Exploration
-data(gcb_clean)
-View(gcb_clean)
+data(gcb)
+View(gcb)
 
-names(gcb_clean)
+names(gcb)
 
-unique(gcb_clean$year)
+unique(gcb$year)
 
 # Coding Review
 chosen_country <- c("CHN")
 
 chosen_country_name <- "China"
 
-data_country <- gcb_clean %>% 
+data_country <- gcb %>% 
                 dplyr::filter(iso3c == chosen_country)
                 
-#data_country <- dplyr::filter(gcb_clean, iso3c == chosen_country)
+#data_country <- dplyr::filter(gcb, iso3c == chosen_country)
 
-data_country <- gcb_clean %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
+data_country <- gcb %>% dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial))
 
-#data_country <- gcb_clean %>% 
+#data_country <- gcb %>% 
 #                dplyr::filter(iso3c == chosen_country & !is.na(gcb_ghg_territorial)) %>%
 #                dplyr::select(year,country_name,iso3c,gcb_ghg_territorial)
 
