@@ -137,9 +137,7 @@ set.seed(seed = 16)
 
 R's `sample()` function takes a sample of size `size`, with or without replacement (defaulting to without), according to some probability vector. See [Brad Duthie's discussion of randomization methods in R](https://bradduthie.github.io/blog/randomisation-methods-in-r/) if you want to get fancy.
 
-We're going to ask R to sample from a vector that runs from 1 up to the number of rows in the `country_gpgk` frame, and then set `my_name` as the row that equals `my_choice` (9), and the column that equals `name_var`. To get this to output as a string, we drop the geometry feature, and then force the output into a character.
-
-If 
+We're going to ask R to sample from a vector that runs from 1 up to the number of rows in the `country_gpgk` frame, and then set `locality_name` as the row that equals `sampled_indices`, and the column that equals `name_var`. To get this to output as a string, we drop the geometry feature, and then force the output into a character.
 
 
 ``` r
@@ -168,13 +166,19 @@ my_localities <- cbind(my_localities,
                        sf::st_coordinates(sf::st_centroid(my_localities)))
 #> Warning: st_centroid assumes attributes are constant over geometries
 ```
-## Actually do the map
+## Plot with R package ggplot2
 
-I usually make my maps by setting the first line as `ggplot2::ggplot()` which opens up a blank figure. You could also write your data in there, but if you're pulling from several data frames it's usually easier to set the data in each row.
+I usually make my maps by setting the first line as `ggplot2::ggplot()` which opens up a blank figure. You could also write your data in there, but if you're pulling from several different data frames it's usually easier to set the data in each row.
 
-`geom_sf()` adds a `sf` (spatial) layer to the map. We're going to make the first layer be all the provinces with a medium grey outline and very light gray interior. The second layer's going to be the locality (or localities, if you changed `num_localities` to be greater than 1) of our choosing. The third layer is going to overlay the text of the localities we sampled on the map at the centroid of that locality.
+`geom_sf()` adds a `sf` (spatial) layer to the map. 
 
-We're also including `theme_minimal_map()` as the wraparound theme for a simple mapping theme that generally looks nice.
+We're going to make the first layer be all the polygons of the level of interest (here municipalities) with a medium grey outline and very light gray interior. 
+
+The second layer will be the locality (or localities, if you changed `num_localities` to be greater than 1) of our choosing. 
+
+The third layer is going to overlay the text of the localities we sampled on the map at the centroid of that locality.
+
+We're also including `theme_minimal_map()` from `ekonomR` as the wraparound theme for a simple mapping theme that generally looks nice and could go into a slide deck.
 
 
 ``` r
@@ -197,7 +201,7 @@ We're also including `theme_minimal_map()` as the wraparound theme for a simple 
     ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
                                axis_title_y = ggplot2::element_blank())
 ```
-
+Now we save the function with `ggsave_map` which provides some nice defaults to the `ggsave()` function from `ggplot2`.
 
 
 ``` r
