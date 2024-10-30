@@ -5,7 +5,7 @@ toc: true
 toc_label: "Contents"
 toc_sticky: true
 author_profile: true
-date: "2024-10-22"
+date: "2024-10-29"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{basic-mapping}
