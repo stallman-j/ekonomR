@@ -137,7 +137,11 @@ set.seed(seed = 16)
 
 R's `sample()` function takes a sample of size `size`, with or without replacement (defaulting to without), according to some probability vector. See [Brad Duthie's discussion of randomization methods in R](https://bradduthie.github.io/blog/randomisation-methods-in-r/) if you want to get fancy.
 
-We're going to ask R to sample from a vector that runs from 1 up to the number of rows in the `country_gpgk` frame, and then set `locality_name` as the row that equals `sampled_indices`, and the column that equals `name_var`. To get this to output as a string, we drop the geometry feature, and then force the output into a character.
+We're going to ask R to sample from a vector that runs from 1 up to the number of rows in the `country_gpgk` frame, and then set `locality_name` as the row that equals `sampled_indices`, and the column that equals `name_var`. That's the place where the actual name of the place is stored.
+
+To get this to output as a string, we drop the `geometry` feature (which is where the spatial attributes are stored), and then force the output into a character.
+
+Finally, we'll create the spatial data frame `my_localities` which is just the `country_gpgk`, restricted to the cantons which have a row number which was sampled by our randomization. 
 
 
 ``` r
@@ -150,15 +154,17 @@ my_localities   <- country_gpgk[sampled_indices,]
 
 # Map the locality
 
-Now let's put this on a map!
+Let's put it all together in a map!
 
 ## Get centroid coordinates
 
-I'd also like to put the name over the locality, but there's an issue: the GADM data don't include lat-long coordinates that I can use to center them. 
+Labels on maps are really nice.
 
-Borrowing from [the ggplot2 spatial tutorial at r-spatial](https://r-spatial.org/r/2018/10/25/ggplot2-sf-2.html), we see we can make a little data frame of the localities we want.
+We might also like to put the name over the locality, but there's an issue: the GADM data don't include lat-long coordinates that we can use to center labels. 
 
-Let's get the centroids of the polygons, extract the coordinates, and make a new little spatial data frame with just the polygon(s) we want to label that starts with the data in `my_localities` and then adds columns for the coordinates of the centroids of the polygons.
+We can make our own workaround: let's get the centroids of the polygons, extract the coordinates, and add to our `my_localities` spatial data frame a pair of columns for the coordinates of the centroids of those polygons.
+
+If you want to see more in this vein, check out [the ggplot2 spatial tutorial at r-spatial](https://r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)
 
 
 ``` r
@@ -166,7 +172,9 @@ my_localities <- cbind(my_localities,
                        sf::st_coordinates(sf::st_centroid(my_localities)))
 #> Warning: st_centroid assumes attributes are constant over geometries
 ```
-## Plot with R package ggplot2
+Congratulations, by the way! You've just performed a spatial analysis! Wasn't that suspiciously easy?
+
+## Make the map with ggplot2
 
 I usually make my maps by setting the first line as `ggplot2::ggplot()` which opens up a blank figure. You could also write your data in there, but if you're pulling from several different data frames it's usually easier to set the data in each row.
 
@@ -217,7 +225,7 @@ Now we save the function with `ggsave_map` which provides some nice defaults to 
 
 # Exercise
 
-1. For a different country, different administrative level, and different number of localities, generate a plot with the administrative polygons shaded in with the color `"#228B22".
+1. For a different country, different administrative level, and different number of localities, generate a plot with the administrative polygons shaded in with the color `"#228B22"`.
 
 # Just the code, please
 
