@@ -123,7 +123,11 @@ knitr::knit(input = here::here("vignettes","basic-regression.Rmd"), output = her
 
 ### Mapping vignettes
 
-``` {r, results = FALSE}
+``` {r, results = FALSE, eval = FALSE}
 knitr::knit(input = here::here("vignettes","basic-mapping.Rmd"), output = here::here("vignettes","basic-mapping.md"))
+
+```
+``` {r}
+knitr::knit(input = here::here("vignettes","basic-randomization.Rmd"), output = here::here("vignettes","basic-randomization.md"))
 
 ```
