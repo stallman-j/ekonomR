@@ -67,6 +67,7 @@ I'll list the vignettes first, and then in the following section will explain wh
 
 ## Varia
 
+- [Basic Randomization: Presentaiton Ordering ](https://stallman-j.github.io/ekonomR/vignettes/basic-randomization/)
 - To add: Rselenium shenanigans
 - To add: Proselytizing for Parallelization
 - To add: Avoiding engaging too deeply with Python by using `reticulate`
