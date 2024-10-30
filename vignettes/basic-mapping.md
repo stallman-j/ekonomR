@@ -211,9 +211,9 @@ We're also including `theme_minimal_map()` as the wraparound theme for a simple 
 
 ![plot of chunk unnamed-chunk-15](https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/Ecuador_with_1_at-gadm-level_2_randomly-chosen.png?raw=true)
 
-# Exercises
+# Exercise
 
-1. Replicate the above 
+1. For a different country, different administrative level, and different number of localities, generate a plot with the administrative polygons shaded in with the color `"#228B22".
 
 # Just the code, please
 

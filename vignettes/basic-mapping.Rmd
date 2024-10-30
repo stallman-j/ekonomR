@@ -205,9 +205,9 @@ knitr::include_graphics(url)
 
 ```
 
-# Exercises
+# Exercise
 
-1. Replicate the above 
+1. For a different country, different administrative level, and different number of localities, generate a plot with the administrative polygons shaded in with the color `"#228B22".
 
 # Just the code, please
 
