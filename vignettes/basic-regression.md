@@ -68,10 +68,10 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation~\@ref(eq:eq_1}) describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\ref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
+Equation~\eqref{eq:eq_1} describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\eqref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
 
 $$
-(\#eq:eq_1)
+\label{eq:eq_1}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
 $$
 
@@ -80,15 +80,17 @@ $$
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
 $$
 
-$$\label{eq:eq_3}
+$$
+\label{eq:eq_3}
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
 $$
 
-$$\label{eq:eq_4}
+$$
+\label{eq:eq_4}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}
 $$
 
-Equation~\ref{eq:eq_4} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $t$. 
+Equation~\eqref{eq:eq_4} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $t$. 
 
 ## Interpreting logarithms in equations {#logs-interpretation}
 
@@ -137,7 +139,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x000002657a7a8950>
+#> <environment: 0x00000265e273a648>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -222,16 +224,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000026576807028>
+#> <environment: 0x00000265e13ee2a0>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x0000026576610aa0>
+#> <environment: 0x00000265e1393058>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265763de840>
+#> <environment: 0x00000265e13328e8>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x0000026572db9290>
+#> <environment: 0x00000265e12b0c40>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -274,7 +276,7 @@ modelsummary::modelsummary(models)
 +-------------+----------+----------+----------+----------+
 |             | (1)      | (2)      | (3)      | (4)      |
 +=============+==========+==========+==========+==========+
-| (Intercept) | -0.347   | -15.544  | -3.447   | 0.151    |
+| (Intercept) | −0.347   | −15.544  | −3.447   | 0.151    |
 +-------------+----------+----------+----------+----------+
 |             | (0.109)  | (0.905)  | (0.166)  | (0.210)  |
 +-------------+----------+----------+----------+----------+
@@ -300,11 +302,11 @@ modelsummary::modelsummary(models)
 +-------------+----------+----------+----------+----------+
 | R2 Adj.     | 0.579    | 0.681    | 0.588    | 0.613    |
 +-------------+----------+----------+----------+----------+
-| AIC         | 259.2    | -105.2   | -78.0    | 252.1    |
+| AIC         | 259.2    | −105.2   | −78.0    | 252.1    |
 +-------------+----------+----------+----------+----------+
-| BIC         | 267.2    | -97.2    | -70.0    | 265.5    |
+| BIC         | 267.2    | −97.2    | −70.0    | 265.5    |
 +-------------+----------+----------+----------+----------+
-| Log.Lik.    | -126.606 | -158.077 | -171.696 | -121.070 |
+| Log.Lik.    | −126.606 | −158.077 | −171.696 | −121.070 |
 +-------------+----------+----------+----------+----------+
 | F           | 146.647  | 226.863  | 152.278  |          |
 +-------------+----------+----------+----------+----------+
@@ -336,7 +338,7 @@ summary(lm_1)
 #> F-statistic: 146.6 on 1 and 105 DF,  p-value: < 2.2e-16
 ```
 
-The coefficient on `gdp_pc` is $1.96\times 10^{-4}$. It's just scaled too small!
+The coefficient on `gdp_pc` is $$1.96\times 10^{-4}$$. It's just scaled too small!
 
 Fortunately, in the [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/) vignette we created a variable called `gdp000_pc`, or GDP per capita in *thousands* of chained 2017 PPP USD.
 
@@ -408,54 +410,15 @@ models <- list(
   "(1)" = lm_1,
   "(2)" = lm_2,
   "(3)" = lm_3,
-  "(4)" = lm_4
-)
-
-# generate output
-
-modelsummary::modelsummary(models)
+  "(4)" = lm_4)
 ```
 
 
-+----------------+----------+----------+----------+----------+
-|                | (1)      | (2)      | (3)      | (4)      |
-+================+==========+==========+==========+==========+
-| (Intercept)    | -0.347   | 0.151    | -15.544  | -3.447   |
-+----------------+----------+----------+----------+----------+
-|                | (0.109)  | (0.210)  | (0.905)  | (0.166)  |
-+----------------+----------+----------+----------+----------+
-| gdp000_pc      | 0.196    | -0.076   |          | 0.304    |
-+----------------+----------+----------+----------+----------+
-|                | (0.016)  | (0.116)  |          | (0.025)  |
-+----------------+----------+----------+----------+----------+
-| I(gdp000_pc^2) |          | 0.025    |          |          |
-+----------------+----------+----------+----------+----------+
-|                |          | (0.014)  |          |          |
-+----------------+----------+----------+----------+----------+
-| I(gdp000_pc^3) |          | -0.001   |          |          |
-+----------------+----------+----------+----------+----------+
-|                |          | (0.000)  |          |          |
-+----------------+----------+----------+----------+----------+
-| log(gdp_pc)    |          |          | 1.685    |          |
-+----------------+----------+----------+----------+----------+
-|                |          |          | (0.112)  |          |
-+----------------+----------+----------+----------+----------+
-| Num.Obs.       | 107      | 107      | 107      | 107      |
-+----------------+----------+----------+----------+----------+
-| R2             | 0.583    | 0.624    | 0.684    | 0.592    |
-+----------------+----------+----------+----------+----------+
-| R2 Adj.        | 0.579    | 0.613    | 0.681    | 0.588    |
-+----------------+----------+----------+----------+----------+
-| AIC            | 259.2    | 252.1    | -105.2   | -78.0    |
-+----------------+----------+----------+----------+----------+
-| BIC            | 267.2    | 265.5    | -97.2    | -70.0    |
-+----------------+----------+----------+----------+----------+
-| Log.Lik.       | -126.606 | -121.070 | -158.077 | -171.696 |
-+----------------+----------+----------+----------+----------+
-| F              | 146.647  | 56.921   | 226.863  | 152.278  |
-+----------------+----------+----------+----------+----------+
-| RMSE           | 0.79     | 0.75     | 1.06     | 1.20     |
-+----------------+----------+----------+----------+----------+
+
+``` r
+modelsummary::modelsummary(models)
+
+```
 
 We're getting there!
 

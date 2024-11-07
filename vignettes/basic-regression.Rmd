@@ -70,10 +70,10 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation~\@ref(eq:eq_1}) describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\ref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
+Equation~\eqref{eq:eq_1} describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\eqref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
 
 $$
-(\#eq:eq_1)
+\label{eq:eq_1}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
 $$
 
@@ -84,15 +84,15 @@ $$
 
 $$
 \label{eq:eq_3}
-
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
 $$
 
-$$\label{eq:eq_4}
+$$
+\label{eq:eq_4}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}
 $$
 
-Equation~\ref{eq:eq_4} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $t$. 
+Equation~\eqref{eq:eq_4} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $t$. 
 
 ## Interpreting logarithms in equations {#logs-interpretation}
 
@@ -228,8 +228,13 @@ models <- list(
 Here's the simple output with `modelsummary()`. We'll add elements to the table to make it more complicated as we go, and then once we've gone through all the parts we'll put everything together into a single code block so we can see how much easier it is to edit once we've done the soft coding.
 
 The output here goes straight to console. 
-```{r}
+```{r, eval = FALSE}
 modelsummary::modelsummary(models)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+modelsummary::modelsummary(models,
+                           output = "html")
 ```
 
 Immediately we see something's up: all the GDP per capita values look like zeros to three significant digits. But wasn't the regression output significant?
@@ -238,7 +243,7 @@ Immediately we see something's up: all the GDP per capita values look like zeros
 summary(lm_1)
 ```
 
-The coefficient on `gdp_pc` is $1.96\times 10^{-4}$. It's just scaled too small!
+The coefficient on `gdp_pc` is $$1.96\times 10^{-4}$$. It's just scaled too small!
 
 Fortunately, in the [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/) vignette we created a variable called `gdp000_pc`, or GDP per capita in *thousands* of chained 2017 PPP USD.
 
@@ -272,7 +277,7 @@ reg_2_vars$outvar
 reg_2_vars$regvars
 ```
 
-``` {r}
+```{r}
 # linear
 reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
                                   regressor_vars = reg_1_vars$regvars)
@@ -306,13 +311,13 @@ models <- list(
   "(1)" = lm_1,
   "(2)" = lm_2,
   "(3)" = lm_3,
-  "(4)" = lm_4
-)
+  "(4)" = lm_4)
 
-# generate output
+```
 
+
+```{r, eval = FALSE}
 modelsummary::modelsummary(models)
-
 
 ```
 
