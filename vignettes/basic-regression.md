@@ -75,17 +75,15 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation~\ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. Equation~\ref{eq:eq_2} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $$\log(\text{GDPpc})$$ on $$\text{GDPpc}$$ (a log-linear regression, often called a semi-elasticity).
+Equation~\ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. Equation~\@ref(eq:eq_2) instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $$\log(\text{GDPpc})$$ on $$\text{GDPpc}$$ (a log-linear regression, often called a semi-elasticity).
 
 $$
 \label{eq:eq_1}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
 $$
 
-$$
-\label{eq:eq_2}
-    \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
-$$
+$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
+    (\#eq:eq_2)$$
 
 $$
 \label{eq:eq_3}
@@ -146,7 +144,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e1aa6218>
+#> <environment: 0x00000265e2776598>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -231,16 +229,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e0be53b0>
+#> <environment: 0x00000265e1442308>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000265e0a20988>
+#> <environment: 0x00000265e13d7d28>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265e05dd8c0>
+#> <environment: 0x00000265e136f590>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000265e0530f88>
+#> <environment: 0x00000265e12fb098>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
