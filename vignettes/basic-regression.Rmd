@@ -82,7 +82,9 @@ $$
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
 $$
 
-$$\label{eq:eq_3}
+$$
+\label{eq:eq_3}
+
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
 $$
 
