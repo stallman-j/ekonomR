@@ -14,6 +14,17 @@ vignette: >
 ---
 
 
+<style type="text/css">
+.table, th, td {
+  font-size: 0.9em;
+} 
+.table tbody td, .table thead tr {
+    white-space: nowrap;
+}
+</style>
+
+
+
 **Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version.
 
 
@@ -51,11 +62,7 @@ The dataset we'll be using has already merged the following datasets, and create
 data("ghg_pop_gdp")
 
 names(ghg_pop_gdp)
-#>  [1] "country_name"           "iso3c"                  "country"                "year"                  
-#>  [5] "gcb_ghg_territorial"    "gcb_ghg_consumption"    "gcb_ghg_transfers"      "pop_000"               
-#>  [9] "le_birth"               "le_15"                  "le_65"                  "tfr"                   
-#> [13] "rgdpe"                  "pop"                    "gdp_pc"                 "gcb_ghg_territorial_pc"
-#> [17] "gcb_ghg_consumption_pc" "gcb_ghg_transfers_pc"   "gdp000_pc"
+#>  [1] "country_name"           "iso3c"                  "country"                "year"                   "gcb_ghg_territorial"    "gcb_ghg_consumption"    "gcb_ghg_transfers"      "pop_000"                "le_birth"               "le_15"                  "le_65"                  "tfr"                    "rgdpe"                  "pop"                    "gdp_pc"                 "gcb_ghg_territorial_pc" "gcb_ghg_consumption_pc" "gcb_ghg_transfers_pc"   "gdp000_pc"
 View(head(ghg_pop_gdp))
 ```
 
@@ -68,7 +75,7 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation~\eqref{eq:eq_1} describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\eqref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
+Equation~\ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. Equation~\ref{eq:eq_2} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $$\log(\text{GDPpc})$$ on $$\text{GDPpc}$$ (a log-linear regression, often called a semi-elasticity).
 
 $$
 \label{eq:eq_1}
@@ -139,7 +146,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e273a648>
+#> <environment: 0x00000265e1aa6218>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -224,16 +231,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e13ee2a0>
+#> <environment: 0x00000265e0be53b0>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000265e1393058>
+#> <environment: 0x00000265e0a20988>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265e13328e8>
+#> <environment: 0x00000265e05dd8c0>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000265e12b0c40>
+#> <environment: 0x00000265e0530f88>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -526,7 +533,7 @@ This is why we did that weird thing with soft-coding the outcome and regressor v
 3. Using the total regressor variables, make a little hack that determines where this data frame is going to be inputted into our `modelsummary` table. We want it to be just under or just above the row that's called "Num.Obs". 
 4. Slot the `rows` data frame in where we want by listing it as an option to the `modelsummary()` output.
 
-### Step 1: 
+**Step 1:** 
 
 Get the number of unique regressors. That's going to determine where to put the row with the column means, because we want it to go right after the number of observations
 
@@ -537,7 +544,7 @@ n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_v
 ```
 
 
-### Step 2: 
+**Step 2:** 
 
 Create a data frame that's got the same formatting as our `modelsummary()` output table.
 
@@ -569,7 +576,7 @@ rows <- data.frame("term" = c("Mean"),
 ```
 
 
-### Step 3:
+**Step 3:**
 
 Trial and error and some googling suggests this funky hack will let us put the dependent variable means in the right spot.  
 
@@ -583,7 +590,7 @@ attr(rows, 'position') <- c(2*n_total_regvars+4)
 ```
 
 
-### Step 4:
+**Step 4:**
 
 Let's see the output now. We've just added the `add_rows = rows` to slot our guy in, and also added the `table_notes` defined earlier.
 
@@ -774,15 +781,16 @@ Because we set a label above, we can also cross-reference the table. An example 
 
 # Exercises
 
-1. In the section on [interpreting logarithms](#logs-interpretation) we described the interpretation of the coefficient $\beta_1$ for Equations \ref{eq:eq_2} and \ref{eq:eq_3}. State the corresponding interpretation of $\beta_1$ in the following equation:
+1. In the section on [interpreting logarithms](#logs-interpretation) we described the interpretation of the coefficient $$\beta_1$$ for Equations \ref{eq:eq_2} and \ref{eq:eq_3}. State the corresponding interpretation of $$\beta_1$$ in the following equation:
 
-$$\label{eq:eq_5}
+$$
+\label{eq:eq_5}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
 $$
 
 2. Determine whether the coefficients in column (2) in Table \ref{tab:basic_reg_table} are statistically significant at the 95\% level (yes, recognizing that these are not using robust standard errors) as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
 
-3. Examine the `lm()` model output on the coefficients (intercept and `log(gdp_pc)` for the equation \ref{eq:eq_2}, $\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$ by inputting `summary(lm_2)` into your console. What is the outputted p value for each coefficient?
+3. Examine the `lm()` model output on the coefficients (intercept and `log(gdp_pc)` for the equation \ref{eq:eq_2}, $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$ by inputting `summary(lm_2)` into your console. What is the outputted p value for each coefficient?
 
 4. In a *different* way than using `modelsummary()`, what are the heteroskedasticity-robust standard errors for the intercept and `log(gdp_pc)` in equation \ref{eq:eq_2}? 
 
