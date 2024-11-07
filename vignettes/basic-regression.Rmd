@@ -23,6 +23,13 @@ knitr::opts_chunk$set(
 
 ```
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
 ```{css, echo=FALSE}
 .table, th, td {
   font-size: 0.9em;

@@ -14,6 +14,13 @@ vignette: >
 ---
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+
 <style type="text/css">
 .table, th, td {
   font-size: 0.9em;
@@ -144,7 +151,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e2776598>
+#> <environment: 0x00000265e2d34690>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -229,16 +236,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e1442308>
+#> <environment: 0x00000265e69213a0>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000265e13d7d28>
+#> <environment: 0x00000265e67bb0d8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265e136f590>
+#> <environment: 0x00000265e663bf70>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000265e12fb098>
+#> <environment: 0x00000265e64ebcc8>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
