@@ -1,3 +1,35 @@
+#' Stargazer sumstats, good defaults for stargazer
+#'
+#' @param data dataset you would like summarized. Assumed to be the case that all the columns you want are included
+#' @param type output type for stargazer
+#' @param style input to starza
+#' @param summary TRUE, whether to make the thing sumstats
+#' @param covariate.labels default NULL in which case you use varnames
+#' @param summary.stat which sum stats to display
+#' @param digits number of significant digits, default is 2
+#' @param out_path output path, default here::here("output","01_tables")
+#' @param output_filename filename for the output, default "summary_stats.tex"
+#' @param title Title of the table, default "summary statistics"
+#' @param label default label for the table
+#' @param float whether to float in latex, default FALSE so that tabular environment is removed
+#'
+#' @returns output tables in both latex and text format, both to console and in the output_path location, with nice defaults
+stargazer_sumstats <- function(data,
+                               type = "latex",
+                               style = "qje",
+                               summary = TRUE,
+                               covariate.labels = NULL,
+                               summary.stat = c("n","min","mean","median","max","sd"),
+                               digits = 2,
+                               out_path = here::here("output","01_tables"),
+                               output_filename = "summary_stats.tex",
+                               title = "Summary Statistics",
+                               label = "tab:summary_stats",
+                               float = FALSE) {
+
+  print("Currently in production")
+}
+
 #' Function for outputting a linear model
 #' @description Outputs a linear model from an outvar and covariates within a data frame, see https://gis.stackexchange.com/questions/403811/linear-regression-analysis-in-r
 #' @param df data frame the vars come from

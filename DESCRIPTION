@@ -20,11 +20,11 @@ Imports:
     ggrepel,
     here,
     httr,
-    kableExtra,
     lmtest,
     lubridate,
     magrittr,
     modelsummary,
+    pandoc,
     readr,
     readxl,
     sandwich,
@@ -37,6 +37,7 @@ Imports:
     tictoc,
     tidyr,
     tidyselect,
+    tinytable,
     writexl
 Depends: 
     R (>= 2.10)

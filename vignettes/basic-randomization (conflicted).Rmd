@@ -104,6 +104,7 @@ just_groups <- cbind(just_groups,order_presentations) %>%
                dplyr::rename(Order = "...2")
 ```
 
+# Results
 
 ```{r, cols.print = 4}
 groups_with_order <- groups %>%
@@ -123,6 +124,7 @@ groups_with_rep <- groups_with_order %>%
                    dplyr::rename(Representative = Name)
 
 knitr::kable(groups_with_rep, format="html")
+
 
 
 ```
