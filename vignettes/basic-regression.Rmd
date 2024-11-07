@@ -254,7 +254,7 @@ modelsummary::modelsummary(models)
 
 ```{r, eval = TRUE, echo = FALSE}
 modelsummary::modelsummary(models,
-                           output = "html")
+                           output = "kableExtra")
 ```
 
 Immediately we see something's up: all the GDP per capita values look like zeros to three significant digits. But wasn't the regression output significant?

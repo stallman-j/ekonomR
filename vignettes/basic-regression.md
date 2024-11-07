@@ -151,7 +151,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e2d34690>
+#> <environment: 0x00000265768ed948>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -236,16 +236,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e69213a0>
+#> <environment: 0x00000266be914340>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000265e67bb0d8>
+#> <environment: 0x00000266beb49008>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265e663bf70>
+#> <environment: 0x00000266c2e49cf8>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000265e64ebcc8>
+#> <environment: 0x00000266c13347e0>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -284,46 +284,147 @@ The output here goes straight to console.
 modelsummary::modelsummary(models)
 ```
 
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> &amp;nbsp;(1) </th>
+   <th style="text-align:center;"> &amp;nbsp;&amp;nbsp;(2) </th>
+   <th style="text-align:center;"> &amp;nbsp;&amp;nbsp;(3) </th>
+   <th style="text-align:center;"> &amp;nbsp;&amp;nbsp;(4) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> −0.347 </td>
+   <td style="text-align:center;"> −15.544 </td>
+   <td style="text-align:center;"> −3.447 </td>
+   <td style="text-align:center;"> 0.151 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.109) </td>
+   <td style="text-align:center;"> (0.905) </td>
+   <td style="text-align:center;"> (0.166) </td>
+   <td style="text-align:center;"> (0.210) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gdp_pc </td>
+   <td style="text-align:center;"> 0.000 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.000 </td>
+   <td style="text-align:center;"> 0.000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.000) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.000) </td>
+   <td style="text-align:center;"> (0.000) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> log(gdp_pc) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.685 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.112) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(gdp_pc^2) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.000) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(gdp_pc^3) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.000) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.583 </td>
+   <td style="text-align:center;"> 0.684 </td>
+   <td style="text-align:center;"> 0.592 </td>
+   <td style="text-align:center;"> 0.624 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.579 </td>
+   <td style="text-align:center;"> 0.681 </td>
+   <td style="text-align:center;"> 0.588 </td>
+   <td style="text-align:center;"> 0.613 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 259.2 </td>
+   <td style="text-align:center;"> −105.2 </td>
+   <td style="text-align:center;"> −78.0 </td>
+   <td style="text-align:center;"> 252.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 267.2 </td>
+   <td style="text-align:center;"> −97.2 </td>
+   <td style="text-align:center;"> −70.0 </td>
+   <td style="text-align:center;"> 265.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −126.606 </td>
+   <td style="text-align:center;"> −158.077 </td>
+   <td style="text-align:center;"> −171.696 </td>
+   <td style="text-align:center;"> −121.070 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 146.647 </td>
+   <td style="text-align:center;"> 226.863 </td>
+   <td style="text-align:center;"> 152.278 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.79 </td>
+   <td style="text-align:center;"> 1.06 </td>
+   <td style="text-align:center;"> 1.20 </td>
+   <td style="text-align:center;"> 0.75 </td>
+  </tr>
+</tbody>
+</table>
 
-+-------------+----------+----------+----------+----------+
-|             | (1)      | (2)      | (3)      | (4)      |
-+=============+==========+==========+==========+==========+
-| (Intercept) | −0.347   | −15.544  | −3.447   | 0.151    |
-+-------------+----------+----------+----------+----------+
-|             | (0.109)  | (0.905)  | (0.166)  | (0.210)  |
-+-------------+----------+----------+----------+----------+
-| gdp_pc      | 0.000    |          | 0.000    | 0.000    |
-+-------------+----------+----------+----------+----------+
-|             | (0.000)  |          | (0.000)  | (0.000)  |
-+-------------+----------+----------+----------+----------+
-| log(gdp_pc) |          | 1.685    |          |          |
-+-------------+----------+----------+----------+----------+
-|             |          | (0.112)  |          |          |
-+-------------+----------+----------+----------+----------+
-| I(gdp_pc^2) |          |          |          | 0.000    |
-+-------------+----------+----------+----------+----------+
-|             |          |          |          | (0.000)  |
-+-------------+----------+----------+----------+----------+
-| I(gdp_pc^3) |          |          |          | 0.000    |
-+-------------+----------+----------+----------+----------+
-|             |          |          |          | (0.000)  |
-+-------------+----------+----------+----------+----------+
-| Num.Obs.    | 107      | 107      | 107      | 107      |
-+-------------+----------+----------+----------+----------+
-| R2          | 0.583    | 0.684    | 0.592    | 0.624    |
-+-------------+----------+----------+----------+----------+
-| R2 Adj.     | 0.579    | 0.681    | 0.588    | 0.613    |
-+-------------+----------+----------+----------+----------+
-| AIC         | 259.2    | −105.2   | −78.0    | 252.1    |
-+-------------+----------+----------+----------+----------+
-| BIC         | 267.2    | −97.2    | −70.0    | 265.5    |
-+-------------+----------+----------+----------+----------+
-| Log.Lik.    | −126.606 | −158.077 | −171.696 | −121.070 |
-+-------------+----------+----------+----------+----------+
-| F           | 146.647  | 226.863  | 152.278  |          |
-+-------------+----------+----------+----------+----------+
-| RMSE        | 0.79     | 1.06     | 1.20     | 0.75     |
-+-------------+----------+----------+----------+----------+
+
 
 Immediately we see something's up: all the GDP per capita values look like zeros to three significant digits. But wasn't the regression output significant?
 
