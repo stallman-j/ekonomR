@@ -17,14 +17,11 @@ vignette: >
 **Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version.
 
 
-
 If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
 
 # Prerequisites
 
 I'm also going to assume that you already know the concepts we discussed in the basic cleaning vignettes. In particular, there's a discussion regarding and a simple example of merging in [Basic Cleaning: Global Carbon Budget](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_gcb/).
-
-If you're just looking for a script that merges the World Population Prospects population data, the Penn World Tables gross domestic product (GDP) data, and the Global Carbon Budget greenhouse gas emissions data and defines some variables, you've also come to the right place and you might want to just copy the final code at the end.
 
 First, bring `ekonomR` into your working library.
 
@@ -71,23 +68,25 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation~\ref{eq:eq_1} describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\ref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
+Equation~\@ref(eq:eq_1}) describes a cross-section specification, showing $\text{GHGpc}$, greenhouse gas emissions per capita in country $i$ and during a particular year $t$, as a function of $\text{GDPpc}$, per-capita GDP. Equation~\ref{eq:eq_2} instead takes $\log(\text{GDPpc})$ as the outcome variable and $\log(\text{GDPpc})$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $\log(\text{GDPpc})$ on $\text{GDPpc}$ (a log-linear regression, often called a semi-elasticity).
 
-\begin{equation}\label{eq:eq_1}
+$$
+(\#eq:eq_1)
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
-\end{equation}
+$$
 
-\begin{equation}\label{eq:eq_2}
+$$
+\label{eq:eq_2}
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
-\end{equation}
+$$
 
-\begin{equation}\label{eq:eq_3}
+$$\label{eq:eq_3}
     \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
-\end{equation}
+$$
 
-\begin{equation}\label{eq:eq_4}
+$$\label{eq:eq_4}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}
-\end{equation}
+$$
 
 Equation~\ref{eq:eq_4} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $t$. 
 
@@ -138,7 +137,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265de40ca00>
+#> <environment: 0x000002657a7a8950>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -223,16 +222,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265797a6778>
+#> <environment: 0x0000026576807028>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x000002657968db70>
+#> <environment: 0x0000026576610aa0>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265795cdad0>
+#> <environment: 0x00000265763de840>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x000002657948ebb0>
+#> <environment: 0x0000026572db9290>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -814,9 +813,9 @@ Because we set a label above, we can also cross-reference the table. An example 
 
 1. In the section on [interpreting logarithms](#logs-interpretation) we described the interpretation of the coefficient $\beta_1$ for Equations \ref{eq:eq_2} and \ref{eq:eq_3}. State the corresponding interpretation of $\beta_1$ in the following equation:
 
-\begin{equation}\label{eq:eq_5}
+$$\label{eq:eq_5}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
-\end{equation}
+$$
 
 2. Determine whether the coefficients in column (2) in Table \ref{tab:basic_reg_table} are statistically significant at the 95\% level (yes, recognizing that these are not using robust standard errors) as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
 
