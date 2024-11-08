@@ -97,8 +97,8 @@ Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome varia
 Equation \ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
 
 
-$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
-$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_2}$$
+$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
+$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_2}$$
 
 
 $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}\label{eq:eq_3}$$
@@ -154,7 +154,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bc315028>
+#> <environment: 0x00000266bde95fb0>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -231,16 +231,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bca3db18>
+#> <environment: 0x00000266bee34b18>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266be5c73b0>
+#> <environment: 0x00000266bee90430>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266be638c48>
+#> <environment: 0x00000266bef058e8>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266bcb2a2a8>
+#> <environment: 0x00000266bf0c2f10>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -1324,6 +1324,8 @@ Here's the code that you would want to modify if you're doing this for your own 
 
 ``` r
 
+# ---- Setup
+
 # bring in ekonomR
 library(ekonomR)
 
@@ -1333,6 +1335,7 @@ data("ghg_pop_gdp")
 names(ghg_pop_gdp)
 View(head(ghg_pop_gdp))
 
+# Things you would change in a four-column reg table without fixed effects ----
 # set parameters
 cross_section_year <- 1960
 
@@ -1365,6 +1368,8 @@ reg_3_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
 
 reg_4_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
                    regvars = c("gdp000_pc"))
+
+# things you would not need to change ----
 
 # make regression formulas
 reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
@@ -1404,6 +1409,7 @@ models <- list(
 # get total regressor vars so we know how many rows to skip down
 n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_vars$regvars,reg_4_vars$regvars)))
 
+# things you would want to check if you need to change ----
 # create data frame of depvar means. 
 # IMPORTANT: if you're modifying this for your own stuff, change the reg_1_vars to reg_2_vars and reg_3_vars and reg_4_vars and so forth
 
