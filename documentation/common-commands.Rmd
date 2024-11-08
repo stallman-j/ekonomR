@@ -118,6 +118,7 @@ knitr::knit(input = here::here("vignettes","intermediate-plotting.Rmd"), output 
 ``` {r}
 knitr::knit(input = here::here("vignettes","summary-statistics.Rmd"), output = here::here("vignettes","summary-statistics.md"))
 knitr::knit(input = here::here("vignettes","basic-regression.Rmd"), output = here::here("vignettes","basic-regression.md"))
+knitr::knit(input = here::here("vignettes","fixed-effects-estimation.Rmd"), output = here::here("vignettes","fixed-effects-estimation.md"))
 
 ```
 

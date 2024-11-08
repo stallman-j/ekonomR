@@ -27,7 +27,7 @@ library(modelsummary)
 
 **Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code.
 
-```{r} 
+```{r, results = FALSE, eval = FALSE} 
 #install.packages("remotes")
 #remotes::install_github("stallman-j/ekonomR")
 ```
@@ -69,9 +69,7 @@ data("ghg_pop_gdp")
 reg_data <- ghg_pop_gdp
 ```
 
-In addition, this dataset also contains a few other demographic variables like life expectancy at birth.
-
-# Refresher of fixed effects and dummy variables
+# Refresher of fixed effects
 
 If it's been a while since you've thought about fixed effects, there are a few great videos by [Ben Lambert on youtube](https://www.youtube.com/@SpartacanUsuals) that will get you the intuition. His videos are the first I check out for econometrics concepts I've forgotten.
 
@@ -80,7 +78,7 @@ I recommend the following:
 1. [Dummy variable estimators](https://www.youtube.com/watch?v=i7vYh1kCEOY)
 2. [Fixed effects estimator](https://www.youtube.com/watch?v=sFvV9b1cGFc)
 
-I'm now going to assume I can use the jargon from these concepts.
+I'm now going to assume I can use the jargon talked about in those videos.
 
 Suppose we're considering country fixed effects. 
 
@@ -288,10 +286,10 @@ n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_v
 
 
 rows <- data.frame("term" = c("Mean","Year FE","Country FE"),
-                   "(1)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2), "N","N"),
-                   "(2)"  = c(round(mean(data_cross_section[[reg_2_vars$outvar]]),2), "Y","N"),
-                   "(3)"  = c(round(mean(data_cross_section[[reg_3_vars$outvar]]),2), "N","Y"),
-                   "(4)"  = c(round(mean(data_cross_section[[reg_4_vars$outvar]]),2), "Y","Y"))
+                   "(1)"  = c(round(mean(reg_data[[reg_1_vars$outvar]]),2), "N","N"),
+                   "(2)"  = c(round(mean(reg_data[[reg_2_vars$outvar]]),2), "Y","N"),
+                   "(3)"  = c(round(mean(reg_data[[reg_3_vars$outvar]]),2), "N","Y"),
+                   "(4)"  = c(round(mean(reg_data[[reg_4_vars$outvar]]),2), "Y","Y"))
 
 attr(rows, 'position') <- c(2*n_total_regvars+4,2*n_total_regvars+5,2*n_total_regvars+6)            
 
