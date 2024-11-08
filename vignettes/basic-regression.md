@@ -151,7 +151,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265768ed948>
+#> <environment: 0x00000266b6588160>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -236,16 +236,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266be914340>
+#> <environment: 0x00000266b6b79458>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266beb49008>
+#> <environment: 0x00000266c28f3e28>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266c2e49cf8>
+#> <environment: 0x00000266c28463b0>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266c13347e0>
+#> <environment: 0x00000266c2ad0830>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -532,6 +532,27 @@ models <- list(
 modelsummary::modelsummary(models)
 
 ```
+
+
+                   (1)        (2)        (3)        (4)       
+  (Intercept)      -0.347     0.151      -15.544    -3.447    
+                   (0.109)    (0.210)    (0.905)    (0.166)   
+  gdp000_pc        0.196      -0.076                0.304     
+                   (0.016)    (0.116)               (0.025)   
+  I(gdp000_pc^2)              0.025                           
+                              (0.014)                         
+  I(gdp000_pc^3)              -0.001                          
+                              (0.000)                         
+  log(gdp_pc)                            1.685                
+                                         (0.112)              
+  Num.Obs.         107        107        107        107       
+  R2               0.583      0.624      0.684      0.592     
+  R2 Adj.          0.579      0.613      0.681      0.588     
+  AIC              259.2      252.1      -105.2     -78.0     
+  BIC              267.2      265.5      -97.2      -70.0     
+  Log.Lik.         -126.606   -121.070   -158.077   -171.696  
+  F                146.647    56.921     226.863    152.278   
+  RMSE             0.79       0.75       1.06       1.20      
 
 We're getting there!
 

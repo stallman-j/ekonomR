@@ -341,6 +341,13 @@ modelsummary::modelsummary(models)
 
 ```
 
+```{r, eval = TRUE, echo = FALSE, results = 'asis'}
+
+modelsummary::modelsummary(models,
+                           output = "tinytable") %>%
+              tinytable::theme_tt(theme = "bootstrap")
+```
+
 We're getting there!
 
 
