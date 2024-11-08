@@ -96,7 +96,7 @@ modelsummary_reg_default <- function(reg_vars_list,
     }
   }
 
-  if (print_models == TRUE) print(models_list)
+  if (print_models == TRUE) print(lapply(models_list,summary))
 
   # get the number of unique regressor vars
 

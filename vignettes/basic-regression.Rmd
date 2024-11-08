@@ -24,7 +24,12 @@ library(modelsummary)
 ```
 
 
-**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version.
+**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code. (Making sure that the `ekonomR` package is unchecked in your "Packages" tab before you re-install).
+
+```{r, results = FALSE, eval = FALSE} 
+#install.packages("remotes")
+#remotes::install_github("stallman-j/ekonomR")
+```
 
 
 If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.

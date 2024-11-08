@@ -16,7 +16,7 @@ vignette: >
 
 
 
-**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 8, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code.
+**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 8, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code. (Making sure that the `ekonomR` package is unchecked in your "Packages" tab before you re-install).
 
 
 ``` r
@@ -52,7 +52,7 @@ The dataset we'll be using includes per-capita measures for gross domestic produ
 - GDP data from the [Penn World Tables](https://www.rug.nl/ggdc/productivity/pwt/?lang=en) (PWT)
 - greenhouse gas data from the [Global Carbon Budget (GCB)](https://globalcarbonbudget.org/).
 
-We'll bring in the data, and then call `reg_data`` to be this dataset (so that this code is easy to adapt for other datasets).
+We'll bring in the data, and then call `reg_data`` to be this dataset (so that this code is easy to adapt for other datasets), and also filter out observations for which the outcome variable is missing to avoid warnings or errors.
 
 ``` r
 data("ghg_pop_gdp")
@@ -77,7 +77,7 @@ Another *great* resource for the intuition is [the Chapter on Fixed Effects in *
 
 I'm now going to assume I can use their jargon.
 
-## Rough intuition
+**Rough intuition**
 
 Suppose we're considering just country fixed effects. 
 
@@ -127,8 +127,6 @@ However, even in more recent years, the financial recession of 2008 might have b
 
 The other way of thinking about it explicitly as a *within* estimator is to say that now we're looking at the variation *between* countries, but *within* the same period of time. 
 
-We get a mroe complete picture than we would with than running fifty-some individual cross-section regressions for each year, though.
-
 
 
 ## Entity fixed effects
@@ -164,7 +162,7 @@ In other words, the variation that we have left after we've included both sets o
 
 
 
-# Prep some regressions
+# Prep regressions
 
 I'm assuming you're familiar with how I like to set up regression tables from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette, so let's jump in.
 
@@ -172,7 +170,7 @@ We'll still use the territorial greenhouse gases per capita.
 
 We'll add another element to the lists, `fevars`, where we'll store which variables we're taking fixed effects over. `iso3c` is the three-letter code for a country, so it's equivalent to using country fixed effects.
 
-## Choose regression variables
+**Choose regression variables**
 
 Pick out our regression variables.
 
@@ -195,7 +193,7 @@ reg_4_vars <- list(outvar = "gcb_ghg_territorial_pc",
                    fevars = c("year","iso3c"))
 ```
 
-## Make regression formulas
+**Make regression formulas**
 Now that we've our variables chosen, we can make our regression formulas:
 
 
@@ -217,7 +215,7 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
                                   fe_vars        = reg_4_vars$fevars)
 ```
 
-## Choose standard errors
+**Choose standard errors**
 
 `ekonomR` has another convenience function called `cluster_formula()` that takes in either a character vector of the variables you want to cluster or a regression formula, and tries to intelligently pull out the variables you used as fixed effects and turn them into a formula that you can then put into `modelsummary` or `feols` as the variables you should cluster by, so that you don't have to hard-code everything. 
 
@@ -249,7 +247,7 @@ vcov_list <- list(vcov_1,
                   vcov_4)
 ```
 
-## Generate models
+# Generate models
 Let's make up our models. The first is just using `lm()` as before. The rest will have to use `feols::fixest()` to get the right estimation. With `feols` we can get clustered standard errors right away.
 
 
@@ -264,7 +262,6 @@ model_3 <- fixest::feols(reg_eq_3,
 model_4 <- fixest::feols(reg_eq_4, 
                          vcov = vcov_4,
                          data = reg_data)
-
 ```
 
 We can look at some of these outputs. Uncomment the below if you'd like to check them out manually.
@@ -275,7 +272,6 @@ We can look at some of these outputs. Uncomment the below if you'd like to check
 #summary(model_2)
 #summary(model_3)
 #summary(model_4)
-
 ```
 
 Put these models into a handy list
@@ -293,7 +289,7 @@ models <- list(
 
 This should be starting to feel familiar. First we'll choose the title and notes, figure out how to add the dependent variable means, and produce our final output.
 
-## Choose title and notes
+**Choose title and notes**
 
 
 ``` r
@@ -305,7 +301,8 @@ cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$")
 ```
 
 
-## Generate dependent variable means
+**Generate dependent variable means**
+
 Let's again generate the mean of the dependent variable and decide the place to put it into the table.
 
 This time, however, we're also going to say whether the *column* has certain fixed effects attached to it. We do this by expanding the `rows` dataframe to include a few more rows.
@@ -338,7 +335,7 @@ If you're getting `NA` in the rows for a particular variable when you do your ow
 | Year FE   | N   | Y   | N   | Y   |
 | Country FE| N   | N   | Y   | N   |
 
-## Produce final output
+**Produce final output**
 
 We have a few more things to remove, so `gof_omit` grew a little bit. We also added `vcov_list` to tell `modelsummary` which standard errors to pick, and just for illustration I've set `fmt = 6` to make the coefficients show out to 6 decimal places.
 
@@ -488,7 +485,7 @@ my_table
 
 
 
-## Save
+**Save**
 
 
 ``` r
@@ -504,8 +501,6 @@ If you get an output error like `cannot open the connection`, make sure the file
 
 
 
-
-#### Outputting to LaTex
 
 Do **not** copy and paste latex output directly into LaTex or Overleaf. There's a much nicer way to do it.
 
@@ -536,9 +531,9 @@ If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Git
 
 Because we set a label above, we can also cross-reference the table. An example of how to do this is given in the file `templates/examples/inserting-tables.tex`.
 
-# The simple defaults: an example with the function `modelsummary_reg_default`.
+# Default output with `modelsummary_reg_default`.
 
-This is an optional section, but you might find the function helpful for generating nice looking regression tables.
+This is an optional section, but you might find this function helpful for generating nice looking regression tables.
 
 `ekonomR` has a function called `modelsummary_reg_default()` that includes all the above in a simple regression format with nice defaults. It works for both linear models and fixed effects. It hasn't been modified to get fancier than that.
 
@@ -567,11 +562,11 @@ reg_vars_list <- list(reg_1_vars,
                       reg_3_vars)
 ```
 
-Run `modelsummary_reg_default()` with default settings. This will export a file by default 
+Run `modelsummary_reg_default()` with default settings. This will export a file by default, and also push to your console a summary of all the models you generated. 
 
 
 ``` r
-modelsummary_reg_default(reg_vars_list = reg_vars_list,
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = ghg_pop_gdp)
 #> NOTE: 114 observations removed because of NA values (LHS: 114).
 #> NOTE: 114 observations removed because of NA values (LHS: 114).
@@ -607,58 +602,15 @@ modelsummary_reg_default(reg_vars_list = reg_vars_list,
 #> Saving regression output to C:/Projects/ekonomR/output/01_tables .
 ```
 
-
-+----------------+----------+----------+----------+
-|                | (1)      | (2)      | (3)      |
-+================+==========+==========+==========+
-| (Intercept)    | -0.0172  |          |          |
-+----------------+----------+----------+----------+
-|                | (0.0185) |          |          |
-+----------------+----------+----------+----------+
-| gdp000_pc      | 0.1150   | 0.1255   | 0.0630   |
-+----------------+----------+----------+----------+
-|                | (0.0041) | (0.0048) | (0.0135) |
-+----------------+----------+----------+----------+
-| I(gdp000_pc^2) | -0.0006  | -0.0007  | -0.0007  |
-+----------------+----------+----------+----------+
-|                | (0.0001) | (0.0001) | (0.0003) |
-+----------------+----------+----------+----------+
-| I(gdp000_pc^3) | 0.0000   | 0.0000   | 0.0000   |
-+----------------+----------+----------+----------+
-|                | (0.0000) | (0.0000) | (0.0000) |
-+----------------+----------+----------+----------+
-| Num.Obs.       | 10235    | 10235    | 10235    |
-+----------------+----------+----------+----------+
-| Mean           | 1.24     | 1.24     | 1.24     |
-+----------------+----------+----------+----------+
-| year FE        | N        | Y        | N        |
-+----------------+----------+----------+----------+
-| iso3c FE       | N        | N        | Y        |
-+----------------+----------+----------+----------+
-| R2             | 0.552    | 0.575    | 0.879    |
-+----------------+----------+----------+----------+
-| R2 Within      |          | 0.567    | 0.203    |
-+================+==========+==========+==========+
-| Robust standard errors given in parentheses.    |
-+================+==========+==========+==========+
-Table: My regression table \label{tab:reg-table}
-
-Let's see a little more complex options. 
-
-You can see the defaults and get help with `?modelsummary_reg_default`.
+We can see this output in Console and the viewer
 
 
 ``` r
-my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ghg_pop_gdp,
-                         my_title = "This is my title \\label{tab:my_table_label}",
-                         table_notes = list(a = "Top level notes",
-                                            b = "Second level notes"),
-                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
-                         fe_names = c("Year FE","Country FE"),
-                         depvar_means = c(1.23,4.59,8.90,"lego"),
-                         fmt = 6,
-                         export_output = FALSE)
+my_table 
+```
+
+
+```
 #> NOTE: 114 observations removed because of NA values (LHS: 114).
 #> NOTE: 114 observations removed because of NA values (LHS: 114).
 #> [[1]]
@@ -690,6 +642,27 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> RMSE: 0.682202     Adj. R2: 0.876855
 #>                  Within R2: 0.202551
+#> Saving regression output to C:/Projects/ekonomR/output/01_tables .
+```
+Let's see a little more flexibility.
+
+You can see the defaults and get help with `?modelsummary_reg_default`.
+
+`modelsummary()` is already an extremely flexible package, as is `fixest`. The point of this function `modelsummary_reg_default` is not to replace the flexibility of these packages, but to provide a set of simple defaults that get your output up and running without much effort.
+
+
+``` r
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = ,
+                         my_title = "This is my title \\label{tab:my_table_label}",
+                         table_notes = list(a = "Top level notes",
+                                            b = "Second level notes"),
+                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
+                         fe_names = c("Year FE","Country FE"),
+                         depvar_means = c(1.23,4.59,8.90,"lego"),
+                         fmt = 6,
+                         export_output = FALSE)
+#> Error in eval(mf, parent.frame()): argument "data" is missing, with no default
 
 my_table <- my_table %>%
   tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
