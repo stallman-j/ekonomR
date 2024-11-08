@@ -97,7 +97,10 @@ Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome varia
 Equation \ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
 
 
-$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
+\begin{align}
+GHGpc_{i,t} &= \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}
+\end{align}
+
 $$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_2}$$
 
 
@@ -154,7 +157,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bde95fb0>
+#> <environment: 0x00000266c3004fc8>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -231,16 +234,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bee34b18>
+#> <environment: 0x00000266bf219238>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266bee90430>
+#> <environment: 0x00000266bd5ce018>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266bef058e8>
+#> <environment: 0x00000266bc5e8810>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266bf0c2f10>
+#> <environment: 0x00000266bb986a68>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -1253,11 +1256,6 @@ If you get an output error like `cannot open the connection`, make sure the file
 
 
 
-```
-#> Error in `pandoc_run()`:
-#> ! Running Pandoc failed with following error
-#> • pandoc.exe: C:/Projects/ekonomR/example-project/output/01_tables/basic_regression_table.docx: withBinaryFile: permission denied (Permission denied)
-```
 
 #### Outputting to LaTex
 
@@ -1298,11 +1296,11 @@ $$
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
 $$
 
-2. Determine whether the coefficients in column (2) in the final table are statistically significant at the 95\% level as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
+2. Determine whether the coefficients in column (2) in the final table are statistically significant at the 95% level as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
 
-3. Examine the `lm()` model output on the coefficients (intercept and `log(gdp_pc)` for the equation \ref{eq:eq_2}, $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$ by inputting `summary(lm_2)` into your console. What is the outputted p value for each coefficient?
+3. Examine the `lm()` model output on the coefficients (intercept and `log(gdp_pc)` for the regression given by $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$ by using `summary()`. What is the outputted p value for each of the two coefficients?
 
-4. In a *different* way than using `modelsummary()`, what are the heteroskedasticity-robust standard errors for the intercept and `log(gdp_pc)` in equation \ref{eq:eq_2}? 
+4. In a *different* way than using `modelsummary()`, what are the heteroskedasticity-robust standard errors for the intercept and `log(gdp_pc)` in the regression given by $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$ ? 
 
     - Write the command you used. (**Hint:** See what we did with `lmtest::coeftest()`). 
     - Verify that they're the same (up to rounding error) as the output we got from the `modelsummary()` output that used `"HC1"` standard errors.
