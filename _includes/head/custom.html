@@ -1,10 +1,23 @@
 <!-- start custom head snippets
 See https://stackoverflow.com/questions/26275645/how-to-support-latex-in-github-pages
--->
 
-<!-- insert favicons. use https://realfavicongenerator.net/ -->
+https://stackoverflow.com/questions/34347818/using-mathjax-on-a-github-page
+-->
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
+
+<!-- insert favicons. use https://realfavicongenerator.net/ 
+
+https://stackoverflow.com/questions/55162080/rendering-problem-cross-reference-equation-in-r-markdown-html
+-->
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
 
 <!-- end custom head snippets -->
