@@ -16,9 +16,15 @@ vignette: >
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  TeX: { 
+      equationNumbers: { 
+            autoNumber: "all",
+            formatNumber: function (n) {return '9.'+n}
+      } 
+  }
 });
 </script>
+
 
 
 <style type="text/css">
@@ -84,23 +90,13 @@ We'll run a linear regression, a log-log regression, and a log-linear regression
 ## Specifications
 Equation~\ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. Equation~\@ref(eq:eq_2) instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity). Equation~\ref{eq:eq_3} shows a regression of $$\log(\text{GDPpc})$$ on $$\text{GDPpc}$$ (a log-linear regression, often called a semi-elasticity).
 
-$$
-\label{eq:eq_1}
-    \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
-$$
+$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}$$
 
-$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
-    (\#eq:eq_2)$$
+$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$
 
-$$
-\label{eq:eq_3}
-    \log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
-$$
+$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}$$
 
-$$
-\label{eq:eq_4}
-    \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}
-$$
+$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}$$
 
 Equation~\eqref{eq:eq_4} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $t$. 
 
@@ -151,7 +147,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266c1e3add8>
+#> <environment: 0x00000266bbf5cb80>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -236,16 +232,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266c1e5c4b0>
+#> <environment: 0x00000266b91695b8>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266c1f0bf28>
+#> <environment: 0x00000266b8a1b230>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266c21cc080>
+#> <environment: 0x00000266b70acc60>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266c230c3f8>
+#> <environment: 0x00000266c324d198>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -488,21 +484,19 @@ reg_2_vars$regvars
 #> [1] "gdp000_pc"      "I(gdp000_pc^2)" "I(gdp000_pc^3)"
 ```
 
+This is all the lineup we need to get the equations set up. First set up our equations, then make the regression models, then put them into a nice little list.
+
 
 ``` r
-# linear
 reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
                                   regressor_vars = reg_1_vars$regvars)
 
-#log-log
 reg_eq_2 <- ekonomR::reg_equation(outcome_var    = reg_2_vars$outvar,
                                   regressor_vars = reg_2_vars$regvars)
 
-#log-linear
 reg_eq_3 <- ekonomR::reg_equation(outcome_var    = reg_3_vars$outvar,
                                   regressor_vars = reg_3_vars$regvars)
 
-# With cubic and quadratic
 reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
                                   regressor_vars = reg_4_vars$regvars)
 
@@ -526,6 +520,7 @@ models <- list(
   "(4)" = lm_4)
 ```
 
+Now we tell `modelsummary` to give us a table.
 
 
 ``` r
@@ -680,35 +675,45 @@ We're getting there!
 
 ## Interpreting coefficients {#interpreting-coefficients}
 
-Here's a rule of thumb we use all the time.
+Here's a good rule of thumb for interpreting coefficients.
 
-With the standard errors listed in parentheses (recalling that these are not the heteroskedasticity-robust ones), the coefficient is roughly significant at the 95% level if multiplying the thing in parenthese by 2 and then adding it to or subtracting it from the coefficient above it does not get that coefficient to zero. 
+If you're given the standard errors listed in parentheses, the coefficient is roughly significant at the 95% level if multiplying the thing in parentheses by 2 and then adding it to or subtracting it from the coefficient above it does not get that coefficient from negative to positive and vice versa.
 
 In other words, we're at about 95% confidence that the coefficient isn't zero if zero isn't in the confidence interval we construct by adding two standard errors to and subtracting two standard errors from our point estimate.
 
-For instance, the coefficient on `gdp000_pc` in column (1) is 0.196, and the standard error currently reported is 0.016, or about 0.02 (rounding up for ease of mental math). Double that to get 0.04. If we add that 0.04 to 0.196, we get about 0.236, which did not cross the line to get negative (which means we didn't hit zero). If we subtract 0.04 from 0.196, we get 0.156, which also doesn't cross over into negative territory. This coefficient is highly significant.
+For instance, the coefficient on `gdp000_pc` in column (1) is 0.196, and the standard error currently reported is 0.016, or about 0.02 (rounding up for ease of mental math). 
 
-On the other hand, when we do the same thing for `gdp000_pc` in column (4), we can get the coefficient of -0.077 to cross over zero and turn positive if we add $2\times 0.116$ to it, so this coefficient is *not* significant at the 95\% level.
+Double that to get 0.04.
+
+If we add that 0.04 to 0.196, we get about 0.236, which did not cross the line to get negative (which means we didn't hit zero). 
+
+If we subtract 0.04 from 0.196, we get 0.156, which also doesn't cross over into negative territory. This coefficient is highly significant.
+
+On the other hand, when we do the same thing for `gdp000_pc` in column (4), we can get the coefficient of -0.077 to cross over zero and turn positive if we add $$2\times 0.116$$ to it, so this coefficient is *not* significant at the 95\% level.
 
 ## Making prettier tables
 
-This is a fine output at a glance. However, it generates a ton of extra rows that we don't need to show. We could tidy this up a whole lot by adding a title and notes, omitting things we don't typically look at, and making the variable names nicer to look at.
+This output is fine, but it generates a ton of extra rows that we don't need to show. 
+
+We could tidy this up a whole lot by adding a title and notes, omitting things we don't typically look at, and making the variable names nicer to look at.
 
 If you're looking for maximum customizability, check out the [modelsummary vignettes](https://modelsummary.com/vignettes/modelsummary.html). We'll just focus on the main things here.
 
-Let's state the title, notes and coefficient labels all together. Note that we made use of `paste0()` to soft-code the cross-section year (so that we could easily check this regression for, say, 2018 instead of 1960). If you're not ultimately outputting this to Latex, you can remove the part that says `\\label{tab:basic_reg_table}` because that's just the way that LaTex will be able to cross-reference the table.
+Let's state the title, notes and coefficient labels all together. Note that we made use of `paste0()` to soft-code the cross-section year (so that we could easily check this regression for, say, 2018 instead of 1960). 
+
+The part that says `\\label{tab:basic_reg_table}` is just the way that LaTex will be able to cross-reference the table. If you're outputting to Word, it's just going to get ignored.
 
 
 ``` r
-  title_crosssection_latex <- paste0("Cross Section GHG and GDP per capita relationship, ", cross_section_year, " \\label{tab:basic_reg_table}")
+my_title <- paste0("Cross Section GHG and GDP per capita relationship, ", cross_section_year, " \\label{tab:basic_reg_table}")
   
-  table_notes <- "Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024)."
+table_notes <- "Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024)."
   
 cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$","Log(GDP pc)")
 ```
 
-
-We also get the heteroskedasticity-robust standard errors with the simple option of `vcov = "HC1"`. `gof_omit` is an option that allows us to omit certain **g**oodness **o**f **f**it statistics. 
+### Robust standard errors
+We also get the heteroskedasticity-robust standard errors with the simple option of `vcov = "HC1"` in the code below. `gof_omit` is an option that allows us to omit certain **g**oodness **o**f **f**it statistics. 
 
 To learn more about your choices for standard errors, you can type `?modelsummary` and then search for `vcov`.
 
@@ -718,7 +723,7 @@ modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
              coef_rename = cov_labels,
-             title = title_crosssection_latex,
+             title = my_title,
              format = 'latex',
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
              escape = FALSE
@@ -840,7 +845,7 @@ modelsummary::modelsummary(models,
 
 
 
-This table is still a little misleading. We're using different outcome variables across regressions, and it would be nice to state that. 
+### Adding dependent variable means
 
 It's also common to want to put the mean of the dependent variable in our table, so that we can interpret the coefficients relative to the output values. This tells us about what's sometimes called **economic significance** (as opposed to **statistical significance**), i.e. the answer to the question, "Is the *magnitude* of the coefficients something I should care about?". 
 
@@ -920,7 +925,7 @@ modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
              coef_rename = cov_labels,
-             title = title_crosssection_latex,
+             title = my_title,
              format = 'latex',
              add_rows = rows,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
@@ -1052,7 +1057,8 @@ modelsummary::modelsummary(models,
 </table>
 
 
-### Tidying up {#tidying-up}
+
+### Adding dependent variable names {#depvar_names}
 
 Finally, let's add a header to state which is the dependent variable. We use `tinytable`'s `group_tt` to put the names at particular columns, which we indicate by `j` in the original table. The below output says to put `"GHGpc"` at columns 2 and 3, and `"log(GHGpc)"` in columns 4 and 5 (because column 1 corresponds to the blank column with the variable names).
 
@@ -1062,7 +1068,7 @@ modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
              coef_rename = cov_labels,
-             title = title_crosssection_latex,
+             title = my_title,
              format = "latex",
              add_rows = rows,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
@@ -1212,7 +1218,7 @@ my_table <- modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
              coef_rename = cov_labels,
-             title = title_crosssection_latex,
+             title = my_title,
              format = "latex",
              add_rows = rows,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
@@ -1256,11 +1262,15 @@ If you're using Overleaf, make sure you have the following code in your preamble
 \newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
 ```
 
-Then, you can drag and drop the entire table `.tex` file into, preferably, a folder in your Overleaf project called something like `Tables`. In the [Overleaf ECON 412 folder](https://www.overleaf.com/read/wsrdjdckwmbz#f4467b), for instance, I've uploaded the table from this exercises into the path `tables/tables-from-r/basic_regression_table.tex`. 
+The code `tinytable::save_tt()` will have given you a `.tex` file.
+
+Now, you can drag and drop the entire table `.tex` file into, preferably, a folder in your Overleaf project called something like `Tables`. 
+
+In the [Overleaf ECON 412 folder](https://www.overleaf.com/read/wsrdjdckwmbz#f4467b), for instance, I've uploaded the table from this exercises into the path `tables/tables-from-r/basic_regression_table.tex`. 
 
 When you update your table, you just have to update the drag and drop.
 
-If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Github so that the tables update automatically.
+If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Github so that the tables update automatically when you run your R code, and then again when you compile in Overleaf.
 
 Because we set a label above, we can also cross-reference the table. An example of how to do this is given in the file `templates/examples/inserting-tables.tex`.
 
@@ -1269,11 +1279,10 @@ Because we set a label above, we can also cross-reference the table. An example 
 1. In the section on [interpreting logarithms](#logs-interpretation) we described the interpretation of the coefficient $$\beta_1$$ for Equations \ref{eq:eq_2} and \ref{eq:eq_3}. State the corresponding interpretation of $$\beta_1$$ in the following equation:
 
 $$
-\label{eq:eq_5}
     \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
 $$
 
-2. Determine whether the coefficients in column (2) in Table \ref{tab:basic_reg_table} are statistically significant at the 95\% level (yes, recognizing that these are not using robust standard errors) as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
+2. Determine whether the coefficients in column (2) in the final table are statistically significant at the 95\% level as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
 
 3. Examine the `lm()` model output on the coefficients (intercept and `log(gdp_pc)` for the equation \ref{eq:eq_2}, $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$ by inputting `summary(lm_2)` into your console. What is the outputted p value for each coefficient?
 
@@ -1282,7 +1291,7 @@ $$
     - Write the command you used. (**Hint:** See what we did with `lmtest::coeftest()`). 
     - Verify that they're the same (up to rounding error) as the output we got from the `modelsummary()` output that used `"HC1"` standard errors.
     
-5. In section [Tidying Up](#tidying-up), change the arguments in `tinytable:group_tt()` so that `"GDPpc"` is *repeated* in columns 2 and columns 3 (that is, over the columns labeled (1) and (2)) rather than spanning *across* columns 2 and columns 3.
+5. In [Adding dependent variable names](#depvar_names), change the arguments in `tinytable:group_tt()` so that `"GDPpc"` is *repeated* in columns 2 and columns 3 (that is, over the columns labeled (1) and (2)) rather than spanning *across* columns 2 and columns 3.
 
 6. Make a conjecture about whether the coefficients will have a stronger or weaker relationship for a more recent year. That is, do you think that in more recent years the relationship between GDP per capita and greenhouse gases per capita is stronger, weaker, or about the same as it was in 1960? Briefly explain your reasoning. 
 
