@@ -30,3 +30,13 @@ $masthead-link-color-hover: mix(#ffffff, $primary-color, 60%) !default;
 
 $link-color: #3275b4 !default;
 $link-color-hover: mix(#fff, $link-color, 50%) !default;
+
+/*============================================================================
+    Breakpoints (to fix later see https://github.com/mmistakes/minimal-mistakes/issues/384)
+========================================================================== */
+
+$small : 768px;
+$medium : 900px;
+$medium-wide : 1024px;
+$large : 1280px;
+$x-large : 1900px;

@@ -5,7 +5,7 @@ toc: true
 toc_label: "Contents"
 toc_sticky: true
 author_profile: true
-date: "2024-10-22"
+date: "2024-11-08"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{fixed-effects-estimation}
@@ -16,7 +16,7 @@ vignette: >
 
 
 
-**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code.
+**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 8, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code.
 
 
 ``` r
@@ -39,14 +39,14 @@ library(ekonomR)
 
 # Overview
 
-We're continuing our vignette series of analyzing the evidence of a Green Kuznets curve, or the hypothesis that as a country grows richer (per capita), environmental quality first deteriorates and then improves, in the context of greenhouse gas emissions.
+We're continuing our vignette series of analyzing the evidence of a Green Kuznets curve, or the hypothesis that as a country grows richer, environmental quality first deteriorates and then improves, in the context of greenhouse gas emissions.
 
 In this vignette, we're going to move away from the cross-sectional regression of the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/), and focus on controlling for certain types of factors with fixed effects. 
 
 # Data
 
 
-The dataset we'll be using has already merged the following datasets, and created per-capita measures for gross domestic product (GDP) and greenhouse gases (GHGs)
+The dataset we'll be using includes per-capita measures for gross domestic product (GDP) and greenhouse gases (GHGs) from the following sources:
 
 - population data from the [World Population Prospects](https://population.un.org/wpp/Download/Standard/MostUsed/) (WPP)
 - GDP data from the [Penn World Tables](https://www.rug.nl/ggdc/productivity/pwt/?lang=en) (PWT)
@@ -58,14 +58,14 @@ We'll bring in the data, and then call `reg_data`` to be this dataset (so that t
 data("ghg_pop_gdp")
 # Uncomment below if you'd like to browse the data a little
 #names(ghg_pop_gdp)
-#View(head(ghg_pop_gdp))
+#View(ghg_pop_gdp)
 
 reg_data <- ghg_pop_gdp
 ```
 
 # Refresher of fixed effects
 
-If it's been a while since you've thought about fixed effects, there are a few great videos by [Ben Lambert on youtube](https://www.youtube.com/@SpartacanUsuals) that will get you the intuition. His videos are the first I check out for econometrics concepts I've forgotten.
+If it's been a while since you've thought about fixed effects, there are a few great videos by [Ben Lambert on Youtube](https://www.youtube.com/@SpartacanUsuals) that will get you the intuition. His videos are the first I check out for econometrics concepts I've forgotten.
 
 I recommend the following:
 
@@ -74,9 +74,11 @@ I recommend the following:
 
 I'm now going to assume I can use the jargon talked about in those videos.
 
+## Rough intuition
+
 Suppose we're considering country fixed effects. 
 
-I tend to think of fixed effects regressions as adding a dummy variable for each country, so that each country gets its own Y intercept in a scatter plot of the regressor of interest on the outcome variable.
+I tend to think of fixed effects regressions as adding a dummy variable for each country, so that each country gets its own Y intercept in a scatter plot where the X axis is the regressor of interest (GDP per capita) on the outcome variable on the Y axis (GHG emissions per capita).
 
 You might also have heard of fixed effects as "de-meaning." 
 
@@ -86,9 +88,9 @@ These are equivalent, but one way of describing it might stick in your head bett
 
 # Conceptual framework
 
-In this vignette, we're going to continue examining the relationship between greenhouse gases per capita and GDP per capita, but now we'll use the **panel** nature of our data. We have multiple countries over multiple years. 
+We're going to continue examining the relationship between greenhouse gases per capita and GDP per capita, but now we'll use the **panel** nature of our data rather than examining **cross sections** at a single point in time.
 
-We have here data from 1950 to 2019, ranging from 55 countries in 1950 to 182 countries in 2019.  This panel is therefore **unbalanced**: we don't have data on all countries available for all years. 
+We have here data from 1950 to 2019, ranging from 55 countries in 1950 to 182 countries in 2019. Observing the same country at multiple times makes this a panel. The fact that not all countries are present in all years makes this panel **unbalanced**.
 
 
 ## Pooled regression
@@ -110,17 +112,19 @@ Equation \ref{eq:eq_2} adds in year fixed effects, denoted by $$\alpha_t$$.
 $$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_t \varepsilon_{i,t}\label{eq:eq_2}$$
 
 
-I tend to think of time fixed effects as adding a dummy variable shifts the *average* level of greenhouse gases per capita for each year that is *constant across all countries*. 
+You can think of time fixed effects as adding a dummy variable that shifts the *average* level of greenhouse gases per capita for each year that is *constant across all countries*. 
 
-For instance, we would expect that greenhouse gases are rising globally over time, because countries have generally been emitting more over time. However, even in more recent years, the financial recession of 2008 might have been associated with relatively smaller average global emissions, because many economies were seeing stagnating output.
+For instance, we would expect that greenhouse gases are rising globally over time, because countries have generally been emitting more over time. 
+
+However, even in more recent years, the financial recession of 2008 might have been associated with relatively smaller average global emissions, because many economies were seeing stagnating output.
 
 
 
 ## Entity fixed effects
 
-Equation \ref{eq:eq_3} adds in country fixed effects, denoted by $$\alpha_i$$.
+Equation \ref{eq:eq_3} adds in entity (here, country) fixed effects, denoted by $$\alpha_i$$.
 
-$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_i \varepsilon_{i,t}\label{eq:eq_3}$$
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_i + \varepsilon_{i,t}\label{eq:eq_3}$$
 
 
 We can think of country fixed effects as adding a dummy variable for *each* country that is *constant across all years*. 
@@ -131,7 +135,7 @@ This reflects, for instance, that Sweden has generally been quite environment-co
 
 Equation \ref{eq:eq_4} includes both country fixed effects, denoted by $$\alpha_i$$, as well as year fixed effects, denoted by $$\alpha_t$$. 
 
-$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3+ \alpha_i + \alpha_t \varepsilon_{i,t}\label{eq:eq_4}$$
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3+ \alpha_i + \alpha_t + \varepsilon_{i,t}\label{eq:eq_4}$$
 
 
 Fixed effects can become quite unmanageable quite quickly: we have 70 years and 182 countries. Compare that with just three other regressors.
