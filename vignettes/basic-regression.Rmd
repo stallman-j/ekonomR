@@ -18,36 +18,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-#library(sandwich)
-#library(modelsummary)
+library(sandwich)
+library(modelsummary)
 
-```
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { 
-      equationNumbers: { 
-            autoNumber: "all",
-            formatNumber: function (n) {return '9.'+n}
-      } 
-  }
-});
-</script>
-
-
-
-```{css, echo=FALSE}
-.table, th, td {
-  font-size: 0.9em;
-} 
-.table tbody td, .table thead tr {
-    white-space: nowrap;
-}
-```
-```{r}
-#| include: false
-options(width = 10000)
-options("tinytable_theme_placement_latex_float" = "H")
 ```
 
 
@@ -180,7 +153,9 @@ data_cross_section <- data %>%
 
 Now we run the regression, and show the output. The standard errors we get here as a default with `summary()` are not heteroskedasticity-robust. The R package `lmtest` has a function called `coeftest()` that we can use to get robust standard errors. This is what you would get if you used `, robust` in Stata. 
 
-There's going to be a really easy way to put this into our final table, but it's nice to know the commands for digging into this manually. If I'm exploring a dataset, I often run the following commands in my console to see how the output's looking before I start making my table.
+If you can't remember why we care about heteroskedasticity (or what heteroskedasticity is), I recommend checking out [Ben Lambert's Youtube summary of heteroskedasticity](https://www.youtube.com/watch?v=zRklTsY9w9c&list=PLwJRxp3blEvZyQBTTOMFRP_TDaSdly3gU&index=54) and the next couple videos in that playlist.
+
+There's going to be a really easy way to put heteroskedasticity-robust standard errors into our final table, but it's nice to know the commands for digging into this manually. If I'm exploring a dataset, I often run the following commands in my console to see how the output's looking before I start making my table.
 
 
 ```{r}
@@ -494,9 +469,13 @@ rows <- data.frame("term" = c("Mean"),
                    "(2)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
                    "(3)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
                    "(4)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)))
+
 ```
+Let's also examine what `rows` is as a data frame. It'll look like the following, and we'll just slot that second row in.
 
-
+| term | X.1 | X.2 | X.3 | X.4 |
+|------|-----|-----|-----|-----|
+| Mean | 0.59| 0.59| 0.59| 0.59|
 
 **Step 3:**
 

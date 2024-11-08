@@ -12,67 +12,399 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-library(dplyr)
+library(sandwich)
+library(modelsummary)
+
 ```
 
 
-# Getting Started
+**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code.
 
-If you're working through this vignette with an eye towards starting your own project, I *highly* recommend first checking out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/) to get your project structured in a way that's scalable, sharable, and documentable. 
-
-You can check out the full list of vignettes [here](https://stallman-j.github.io/ekonomR/vignettes/vignettes/)
-
-If you've already created a project using the `ekonomR` function `create_folders()`, you may want to copy the code from the end of this vignette into a file called, say, `fixed-effects-estimation.R` into your project folder folder `code/scratch` so that you can edit and refer back to it.
-
-If you're familiar with RMarkdown or you'd like an excuse to learn it, you can copy `fixed-effects-estimation.Rmd` from [the GitHub repo for ekonomR](https://github.com/stallman-j/ekonomR/blob/main/vignettes/fixed-effects-estimation.Rmd) and save it into `code/scratch`.
-
-Exercises called *comprehension check* will be those that you may understand just by looking at the code if you're experienced in R. If it's not obvious to you how you would write the code to answer these checks, you should puzzle around with the code in your console to figure them out.
-
-
-The data we'll use has been cleaned and loaded into the package `ekonomR`. 
-
-## New Installation 
-
-Run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
-
-
-``` {r, eval = FALSE, results = FALSE}
-install.packages("remotes") 
-remotes::install_github("stallman-j/ekonomR")
+```{r} 
+#install.packages("remotes")
+#remotes::install_github("stallman-j/ekonomR")
 ```
 
-## Re-installation 
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
 
-If you've already installed `ekonomR` before starting this vignette, you'll need to re-install it correctly so that you can access this update.
+# Prerequisites
 
-First, go into the "Packages" tab in RStudio (it's in the window that's shared with tabs for `Files`, `Packages`, `Help`, `Viewer`, and `Presentation`) and make sure that `ekonomR` is *unchecked*. If you don't do this, you might get an error message or R will have to restart.
+I'm also going to assume that you already know the concepts we discussed in the basic cleaning vignettes, as well as in the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette. This vignette directly follows that.
 
-Then run these two lines in your console. This will allow the updated version of `ekonomR` to get installed into your library. If you've already installed the R package `remotes`, comment out that line with a `#` sign in front.
-
-
-``` {r, results = FALSE, eval = FALSE}
-install.packages("remotes") 
-remotes::install_github("stallman-j/ekonomR")
-```
-
-Either way, once you've installed `ekonomR`, you'll want to bring the `ekonomR` package into your working library.
-
+First, bring `ekonomR` into your working library.
 
 ``` {r}
 library(ekonomR)
 ```
 
-Your R Session might ask you to download a bunch of packages. This isn't usually a problem, but because `ekonomR` is getting updated so frequently, you might run into trouble.
+# Overview
 
-If you're given the option, update packages from CRAN, the package repository for well-documented R packages. If your R crashes, run the above sequence but then instruct R *not* to update the packages and see how things go. If you're still having trouble, try uninstalling and reinstalling R and R Studio and then coming back. If you're still having trouble, email me.
+We're continuing our vignette series of analyzing the evidence of a Green Kuznets curve, or the hypothesis that as a country grows richer (per capita), environmental quality first deteriorates and then improves, in the context of greenhouse gas emissions.
+
+In this vignette, we're going to move away from the cross-sectional regression of the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/), and focus on controlling for certain types of factors with fixed effects. 
+
+# Data
 
 
-# Prerequisites
+The dataset we'll be using has already merged the following datasets, and created per-capita measures for gross domestic product (GDP) and greenhouse gases (GHGs)
 
-If you haven't gone through the vignette [Basic Plotting](https://stallman-j.github.io/ekonomR/vignettes/basic-plotting/) and you're new to or rusty with R, see the vignette [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations we'll be assuming you know.
+- population data from the [World Population Prospects](https://population.un.org/wpp/Download/Standard/MostUsed/) (WPP)
+- GDP data from the [Penn World Tables](https://www.rug.nl/ggdc/productivity/pwt/?lang=en) (PWT)
+- greenhouse gas data from the [Global Carbon Budget (GCB)](https://globalcarbonbudget.org/).
+
+We'll bring in the data, and then call `reg_data`` to be this dataset (so that this code is easy to adapt for other datasets).
+``` {r}
+data("ghg_pop_gdp")
+# Uncomment below if you'd like to browse the data a little
+#names(ghg_pop_gdp)
+#View(head(ghg_pop_gdp))
+
+reg_data <- ghg_pop_gdp
+```
+
+In addition, this dataset also contains a few other demographic variables like life expectancy at birth.
+
+# Refresher of fixed effects and dummy variables
+
+If it's been a while since you've thought about fixed effects, there are a few great videos by [Ben Lambert on youtube](https://www.youtube.com/@SpartacanUsuals) that will get you the intuition. His videos are the first I check out for econometrics concepts I've forgotten.
+
+I recommend the following:
+
+1. [Dummy variable estimators](https://www.youtube.com/watch?v=i7vYh1kCEOY)
+2. [Fixed effects estimator](https://www.youtube.com/watch?v=sFvV9b1cGFc)
+
+I'm now going to assume I can use the jargon from these concepts.
+
+Suppose we're considering country fixed effects. 
+
+I tend to think of fixed effects regressions as adding a dummy variable for each country, so that each country gets its own Y intercept in a scatter plot of the regressor of interest on the outcome variable.
+
+You might also have heard of fixed effects as "de-meaning." 
+
+"De-meaning" comes in as the idea that we can generate our fixed effects estimator by calculating the mean value over all time periods for a particular country, and then subtract that from our original equation. In that case, then the coefficient of interest on a regressor can be described as giving us the deviation in our regressor *relative to the country's mean value over all years*.
+
+These are equivalent, but one way of describing it might stick in your head better.
+
+# Conceptual framework
+
+In this vignette, we're going to continue examining the relationship between greenhouse gases per capita and GDP per capita, but now we'll use the **panel** nature of our data. We have multiple countries over multiple years. 
+
+We have here data from 1950 to 2019, ranging from 55 countries in 1950 to 182 countries in 2019.  This panel is therefore **unbalanced**: we don't have data on all countries available for all years. 
+
+
+## Pooled regression
+
+Equation \ref{eq:eq_1} describes a **pooled** panel specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and pooling all the years $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. 
+
+We're including the cubic and quadratic here so that we can have nonlinear effects.
+
+$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_1}$$
+
+It's pooled because we've thrown in all the years and countries without explicitly considering that countries are going to exhibit persistence across time, and that particular years are going to affect all countries. The economic recession of 2008, for instance, stalled economic growth pretty much worldwide.
+
+
+
+## Time fixed effects
+
+Equation \ref{eq:eq_2} adds in year fixed effects, denoted by $$\alpha_t$$.
+
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_t \varepsilon_{i,t}\label{eq:eq_2}$$
+
+
+I tend to think of time fixed effects as adding a dummy variable shifts the *average* level of greenhouse gases per capita for each year that is *constant across all countries*. 
+
+For instance, we would expect that greenhouse gases are rising globally over time, because countries have generally been emitting more over time. However, even in more recent years, the financial recession of 2008 might have been associated with relatively smaller average global emissions, because many economies were seeing stagnating output.
+
+
+
+## Entity fixed effects
+
+Equation \ref{eq:eq_3} adds in country fixed effects, denoted by $$\alpha_i$$.
+
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_i \varepsilon_{i,t}\label{eq:eq_3}$$
+
+
+We can think of country fixed effects as adding a dummy variable for *each* country that is *constant across all years*. 
+
+This reflects, for instance, that Sweden has generally been quite environment-conscious so would tend to emit less regardless of how it is doing economically; that the United States is a rich country and tends to emit quite a lot of greenhouse gases per capita; and that Brazil has and has had a large Amazon rainforest which soaks up a large amount of carbon dioxide. 
+
+## Two-way fixed effects {#twfe}
+
+Equation \ref{eq:eq_4} includes both country fixed effects, denoted by $$\alpha_i$$, as well as year fixed effects, denoted by $$\alpha_t$$. 
+
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3+ \alpha_i + \alpha_t \varepsilon_{i,t}\label{eq:eq_4}$$
+
+
+Fixed effects can become quite unmanageable quite quickly: we have 70 years and 182 countries. Compare that with just three other regressors.
+
+
+
+# Prep some regressions
+
+Let's jump right into this. I'm assuming you're familiar with how I like to set up regression tables from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette.
+
+We'll still use the territorial greenhouse gases per capita. Let's decide what our regressions are going to look like. 
+
+We'll add another element to the lists, `fevars`, where we'll store which variables we're taking fixed effects over.
+
+## Choose regression variables
+
+Pick out our regression variables.
+
+```{r}
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars  = NULL)
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = "year")
+
+reg_3_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("iso3c"))
+
+reg_4_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("year","iso3c"))
+```
+
+## Make regression formulas
+Now that we've our variables chosen, we can make our regression formulas:
+
+```{r}
+reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
+                                  regressor_vars = reg_1_vars$regvars,
+                                  fe_vars = NULL)
+
+reg_eq_2 <- ekonomR::reg_equation(outcome_var    = reg_2_vars$outvar,
+                                  regressor_vars = reg_2_vars$regvars,
+                                  fe_vars        = reg_2_vars$fevars)
+
+reg_eq_3 <- ekonomR::reg_equation(outcome_var    = reg_3_vars$outvar,
+                                  regressor_vars = reg_3_vars$regvars,
+                                  fe_vars        = reg_3_vars$fevars)
+
+reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
+                                  regressor_vars = reg_4_vars$regvars,
+                                  fe_vars        = reg_4_vars$fevars)
+```
+
+## Choose standard errors
+
+`ekonomR` has another convenience function called `cluster_formula()` that takes in either a character vector of the variables you want to cluster or a regression formula, and tries to intelligently pull out the variables you used as fixed effects and turn them into a formula that you can then put into `modelsummary` or `feols` as the variables you should cluster by, so that you don't have to hard-code everything. 
+
+Let's set those up, as well, then. We call them `vcov_x` because they'll go into the `vcov` (variance-covariance matrix) argument. 
+
+
+
+```{r}
+
+vcov_1 <- ekonomR::cluster_formula(reg_eq_1)
+vcov_2 <- ekonomR::cluster_formula(reg_eq_2)
+vcov_3 <- ekonomR::cluster_formula(reg_eq_3)
+vcov_4 <- ekonomR::cluster_formula(reg_eq_4)
+```
+
+You should get a warning message, because `reg_eq_1` is just `gcb_ghg_territorial_pc ~ gdp000_pc + I(gdp000_pc^2) + I(gdp000_pc^3)` and there are no fixed effects in that regression. That's fine, it outputs `"HC1"` which will give us robust standard errors anyways in `modelsummary`.
+
+If you wanted something boutique and had a reason to change these defaults, you could just replace in this list manually, e.g. `vcov_1 <- "HC3"`.
+
+Just like we're going to do with the model output, it would be helpful to aggregate into a list.
+
+```{r}
+vcov_list <- list(vcov_1,
+                  vcov_2,
+                  vcov_3,
+                  vcov_4)
+```
+
+## Generate models
+Let's make up our models. The first is just using `lm()` as before. The rest will have to use `feols::fixest()` to get the right estimation. With `feols` we can get clustered standard errors right away.
+
+```{r}
+model_1 <- lm(reg_eq_1, data = reg_data)
+model_2 <- fixest::feols(reg_eq_2, 
+                         vcov = vcov_2,
+                         data = reg_data)
+model_3 <- fixest::feols(reg_eq_3, 
+                         vcov = vcov_3,
+                         data = reg_data)
+model_4 <- fixest::feols(reg_eq_4, 
+                         vcov = vcov_4,
+                         data = reg_data)
+
+```
+
+We can look at some of these outputs. Uncomment the below if you'd like to check them out manually.
+
+```{r}
+#summary(model_1)
+#summary(model_2)
+#summary(model_3)
+#summary(model_4)
+
+```
+
+Put these models into a handy list
+
+```{r}
+models <- list(
+  "(1)" = model_1,
+  "(2)" = model_2,
+  "(3)" = model_3,
+  "(4)" = model_4)
+```
+
+# Generate output table
+
+## Choose title and notes
+
+```{r}
+my_title <- paste0("GHG and GDP per capita relationship \\label{tab:fe_reg}")
+
+table_notes <- "Robust standard errors given in parentheses in column (1). The other columns have standard errors clustered at the units for which fixed effects are calculated. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024)."
+
+cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$")
+```
+
+
+## Generate dependent variable means
+Let's again generate the mean of the dependent variable and decide the place to put it into the table.
+
+This time, however, we're also going to say whether the *column* has certain fixed effects attached to it. We do this by expanding the `rows` dataframe to include a few more rows.
+
+We also need to add to the `attribute` of rows to place all three rows, otherwise the rows with fixed effects get shunted to the bottom.
+
+``` {r}
+n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_vars$regvars,reg_4_vars$regvars)))
+
+
+rows <- data.frame("term" = c("Mean","Year FE","Country FE"),
+                   "(1)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2), "N","N"),
+                   "(2)"  = c(round(mean(data_cross_section[[reg_2_vars$outvar]]),2), "Y","N"),
+                   "(3)"  = c(round(mean(data_cross_section[[reg_3_vars$outvar]]),2), "N","Y"),
+                   "(4)"  = c(round(mean(data_cross_section[[reg_4_vars$outvar]]),2), "Y","Y"))
+
+attr(rows, 'position') <- c(2*n_total_regvars+4,2*n_total_regvars+5,2*n_total_regvars+6)            
+
+```
+
+This is now what the rows will look like:
+
+
+| term      | X.1 | X.2 | X.3 | X.4 |
+|------     |-----|-----|-----|-----|
+| Mean      | 0.59| 0.59| 0.59| 0.59|
+| Year FE   | N   | Y   | N   | Y   |
+| Country FE| N   | N   | Y   | N   |
+
+## Produce final output
+
+We have a few more things to remove, so `gof_omit` grew a little bit. We also added `vcov_list` to tell `modelsummary` which standard errors to pick, and just for illustration I've set `fmt = 6` to make the coefficients show out to 6 decimal places.
+
+```{r}
+
+my_table <- modelsummary::modelsummary(models,
+                                       stars = FALSE,
+                                       vcov = vcov_list,
+                                       fmt  = 6, # to 4 decimal places
+                                       coef_rename = cov_labels,
+                                       title = my_title,
+                                       format = "latex",
+                                       add_rows = rows,
+                                       gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
+                                       escape = FALSE,
+                                       notes = table_notes
+)   %>%
+  tinytable::group_tt(j = list("GHGpc" =2:5))
+
+my_table
+  
+```
+
+## Save
+
+```{r, eval = FALSE}
+  tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.tex"),
+                     overwrite = TRUE)
+  
+   tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.docx"),
+                     overwrite = TRUE)
+```
+If you get an output error like `cannot open the connection`, make sure the file is closed on your local computer before running the command. R can't overwrite the file if it's open.
+
+
+```{r, eval = TRUE, echo = FALSE}
+  tinytable::save_tt(my_table,
+                     output = here::here("example-project","output","01_tables","fixed_effects_table.tex"),
+                     overwrite = TRUE)
+  
+   tinytable::save_tt(my_table,
+                     output = here::here("example-project","output","01_tables","fixed_effects_table.docx"),
+                     overwrite = TRUE)
+```
+
+#### Outputting to LaTex
+
+Do **not** copy and paste latex output directly into LaTex or Overleaf. There's a much nicer way to do it.
+
+If you're using Overleaf, make sure you have the following code in your preamble:
+
+``` {r, eval = FALSE}
+\usepackage{tabularray}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\UseTblrLibrary{booktabs}
+\NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
+\newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
+\newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
+```
+
+The code `tinytable::save_tt()` will have given you a `.tex` file.
+
+Now, you can drag and drop the entire table `.tex` file into, preferably, a folder in your Overleaf project called something like `Tables`. 
+
+In the [Overleaf ECON 412 folder](https://www.overleaf.com/read/wsrdjdckwmbz#f4467b), for instance, I've uploaded the table from this exercises into the path `tables/tables-from-r/fixed_effects_table.tex`. 
+
+When you update your table, you just have to update the drag and drop.
+
+If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Github so that the tables update automatically when you run your R code, and then again when you compile in Overleaf.
+
+Because we set a label above, we can also cross-reference the table. An example of how to do this is given in the file `templates/examples/inserting-tables.tex`.
+
+# Exercises
+
+1. What would the intuitive relationship between greenhouse gases per capita and GDP per capita be in \ref{eq:eq_1} if $$\beta_1$$ were positive, $$\beta_2$$ were negative, and $$\beta_3$$ were effectively zero? (Think of what the relationship would be at low levels of GDP per capita, intermediate levels, and then high levels of GDP per capita)
+
+    - What about if $$\beta_1$$ were negative, $$\beta_2$$ were positive, and $$\beta_3$$ were negative?
+    - (**Hint:** you might find it helpful to explore some toy numbers in an app like [Desmos](https://www.desmos.com/calculator).)
+    
+2. Generate a new model, called `model_5`, which is the same as `model_4` but instead clustered by just `iso3c` instead of both `year` *and* `iso3c`. What's the standard error on `gdp000_pc` in the old `model_4`, and in this new `model_5`? 
+
+    - You don't need to make up a new table to do this; you can just figure it out from your R console output.
+
+3. Reproduce the final table, but instead of using *per capita* variables use just GDP and just greenhouse gas emissions by country. Remember to change the column title, the table title, the table notes, and the covariate labels.
+
+    - Briefly describe which table, using the per capita variables or the raw country-level variables, that you find more convincing if we're trying to evaluate the relationship between economic growth and greenhouse gas emissions. Why do you prefer the one you prefer?
+
+# Just the code, please
+
+```{r}
+
+```
+
+
+
+

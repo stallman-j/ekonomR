@@ -20,9 +20,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-This is the list of vignettes for the workflow package `ekonomR`. 
+This is the list of vignettes for the workflow package `ekonomR`, but it's also where I've come to put my general resources for coding and reference in these areas. 
 
-To view the code behind all this check out the [ekonomR repository](https://github.com/stallman-j/ekonomR).
+Some of these vignettes don't yet have my `ekonomR` functions to streamline the workflows, but I'm including the walkthrough of the main ideas and then will put it into functions the next time I need to write up similar code.
+
+There are other concepts for which I don't think I have an improvement to suggest. In this case I'll link the resource I think you should check out. Each section also has some resources I recomment.
+
+You can access all the underlying code in the [ekonomR repository](https://github.com/stallman-j/ekonomR).
 
 I'll list the vignettes first, and then in the following section will explain who I envision would use what vignettes in what way.
 
@@ -51,11 +55,20 @@ I'll list the vignettes first, and then in the following section will explain wh
 
 ## Analysis
 
+
 - [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/)
 - [Summary Statistics](https://stallman-j.github.io/ekonomR/vignettes/summary-statistics/)
 - [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation/)
 - [Event Study Regression](https://stallman-j.github.io/ekonomR/vignettes/event-study/)
+- Differences-in-differences: just check out [Asjad Naqvi's DiD tutorials with the `sunab()` option in `fixest`](https://asjadnaqvi.github.io/DiD/). 
 
+    - [This](https://diff.healthpolicydatascience.org/) is a great breakdown of the intuition of DiD, along with the notation you want
+    - [Someone explaining clearly what's wrong with two-way fixed effects and different treatment times](https://andrewcbaker.netlify.app/2019/09/25/difference-in-differences-methodology/)
+
+**General Resources** 
+
+- [The Effect by Nick Huntington-Klein](https://theeffectbook.net/index.html) contains nice exposition on econometrics and identification, along with a bunch of R code examples through the `causaldata` packge.
+- The [CRAN page for Econometrics](https://cran.r-project.org/web/views/Econometrics.html) includes a wealth of information on econometric packages in R.
 
 ## Plotting
 
