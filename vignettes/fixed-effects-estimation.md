@@ -224,7 +224,6 @@ Let's set those up, as well, then. We call them `vcov_x` because they'll go into
 
 
 
-
 ``` r
 
 vcov_1 <- ekonomR::cluster_formula(reg_eq_1)
@@ -567,7 +566,49 @@ Run `modelsummary_reg_default()` with default settings. This will export a file 
 ``` r
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = reg_data)
-
+#> [[1]]
+#> 
+#> Call:
+#> lm(formula = reg_eqs_list[[i]], data = data)
+#> 
+#> Residuals:
+#>     Min      1Q  Median      3Q     Max 
+#> -7.7433 -0.3745 -0.1319  0.0567 18.3961 
+#> 
+#> Coefficients:
+#>                  Estimate Std. Error t value Pr(>|t|)    
+#> (Intercept)    -1.722e-02  2.000e-02  -0.861    0.389    
+#> gdp000_pc       1.150e-01  2.028e-03  56.677   <2e-16 ***
+#> I(gdp000_pc^2) -6.370e-04  3.541e-05 -17.988   <2e-16 ***
+#> I(gdp000_pc^3)  1.732e-06  1.212e-07  14.289   <2e-16 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 1.314 on 10231 degrees of freedom
+#> Multiple R-squared:  0.5517,	Adjusted R-squared:  0.5515 
+#> F-statistic:  4196 on 3 and 10231 DF,  p-value: < 2.2e-16
+#> 
+#> 
+#> [[2]]
+#> OLS estimation, Dep. Var.: gcb_ghg_territorial_pc
+#> Observations: 10,235
+#> Fixed-effects: year: 70
+#> Standard-errors: Clustered (year) 
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> RMSE: 1.27831     Adj. R2: 0.572392
+#>                 Within R2: 0.567107
+#> 
+#> [[3]]
+#> OLS estimation, Dep. Var.: gcb_ghg_territorial_pc
+#> Observations: 10,235
+#> Fixed-effects: iso3c: 182
+#> Standard-errors: Clustered (iso3c) 
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> RMSE: 0.682202     Adj. R2: 0.876855
+#>                  Within R2: 0.202551
+#> Saving regression output to C:/Projects/ekonomR/output/01_tables .
 ```
 
 We can see this output in Console and the viewer
@@ -577,11 +618,6 @@ We can see this output in Console and the viewer
 my_table 
 ```
 
-
-```
-#> Saving regression output to C:/Projects/ekonomR/output/01_tables .
-#> Error: `x` must be of class `tinytable`.
-```
 Let's see a little more flexibility.
 
 You can see the defaults and get help with `?modelsummary_reg_default`.
@@ -600,11 +636,52 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          depvar_means = c(1.23,4.59,"lego"),
                          fmt = 6,
                          export_output = FALSE)
+#> [[1]]
+#> 
+#> Call:
+#> lm(formula = reg_eqs_list[[i]], data = data)
+#> 
+#> Residuals:
+#>     Min      1Q  Median      3Q     Max 
+#> -7.7433 -0.3745 -0.1319  0.0567 18.3961 
+#> 
+#> Coefficients:
+#>                  Estimate Std. Error t value Pr(>|t|)    
+#> (Intercept)    -1.722e-02  2.000e-02  -0.861    0.389    
+#> gdp000_pc       1.150e-01  2.028e-03  56.677   <2e-16 ***
+#> I(gdp000_pc^2) -6.370e-04  3.541e-05 -17.988   <2e-16 ***
+#> I(gdp000_pc^3)  1.732e-06  1.212e-07  14.289   <2e-16 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 1.314 on 10231 degrees of freedom
+#> Multiple R-squared:  0.5517,	Adjusted R-squared:  0.5515 
+#> F-statistic:  4196 on 3 and 10231 DF,  p-value: < 2.2e-16
+#> 
+#> 
+#> [[2]]
+#> OLS estimation, Dep. Var.: gcb_ghg_territorial_pc
+#> Observations: 10,235
+#> Fixed-effects: year: 70
+#> Standard-errors: Clustered (year) 
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> RMSE: 1.27831     Adj. R2: 0.572392
+#>                 Within R2: 0.567107
+#> 
+#> [[3]]
+#> OLS estimation, Dep. Var.: gcb_ghg_territorial_pc
+#> Observations: 10,235
+#> Fixed-effects: iso3c: 182
+#> Standard-errors: Clustered (iso3c) 
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> RMSE: 0.682202     Adj. R2: 0.876855
+#>                  Within R2: 0.202551
 
 my_table <- my_table %>%
-  tinytable::group_tt(j = list("GHGpc" =2:3,"GHGpc" = 4))
+  tinytable::group_tt(j = list("GHGpc" =2:4))
 
-my_table
 
 # generate output folder if it doesn't already exist
 
@@ -618,37 +695,6 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
                      output = here::here("output","01_tables","fixed_effects_table.docx"),
                      overwrite = TRUE)
 ```
-
-\begin{table}
-\centering
-\caption{\label{tab:unnamed-chunk-26}This is my title \label{tab:my_table_label}}
-\centering
-\begin{tabular}[t]{lccc}
-\toprule
-\multicolumn{1}{c}{ } & \multicolumn{2}{c}{GHGpc} & \multicolumn{1}{c}{GHGpc} \\
-\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-4}
-  & &nbsp;(1) & &nbsp;&nbsp;(2) & &nbsp;&nbsp;(3)\\
-\midrule
-Intercept & −0.017223 &  & \\
- & (0.018464) &  & \\
-GDP pc & 0.114956 & 0.125539 & 0.063043\\
- & (0.004084) & (0.004778) & (0.013474)\\
-(GDP pc)$^2$ & −0.000637 & −0.000716 & −0.000739\\
- & (0.000099) & (0.000087) & (0.000259)\\
-(GDP pc)$^3$ & 0.000002 & 0.000002 & 0.000003\\
- & (0.000000) & (0.000000) & (0.000001)\\
-Num.Obs. & 10235 & 10235 & 10235\\
-Mean & 1.23 & 4.59 & 8.9\\
-Year FE & N & Y & N\\
-Country FE & N & N & Y\\
-R2 & 0.552 & 0.575 & 0.879\\
-R2 Within &  & 0.567 & 0.203\\
-\bottomrule
-\multicolumn{4}{l}{\rule{0pt}{1em}Top level notes}\\
-\end{tabular}
-\end{table}
-
-
 
 
 # Exercises

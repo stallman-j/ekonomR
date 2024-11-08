@@ -12,16 +12,13 @@ modelsummary_reg_default(
   cov_labels = FALSE,
   fe_names = NULL,
   depvar_means = NULL,
-  format = "latex",
   stars = FALSE,
-  escape = FALSE,
   gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
   fmt = 4,
   out_path = here::here("output", "01_tables"),
   output_filename = "regression_table",
   export_output = TRUE,
   print_models = TRUE,
-  output = "default",
   ...
 )
 }
@@ -38,11 +35,7 @@ modelsummary_reg_default(
 
 \item{depvar_means}{default of NULL takes the mean of the dependent variable for each column, rounded to 2 significant digits, with missing values removed before the mean is calculated. If you want something different, input a numeric vector of the means that you want for each column of your regression. If not NULL, this vector therefore needs to have the same number of elements as reg_vars_list does.}
 
-\item{format}{defaults to "latex", in modelsummary}
-
 \item{stars}{defaults to FALSE, from modelsummary}
-
-\item{escape}{defaults to FALSE, in modelsummary so that output is less buggy}
 
 \item{gof_omit}{goodness of fit statistics to ignore, defaults to keeping mostly the R2 and Adj R2}
 
@@ -57,6 +50,10 @@ modelsummary_reg_default(
 \item{print_models}{default is TRUE, whether you want to print the list of models with output to the console}
 
 \item{...}{additional options to put into modelsummary}
+
+\item{format}{defaults to "latex", in modelsummary}
+
+\item{escape}{defaults to FALSE, in modelsummary so that output is less buggy}
 }
 \value{
 a modelsummary object

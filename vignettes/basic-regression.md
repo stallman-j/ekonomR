@@ -133,7 +133,9 @@ We'll examine the outcome variable `gcb_ghg_territorial_pc`, or GHGs from territ
 
 ## Example Run-through 
 
-This is a very simple regression equation: the `~` usually means "by" or "on" in R.
+If you're running an interactive session in the R console, here's how you might explore a regression.
+
+This is a very simple equation. You can write a regression manually, but using `reg_equation()` is going to allow us to soft-code the variables we include earlier in the script.
 
 
 ``` r
@@ -142,8 +144,10 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000020abfce3cc0>
+#> <environment: 0x00000209ea9d1748>
 ```
+ The `~` usually means "by" or "on" in R.
+ 
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
 
@@ -164,7 +168,6 @@ There's going to be a really easy way to put heteroskedasticity-robust standard 
 
 
 ``` r
-
 lm_example <- stats::lm(reg_eq_ex, 
                         data = data_cross_section)
 
@@ -202,7 +205,6 @@ Unsurprisingly, the heteroskedasticity-robust standard errors are a little bigge
 
 ## Multiple regression equations
 
-
 Now that we know how to go back and examine the output, let's generate all four of our regression equations in one go.
 
 To get the squared and cubic terms, we use `I(varname^2)` and `I(varname^3)` respectively. You could use `poly(varname,2)` but that's hard to interpret.
@@ -221,16 +223,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000020ab523ded8>
+#> <environment: 0x00000209e89284a0>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x0000020ab520d7e8>
+#> <environment: 0x00000209e88b2fb8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x0000020ab51df320>
+#> <environment: 0x00000209e8855888>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x0000020ab51accc0>
+#> <environment: 0x00000209e880f0b0>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -448,7 +450,7 @@ If this weren't a vignette and I were working in my own script, I would go back 
 
 I'm going to do something that might seem a little weird and convoluted now, but that's going to make adjustment later simpler. 
 
-I'm going to group together the outcome and regressor variables for each regression in a bit of a weird way, so that I can refer to these later without having to hard-code them.
+I'm going to group together the outcome and regressor variables for each regression.
 
 I'm using a `list` because lists can hold objects of different sizes. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
 

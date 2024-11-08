@@ -45,16 +45,13 @@ modelsummary_reg_default <- function(reg_vars_list,
                                  cov_labels = FALSE,
                                  fe_names = NULL,
                                  depvar_means = NULL,
-                                 format = "latex",
                                  stars = FALSE,
-                                 escape = FALSE,
                                  gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
                                  fmt  = 4,
                                  out_path = here::here("output","01_tables"),
                                  output_filename = "regression_table",
                                  export_output = TRUE,
                                  print_models = TRUE,
-                                 output = "default",
                                  ...
                                  ){
 
@@ -166,12 +163,9 @@ modelsummary_reg_default <- function(reg_vars_list,
                                          fmt  = fmt,
                                          coef_rename = cov_labels,
                                          title = my_title,
-                                         format = format,
                                          add_rows = rows,
                                          gof_omit = gof_omit,
-                                         escape = escape,
                                          notes = table_notes,
-                                         output = output,
                                          ...
   )
 

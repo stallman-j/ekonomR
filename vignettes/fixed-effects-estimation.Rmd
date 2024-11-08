@@ -227,7 +227,6 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
 Let's set those up, as well, then. We call them `vcov_x` because they'll go into the `vcov` (variance-covariance matrix) argument. 
 
 
-
 ```{r}
 
 vcov_1 <- ekonomR::cluster_formula(reg_eq_1)
@@ -461,7 +460,7 @@ reg_vars_list <- list(reg_1_vars,
 
 Run `modelsummary_reg_default()` with default settings. This will export a file by default, and also push to your console a summary of all the models you generated. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = reg_data)
 
@@ -473,21 +472,13 @@ We can see this output in Console and the viewer
 my_table 
 ```
 
-```{r, eval = TRUE, echo = FALSE}
-modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = reg_data,
-                         output = "kableExtra",
-                         escape = FALSE,
-                         print_models = FALSE)
-
-```
 Let's see a little more flexibility.
 
 You can see the defaults and get help with `?modelsummary_reg_default`.
 
 `modelsummary()` is already an extremely flexible package, as is `fixest`. The point of this function `modelsummary_reg_default` is not to replace the flexibility of these packages, but to provide a set of simple defaults that get your output up and running without much effort.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = reg_data,
                          my_title = "This is my title \\label{tab:my_table_label}",
@@ -500,9 +491,8 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          export_output = FALSE)
 
 my_table <- my_table %>%
-  tinytable::group_tt(j = list("GHGpc" =2:3,"GHGpc" = 4))
+  tinytable::group_tt(j = list("GHGpc" =2:4))
 
-my_table
 
 # generate output folder if it doesn't already exist
 
@@ -517,54 +507,7 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
                      overwrite = TRUE)
 ```
 
-```{r, eval = TRUE, echo = FALSE}
 
-modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = reg_data,
-                         my_title = "This is my title \\label{tab:my_table_label}",
-                         table_notes = list(a = "Top level notes",
-                                            b = "Second level notes"),
-                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
-                         fe_names = c("Year FE","Country FE"),
-                         depvar_means = c(1.23,4.59,8.90,"lego"),
-                         output = "kableExtra",
-                         fmt = 6,
-                         export_output = FALSE,
-                         print_models = FALSE) %>%
-  kableExtra::add_header_above(c(" "=1, "GHGpc" =2, "GHGpc"=1))
-
-if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
-
- tinytable::save_tt(my_table,
-                     output = here::here("output","01_tables","fixed_effects_table.tex"),
-                     overwrite = TRUE)
-
-  tinytable::save_tt(my_table,
-                     output = here::here("output","01_tables","fixed_effects_table.docx"),
-                     overwrite = TRUE)
-
-
-```
-
-```{r, eval = FALSE, echo = FALSE}
-
-modelsummary::modelsummary(models,
-             stars = FALSE,
-             vcov = vcov_list,
-             fmt = 6,
-             coef_rename = cov_labels,
-             title = my_title,
-             output = "kableExtra",
-             add_rows = rows,
-             gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
-             escape = FALSE,
-             notes = table_notes
-
-) %>%
-  kableExtra::add_header_above(c(" "=1, "GHGpc" =4))
-
-            
-```
 # Exercises
 
 1. What would the intuitive relationship between greenhouse gases per capita and GDP per capita be in Equation \ref{eq:eq_1} if $$\beta_1$$ were positive, $$\beta_2$$ were negative, and $$\beta_3$$ were effectively zero? (Think of what the relationship would be at low levels of GDP per capita, intermediate levels, and then high levels of GDP per capita)
