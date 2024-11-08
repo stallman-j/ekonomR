@@ -144,7 +144,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000020ab5c0bcc8>
+#> <environment: 0x0000020ab8c05f38>
 ```
  The `~` usually means "by" or "on" in R.
  
@@ -223,16 +223,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000209f30fda58>
+#> <environment: 0x0000020ab73642b8>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000209f30a2a00>
+#> <environment: 0x0000020ab8107a48>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000209f306f148>
+#> <environment: 0x0000020ab82e0090>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x000002096cfae730>
+#> <environment: 0x0000020abad91740>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -1295,11 +1295,7 @@ Because we set a label above, we can also cross-reference the table. An example 
 
 # Exercises
 
-1. In the section on [interpreting logarithms](#logs-interpretation) we described the interpretation of the coefficient $$\beta_1$$ for Equations \ref{eq:eq_2} and \ref{eq:eq_3}. State the corresponding interpretation of $$\beta_1$$ in the following equation:
-
-$$
-    \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}
-$$
+1. In the section on [interpreting logarithms](#logs-interpretation) we described the interpretation of the coefficient $$\beta_1$$ for Equations \ref{eq:eq_2} and \ref{eq:eq_3}. State the corresponding interpretation of $$\beta_1$$ in the equation: $$ \text{GHGpc}_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$
 
 2. Determine whether the coefficients in column (2) in the final table are statistically significant at the 95% level as we did in the section [interpreting coefficients](#interpreting-coefficients) by doing a rough back-of-the-envelope calculation. Round as you need.  (This is just to practice the heuristic we typically use for reading regression tables.)
 
