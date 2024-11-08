@@ -83,7 +83,7 @@ Equation \ref{eq:eq_2} adds in a quadratic and a cubic term for GDP per capita, 
 
 Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity).
 
-Equation \ref{eq:eq_4} shows a regression of how $$\text{GDPpc}$$ affects $$\log(\text{GDPpc})$$ (a log-linear regression, often called a semi-elasticity).
+Equation \ref{eq:eq_4} shows a regression of how $$\text{GDPpc}$$ affects $$\log(\text{GHGpc})$$ (a log-linear regression, often called a semi-elasticity).
 
 
 
@@ -105,7 +105,7 @@ $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_
 
 The coefficient of a logged variable is best understood as a percentage. If you're feeling rusty on this, [here's a good explanation](https://openstax.org/books/introductory-business-statistics-2e/pages/13-5-interpretation-of-regression-coefficients-elasticity-and-logarithmic-transformation).
 
-Equation \ref{eq:eq_3}, for instance, says that for a 1% increase in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation~\ref{eq:eq_4}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
+Equation \ref{eq:eq_3}, for instance, says that for a 1% increase in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation\ref{eq:eq_4}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
 
 ## Caveat about logarithms
 
@@ -257,11 +257,7 @@ If this weren't a vignette and I were working in my own script, I would go back 
 
 # Re-running the regression setup
 
-I'm going to do something that might seem a little weird and convoluted now, but that's going to make adjustment later simpler. 
-
-I'm going to group together the outcome and regressor variables for each regression.
-
-I'm using a `list` because lists can hold objects of different sizes. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
+Rather than manually writing the regression equations, let's put the outcome and regression variables into lists. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
 
 ```{r}
 reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
@@ -284,8 +280,6 @@ Now when I want to refer to my outcome variable for, say, the second regression,
 reg_2_vars$outvar
 reg_2_vars$regvars
 ```
-
-This is all the lineup we need to get the equations set up. 
 
 Now we can plug and play.
 

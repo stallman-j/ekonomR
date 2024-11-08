@@ -77,7 +77,7 @@ Equation \ref{eq:eq_2} adds in a quadratic and a cubic term for GDP per capita, 
 
 Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity).
 
-Equation \ref{eq:eq_4} shows a regression of how $$\text{GDPpc}$$ affects $$\log(\text{GDPpc})$$ (a log-linear regression, often called a semi-elasticity).
+Equation \ref{eq:eq_4} shows a regression of how $$\text{GDPpc}$$ affects $$\log(\text{GHGpc})$$ (a log-linear regression, often called a semi-elasticity).
 
 
 
@@ -99,7 +99,7 @@ $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_
 
 The coefficient of a logged variable is best understood as a percentage. If you're feeling rusty on this, [here's a good explanation](https://openstax.org/books/introductory-business-statistics-2e/pages/13-5-interpretation-of-regression-coefficients-elasticity-and-logarithmic-transformation).
 
-Equation \ref{eq:eq_3}, for instance, says that for a 1% increase in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation~\ref{eq:eq_4}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
+Equation \ref{eq:eq_3}, for instance, says that for a 1% increase in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation\ref{eq:eq_4}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
 
 ## Caveat about logarithms
 
@@ -144,7 +144,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000209ea9d1748>
+#> <environment: 0x0000020ab5c0bcc8>
 ```
  The `~` usually means "by" or "on" in R.
  
@@ -223,16 +223,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000209e89284a0>
+#> <environment: 0x00000209f30fda58>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000209e88b2fb8>
+#> <environment: 0x00000209f30a2a00>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000209e8855888>
+#> <environment: 0x00000209f306f148>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000209e880f0b0>
+#> <environment: 0x000002096cfae730>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -448,11 +448,7 @@ If this weren't a vignette and I were working in my own script, I would go back 
 
 # Re-running the regression setup
 
-I'm going to do something that might seem a little weird and convoluted now, but that's going to make adjustment later simpler. 
-
-I'm going to group together the outcome and regressor variables for each regression.
-
-I'm using a `list` because lists can hold objects of different sizes. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
+Rather than manually writing the regression equations, let's put the outcome and regression variables into lists. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
 
 
 ``` r
@@ -479,8 +475,6 @@ reg_2_vars$outvar
 reg_2_vars$regvars
 #> [1] "gdp000_pc"      "I(gdp000_pc^2)" "I(gdp000_pc^3)"
 ```
-
-This is all the lineup we need to get the equations set up. 
 
 Now we can plug and play.
 
