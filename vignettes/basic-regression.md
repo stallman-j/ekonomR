@@ -88,24 +88,31 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation (1) describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. Equation (2) instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity). Equation (3) shows a regression of $$\log(\text{GDPpc})$$ on $$\text{GDPpc}$$ (a log-linear regression, often called a semi-elasticity).
 
-Equation (4) adds in a quadratic and a cubic term for GDP per capita, still within a particular year $$t$$. 
+Equation \ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. If we only had data for the one year, we could omit the $$t$$ subscript for simplicity.
 
-$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}$$
+Equation\ref{eq:eq_2} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $$t$$. 
 
-$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}$$
+Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity).
 
-$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}$$
+Equation\ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
 
-$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}$$
+
+$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
+$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_2}$$
+
+
+$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \log(\text{GDPpc})_{i,t} + \varepsilon_{i,t}\label{eq:eq_3}$$
+
+$$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_4}$$
+
 
 
 ## Interpreting logarithms in equations {#logs-interpretation}
 
 The interpretation of a logarithm of a unit regressor is best understood as a percentage. If you're feeling rusty on this, [here's a good explanation](https://openstax.org/books/introductory-business-statistics-2e/pages/13-5-interpretation-of-regression-coefficients-elasticity-and-logarithmic-transformation).
 
-Equation~\ref{eq:eq_2}, for instance, says that for a 1% change in GDP per capita, we should expect a $\beta_1$% increase in greenhouse gases per capita. Equation~\ref{eq:eq_3}, on the other hand, says that for an increase in one *dollar*, we should see a $\beta_1$ *percent* increase in greenhouse gases per capita.
+Equation (2), for instance, says that for a 1% change in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation~\ref{eq:eq_3}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
 
 ## Caveat about logarithms
 
@@ -148,7 +155,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bbf5cb80>
+#> <environment: 0x00000265df87b230>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -209,40 +216,32 @@ Unsurprisingly, the heteroskedasticity-robust standard errors are a little bigge
 
 Now that we know how to go back and examine the output, let's generate all four of our regression equations in one go.
 
-
-Here are all our regression equations in one go. To get the squared and cubic terms, we use `I(varname^2)` and `I(varname^3)` respectively. You could use `poly(varname,2)` but that's hard to interpret.
+To get the squared and cubic terms, we use `I(varname^2)` and `I(varname^3)` respectively. You could use `poly(varname,2)` but that's hard to interpret.
 
 
 ``` r
-# linear
 reg_eq_1 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
                                   regressor_vars = c("gdp_pc"))
-
-#log-log
 reg_eq_2 <- ekonomR::reg_equation(outcome_var = "log(gcb_ghg_territorial_pc)",
                                   regressor_vars = c("log(gdp_pc)"))
-
-#log-linear
 reg_eq_3 <- ekonomR::reg_equation(outcome_var = "log(gcb_ghg_territorial_pc)",
                                   regressor_vars = c("gdp_pc"))
-
-# With cubic and quadratic
 reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
                                   regressor_vars = c("gdp_pc","I(gdp_pc^2)","I(gdp_pc^3)"))
 
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266b91695b8>
+#> <environment: 0x000002657bd90348>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266b8a1b230>
+#> <environment: 0x000002657bc85cf8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266b70acc60>
+#> <environment: 0x000002657bbe36c8>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266c324d198>
+#> <environment: 0x000002657b72a7b8>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -458,7 +457,7 @@ When we put it all together in a block, we can see how simple it is to re-do thi
 
 I'm going to do something that might seem a little weird and convoluted now, but that's going to make adjustment later simpler. I'm going to list the outcome and regressor variables for each regression in a bit of a weird way up top, so that I can refer to these later without having to hard-code them.
 
-I'm using a `list` because that can hold objects of different sizes.
+I'm using a `list` because that can hold objects of different sizes. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
 
 
 ``` r
@@ -1243,6 +1242,11 @@ If you get an output error like `cannot open the connection`, make sure the file
 
 
 
+```
+#> Error in `pandoc_run()`:
+#> ! Running Pandoc failed with following error
+#> • pandoc.exe: C:/Projects/ekonomR/example-project/output/01_tables/basic_regression_table.docx: withBinaryFile: permission denied (Permission denied)
+```
 
 #### Outputting to LaTex
 
