@@ -72,7 +72,9 @@ I recommend the following:
 1. [Dummy variable estimators](https://www.youtube.com/watch?v=i7vYh1kCEOY)
 2. [Fixed effects estimator](https://www.youtube.com/watch?v=sFvV9b1cGFc)
 
-I'm now going to assume I can use the jargon talked about in those videos.
+Another *great* resource for the intuition is [the Chapter on Fixed Effects in *The Effect* by Nick Huntington-Klein](https://theeffectbook.net/ch-FixedEffects.html). It's really approachable.
+
+I'm now going to assume I can use their jargon.
 
 ## Rough intuition
 
@@ -82,7 +84,9 @@ I tend to think of fixed effects regressions as adding a dummy variable for each
 
 You might also have heard of fixed effects as "de-meaning." 
 
-"De-meaning" comes in as the idea that we can generate our fixed effects estimator by calculating the mean value over all time periods for a particular country, and then subtract that from our original equation. In that case, then the coefficient of interest on a regressor can be described as giving us the deviation in our regressor *relative to the country's mean value over all years*.
+"De-meaning" comes in as the idea that we can generate a fixed effects estimator by calculating the mean value over all time periods for each country, and then subtract that from our original equation. 
+
+In that case, then the coefficient of interest can be described as giving us the change in GHG per capita of a change in GDP per capita *relative to the country's mean GDP per capita over all the years we observe it*.
 
 These are equivalent, but one way of describing it might stick in your head better.
 
@@ -101,15 +105,15 @@ We're including the cubic and quadratic here so that we can have nonlinear effec
 
 $$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_1}$$
 
-It's pooled because we've thrown in all the years and countries without explicitly considering that countries are going to exhibit persistence across time, and that particular years are going to affect all countries. The economic recession of 2008, for instance, stalled economic growth pretty much worldwide.
+It's pooled because we've thrown in all the years and countries without explicitly considering that countries are going to exhibit persistence across time, and that particular years are going to affect all countries.
 
-
+The comparison we're making here is a *between* variation: that is, we're comparing *between* countries and *between* years. The variation in GHG per capita comes from comparing the United States in 1960 to Kenya in 2019.
 
 ## Time fixed effects
 
 Equation \ref{eq:eq_2} adds in year fixed effects, denoted by $$\alpha_t$$.
 
-$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_t \varepsilon_{i,t}\label{eq:eq_2}$$
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_t + \varepsilon_{i,t}\label{eq:eq_2}$$
 
 
 You can think of time fixed effects as adding a dummy variable that shifts the *average* level of greenhouse gases per capita for each year that is *constant across all countries*. 
@@ -117,6 +121,10 @@ You can think of time fixed effects as adding a dummy variable that shifts the *
 For instance, we would expect that greenhouse gases are rising globally over time, because countries have generally been emitting more over time. 
 
 However, even in more recent years, the financial recession of 2008 might have been associated with relatively smaller average global emissions, because many economies were seeing stagnating output.
+
+The other way of thinking about it explicitly as a *within* estimator is to say that now we're looking at the variation *between* countries, but *within* the same period of time. 
+
+We get more information than we would with than running fifty-some individual cross-section regressions for each year, though.
 
 
 
@@ -131,24 +139,33 @@ We can think of country fixed effects as adding a dummy variable for *each* coun
 
 This reflects, for instance, that Sweden has generally been quite environment-conscious so would tend to emit less regardless of how it is doing economically; that the United States is a rich country and tends to emit quite a lot of greenhouse gases per capita; and that Brazil has and has had a large Amazon rainforest which soaks up a large amount of carbon dioxide. 
 
+This is the *within* variation. If we're looking at *within* variation in GDP per capita, it's that we're comparing how Ecuador did economically in 2019 relative to its mean economic level over the whole time period against how Ecuador did economically in 1983.
+
 ## Two-way fixed effects {#twfe}
 
 Equation \ref{eq:eq_4} includes both country fixed effects, denoted by $$\alpha_i$$, as well as year fixed effects, denoted by $$\alpha_t$$. 
 
-$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3+ \alpha_i + \alpha_t + \varepsilon_{i,t}\label{eq:eq_4}$$
+$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3+ \alpha_i + \alpha_t + \varepsilon_{i,t}\label{eq:eq_4}$$
 
 
-Fixed effects can become quite unmanageable quite quickly: we have 70 years and 182 countries. Compare that with just three other regressors.
+Fixed effects can become quite unmanageable quite quickly: we have 70 years and 182 countries. Compare that with just three other regressors. This is precisely why statistics packages in practice compute using some form of de-meaning rather than adding in hundreds, thousands, or more intercepts.
+
+Two-way fixed effects are trickier to interpret, but the key is to think of every set of fixed effects as adding another *within*.
+
+We've subtracted out the country-level means as well as the year-level means. What we're left with is how countries vary from year to year relative to that annual average level across all countries, and then again relative to their own country-average value.
+
+In other words, the variation that we have left after we've included both sets of fixed effects is the variation relative to the average for the country and in that particular year.
+
 
 
 
 # Prep some regressions
 
-Let's jump right into this. I'm assuming you're familiar with how I like to set up regression tables from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette.
+I'm assuming you're familiar with how I like to set up regression tables from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette, so we can jump right in.
 
-We'll still use the territorial greenhouse gases per capita. Let's decide what our regressions are going to look like. 
+We'll still use the territorial greenhouse gases per capita.
 
-We'll add another element to the lists, `fevars`, where we'll store which variables we're taking fixed effects over.
+We'll add another element to the lists, `fevars`, where we'll store which variables we're taking fixed effects over. `iso3c` is the three-letter code for a country, so it's equivalent to using country fixed effects.
 
 ## Choose regression variables
 
@@ -180,7 +197,7 @@ Now that we've our variables chosen, we can make our regression formulas:
 ``` r
 reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
                                   regressor_vars = reg_1_vars$regvars,
-                                  fe_vars = NULL)
+                                  fe_vars        = reg_1_vars$fevars)
 
 reg_eq_2 <- ekonomR::reg_equation(outcome_var    = reg_2_vars$outvar,
                                   regressor_vars = reg_2_vars$regvars,
@@ -213,11 +230,11 @@ vcov_3 <- ekonomR::cluster_formula(reg_eq_3)
 vcov_4 <- ekonomR::cluster_formula(reg_eq_4)
 ```
 
-You should get a warning message, because `reg_eq_1` is just `gcb_ghg_territorial_pc ~ gdp000_pc + I(gdp000_pc^2) + I(gdp000_pc^3)` and there are no fixed effects in that regression. That's fine, it outputs `"HC1"` which will give us robust standard errors anyways in `modelsummary`.
+You should get a warning message from the first one, because `reg_eq_1` is just `gcb_ghg_territorial_pc ~ gdp000_pc + I(gdp000_pc^2) + I(gdp000_pc^3)` and there are no fixed effects in that regression. That's fine. It outputs `"HC1"` which will give us robust standard errors anyways in `modelsummary`.
 
-If you wanted something boutique and had a reason to change these defaults, you could just replace in this list manually, e.g. `vcov_1 <- "HC3"`.
+These are good defaults, but you could obviously change them manually if you had a reason to.
 
-Just like we're going to do with the model output, it would be helpful to aggregate into a list.
+Just like we're going to do with the model, it would be helpful to aggregate these options into a list.
 
 
 ``` r
@@ -270,6 +287,8 @@ models <- list(
 ```
 
 # Generate output table
+
+This should be starting to feel familiar. First we'll choose the title and notes, figure out how to add the dependent variable means, and produce our final output.
 
 ## Choose title and notes
 
@@ -334,51 +353,135 @@ my_table <- modelsummary::modelsummary(models,
                                        notes = table_notes
 )   %>%
   tinytable::group_tt(j = list("GHGpc" =2:5))
+  
+```
 
+
+
+``` r
 my_table
 ```
 
-+--------------+------------+------------+------------+------------+
-|              | GHGpc                                             |
-+--------------+------------+------------+------------+------------+
-|              | (1)        | (2)        | (3)        | (4)        |
-+==============+============+============+============+============+
-| Intercept    | -0.017223  |            |            |            |
-+--------------+------------+------------+------------+------------+
-|              | (0.018464) |            |            |            |
-+--------------+------------+------------+------------+------------+
-| GDP pc       | 0.114956   | 0.125539   | 0.063043   | 0.064470   |
-+--------------+------------+------------+------------+------------+
-|              | (0.004084) | (0.004778) | (0.013474) | (0.014323) |
-+--------------+------------+------------+------------+------------+
-| (GDP pc)$^2$ | -0.000637  | -0.000716  | -0.000739  | -0.000737  |
-+--------------+------------+------------+------------+------------+
-|              | (0.000099) | (0.000087) | (0.000259) | (0.000265) |
-+--------------+------------+------------+------------+------------+
-| (GDP pc)$^3$ | 0.000002   | 0.000002   | 0.000003   | 0.000002   |
-+--------------+------------+------------+------------+------------+
-|              | (0.000000) | (0.000000) | (0.000001) | (0.000001) |
-+--------------+------------+------------+------------+------------+
-| Num.Obs.     | 10235      | 10235      | 10235      | 10235      |
-+--------------+------------+------------+------------+------------+
-| Mean         | NA         | NA         | NA         | NA         |
-+--------------+------------+------------+------------+------------+
-| Year FE      | N          | Y          | N          | Y          |
-+--------------+------------+------------+------------+------------+
-| Country FE   | N          | N          | Y          | Y          |
-+--------------+------------+------------+------------+------------+
-| R2           | 0.552      | 0.575      | 0.879      | 0.883      |
-+--------------+------------+------------+------------+------------+
-| R2 Within    |            | 0.567      | 0.203      | 0.168      |
-+==============+============+============+============+============+
-| Robust standard errors given in parentheses in column (1). The   |
-| other columns have standard errors clustered at the units for    |
-| which fixed effects are calculated. Population data are          |
-| obtained from UN-DESA (2023). Gross domestic product (GDP) in    |
-| 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse  |
-| gases in tonnes of carbon per year from GCB (2024).              |
-+==============+============+============+============+============+
-Table: GHG and GDP per capita relationship \label{tab:fe_reg}
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<caption>GHG and GDP per capita relationship \label{tab:fe_reg}</caption>
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">GHGpc</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;">  (1) </th>
+   <th style="text-align:center;">   (2) </th>
+   <th style="text-align:center;">   (3) </th>
+   <th style="text-align:center;">   (4) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Intercept </td>
+   <td style="text-align:center;"> −0.017223 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.018464) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GDP pc </td>
+   <td style="text-align:center;"> 0.114956 </td>
+   <td style="text-align:center;"> 0.125539 </td>
+   <td style="text-align:center;"> 0.063043 </td>
+   <td style="text-align:center;"> 0.064470 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004084) </td>
+   <td style="text-align:center;"> (0.004778) </td>
+   <td style="text-align:center;"> (0.013474) </td>
+   <td style="text-align:center;"> (0.014323) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^2$ </td>
+   <td style="text-align:center;"> −0.000637 </td>
+   <td style="text-align:center;"> −0.000716 </td>
+   <td style="text-align:center;"> −0.000739 </td>
+   <td style="text-align:center;"> −0.000737 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.000099) </td>
+   <td style="text-align:center;"> (0.000087) </td>
+   <td style="text-align:center;"> (0.000259) </td>
+   <td style="text-align:center;"> (0.000265) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^3$ </td>
+   <td style="text-align:center;"> 0.000002 </td>
+   <td style="text-align:center;"> 0.000002 </td>
+   <td style="text-align:center;"> 0.000003 </td>
+   <td style="text-align:center;"> 0.000002 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.000000) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.000000) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.000001) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.000001) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 10235 </td>
+   <td style="text-align:center;"> 10235 </td>
+   <td style="text-align:center;"> 10235 </td>
+   <td style="text-align:center;"> 10235 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mean </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
+   <td style="text-align:center;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Year FE </td>
+   <td style="text-align:center;"> N </td>
+   <td style="text-align:center;"> Y </td>
+   <td style="text-align:center;"> N </td>
+   <td style="text-align:center;"> Y </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Country FE </td>
+   <td style="text-align:center;"> N </td>
+   <td style="text-align:center;"> N </td>
+   <td style="text-align:center;"> Y </td>
+   <td style="text-align:center;"> Y </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.552 </td>
+   <td style="text-align:center;"> 0.575 </td>
+   <td style="text-align:center;"> 0.879 </td>
+   <td style="text-align:center;"> 0.883 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Within </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.567 </td>
+   <td style="text-align:center;"> 0.203 </td>
+   <td style="text-align:center;"> 0.168 </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Robust standard errors given in parentheses in column (1). The other columns have standard errors clustered at the units for which fixed effects are calculated. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024).</td></tr></tfoot>
+</table>
+
+
 
 ## Save
 
@@ -430,7 +533,7 @@ Because we set a label above, we can also cross-reference the table. An example 
 
 # Exercises
 
-1. What would the intuitive relationship between greenhouse gases per capita and GDP per capita be in \ref{eq:eq_1} if $$\beta_1$$ were positive, $$\beta_2$$ were negative, and $$\beta_3$$ were effectively zero? (Think of what the relationship would be at low levels of GDP per capita, intermediate levels, and then high levels of GDP per capita)
+1. What would the intuitive relationship between greenhouse gases per capita and GDP per capita be in Equation \ref{eq:eq_1} if $$\beta_1$$ were positive, $$\beta_2$$ were negative, and $$\beta_3$$ were effectively zero? (Think of what the relationship would be at low levels of GDP per capita, intermediate levels, and then high levels of GDP per capita)
 
     - What about if $$\beta_1$$ were negative, $$\beta_2$$ were positive, and $$\beta_3$$ were negative?
     - (**Hint:** you might find it helpful to explore some toy numbers in an app like [Desmos](https://www.desmos.com/calculator).)
