@@ -14,31 +14,14 @@ vignette: >
 ---
 
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { 
-      equationNumbers: { 
-            autoNumber: "all",
-            formatNumber: function (n) {return '9.'+n}
-      } 
-  }
-});
-</script>
+
+**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version. You might want to uncomment one or both of the following to run the installation code. (Making sure that the `ekonomR` package is unchecked in your "Packages" tab before you re-install).
 
 
-
-<style type="text/css">
-.table, th, td {
-  font-size: 0.9em;
-} 
-.table tbody td, .table thead tr {
-    white-space: nowrap;
-}
-</style>
-
-
-
-**Make sure** you've got the latest version of `ekonomR`. If you've updated the package less recently than Nov 7, 2024, you should install the latest version.
+``` r
+#install.packages("remotes")
+#remotes::install_github("stallman-j/ekonomR")
+```
 
 
 If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
@@ -159,7 +142,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e33859a0>
+#> <environment: 0x0000020abfce3cc0>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -174,7 +157,9 @@ data_cross_section <- data %>%
 
 Now we run the regression, and show the output. The standard errors we get here as a default with `summary()` are not heteroskedasticity-robust. The R package `lmtest` has a function called `coeftest()` that we can use to get robust standard errors. This is what you would get if you used `, robust` in Stata. 
 
-There's going to be a really easy way to put this into our final table, but it's nice to know the commands for digging into this manually. If I'm exploring a dataset, I often run the following commands in my console to see how the output's looking before I start making my table.
+If you can't remember why we care about heteroskedasticity (or what heteroskedasticity is), I recommend checking out [Ben Lambert's Youtube summary of heteroskedasticity](https://www.youtube.com/watch?v=zRklTsY9w9c&list=PLwJRxp3blEvZyQBTTOMFRP_TDaSdly3gU&index=54) and the next couple videos in that playlist.
+
+There's going to be a really easy way to put heteroskedasticity-robust standard errors into our final table, but it's nice to know the commands for digging into this manually. If I'm exploring a dataset, I often run the following commands in my console to see how the output's looking before I start making my table.
 
 
 
@@ -236,16 +221,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000265e18b4500>
+#> <environment: 0x0000020ab523ded8>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000265e184a408>
+#> <environment: 0x0000020ab520d7e8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000265e17f9ec0>
+#> <environment: 0x0000020ab51df320>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000265e17614b8>
+#> <environment: 0x0000020ab51accc0>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -255,6 +240,7 @@ lm_1 <- lm(reg_eq_1 , data = data_cross_section)
 lm_2 <- lm(reg_eq_2 , data = data_cross_section)
 lm_3 <- lm(reg_eq_3 , data = data_cross_section)
 lm_4 <- lm(reg_eq_4 , data = data_cross_section)
+
 ```
 We then put the corresponding models into a list called `models`. 
 
@@ -479,6 +465,7 @@ reg_3_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
 
 reg_4_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
                   regvars = c("gdp000_pc"))
+
 ```
 
 Now when I want to refer to my outcome variable for, say, the second regression, and then the regressors, I can do that with the following:
@@ -535,6 +522,7 @@ models <- list(
   "(2)" = lm_2,
   "(3)" = lm_3,
   "(4)" = lm_4)
+
 ```
 
 Now we tell `modelsummary` to give us a table.
@@ -727,6 +715,7 @@ my_title <- paste0("Cross Section GHG and GDP per capita relationship, ", cross_
 table_notes <- "Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024)."
   
 cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$","Log(GDP pc)")
+
 ```
 
 ### Robust standard errors
@@ -925,9 +914,13 @@ rows <- data.frame("term" = c("Mean"),
                    "(2)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
                    "(3)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
                    "(4)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)))
+
 ```
+Let's also examine what `rows` is as a data frame. It'll look like the following, and we'll just slot that second row in.
 
-
+| term | X.1 | X.2 | X.3 | X.4 |
+|------|-----|-----|-----|-----|
+| Mean | 0.59| 0.59| 0.59| 0.59|
 
 **Step 3:**
 
@@ -1255,6 +1248,7 @@ my_table <- modelsummary::modelsummary(models,
              notes = table_notes
 )   %>%
   tinytable::group_tt(j = list("GHGpc" =2:3, "log(GHGpc)"=4:5))
+
 ```
 
 

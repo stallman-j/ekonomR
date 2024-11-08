@@ -477,7 +477,10 @@ my_table
 ```{r, eval = TRUE, echo = FALSE}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = ghg_pop_gdp,
-                         output = "kableExtra") 
+                         output = "kableExtra",
+                         print_models = FALSE)
+
+my_table
 ```
 Let's see a little more flexibility.
 
@@ -487,18 +490,18 @@ You can see the defaults and get help with `?modelsummary_reg_default`.
 
 ```{r}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ,
+                         data = reg_data,
                          my_title = "This is my title \\label{tab:my_table_label}",
                          table_notes = list(a = "Top level notes",
                                             b = "Second level notes"),
                          cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
                          fe_names = c("Year FE","Country FE"),
-                         depvar_means = c(1.23,4.59,8.90,"lego"),
+                         depvar_means = c(1.23,4.59,"lego"),
                          fmt = 6,
                          export_output = FALSE)
 
 my_table <- my_table %>%
-  tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
+  tinytable::group_tt(j = list("GHGpc" =2:3,"GHGpc" = 4))
 
 # generate output folder if it doesn't already exist
 
@@ -507,6 +510,27 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
  tinytable::save_tt(my_table,
                      output = here::here("output","01_tables","fixed_effects_table.tex"),
                      overwrite = TRUE)
+
+```
+
+```{r, eval = TRUE, echo = FALSE}
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = ,
+                         my_title = "This is my title \\label{tab:my_table_label}",
+                         table_notes = list(a = "Top level notes",
+                                            b = "Second level notes"),
+                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
+                         fe_names = c("Year FE","Country FE"),
+                         depvar_means = c(1.23,4.59,8.90,"lego"),
+                         output = "kableExtra",
+                         fmt = 6,
+                         export_output = FALSE,
+                         print_models = FALSE)
+
+my_table <- my_table %>%
+  kableExtra::add_header_above(c(" "=1, "GHGpc" =2, "GHGpc"=1))
+            
+my_table
 
 ```
 
@@ -527,7 +551,7 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
 
 # Just the code, please
 
-```{r}
+```{r, eval = FALSE}
 
 # install if you need it
 #install.packages("remotes")

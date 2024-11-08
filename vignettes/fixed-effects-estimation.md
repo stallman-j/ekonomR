@@ -613,6 +613,62 @@ my_table
 ```
 #> NOTE: 114 observations removed because of NA values (LHS: 114).
 #> NOTE: 114 observations removed because of NA values (LHS: 114).
+#> Saving regression output to C:/Projects/ekonomR/output/01_tables .
+```
+
+
++----------------+----------+----------+----------+
+|                | (1)      | (2)      | (3)      |
++================+==========+==========+==========+
+| (Intercept)    | -0.0172  |          |          |
++----------------+----------+----------+----------+
+|                | (0.0185) |          |          |
++----------------+----------+----------+----------+
+| gdp000_pc      | 0.1150   | 0.1255   | 0.0630   |
++----------------+----------+----------+----------+
+|                | (0.0041) | (0.0048) | (0.0135) |
++----------------+----------+----------+----------+
+| I(gdp000_pc^2) | -0.0006  | -0.0007  | -0.0007  |
++----------------+----------+----------+----------+
+|                | (0.0001) | (0.0001) | (0.0003) |
++----------------+----------+----------+----------+
+| I(gdp000_pc^3) | 0.0000   | 0.0000   | 0.0000   |
++----------------+----------+----------+----------+
+|                | (0.0000) | (0.0000) | (0.0000) |
++----------------+----------+----------+----------+
+| Num.Obs.       | 10235    | 10235    | 10235    |
++----------------+----------+----------+----------+
+| Mean           | 1.24     | 1.24     | 1.24     |
++----------------+----------+----------+----------+
+| year FE        | N        | Y        | N        |
++----------------+----------+----------+----------+
+| iso3c FE       | N        | N        | Y        |
++----------------+----------+----------+----------+
+| R2             | 0.552    | 0.575    | 0.879    |
++----------------+----------+----------+----------+
+| R2 Within      |          | 0.567    | 0.203    |
++================+==========+==========+==========+
+| Robust standard errors given in parentheses.    |
++================+==========+==========+==========+
+Table: My regression table \label{tab:reg-table}
+Let's see a little more flexibility.
+
+You can see the defaults and get help with `?modelsummary_reg_default`.
+
+`modelsummary()` is already an extremely flexible package, as is `fixest`. The point of this function `modelsummary_reg_default` is not to replace the flexibility of these packages, but to provide a set of simple defaults that get your output up and running without much effort.
+
+
+``` r
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = reg_data,
+                         my_title = "This is my title \\label{tab:my_table_label}",
+                         table_notes = list(a = "Top level notes",
+                                            b = "Second level notes"),
+                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
+                         fe_names = c("Year FE","Country FE"),
+                         depvar_means = c(1.23,4.59,"lego"),
+                         fmt = 6,
+                         export_output = FALSE)
 #> [[1]]
 #> 
 #> Call:
@@ -642,30 +698,9 @@ my_table
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> RMSE: 0.682202     Adj. R2: 0.876855
 #>                  Within R2: 0.202551
-#> Saving regression output to C:/Projects/ekonomR/output/01_tables .
-```
-Let's see a little more flexibility.
-
-You can see the defaults and get help with `?modelsummary_reg_default`.
-
-`modelsummary()` is already an extremely flexible package, as is `fixest`. The point of this function `modelsummary_reg_default` is not to replace the flexibility of these packages, but to provide a set of simple defaults that get your output up and running without much effort.
-
-
-``` r
-my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ,
-                         my_title = "This is my title \\label{tab:my_table_label}",
-                         table_notes = list(a = "Top level notes",
-                                            b = "Second level notes"),
-                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
-                         fe_names = c("Year FE","Country FE"),
-                         depvar_means = c(1.23,4.59,8.90,"lego"),
-                         fmt = 6,
-                         export_output = FALSE)
-#> Error in eval(mf, parent.frame()): argument "data" is missing, with no default
 
 my_table <- my_table %>%
-  tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
+  tinytable::group_tt(j = list("GHGpc" =2:3,"GHGpc" = 4))
 
 # generate output folder if it doesn't already exist
 
@@ -674,8 +709,53 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
  tinytable::save_tt(my_table,
                      output = here::here("output","01_tables","fixed_effects_table.tex"),
                      overwrite = TRUE)
-#> Error: `j` must be integer-ish; all values must be less than or equal to 4
+
 ```
+
+
+```
+#> Error in eval(mf, parent.frame()): argument "data" is missing, with no default
+#> Error in if (kable_format %in% c("pipe", "markdown")) {: argument is of length zero
+```
+
++--------------+------------+------------+------------+
+|              | GHGpc                   | GHGpc      |
++--------------+------------+------------+------------+
+|              | (1)        | (2)        | (3)        |
++==============+============+============+============+
+| Intercept    | -0.017223  |            |            |
++--------------+------------+------------+------------+
+|              | (0.018464) |            |            |
++--------------+------------+------------+------------+
+| GDP pc       | 0.114956   | 0.125539   | 0.063043   |
++--------------+------------+------------+------------+
+|              | (0.004084) | (0.004778) | (0.013474) |
++--------------+------------+------------+------------+
+| (GDP pc)$^2$ | -0.000637  | -0.000716  | -0.000739  |
++--------------+------------+------------+------------+
+|              | (0.000099) | (0.000087) | (0.000259) |
++--------------+------------+------------+------------+
+| (GDP pc)$^3$ | 0.000002   | 0.000002   | 0.000003   |
++--------------+------------+------------+------------+
+|              | (0.000000) | (0.000000) | (0.000001) |
++--------------+------------+------------+------------+
+| Num.Obs.     | 10235      | 10235      | 10235      |
++--------------+------------+------------+------------+
+| Mean         | 1.23       | 4.59       | lego       |
++--------------+------------+------------+------------+
+| Year FE      | N          | Y          | N          |
++--------------+------------+------------+------------+
+| Country FE   | N          | N          | Y          |
++--------------+------------+------------+------------+
+| R2           | 0.552      | 0.575      | 0.879      |
++--------------+------------+------------+------------+
+| R2 Within    |            | 0.567      | 0.203      |
++==============+============+============+============+
+| ^a^ Top level notes                                 |
++==============+============+============+============+
+| ^b^ Second level notes                              |
++==============+============+============+============+
+Table: This is my title \label{tab:my_table_label}
 
 # Exercises
 
@@ -762,7 +842,6 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
 # choose standard errors
 
 vcov_1 <- ekonomR::cluster_formula(reg_eq_1)
-#> The regression formula you inputted either wasn't the correct format (it should be e.g. 'y ~ x | year') or didn't contain a variable to take fixed effects over (e.g. you wrote just y~x1 + x2 without a clustering variable). It's possible you want to show a regression without fixed effects. In case that's you, I'm setting this output to be 'HC1' so you'll get robust standard errors anyways if you put this output directly into feols or modelsummary.
 vcov_2 <- ekonomR::cluster_formula(reg_eq_2)
 vcov_3 <- ekonomR::cluster_formula(reg_eq_3)
 vcov_4 <- ekonomR::cluster_formula(reg_eq_4)
@@ -879,37 +958,6 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          depvar_means = c(1.23,4.59,8.90,"lego"),
                          fmt = 6,
                          export_output = FALSE)
-#> NOTE: 114 observations removed because of NA values (LHS: 114).
-#> NOTE: 114 observations removed because of NA values (LHS: 114).
-#> [[1]]
-#> 
-#> Call:
-#> lm(formula = reg_eqs_list[[i]], data = data)
-#> 
-#> Coefficients:
-#>    (Intercept)       gdp000_pc  I(gdp000_pc^2)  I(gdp000_pc^3)  
-#>     -1.722e-02       1.150e-01      -6.370e-04       1.732e-06  
-#> 
-#> 
-#> [[2]]
-#> OLS estimation, Dep. Var.: gcb_ghg_territorial_pc
-#> Observations: 10,235
-#> Fixed-effects: year: 70
-#> Standard-errors: Clustered (year) 
-#> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#> RMSE: 1.27831     Adj. R2: 0.572392
-#>                 Within R2: 0.567107
-#> 
-#> [[3]]
-#> OLS estimation, Dep. Var.: gcb_ghg_territorial_pc
-#> Observations: 10,235
-#> Fixed-effects: iso3c: 182
-#> Standard-errors: Clustered (iso3c) 
-#> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#> RMSE: 0.682202     Adj. R2: 0.876855
-#>                  Within R2: 0.202551
 
 my_table <- my_table %>%
   tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
@@ -921,7 +969,6 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
  tinytable::save_tt(my_table,
                      output = here::here("output","01_tables","fixed_effects_table.tex"),
                      overwrite = TRUE)
-#> Error: `j` must be integer-ish; all values must be less than or equal to 4
 ```
 
 
