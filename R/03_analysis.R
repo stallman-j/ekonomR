@@ -40,49 +40,48 @@
 #'
 modelsummary_reg_default <- function(reg_vars_list,
                                      data,
-                                 my_title = "My regression table \\label{tab:reg-table}",
-                                 table_notes = c("Robust standard errors given in parentheses."),
-                                 cov_labels = FALSE,
-                                 fe_names = NULL,
-                                 depvar_means = NULL,
-                                 format = "latex",
-                                 stars = FALSE,
-                                 escape = FALSE,
-                                 gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
-                                 fmt  = 4,
-                                 out_path = here::here("output","01_tables"),
-                                 output_filename = "regression_table",
-                                 export_output = TRUE,
-                                 print_models = TRUE,
-                                 output = "default",
-                                 ...
+                                     my_title = "My regression table \\label{tab:reg-table}",
+                                     table_notes = c("Robust standard errors given in parentheses."),
+                                     cov_labels = FALSE,
+                                     fe_names = NULL,
+                                     depvar_means = NULL,
+                                     format = "latex",
+                                     stars = FALSE,
+                                     escape = FALSE,
+                                     gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
+                                     fmt  = 4,
+                                     out_path = here::here("output","01_tables"),
+                                     output_filename = "regression_table",
+                                     export_output = TRUE,
+                                     print_models = TRUE,
+                                     ...
                                  ){
 
-  # len is the number of regressions we run, it is getting used a lot
+  # len is the number of regressions we run. It is getting used a lot so we just set the number
 
   len <- length(reg_vars_list)
 
-  # create the list of regression equations
-  reg_eqs_list <- vector(mode = "list", length = len)
+  # create the lists we'll need to populate
+  reg_eqs_list         <- vector(mode = "list", length = len)
+  vcov_list            <- vector(mode = "list", length = len)
+  unique_varnames_list <- vector(mode = "list", length = len)
+  models_list          <- vector(mode = "list", length = len)
 
-  # make regression formulas
+
+   # make regression formulas
   for (i in 1:len) {
     reg_eqs_list[[i]] <- ekonomR::reg_equation(outcome_var = reg_vars_list[[i]]$outvar,
                                                regressor_vars = reg_vars_list[[i]]$regvars,
                                                fe_vars     = reg_vars_list[[i]]$fevars)
   }
 
-  # choose standard errors
-
-  vcov_list <- vector(mode = "list", length = len)
-
   # put standard errors in a list
   for (i in 1:len) {
     vcov_list[[i]] <- ekonomR::cluster_formula(reg_eqs_list[[i]], verbose = FALSE)
   }
 
+  # if none of
 
-  models_list <- vector(mode = "list", length = len)
   # generate models
   for (i in 1:len) {
 
@@ -101,7 +100,6 @@ modelsummary_reg_default <- function(reg_vars_list,
 
   # get the number of unique regressor vars
 
-  unique_varnames_list <- vector(mode = "list", length = len)
 
   for (i in 1:len) {
     unique_varnames_list[[i]] <- unique(reg_vars_list[[i]]$regvars)
