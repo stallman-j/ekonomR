@@ -94,7 +94,7 @@ Equation \ref{eq:eq_2} adds in a quadratic and a cubic term for GDP per capita, 
 
 Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity).
 
-Equation \ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
+Equation \ref{eq:eq_4} shows a regression of how $$\text{GDPpc}$$ affects $$\log(\text{GDPpc})$$ (a log-linear regression, often called a semi-elasticity).
 
 
 
@@ -114,13 +114,13 @@ $$\log(\text{GHGpc})_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_
 
 ## Interpreting logarithms in equations {#logs-interpretation}
 
-The interpretation of a logarithm of a unit regressor is best understood as a percentage. If you're feeling rusty on this, [here's a good explanation](https://openstax.org/books/introductory-business-statistics-2e/pages/13-5-interpretation-of-regression-coefficients-elasticity-and-logarithmic-transformation).
+The coefficient of a logged variable is best understood as a percentage. If you're feeling rusty on this, [here's a good explanation](https://openstax.org/books/introductory-business-statistics-2e/pages/13-5-interpretation-of-regression-coefficients-elasticity-and-logarithmic-transformation).
 
-Equation (2), for instance, says that for a 1% change in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation~\ref{eq:eq_3}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
+Equation \ref{eq:eq_3}, for instance, says that for a 1% increase in GDP per capita, we should expect a $$\beta_1$$% increase in greenhouse gases per capita. Equation~\ref{eq:eq_4}, on the other hand, says that for an increase in one *dollar*, we should see a $$\beta_1$$ *percent* increase in greenhouse gases per capita.
 
 ## Caveat about logarithms
 
-There's one big issue with taking logarithms in this context: there are country-years for which the GHGs from consumption are negative. The natural log function approaches negative infinity on the y axis as the x axis approaches zero from the right, and function doesn't exist for negative x values.
+There's one big issue with taking logarithms in this context: there are country-years for which the GHGs from consumption are negative. Logarithms don't exist for negative numbers (and act a little funky for numbers close to zero but positive).
 
 For the sake of convenience for this vignette, we're going to drop the values for which GHGs from consumption are negative or zero.
 
@@ -140,11 +140,11 @@ One of the things that makes regression code messy is going in and rewriting all
 
 That's why `ekonomR` has a simple function called `reg_equation()` that turns your vectors of character variables into a formula that you can just plug into a linear model. 
 
-It works with `lm()` (linear models) and the `feols()` (fixed effects with ordinary least squares) function in the `fixest` package so that you can define your outcome variables, regressor variables, and fixed effects variables up top, and then only change them up here.
+It works with `lm()` (linear models) and the `feols()` (fixed effects with ordinary least squares) function in the `fixest` package so that you can define your outcome variables, regressor variables, and fixed effects variables up top.
 
 Usually, a single table that fits on a portrait-oriented page will have some 3 to 6 columns. If you need more columns than that, you likely need to reorient your page so that it's landscape. 
 
-If you're showing more than six equations, you should also really question if these are the regressions you want to run, or if your output would look better spread across two tables.
+If you're showing more than six equations, you should also question if these are the regressions you want to run, or if your output would look better spread across two tables, or if you're overwhelming your audience with regressions.
 
 We'll examine the outcome variable `gcb_ghg_territorial_pc`, or GHGs from territorial emissions per capita, as per the Global Carbon Budget. Let's examine this first with `gdp_pc` or GDP per capita.
 
@@ -159,7 +159,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266c07f5a90>
+#> <environment: 0x00000265e33859a0>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -236,16 +236,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bef3ab08>
+#> <environment: 0x00000265e18b4500>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266bcf463d8>
+#> <environment: 0x00000265e184a408>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266bbd9f668>
+#> <environment: 0x00000265e17f9ec0>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266c29caa38>
+#> <environment: 0x00000265e17614b8>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -256,15 +256,17 @@ lm_2 <- lm(reg_eq_2 , data = data_cross_section)
 lm_3 <- lm(reg_eq_3 , data = data_cross_section)
 lm_4 <- lm(reg_eq_4 , data = data_cross_section)
 ```
-We then put the corresponding models into a list called `models`. In R, a `list` is a nice way to store objects together. An `object` in R can be just about anything, including output from a plot, a scalar, a name like `"Bob"`, a matrix, a data frame, the output from our linear regression models, a network graph.
+We then put the corresponding models into a list called `models`. 
+
+### Lists in R
+
+In R, a `list` is a nice way to store objects together. An `object` in R can be just about anything, including output from a plot, a scalar, a name like `"Bob"`, a matrix, a data frame, the output from our linear regression models, or a network graph.
 
 Here, the output of a linear regression model is an object that contains things like the standard errors, the residuals, the p values, etc. 
 
 `models` just collects all four of those outputs together so that we can input them all into a function, called `modelsummary()`, that's going to be able to use that information and generate our output table.
 
-Let's go ahead and do that. I'm naming my lists things like `"(1)"` because that's going to go in the column names in the final table. A common error to have happen if you're changing the number of columns you put in a table is to forget that items in a list in R are separated by a comma. 
-
-So in the `list` named `models`, the first item is called `"(1)"`, and it's the object generated by running an `lm()` on the regression equation `reg_eq_1` which was our simple greenhouse gases per capita on gdp per capita. 
+In the `list` named `models`, the first item is called `"(1)"`, and it's the object generated by running an `lm()` on the regression equation `reg_eq_1` which was our simple greenhouse gases per capita on GDP per capita. 
 
 
 ``` r
@@ -276,9 +278,8 @@ models <- list(
 )
 ```
 
-Here's the simple output with `modelsummary()`. We'll add elements to the table to make it more complicated as we go, and then once we've gone through all the parts we'll put everything together into a single code block so we can see how much easier it is to edit once we've done the soft coding.
+Here's the simplest output with `modelsummary()`.
 
-The output here goes straight to console. 
 
 ``` r
 modelsummary::modelsummary(models)
@@ -455,13 +456,15 @@ The coefficient on `gdp_pc` is $$1.96\times 10^{-4}$$. It's just scaled too smal
 
 Fortunately, in the [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/) vignette we created a variable called `gdp000_pc`, or GDP per capita in *thousands* of chained 2017 PPP USD.
 
-If this weren't a vignette and I were working in my own script, I would go back and just change the regressor variables defined in `reg_eq_1` to `reg_eq_4` to be `gdp000_pc` where it was relevant. We won't need to make this change for the logarithm, that shows up fine.
+If this weren't a vignette and I were working in my own script, I would go back and just change the regressor variables defined in `reg_eq_1` to `reg_eq_4` to be `gdp000_pc` where it was relevant. We won't need to make this change for the logarithm, since that shows up fine.
 
-When we put it all together in a block, we can see how simple it is to re-do things when we've got everything so clearly labeled and organized. 
+# Re-running the regression setup
 
-I'm going to do something that might seem a little weird and convoluted now, but that's going to make adjustment later simpler. I'm going to list the outcome and regressor variables for each regression in a bit of a weird way up top, so that I can refer to these later without having to hard-code them.
+I'm going to do something that might seem a little weird and convoluted now, but that's going to make adjustment later simpler. 
 
-I'm using a `list` because that can hold objects of different sizes. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
+I'm going to group together the outcome and regressor variables for each regression in a bit of a weird way, so that I can refer to these later without having to hard-code them.
+
+I'm using a `list` because lists can hold objects of different sizes. I've also changed the order of equations (mostly for aesthetic purposes in the final table).
 
 
 ``` r
@@ -488,7 +491,11 @@ reg_2_vars$regvars
 #> [1] "gdp000_pc"      "I(gdp000_pc^2)" "I(gdp000_pc^3)"
 ```
 
-This is all the lineup we need to get the equations set up. First set up our equations, then make the regression models, then put them into a nice little list.
+This is all the lineup we need to get the equations set up. 
+
+Now we can plug and play.
+
+First set up our equations.
 
 
 ``` r
@@ -503,8 +510,11 @@ reg_eq_3 <- ekonomR::reg_equation(outcome_var    = reg_3_vars$outvar,
 
 reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
                                   regressor_vars = reg_4_vars$regvars)
+```
 
-# make regression models
+Now make the regression models.
+
+``` r
 lm_1 <- lm(reg_eq_1 , data = data_cross_section)
 lm_2 <- lm(reg_eq_2 , data = data_cross_section)
 lm_3 <- lm(reg_eq_3 , data = data_cross_section)
@@ -515,8 +525,11 @@ lm_4 <- lm(reg_eq_4 , data = data_cross_section)
 #summary(lm_2)
 #summary(lm_3)
 #summary(lm_4)
+```
 
-# put regression models into a single list
+Now put the regression models together into another list called `models`.
+
+``` r
 models <- list(
   "(1)" = lm_1,
   "(2)" = lm_2,
@@ -693,7 +706,7 @@ If we add that 0.04 to 0.196, we get about 0.236, which did not cross the line t
 
 If we subtract 0.04 from 0.196, we get 0.156, which also doesn't cross over into negative territory. This coefficient is highly significant.
 
-On the other hand, when we do the same thing for `gdp000_pc` in column (4), we can get the coefficient of -0.077 to cross over zero and turn positive if we add $$2\times 0.116$$ to it, so this coefficient is *not* significant at the 95\% level.
+On the other hand, when we do the same thing for `gdp000_pc` in column (4), we can get the coefficient of -0.077 to cross over zero and turn positive if we add $$2\times 0.116$$ to it, so this coefficient is *not* significant at the 95% level.
 
 ## Making prettier tables
 
@@ -884,7 +897,7 @@ What's this code doing:
 - Start with `data_cross_section`
 - Choose the column that corresponds to `reg_1_vars$outvar` (which is a fancy way of saying `"ghg_territorial_pc"`, but soft-coded so that we can make changes )
 - Take the mean
-- Rounding that average to two decimal places so it fits nicely in the table.
+- Round that average to two decimal places so it fits nicely in the table.
 
 If you're modifying this code for your own regressions and not using logged variables, you'll want to use the following code.
 
@@ -1311,9 +1324,10 @@ $$
 
 6. Make a conjecture about whether the coefficients will have a stronger or weaker relationship for a more recent year. That is, do you think that in more recent years the relationship between GDP per capita and greenhouse gases per capita is stronger, weaker, or about the same as it was in 1960? Briefly explain your reasoning. 
 
-    - I'm not interested in whether you're right or wrong here. It's just good practice to document your hypotheses *before* you run an analysis, and if you haven't thought about your hypothesis before you do your analysis, it's easy to get off track.
+    - I'm not interested in whether you're right or wrong here. It's just good practice to document your hypotheses *before* you run an analysis.
+    - If you haven't thought about your hypothesis before you do your analysis, it's easy to get off track.
 
-7. **Make sure you do Exercise 6 before you run this analysis**. *Without* changing your conjecture, re-create the analysis we did above to produce a final table with a year more recent than 2000. Compare this with your conjecture from Exercise 6. 
+7. **Make sure you do Exercise 6 before you run this analysis**. *Without* changing your conjecture ex post, re-create the analysis we did above to produce a final table with a year more recent than 2000. Compare this with your conjecture from Exercise 6. 
 
     - Did your reasoning hold? 
     - If you were wrong, suggest why the results might differ from your initial hypothesis.
