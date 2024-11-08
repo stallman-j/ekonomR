@@ -84,9 +84,9 @@ The dataset we'll be using has already merged the following datasets, and create
 
 ``` {r}
 data("ghg_pop_gdp")
-
-names(ghg_pop_gdp)
-View(head(ghg_pop_gdp))
+# Uncomment below if you'd like to browse the data a little
+#names(ghg_pop_gdp)
+#View(head(ghg_pop_gdp))
 ```
 
 In addition, this dataset also contains a few other demographic variables like life expectancy at birth.
@@ -101,11 +101,11 @@ We'll run a linear regression, a log-log regression, and a log-linear regression
 
 Equation \ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. If we only had data for the one year, we could omit the $$t$$ subscript for simplicity.
 
-Equation\ref{eq:eq_2} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $$t$$. 
+Equation \ref{eq:eq_2} adds in a quadratic and a cubic term for GDP per capita, still within a particular year $$t$$. 
 
 Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity).
 
-Equation\ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
+Equation \ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
 
 
 $$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
@@ -376,7 +376,7 @@ If you're looking for maximum customizability, check out the [modelsummary vigne
 
 Let's state the title, notes and coefficient labels all together. Note that we made use of `paste0()` to soft-code the cross-section year (so that we could easily check this regression for, say, 2018 instead of 1960). 
 
-The part that says `\\label{tab:basic_reg_table}` is just the way that LaTex will be able to cross-reference the table. If you're outputting to Word, it's just going to get ignored.
+The part that says `\\label{tab:basic_reg_table}` is the way that LaTex will be able to cross-reference the table. If you're outputting to Word, it's going to get ignored, but you can delete it for simplicity. The `$^2$` formatting doesn't show up well on this web page with the current settings, but in both Word and Latex will come up as something like $$(\text{GDP pc})^2$$
 
 ```{r}
 my_title <- paste0("Cross Section GHG and GDP per capita relationship, ", cross_section_year, " \\label{tab:basic_reg_table}")
@@ -443,24 +443,18 @@ n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_v
 
 **Step 2:** 
 
-Create a data frame that's got the same formatting as our `modelsummary()` output table.
+Create a data frame that's got the same formatting as our `modelsummary()` output table, so that we can basically just tell `modelsummary()` that in a particular spot, insert our new data frame `rows` as extra rows.
 
-What's happening here in, say, column `"(1)"` is that we're taking `data_cross_section`, choosing the column that corresponds to `reg_1_vars$outvar`, and taking the mean, and *then* we're rounding that average to two decimal places.
+For each cell, we're going to want the mean of the dependent variable of the regression column it corresponds to.
 
-The problem is, `log(gcb_ghg_territorial_pc)` isn't an actual variable, and it's the dependent variable here. If we tried to do this directly, we'd get an error. 
+What's this code doing:
 
-It's also not super helpful to know what the value of log greenhouse gases are. So okay, fine, let's cheat a little bit and just use the units value for this from regression 1 for the first three columns.
+- Start with `data_cross_section`
+- Choose the column that corresponds to `reg_1_vars$outvar` (which is a fancy way of saying `"ghg_territorial_pc"`, but soft-coded so that we can make changes )
+- Take the mean
+- Rounding that average to two decimal places so it fits nicely in the table.
 
-
-``` {r}
-rows <- data.frame("term" = c("Mean"),
-                   "(1)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
-                   "(2)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
-                   "(3)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
-                   "(4)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)))
-```
-
-If you're modifying this code for your own regressions and not using logged variables, you'll want to use the following code instead so that your dependent variable means actually track your regressions.
+If you're modifying this code for your own regressions and not using logged variables, you'll want to use the following code.
 
 ``` {r, eval = FALSE}
 rows <- data.frame("term" = c("Mean"),
@@ -471,13 +465,30 @@ rows <- data.frame("term" = c("Mean"),
 ```
 
 
+That said, we're going to cheat a little bit and just use the units value for this from regression 1 for the first three columns.
+
+That's because `log(gcb_ghg_territorial_pc)` isn't an actual variable. If we tried to do this directly, we'd get an error.
+
+It's also not super helpful to know what the value of log greenhouse gases are, so we'll just use the levels. This is the thing that actually gets run in this particular case:
+
+
+``` {r}
+rows <- data.frame("term" = c("Mean"),
+                   "(1)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
+                   "(2)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
+                   "(3)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
+                   "(4)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)))
+```
+
+
+
 **Step 3:**
 
-Trial and error and some googling suggests this funky hack will let us put the dependent variable means in the right spot.  
+Trial and error and some googling suggests the following funky hack will let us put the dependent variable means in the right spot.  
 
-Why: we want `rows` to be inserted into the row that's below all the regressor variables (which take up two rows, one for the point estimate and one for the standard error), as well as the column names and the number of observations.
+Why: we want `rows` to be inserted at the row that's below all the regressor variables (which take up two rows, one for the point estimate and one for the standard error), as well as the column names and the number of observations.
 
-If you start adding column titles and stuff to your table, you might need to play with this formula a little bit to get it where you want it.
+If you make large modifications to your own table, you might need to play with this formula a little bit to get it where you want it.
 
 ```{r}
 attr(rows, 'position') <- c(2*n_total_regvars+4)            
@@ -556,6 +567,7 @@ modelsummary::modelsummary(models,
 
             
 ```
+
 ### Output
 
 This looks good! Now we want to output, either to LaTex or to Word. Fortunately, it's super simple to do either with just a change of options in `tinytable::save_tt()` because `tinytable` recognizes what options you wanted based on the file extension you list.
@@ -606,7 +618,7 @@ Do **not** copy and paste latex output directly into LaTex or Overleaf. There's 
 
 If you're using Overleaf, make sure you have the following code in your preamble:
 
-``` {bash, eval = FALSE}
+``` {r, eval = FALSE}
 \usepackage{tabularray}
 \usepackage{float}
 \usepackage{graphicx}
@@ -657,3 +669,133 @@ $$
 
     - Did your reasoning hold? 
     - If you were wrong, suggest why the results might differ from your initial hypothesis.
+
+# Just the code, please
+
+Here's the code that you would want to modify if you're doing this for your own project.
+``` {r, eval = FALSE}
+
+# bring in ekonomR
+library(ekonomR)
+
+# bring in data
+data("ghg_pop_gdp")
+
+names(ghg_pop_gdp)
+View(head(ghg_pop_gdp))
+
+# set parameters
+cross_section_year <- 1960
+
+my_title <- paste0("Cross Section GHG and GDP per capita relationship, ", cross_section_year, " \\label{tab:basic_reg_table}")
+
+table_notes <- "Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024)."
+
+cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$","Log(GDP pc)")
+
+
+# make data restrictions
+
+# for now since we're using logs, just restrict emissions to being positive
+data <- ghg_pop_gdp %>%
+  dplyr::filter(gcb_ghg_territorial_pc > 0)
+
+data_cross_section <- data %>%
+  dplyr::filter(year == cross_section_year)
+
+
+# define regression outcome and regressor variables
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc"))
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"))
+
+reg_3_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
+                   regvars = c("log(gdp_pc)"))
+
+reg_4_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
+                   regvars = c("gdp000_pc"))
+
+# make regression formulas
+reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
+                                  regressor_vars = reg_1_vars$regvars)
+
+reg_eq_2 <- ekonomR::reg_equation(outcome_var    = reg_2_vars$outvar,
+                                  regressor_vars = reg_2_vars$regvars)
+
+reg_eq_3 <- ekonomR::reg_equation(outcome_var    = reg_3_vars$outvar,
+                                  regressor_vars = reg_3_vars$regvars)
+
+reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
+                                  regressor_vars = reg_4_vars$regvars)
+
+# make regression models
+lm_1 <- lm(reg_eq_1 , data = data_cross_section)
+lm_2 <- lm(reg_eq_2 , data = data_cross_section)
+lm_3 <- lm(reg_eq_3 , data = data_cross_section)
+lm_4 <- lm(reg_eq_4 , data = data_cross_section)
+
+# uncomment if you want to examine the output
+#summary(lm_1)
+#summary(lm_2)
+#summary(lm_3)
+#summary(lm_4)
+
+# put regression models into a single list
+models <- list(
+  "(1)" = lm_1,
+  "(2)" = lm_2,
+  "(3)" = lm_3,
+  "(4)" = lm_4)
+
+
+# add dependent variable means
+
+# get total regressor vars so we know how many rows to skip down
+n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_vars$regvars,reg_4_vars$regvars)))
+
+# create data frame of depvar means. 
+# IMPORTANT: if you're modifying this for your own stuff, change the reg_1_vars to reg_2_vars and reg_3_vars and reg_4_vars and so forth
+
+rows <- data.frame("term" = c("Mean"),
+                   "(1)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
+                   "(2)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
+                   "(3)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)),
+                   "(4)"  = c(round(mean(data_cross_section[[reg_1_vars$outvar]]),2)))
+
+# say where we're going to put the rows df
+attr(rows, 'position') <- c(2*n_total_regvars+4)            
+
+# produce final output
+
+my_table <- modelsummary::modelsummary(models,
+                                       stars = FALSE,
+                                       vcov = "HC1",
+                                       coef_rename = cov_labels,
+                                       title = my_title,
+                                       format = "latex",
+                                       add_rows = rows,
+                                       gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
+                                       escape = FALSE,
+                                       notes = table_notes
+)   %>%
+  tinytable::group_tt(j = list("GHGpc" =2:3, "log(GHGpc)"=4:5))
+
+# save output
+
+# save_tt will break if you don't have the output path created. this little line below will create the path if it doesn't already exist.
+# if you used ekonomR::create_folders() previously it should exist already
+
+if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+
+
+tinytable::save_tt(my_table,
+                   output = here::here("output","01_tables","basic_regression_table.tex"),
+                   overwrite = TRUE)
+
+tinytable::save_tt(my_table,
+                   output = here::here("output","01_tables","basic_regression_table.docx"),
+                   overwrite = TRUE)
+
+```
