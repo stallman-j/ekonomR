@@ -66,7 +66,8 @@ data("ghg_pop_gdp")
 #names(ghg_pop_gdp)
 #View(ghg_pop_gdp)
 
-reg_data <- ghg_pop_gdp
+reg_data <- ghg_pop_gdp %>%
+            dplyr::filter(!is.na(gcb_ghg_territorial_pc))
 ```
 
 # Refresher of fixed effects
@@ -318,12 +319,14 @@ attr(rows, 'position') <- c(2*n_total_regvars+4,2*n_total_regvars+5,2*n_total_re
 
 ```
 
-This is now what the rows will look like:
+This is now what the rows will look like. 
+
+If you're getting `NA` in the rows for a particular variable when you do your own analysis, make sure you remove your missing values of the outcome variable, or examine the `na.rm` in the help for `?mean`, because the mean will default to missing if any values are missing.
 
 
 | term      | X.1 | X.2 | X.3 | X.4 |
 |------     |-----|-----|-----|-----|
-| Mean      | 0.59| 0.59| 0.59| 0.59|
+| Mean      | 1.29| 1.29| 1.29| 1.29|
 | Year FE   | N   | Y   | N   | Y   |
 | Country FE| N   | N   | Y   | N   |
 
@@ -446,6 +449,157 @@ Because we set a label above, we can also cross-reference the table. An example 
 # Just the code, please
 
 ```{r}
+
+# install if you need it
+#install.packages("remotes")
+#remotes::install_github("stallman-j/ekonomR")
+
+
+# bring in ekonomR
+
+library(ekonomR)
+
+# bring in the data
+data("ghg_pop_gdp")
+# Uncomment below if you'd like to browse the data a little
+#names(ghg_pop_gdp)
+#View(ghg_pop_gdp)
+
+# remove non-missing values for now
+reg_data <- ghg_pop_gdp %>%
+  dplyr::filter(!is.na(gcb_ghg_territorial_pc))
+
+# choose regression variables
+
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars  = NULL)
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = "year")
+
+reg_3_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("iso3c"))
+
+reg_4_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("year","iso3c"))
+
+# create regression equations
+
+reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
+                                  regressor_vars = reg_1_vars$regvars,
+                                  fe_vars        = reg_1_vars$fevars)
+
+reg_eq_2 <- ekonomR::reg_equation(outcome_var    = reg_2_vars$outvar,
+                                  regressor_vars = reg_2_vars$regvars,
+                                  fe_vars        = reg_2_vars$fevars)
+
+reg_eq_3 <- ekonomR::reg_equation(outcome_var    = reg_3_vars$outvar,
+                                  regressor_vars = reg_3_vars$regvars,
+                                  fe_vars        = reg_3_vars$fevars)
+
+reg_eq_4 <- ekonomR::reg_equation(outcome_var    = reg_4_vars$outvar,
+                                  regressor_vars = reg_4_vars$regvars,
+                                  fe_vars        = reg_4_vars$fevars)
+
+# examine the equations if you like
+
+#reg_eq_1
+#reg_eq_2
+#reg_eq_3
+#reg_eq_4
+
+# choose standard errors
+
+vcov_1 <- ekonomR::cluster_formula(reg_eq_1)
+vcov_2 <- ekonomR::cluster_formula(reg_eq_2)
+vcov_3 <- ekonomR::cluster_formula(reg_eq_3)
+vcov_4 <- ekonomR::cluster_formula(reg_eq_4)
+
+# put standard error choices together in a list
+
+vcov_list <- list(vcov_1,
+                  vcov_2,
+                  vcov_3,
+                  vcov_4)
+
+# generate models
+model_1 <- lm(reg_eq_1, data = reg_data)
+model_2 <- fixest::feols(reg_eq_2, 
+                         vcov = vcov_2,
+                         data = reg_data)
+model_3 <- fixest::feols(reg_eq_3, 
+                         vcov = vcov_3,
+                         data = reg_data)
+model_4 <- fixest::feols(reg_eq_4, 
+                         vcov = vcov_4,
+                         data = reg_data)
+
+# look at outputs
+#summary(model_1)
+#summary(model_2)
+#summary(model_3)
+#summary(model_4)
+
+# put models into a list
+models <- list(
+  "(1)" = model_1,
+  "(2)" = model_2,
+  "(3)" = model_3,
+  "(4)" = model_4)
+
+# choose title and notes 
+my_title <- paste0("GHG and GDP per capita relationship \\label{tab:fe_reg}")
+
+table_notes <- "Robust standard errors given in parentheses in column (1). The other columns have standard errors clustered at the units for which fixed effects are calculated. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024)."
+
+cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$")
+
+# generate dependent variable means
+n_total_regvars <- length(unique(c(reg_1_vars$regvars,reg_2_vars$regvars,reg_3_vars$regvars,reg_4_vars$regvars)))
+
+
+rows <- data.frame("term" = c("Mean","Year FE","Country FE"),
+                   "(1)"  = c(round(mean(reg_data[[reg_1_vars$outvar]]),2), "N","N"),
+                   "(2)"  = c(round(mean(reg_data[[reg_2_vars$outvar]]),2), "Y","N"),
+                   "(3)"  = c(round(mean(reg_data[[reg_3_vars$outvar]]),2), "N","Y"),
+                   "(4)"  = c(round(mean(reg_data[[reg_4_vars$outvar]]),2), "Y","Y"))
+
+attr(rows, 'position') <- c(2*n_total_regvars+4,2*n_total_regvars+5,2*n_total_regvars+6)            
+
+
+# produce final output
+
+my_table <- modelsummary::modelsummary(models,
+                                       stars = FALSE,
+                                       vcov = vcov_list,
+                                       fmt  = 6, # to 4 decimal places
+                                       coef_rename = cov_labels,
+                                       title = my_title,
+                                       format = "latex",
+                                       add_rows = rows,
+                                       gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
+                                       escape = FALSE,
+                                       notes = table_notes
+)   %>%
+  tinytable::group_tt(j = list("GHGpc" =2:5))
+
+
+# generate output folder if it doesn't already exist
+if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+
+
+# save 
+tinytable::save_tt(my_table,
+                   output = here::here("output","01_tables","fixed_effects_table.tex"),
+                   overwrite = TRUE)
+
+tinytable::save_tt(my_table,
+                   output = here::here("output","01_tables","fixed_effects_table.docx"),
+                   overwrite = TRUE)
 
 ```
 
