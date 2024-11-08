@@ -98,13 +98,19 @@ In this vignette, we're going to examine the relationship between greenhouse gas
 We'll run a linear regression, a log-log regression, and a log-linear regression, as well as a fourth specification with a cubic and quadratic term (to allow for a particular type of non-linear relationship).
 
 ## Specifications
-Equation (1) describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. 
+Equation (1) \ref{eq:eq_1} describes a cross-section specification, showing $$\text{GHGpc}$$, greenhouse gas emissions per capita in country $$i$$ and during a particular year $$t$$, as a function of $$\text{GDPpc}$$, per-capita GDP. 
 
 Equation (2) instead takes $$\log(\text{GDPpc})$$ as the outcome variable and $$\log(\text{GDPpc})$$ as the regressor (a log-log regression, or an elasticity).
 
 Equation (3) shows a regression of $$\log(\text{GDPpc})$$ on $$\text{GDPpc}$$ (a log-linear regression, often called a semi-elasticity).
 
 Equation (4) adds in a quadratic and a cubic term for GDP per capita, still within a particular year $$t$$. 
+
+\begin{equation}
+\label{eq:eq_1}
+\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}
+\end{equation}
+
 
 $$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}$$
 
