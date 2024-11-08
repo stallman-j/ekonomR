@@ -254,7 +254,9 @@ modelsummary::modelsummary(models)
 
 ```{r, eval = TRUE, echo = FALSE}
 modelsummary::modelsummary(models,
-                           output = "kableExtra")
+                           output = "kableExtra",
+                           escape = FALSE)
+            
 ```
 
 Immediately we see something's up: all the GDP per capita values look like zeros to three significant digits. But wasn't the regression output significant?
@@ -341,11 +343,11 @@ modelsummary::modelsummary(models)
 
 ```
 
-```{r, eval = TRUE, echo = FALSE, results = 'asis'}
-
+```{r, eval = TRUE, echo = FALSE}
 modelsummary::modelsummary(models,
-                           output = "tinytable") %>%
-              tinytable::theme_tt(theme = "bootstrap")
+                           output = "kableExtra",
+                           escape = FALSE)
+            
 ```
 
 We're getting there!
@@ -381,18 +383,11 @@ cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$","Log(GDP pc)
 ```
 
 
-We'll also set some options for `modelsummary` that will make the output prettier. We're going to use the package `tinytable` to format the tables.
-
-```{r}
- # options(modelsummary_format_numeric_latex = "plain") # there was a "\num{}# argument wrapping around the latex tables and this removes it
-```
-
-
 We also get the heteroskedasticity-robust standard errors with the simple option of `vcov = "HC1"`. `gof_omit` is an option that allows us to omit certain **g**oodness **o**f **f**it statistics. 
 
 To learn more about your choices for standard errors, you can type `?modelsummary` and then search for `vcov`.
 
-```{r reg_output_simple, results = 'markup'}
+```{r reg_output_simple, eval = FALSE}
 modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
@@ -402,6 +397,20 @@ modelsummary::modelsummary(models,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
              escape = FALSE
 )
+```
+
+```{r, eval = TRUE, echo = FALSE}
+
+modelsummary::modelsummary(models,
+             stars = FALSE,
+             vcov = "HC1",
+             coef_rename = cov_labels,
+             title = title_crosssection_latex,
+             output = "kableExtra",
+             gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
+             escape = FALSE
+)
+            
 ```
 
 This table is still a little misleading. We're using different outcome variables across regressions, and it would be nice to state that. 
@@ -474,7 +483,7 @@ attr(rows, 'position') <- c(2*n_total_regvars+4)
 
 Let's see the output now. We've just added the `add_rows = rows` to slot our guy in, and also added the `table_notes` defined earlier.
 
-```{r reg_output_2, results = 'markup'}
+```{r reg_output_2, eval = FALSE}
 modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
@@ -488,12 +497,27 @@ modelsummary::modelsummary(models,
 )
 ```
 
+```{r, eval = TRUE, echo = FALSE}
 
+modelsummary::modelsummary(models,
+             stars = FALSE,
+             vcov = "HC1",
+             coef_rename = cov_labels,
+             title = title_crosssection_latex,
+             output = "kableExtra",
+             add_rows = rows,
+             gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
+             escape = FALSE,
+             notes = table_notes
+
+)
+            
+```
 ### Tidying up {#tidying-up}
 
 Finally, let's add a header to state which is the dependent variable. We use `tinytable`'s `group_tt` to put the names at particular columns, which we indicate by `j` in the original table. The below output says to put `"GHGpc"` at columns 2 and 3, and `"log(GHGpc)"` in columns 4 and 5 (because column 1 corresponds to the blank column with the variable names).
 
-```{r}
+```{r, eval = FALSE}
 modelsummary::modelsummary(models,
              stars = FALSE,
              vcov = "HC1",
@@ -508,6 +532,24 @@ modelsummary::modelsummary(models,
   tinytable::group_tt(j = list("GHGpc" =2:3, "log(GHGpc)"=4:5))
 ```
 
+```{r, eval = TRUE, echo = FALSE}
+
+modelsummary::modelsummary(models,
+             stars = FALSE,
+             vcov = "HC1",
+             coef_rename = cov_labels,
+             title = title_crosssection_latex,
+             output = "kableExtra",
+             add_rows = rows,
+             gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
+             escape = FALSE,
+             notes = table_notes
+
+) %>%
+  kableExtra::add_header_above(c(" "=1, "GHGpc" =2, "log(GHGpc)"=2))
+
+            
+```
 ### Output
 
 This looks good! Now we want to output, either to LaTex or to Word. Fortunately, it's super simple to do either with just a change of options in `tinytable::save_tt()` because `tinytable` recognizes what options you wanted based on the file extension you list.

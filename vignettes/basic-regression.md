@@ -151,7 +151,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266b6588160>
+#> <environment: 0x00000266c1e3add8>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -236,16 +236,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266b6b79458>
+#> <environment: 0x00000266c1e5c4b0>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266c28f3e28>
+#> <environment: 0x00000266c1f0bf28>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266c28463b0>
+#> <environment: 0x00000266c21cc080>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266c2ad0830>
+#> <environment: 0x00000266c230c3f8>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -288,10 +288,10 @@ modelsummary::modelsummary(models)
  <thead>
   <tr>
    <th style="text-align:left;">   </th>
-   <th style="text-align:center;"> &amp;nbsp;(1) </th>
-   <th style="text-align:center;"> &amp;nbsp;&amp;nbsp;(2) </th>
-   <th style="text-align:center;"> &amp;nbsp;&amp;nbsp;(3) </th>
-   <th style="text-align:center;"> &amp;nbsp;&amp;nbsp;(4) </th>
+   <th style="text-align:center;">  (1) </th>
+   <th style="text-align:center;">   (2) </th>
+   <th style="text-align:center;">   (3) </th>
+   <th style="text-align:center;">   (4) </th>
   </tr>
  </thead>
 <tbody>
@@ -533,26 +533,147 @@ modelsummary::modelsummary(models)
 
 ```
 
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;">  (1) </th>
+   <th style="text-align:center;">   (2) </th>
+   <th style="text-align:center;">   (3) </th>
+   <th style="text-align:center;">   (4) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> −0.347 </td>
+   <td style="text-align:center;"> 0.151 </td>
+   <td style="text-align:center;"> −15.544 </td>
+   <td style="text-align:center;"> −3.447 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.109) </td>
+   <td style="text-align:center;"> (0.210) </td>
+   <td style="text-align:center;"> (0.905) </td>
+   <td style="text-align:center;"> (0.166) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> gdp000_pc </td>
+   <td style="text-align:center;"> 0.196 </td>
+   <td style="text-align:center;"> −0.076 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.304 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.016) </td>
+   <td style="text-align:center;"> (0.116) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.025) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(gdp000_pc^2) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.025 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.014) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(gdp000_pc^3) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.001 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.000) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> log(gdp_pc) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.685 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.112) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.583 </td>
+   <td style="text-align:center;"> 0.624 </td>
+   <td style="text-align:center;"> 0.684 </td>
+   <td style="text-align:center;"> 0.592 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.579 </td>
+   <td style="text-align:center;"> 0.613 </td>
+   <td style="text-align:center;"> 0.681 </td>
+   <td style="text-align:center;"> 0.588 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 259.2 </td>
+   <td style="text-align:center;"> 252.1 </td>
+   <td style="text-align:center;"> −105.2 </td>
+   <td style="text-align:center;"> −78.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 267.2 </td>
+   <td style="text-align:center;"> 265.5 </td>
+   <td style="text-align:center;"> −97.2 </td>
+   <td style="text-align:center;"> −70.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −126.606 </td>
+   <td style="text-align:center;"> −121.070 </td>
+   <td style="text-align:center;"> −158.077 </td>
+   <td style="text-align:center;"> −171.696 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 146.647 </td>
+   <td style="text-align:center;"> 56.921 </td>
+   <td style="text-align:center;"> 226.863 </td>
+   <td style="text-align:center;"> 152.278 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.79 </td>
+   <td style="text-align:center;"> 0.75 </td>
+   <td style="text-align:center;"> 1.06 </td>
+   <td style="text-align:center;"> 1.20 </td>
+  </tr>
+</tbody>
+</table>
 
-                   (1)        (2)        (3)        (4)       
-  (Intercept)      -0.347     0.151      -15.544    -3.447    
-                   (0.109)    (0.210)    (0.905)    (0.166)   
-  gdp000_pc        0.196      -0.076                0.304     
-                   (0.016)    (0.116)               (0.025)   
-  I(gdp000_pc^2)              0.025                           
-                              (0.014)                         
-  I(gdp000_pc^3)              -0.001                          
-                              (0.000)                         
-  log(gdp_pc)                            1.685                
-                                         (0.112)              
-  Num.Obs.         107        107        107        107       
-  R2               0.583      0.624      0.684      0.592     
-  R2 Adj.          0.579      0.613      0.681      0.588     
-  AIC              259.2      252.1      -105.2     -78.0     
-  BIC              267.2      265.5      -97.2      -70.0     
-  Log.Lik.         -126.606   -121.070   -158.077   -171.696  
-  F                146.647    56.921     226.863    152.278   
-  RMSE             0.79       0.75       1.06       1.20      
+
 
 We're getting there!
 
@@ -587,14 +708,6 @@ cov_labels <- c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$","Log(GDP pc)
 ```
 
 
-We'll also set some options for `modelsummary` that will make the output prettier. We're going to use the package `tinytable` to format the tables.
-
-
-``` r
- # options(modelsummary_format_numeric_latex = "plain") # there was a "\num{}# argument wrapping around the latex tables and this removes it
-```
-
-
 We also get the heteroskedasticity-robust standard errors with the simple option of `vcov = "HC1"`. `gof_omit` is an option that allows us to omit certain **g**oodness **o**f **f**it statistics. 
 
 To learn more about your choices for standard errors, you can type `?modelsummary` and then search for `vcov`.
@@ -612,40 +725,120 @@ modelsummary::modelsummary(models,
 )
 ```
 
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Cross Section GHG and GDP per capita relationship, 1960 \label{tab:basic_reg_table}</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;">  (1) </th>
+   <th style="text-align:center;">   (2) </th>
+   <th style="text-align:center;">   (3) </th>
+   <th style="text-align:center;">   (4) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Intercept </td>
+   <td style="text-align:center;"> −0.347 </td>
+   <td style="text-align:center;"> 0.151 </td>
+   <td style="text-align:center;"> −15.544 </td>
+   <td style="text-align:center;"> −3.447 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.165) </td>
+   <td style="text-align:center;"> (0.192) </td>
+   <td style="text-align:center;"> (0.939) </td>
+   <td style="text-align:center;"> (0.195) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GDP pc </td>
+   <td style="text-align:center;"> 0.196 </td>
+   <td style="text-align:center;"> −0.076 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.304 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.049) </td>
+   <td style="text-align:center;"> (0.156) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.030) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^2$ </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.025 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.027) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^3$ </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.001 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log(GDP pc) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.685 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.110) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.583 </td>
+   <td style="text-align:center;"> 0.624 </td>
+   <td style="text-align:center;"> 0.684 </td>
+   <td style="text-align:center;"> 0.592 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.579 </td>
+   <td style="text-align:center;"> 0.613 </td>
+   <td style="text-align:center;"> 0.681 </td>
+   <td style="text-align:center;"> 0.588 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 16.057 </td>
+   <td style="text-align:center;"> 34.277 </td>
+   <td style="text-align:center;"> 235.390 </td>
+   <td style="text-align:center;"> 100.080 </td>
+  </tr>
+</tbody>
+</table>
 
-+--------------+---------+---------+---------+---------+
-|              | (1)     | (2)     | (3)     | (4)     |
-+==============+=========+=========+=========+=========+
-| Intercept    | -0.347  | 0.151   | -15.544 | -3.447  |
-+--------------+---------+---------+---------+---------+
-|              | (0.165) | (0.192) | (0.939) | (0.195) |
-+--------------+---------+---------+---------+---------+
-| GDP pc       | 0.196   | -0.076  |         | 0.304   |
-+--------------+---------+---------+---------+---------+
-|              | (0.049) | (0.156) |         | (0.030) |
-+--------------+---------+---------+---------+---------+
-| (GDP pc)$^2$ |         | 0.025   |         |         |
-+--------------+---------+---------+---------+---------+
-|              |         | (0.027) |         |         |
-+--------------+---------+---------+---------+---------+
-| (GDP pc)$^3$ |         | -0.001  |         |         |
-+--------------+---------+---------+---------+---------+
-|              |         | (0.001) |         |         |
-+--------------+---------+---------+---------+---------+
-| Log(GDP pc)  |         |         | 1.685   |         |
-+--------------+---------+---------+---------+---------+
-|              |         |         | (0.110) |         |
-+--------------+---------+---------+---------+---------+
-| Num.Obs.     | 107     | 107     | 107     | 107     |
-+--------------+---------+---------+---------+---------+
-| R2           | 0.583   | 0.624   | 0.684   | 0.592   |
-+--------------+---------+---------+---------+---------+
-| R2 Adj.      | 0.579   | 0.613   | 0.681   | 0.588   |
-+--------------+---------+---------+---------+---------+
-| F            | 16.057  | 34.277  | 235.390 | 100.080 |
-+--------------+---------+---------+---------+---------+
 
-Table: Cross Section GHG and GDP per capita relationship, 1960 \label{tab:basic_reg_table}
 
 This table is still a little misleading. We're using different outcome variables across regressions, and it would be nice to state that. 
 
@@ -736,47 +929,127 @@ modelsummary::modelsummary(models,
 )
 ```
 
-
-+--------------+---------+---------+---------+---------+
-|              | (1)     | (2)     | (3)     | (4)     |
-+==============+=========+=========+=========+=========+
-| Intercept    | -0.347  | 0.151   | -15.544 | -3.447  |
-+--------------+---------+---------+---------+---------+
-|              | (0.165) | (0.192) | (0.939) | (0.195) |
-+--------------+---------+---------+---------+---------+
-| GDP pc       | 0.196   | -0.076  |         | 0.304   |
-+--------------+---------+---------+---------+---------+
-|              | (0.049) | (0.156) |         | (0.030) |
-+--------------+---------+---------+---------+---------+
-| (GDP pc)$^2$ |         | 0.025   |         |         |
-+--------------+---------+---------+---------+---------+
-|              |         | (0.027) |         |         |
-+--------------+---------+---------+---------+---------+
-| (GDP pc)$^3$ |         | -0.001  |         |         |
-+--------------+---------+---------+---------+---------+
-|              |         | (0.001) |         |         |
-+--------------+---------+---------+---------+---------+
-| Log(GDP pc)  |         |         | 1.685   |         |
-+--------------+---------+---------+---------+---------+
-|              |         |         | (0.110) |         |
-+--------------+---------+---------+---------+---------+
-| Num.Obs.     | 107     | 107     | 107     | 107     |
-+--------------+---------+---------+---------+---------+
-| Mean         | 0.590   | 0.590   | 0.590   | 0.590   |
-+--------------+---------+---------+---------+---------+
-| R2           | 0.583   | 0.624   | 0.684   | 0.592   |
-+--------------+---------+---------+---------+---------+
-| R2 Adj.      | 0.579   | 0.613   | 0.681   | 0.588   |
-+--------------+---------+---------+---------+---------+
-| F            | 16.057  | 34.277  | 235.390 | 100.080 |
-+==============+=========+=========+=========+=========+
-| Robust standard errors given in parentheses.         |
-| Population data are obtained from UN-DESA (2023).    |
-| Gross domestic product (GDP) in 2017 chained PPP     |
-| thousand USD per capita (PWT 2023). Greenhouse       |
-| gases in tonnes of carbon per year from GCB (2024).  |
-+==============+=========+=========+=========+=========+
-Table: Cross Section GHG and GDP per capita relationship, 1960 \label{tab:basic_reg_table}
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<caption>Cross Section GHG and GDP per capita relationship, 1960 \label{tab:basic_reg_table}</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;">  (1) </th>
+   <th style="text-align:center;">   (2) </th>
+   <th style="text-align:center;">   (3) </th>
+   <th style="text-align:center;">   (4) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Intercept </td>
+   <td style="text-align:center;"> −0.347 </td>
+   <td style="text-align:center;"> 0.151 </td>
+   <td style="text-align:center;"> −15.544 </td>
+   <td style="text-align:center;"> −3.447 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.165) </td>
+   <td style="text-align:center;"> (0.192) </td>
+   <td style="text-align:center;"> (0.939) </td>
+   <td style="text-align:center;"> (0.195) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GDP pc </td>
+   <td style="text-align:center;"> 0.196 </td>
+   <td style="text-align:center;"> −0.076 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.304 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.049) </td>
+   <td style="text-align:center;"> (0.156) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.030) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^2$ </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.025 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.027) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^3$ </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.001 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log(GDP pc) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.685 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.110) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mean </td>
+   <td style="text-align:center;"> 0.590 </td>
+   <td style="text-align:center;"> 0.590 </td>
+   <td style="text-align:center;"> 0.590 </td>
+   <td style="text-align:center;"> 0.590 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.583 </td>
+   <td style="text-align:center;"> 0.624 </td>
+   <td style="text-align:center;"> 0.684 </td>
+   <td style="text-align:center;"> 0.592 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.579 </td>
+   <td style="text-align:center;"> 0.613 </td>
+   <td style="text-align:center;"> 0.681 </td>
+   <td style="text-align:center;"> 0.588 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 16.057 </td>
+   <td style="text-align:center;"> 34.277 </td>
+   <td style="text-align:center;"> 235.390 </td>
+   <td style="text-align:center;"> 100.080 </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024).</td></tr></tfoot>
+</table>
 
 
 ### Tidying up {#tidying-up}
@@ -799,48 +1072,133 @@ modelsummary::modelsummary(models,
   tinytable::group_tt(j = list("GHGpc" =2:3, "log(GHGpc)"=4:5))
 ```
 
-+--------------+---------+---------+---------+---------+
-|              | GHGpc             | log(GHGpc)        |
-+--------------+---------+---------+---------+---------+
-|              | (1)     | (2)     | (3)     | (4)     |
-+==============+=========+=========+=========+=========+
-| Intercept    | -0.347  | 0.151   | -15.544 | -3.447  |
-+--------------+---------+---------+---------+---------+
-|              | (0.165) | (0.192) | (0.939) | (0.195) |
-+--------------+---------+---------+---------+---------+
-| GDP pc       | 0.196   | -0.076  |         | 0.304   |
-+--------------+---------+---------+---------+---------+
-|              | (0.049) | (0.156) |         | (0.030) |
-+--------------+---------+---------+---------+---------+
-| (GDP pc)$^2$ |         | 0.025   |         |         |
-+--------------+---------+---------+---------+---------+
-|              |         | (0.027) |         |         |
-+--------------+---------+---------+---------+---------+
-| (GDP pc)$^3$ |         | -0.001  |         |         |
-+--------------+---------+---------+---------+---------+
-|              |         | (0.001) |         |         |
-+--------------+---------+---------+---------+---------+
-| Log(GDP pc)  |         |         | 1.685   |         |
-+--------------+---------+---------+---------+---------+
-|              |         |         | (0.110) |         |
-+--------------+---------+---------+---------+---------+
-| Num.Obs.     | 107     | 107     | 107     | 107     |
-+--------------+---------+---------+---------+---------+
-| Mean         | 0.590   | 0.590   | 0.590   | 0.590   |
-+--------------+---------+---------+---------+---------+
-| R2           | 0.583   | 0.624   | 0.684   | 0.592   |
-+--------------+---------+---------+---------+---------+
-| R2 Adj.      | 0.579   | 0.613   | 0.681   | 0.588   |
-+--------------+---------+---------+---------+---------+
-| F            | 16.057  | 34.277  | 235.390 | 100.080 |
-+==============+=========+=========+=========+=========+
-| Robust standard errors given in parentheses.         |
-| Population data are obtained from UN-DESA (2023).    |
-| Gross domestic product (GDP) in 2017 chained PPP     |
-| thousand USD per capita (PWT 2023). Greenhouse       |
-| gases in tonnes of carbon per year from GCB (2024).  |
-+==============+=========+=========+=========+=========+
-Table: Cross Section GHG and GDP per capita relationship, 1960 \label{tab:basic_reg_table}
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<caption>Cross Section GHG and GDP per capita relationship, 1960 \label{tab:basic_reg_table}</caption>
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">GHGpc</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">log(GHGpc)</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;">  (1) </th>
+   <th style="text-align:center;">   (2) </th>
+   <th style="text-align:center;">   (3) </th>
+   <th style="text-align:center;">   (4) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Intercept </td>
+   <td style="text-align:center;"> −0.347 </td>
+   <td style="text-align:center;"> 0.151 </td>
+   <td style="text-align:center;"> −15.544 </td>
+   <td style="text-align:center;"> −3.447 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.165) </td>
+   <td style="text-align:center;"> (0.192) </td>
+   <td style="text-align:center;"> (0.939) </td>
+   <td style="text-align:center;"> (0.195) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GDP pc </td>
+   <td style="text-align:center;"> 0.196 </td>
+   <td style="text-align:center;"> −0.076 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.304 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.049) </td>
+   <td style="text-align:center;"> (0.156) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.030) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^2$ </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.025 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.027) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> (GDP pc)$^3$ </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.001 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log(GDP pc) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.685 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.110) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+   <td style="text-align:center;"> 107 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mean </td>
+   <td style="text-align:center;"> 0.590 </td>
+   <td style="text-align:center;"> 0.590 </td>
+   <td style="text-align:center;"> 0.590 </td>
+   <td style="text-align:center;"> 0.590 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.583 </td>
+   <td style="text-align:center;"> 0.624 </td>
+   <td style="text-align:center;"> 0.684 </td>
+   <td style="text-align:center;"> 0.592 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.579 </td>
+   <td style="text-align:center;"> 0.613 </td>
+   <td style="text-align:center;"> 0.681 </td>
+   <td style="text-align:center;"> 0.588 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 16.057 </td>
+   <td style="text-align:center;"> 34.277 </td>
+   <td style="text-align:center;"> 235.390 </td>
+   <td style="text-align:center;"> 100.080 </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024).</td></tr></tfoot>
+</table>
+
 
 ### Output
 
