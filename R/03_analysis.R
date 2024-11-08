@@ -1,3 +1,201 @@
+#' modelsummary_reg_default
+#' @description modelsummary_reg_default takes in a list of regression variables formatted in a particular way and a data frame, and outputs a modelsummary table with reasonable defaults for these regressions. It currently supports using fixest::feols with fixed effects (in which case it clusters standard errors by the fixed effects categories); as well as lm() for regression equations which do not have fixed effects variables inputted. It tries to cleverly add in dependent variable means and fixed effect rows.
+#' See the vignette [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation) for how this function comes together and a couple examples of use.
+#' @param reg_vars_list requires a list where each element of the list is also a list.
+#' @param my_title title for your table
+#' @param table_notes notes to put in your table
+#' @param cov_labels labels for the covariates. if you input this you need to make sure it's the right length for the covariates you're including
+#' @param fe_names defaults to NULL, in which case we take the column names of the variables inputted as FE vars. could instead give a character vector e.g. c("Year FE","Country FE") to put into the modelsummary output. You need to make sure that this character vector is in the order that this function will pick out, though, so I recommend running it through first with fe_names = NULL to see that the output accords with what you think, and then adjusting.
+#' @param depvar_means default of NULL takes the mean of the dependent variable for each column, rounded to 2 significant digits, with missing values removed before the mean is calculated. If you want something different, input a numeric vector of the means that you want for each column of your regression. If not NULL, this vector therefore needs to have the same number of elements as reg_vars_list does.
+#' @param format defaults to "latex", in modelsummary
+#' @param stars defaults to FALSE, from modelsummary
+#' @param escape defaults to FALSE, in modelsummary so that output is less buggy
+#' @param gof_omit goodness of fit statistics to ignore, defaults to keeping mostly the R2 and Adj R2
+#' @param fmt format of the final table, defaults to 4 decimal points, from modelsummary
+#' @param print_models default is TRUE, whether you want to print the list of models with output to the console
+#' @param out_path defaults to here::here("output","01_tables"), the place to send table output if you're saving it. will create the folder if it doesn't exist already
+#' @param output_filename character vector, name for output filename. defaults to "regression_table"
+#' @param export_output defaults to TRUE, in which case it saves a .docx and a .tex file into the file path given by file.path(out_path,paste0(output_filename,".tex")) and file.path(out_path,paste0(output_filename,".docx"))
+#' @param ... additional options to put into modelsummary
+#'
+#' @returns a modelsummary object
+#' @export
+#'
+#' @examples
+#' data(ghg_pop_gdp)
+#' reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+#' regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+#' fevars  = NULL)
+#' reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+#'                    regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+#'                    fevars = "year"))
+#' reg_vars_list <- list(reg_1_vars,reg_2_vars)
+#' # default output
+#' modelsummary_reg_default(reg_vars_list, data = ghg_pop_gdp)
+#' # save and adjust ex post, so don't export
+#' my_table <- modelsummary_reg_default(reg_vars_list, data = ghg_pop_gdp, export_output = FALSE)
+#' my_table <- my_table %>% tinytable::group_tt(j = list("GHGpc" =2:3))
+#'if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+#' tinytable::save_tt(my_table, output = here::here("output","01_tables","fixed_effects_table.tex"), overwrite = TRUE)
+#'
+modelsummary_reg_default <- function(reg_vars_list,
+                                     data,
+                                 my_title = "My regression table \\label{tab:reg-table}",
+                                 table_notes = c("Robust standard errors given in parentheses."),
+                                 cov_labels = FALSE,
+                                 fe_names = NULL,
+                                 depvar_means = NULL,
+                                 format = "latex",
+                                 stars = FALSE,
+                                 escape = FALSE,
+                                 gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
+                                 fmt  = 4,
+                                 out_path = here::here("output","01_tables"),
+                                 output_filename = "regression_table",
+                                 export_output = TRUE,
+                                 print_models = TRUE,
+                                 ...
+                                 ){
+
+  # len is the number of regressions we run, it is getting used a lot
+
+  len <- length(reg_vars_list)
+
+  # create the list of regression equations
+  reg_eqs_list <- vector(mode = "list", length = len)
+
+  # make regression formulas
+  for (i in 1:len) {
+    reg_eqs_list[[i]] <- ekonomR::reg_equation(outcome_var = reg_vars_list[[i]]$outvar,
+                                               regressor_vars = reg_vars_list[[i]]$regvars,
+                                               fe_vars     = reg_vars_list[[i]]$fevars)
+  }
+
+  # choose standard errors
+
+  vcov_list <- vector(mode = "list", length = len)
+
+  # put standard errors in a list
+  for (i in 1:len) {
+    vcov_list[[i]] <- ekonomR::cluster_formula(reg_eqs_list[[i]], verbose = FALSE)
+  }
+
+
+  models_list <- vector(mode = "list", length = len)
+  # generate models
+  for (i in 1:len) {
+
+    # if there's no fe_vars in reg_vars_list, then use lm(). If there is, use fixest::feols()
+    if (is.null(reg_vars_list[[i]]$fevars)) {
+      models_list[[i]] <- lm(reg_eqs_list[[i]],
+                             data = data)
+    } else {
+      models_list[[i]] <- fixest::feols(reg_eqs_list[[i]],
+                                        vcov = vcov_list[[i]],
+                                        data = data)
+    }
+  }
+
+  if (print_models == TRUE) print(models_list)
+
+  # get the number of unique regressor vars
+
+  unique_varnames_list <- vector(mode = "list", length = len)
+
+  for (i in 1:len) {
+    unique_varnames_list[[i]] <- unique(reg_vars_list[[i]]$regvars)
+  }
+
+  length_unique_varnames <- length(unique(unlist(unique_varnames_list)))
+
+  # get the number of unique FE vars
+
+  unique_fes_list <- vector(mode = "list", length = len)
+
+  for (i in 1:len) {
+    unique_fes_list[[i]] <- unique(reg_vars_list[[i]]$fevars)
+  }
+
+  unique_fes <- unique(unlist(unique_fes_list))
+
+# add attribute rows for depvar means and fixed effects
+
+  # determine the number of columns in this regression
+  col_1 <- data.frame("term" = c("Mean",paste0(unique_fes," FE")))
+
+  if (!is.null(fe_names)) {
+    col_1 <- data.frame("term" = c("Mean",fe_names))
+  }
+  other_cols <- matrix(NA,
+                       nrow = nrow(col_1),
+                       ncol = len) %>% as.data.frame()
+
+  rows <- cbind(col_1,other_cols)
+
+  rows
+  # add on a column for each regression equation
+  for (i in 1:len) {
+
+    # test if the ith reg_vars_list has a fe_vars in the unique_fes
+    for (j in 1:length(unique_fes)) {
+
+      # fill in the depvar means with either the default value or the thing the user gave
+      if (is.null(depvar_means)) {
+      rows[1,i+1] <- round(mean(data[[reg_vars_list[[i]]$outvar]], na.rm = TRUE),2)
+      } else {
+        rows[1,i+1] <- depvar_means[i]
+      }
+
+      # if the jth fe is in the list of fevars for this regression, list as a "Y"
+      if (unique_fes[j] %in% reg_vars_list[[i]]$fevars) {
+      rows[j+1,i+1] <- "Y"
+      } else {
+        rows[j+1,i+1] <- "N"
+      }
+    }
+
+  }
+
+  # set the position of the rows
+  attr(rows, 'position') <- 2*n_total_regvars+3+c(1:len)
+
+  my_table <- modelsummary::modelsummary(models_list,
+                                         stars = stars,
+                                         vcov = vcov_list,
+                                         fmt  = fmt,
+                                         coef_rename = cov_labels,
+                                         title = my_title,
+                                         format = format,
+                                         add_rows = rows,
+                                         gof_omit = gof_omit,
+                                         escape = escape,
+                                         notes = table_notes,
+                                         ...
+  )
+
+  if (export_output == TRUE) {
+
+    # generate output folder if it doesn't already exist
+  if (!dir.exists(out_path)) {
+    message(paste0("Created output folder ", out_path, " which is where you'll find your regression output."))
+    dir.create(out_path, recursive = TRUE)
+  }
+
+    message(paste0("Saving regression output to ", out_path, " ."))
+
+  tinytable::save_tt(my_table,
+                     output = file.path(out_path,paste0(output_filename,".tex")),
+                     overwrite = TRUE)
+
+  tinytable::save_tt(my_table,
+                     output = file.path(out_path,paste0(output_filename,".docx")),
+                     overwrite = TRUE)
+
+  }
+
+  return(my_table)
+}
+
 #' Stargazer sumstats, good defaults for stargazer
 #'
 #' @param data dataset you would like summarized. Assumed to be the case that all the columns you want are included

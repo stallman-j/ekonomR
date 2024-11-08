@@ -85,15 +85,17 @@ I'm now going to assume I can use their jargon.
 
 ## Rough intuition
 
-Suppose we're considering country fixed effects. 
+Suppose we're considering just country fixed effects. 
 
-I tend to think of fixed effects regressions as adding a dummy variable for each country, so that each country gets its own Y intercept in a scatter plot where the X axis is the regressor of interest (GDP per capita) on the outcome variable on the Y axis (GHG emissions per capita).
+I tend to think of fixed effects regressions as adding a dummy variable for each country, so that each country gets its own Y intercept in a scatter plot where the X axis is the regressor of interest (GDP per capita) and the Y axis is the outcome variable (GHG emissions per capita).
 
-You might also have heard of fixed effects as "de-meaning." 
+You might also have heard of fixed effects as "de-meaning" or a "within" estimator. 
 
-"De-meaning" comes in as the idea that we can generate a fixed effects estimator by calculating the mean value over all time periods for each country, and then subtract that from our original equation. 
+"De-meaning" is the idea that we can generate a fixed effects estimator by calculating the mean value over all time periods for each country, and then country-by-country subtract that from a regression equation like Equation \ref{eq:eq_1}. 
 
-In that case, then the coefficient of interest can be described as giving us the change in GHG per capita of a change in GDP per capita *relative to the country's mean GDP per capita over all the years we observe it*.
+In that case, then the coefficient of interest $$\beta_1$$ can be described as giving us the change in GHG per capita when we change GDP per capita *relative to the country's mean GDP per capita over all the years we observe it*. 
+
+It's called the "within" estimator because we're now looking *within* a particular country.
 
 These are equivalent, but one way of describing it might stick in your head better.
 
@@ -110,7 +112,7 @@ Equation \ref{eq:eq_1} describes a **pooled** panel specification, showing $$\te
 
 We're including the cubic and quadratic here so that we can have nonlinear effects.
 
-$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_1}$$
+$$\text{GHGpc}_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_1}$$
 
 It's pooled because we've thrown in all the years and countries without explicitly considering that countries are going to exhibit persistence across time, and that particular years are going to affect all countries.
 
@@ -120,10 +122,10 @@ The comparison we're making here is a *between* variation: that is, we're compar
 
 Equation \ref{eq:eq_2} adds in year fixed effects, denoted by $$\alpha_t$$.
 
-$$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_t + \varepsilon_{i,t}\label{eq:eq_2}$$
+$$\text{GHGpc}_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3 + \alpha_t + \varepsilon_{i,t}\label{eq:eq_2}$$
 
 
-You can think of time fixed effects as adding a dummy variable that shifts the *average* level of greenhouse gases per capita for each year that is *constant across all countries*. 
+You can think of time fixed effects as adding a dummy variable that shifts the *average* level of greenhouse gases per capita for each year, but that this average is *constant across all countries*. 
 
 For instance, we would expect that greenhouse gases are rising globally over time, because countries have generally been emitting more over time. 
 
@@ -131,7 +133,7 @@ However, even in more recent years, the financial recession of 2008 might have b
 
 The other way of thinking about it explicitly as a *within* estimator is to say that now we're looking at the variation *between* countries, but *within* the same period of time. 
 
-We get more information than we would with than running fifty-some individual cross-section regressions for each year, though.
+We get a mroe complete picture than we would with than running fifty-some individual cross-section regressions for each year, though.
 
 
 
@@ -146,7 +148,7 @@ We can think of country fixed effects as adding a dummy variable for *each* coun
 
 This reflects, for instance, that Sweden has generally been quite environment-conscious so would tend to emit less regardless of how it is doing economically; that the United States is a rich country and tends to emit quite a lot of greenhouse gases per capita; and that Brazil has and has had a large Amazon rainforest which soaks up a large amount of carbon dioxide. 
 
-This is the *within* variation. If we're looking at *within* variation in GDP per capita, it's that we're comparing how Ecuador did economically in 2019 relative to its mean economic level over the whole time period against how Ecuador did economically in 1983.
+This is the *within* variation by country. If we're looking at *within* variation in GDP per capita, it's that we're comparing how Ecuador did economically in 2019 relative to how Ecuador did economically in 1983, given that it's Ecuador.
 
 ## Two-way fixed effects {#twfe}
 
@@ -155,7 +157,9 @@ Equation \ref{eq:eq_4} includes both country fixed effects, denoted by $$\alpha_
 $$GHGpc_{i,t} = \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}_{i,t}^2 + \beta_3 \text{GDPpc}_{i,t}^3+ \alpha_i + \alpha_t + \varepsilon_{i,t}\label{eq:eq_4}$$
 
 
-Fixed effects can become quite unmanageable quite quickly: we have 70 years and 182 countries. Compare that with just three other regressors. This is precisely why statistics packages in practice compute using some form of de-meaning rather than adding in hundreds, thousands, or more intercepts.
+Fixed effects can become quite unmanageable quite quickly if we keep thinking of the "adding an intercept" interpretation. We now have 70 years and 182 countries. Compare that with just three other regressors.
+
+This is precisely why statistics packages in practice compute using some form of de-meaning rather than adding in hundreds, thousands, or more intercepts.
 
 Two-way fixed effects are trickier to interpret, but the key is to think of every set of fixed effects as adding another *within*.
 
@@ -168,7 +172,7 @@ In other words, the variation that we have left after we've included both sets o
 
 # Prep some regressions
 
-I'm assuming you're familiar with how I like to set up regression tables from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette, so we can jump right in.
+I'm assuming you're familiar with how I like to set up regression tables from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) vignette, so let's jump in.
 
 We'll still use the territorial greenhouse gases per capita.
 
@@ -431,6 +435,73 @@ If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Git
 
 Because we set a label above, we can also cross-reference the table. An example of how to do this is given in the file `templates/examples/inserting-tables.tex`.
 
+# The simple defaults: an example with the function `modelsummary_reg_default`.
+
+This is an optional section, but you might find the function helpful for generating nice looking regression tables.
+
+`ekonomR` has a function called `modelsummary_reg_default()` that includes all the above in a simple regression format with nice defaults. It works for both linear models and fixed effects. It hasn't been modified to get fancier than that.
+
+All you need to do is be able to input the regression variables in a list such that the function can read it, and you'll get a pretty reasonable output table for your fixed effects regression of choice. 
+
+The regression equation formula doesn't yet allow for complicated interactions yet of the sort `fixest` excels at, but it's good for outputting simple correlations and fixed effects regressions.
+
+Create the regression variables. You can have however many regressions you want, and here's an example with 3.
+
+```{r}
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars  = NULL)
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = "year")
+
+reg_3_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("iso3c"))
+
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars)
+```
+
+Run `modelsummary_reg_default()` with default settings. This will export a file by default 
+
+```{r}
+modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = ghg_pop_gdp)
+
+```
+
+Let's see a little more complex options. 
+
+You can see the defaults and get help with `?modelsummary_reg_default`.
+
+```{r}
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = ghg_pop_gdp,
+                         my_title = "This is my title \\label{tab:my_table_label}",
+                         table_notes = list(a = "Top level notes",
+                                            b = "Second level notes"),
+                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
+                         fe_names = c("Year FE","Country FE"),
+                         depvar_means = c(1.23,4.59,8.90,"lego"),
+                         fmt = 6,
+                         export_output = FALSE)
+
+my_table <- my_table %>%
+  tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
+
+# generate output folder if it doesn't already exist
+
+if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+
+ tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.tex"),
+                     overwrite = TRUE)
+
+```
+
 # Exercises
 
 1. What would the intuitive relationship between greenhouse gases per capita and GDP per capita be in Equation \ref{eq:eq_1} if $$\beta_1$$ were positive, $$\beta_2$$ were negative, and $$\beta_3$$ were effectively zero? (Think of what the relationship would be at low levels of GDP per capita, intermediate levels, and then high levels of GDP per capita)
@@ -601,6 +672,47 @@ tinytable::save_tt(my_table,
                    output = here::here("output","01_tables","fixed_effects_table.docx"),
                    overwrite = TRUE)
 
+# use modelsummary_reg_default() instead
+
+# generate lists of regression variables
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars  = NULL)
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = "year")
+
+reg_3_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("iso3c"))
+
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars)
+
+# generate output
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = ghg_pop_gdp,
+                         my_title = "This is my title \\label{tab:my_table_label}",
+                         table_notes = list(a = "Top level notes",
+                                            b = "Second level notes"),
+                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
+                         fe_names = c("Year FE","Country FE"),
+                         depvar_means = c(1.23,4.59,8.90,"lego"),
+                         fmt = 6,
+                         export_output = FALSE)
+
+my_table <- my_table %>%
+  tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
+
+# generate output folder if it doesn't already exist
+
+if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+
+ tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.tex"),
+                     overwrite = TRUE)
 ```
 
 
