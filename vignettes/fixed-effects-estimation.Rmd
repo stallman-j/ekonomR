@@ -199,7 +199,8 @@ reg_4_vars <- list(outvar = "gcb_ghg_territorial_pc",
 ```
 
 **Make regression formulas**
-Now that we've our variables chosen, we can make our regression formulas:
+
+Now that we've chosen our variables, we can make our regression formulas:
 
 ```{r}
 reg_eq_1 <- ekonomR::reg_equation(outcome_var    = reg_1_vars$outvar,
@@ -434,7 +435,7 @@ Because we set a label above, we can also cross-reference the table. An example 
 
 The function `modelsummary_reg_default` might be helpful for generating nice looking regression tables, but this is an optional section.
 
-`ekonomR`'s function `modelsummary_reg_default()` that includes all the above in a simple regression format with nice defaults. It works for both linear models and fixed effects. It hasn't been modified to get fancier than that.
+`ekonomR`'s function `modelsummary_reg_default()` includes all the above in a simple regression format with nice defaults. It works for both linear models and fixed effects. It hasn't been modified to get fancier than that, or to handle fancy interaction terms in the regression formulas.
 
 All you need to do is be able to input the regression variables in a list such that the function can read it, and you'll get a pretty reasonable output table for your fixed effects regression of choice. 
 
@@ -460,9 +461,9 @@ reg_vars_list <- list(reg_1_vars,
 
 Run `modelsummary_reg_default()` with default settings. This will export a file by default, and also push to your console a summary of all the models you generated. 
 
-```{r}
+```{r, eval = FALSE}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ghg_pop_gdp)
+                         data = reg_data)
 
 ```
 
@@ -473,12 +474,12 @@ my_table
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ghg_pop_gdp,
+modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = reg_data,
                          output = "kableExtra",
+                         escape = FALSE,
                          print_models = FALSE)
 
-my_table
 ```
 Let's see a little more flexibility.
 
@@ -486,7 +487,7 @@ You can see the defaults and get help with `?modelsummary_reg_default`.
 
 `modelsummary()` is already an extremely flexible package, as is `fixest`. The point of this function `modelsummary_reg_default` is not to replace the flexibility of these packages, but to provide a set of simple defaults that get your output up and running without much effort.
 
-```{r}
+```{r, eval = FALSE}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = reg_data,
                          my_title = "This is my title \\label{tab:my_table_label}",
@@ -501,6 +502,8 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
 my_table <- my_table %>%
   tinytable::group_tt(j = list("GHGpc" =2:3,"GHGpc" = 4))
 
+my_table
+
 # generate output folder if it doesn't already exist
 
 if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
@@ -509,10 +512,14 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
                      output = here::here("output","01_tables","fixed_effects_table.tex"),
                      overwrite = TRUE)
 
+  tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.docx"),
+                     overwrite = TRUE)
 ```
 
 ```{r, eval = TRUE, echo = FALSE}
-my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+
+modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          data = reg_data,
                          my_title = "This is my title \\label{tab:my_table_label}",
                          table_notes = list(a = "Top level notes",
@@ -523,15 +530,41 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          output = "kableExtra",
                          fmt = 6,
                          export_output = FALSE,
-                         print_models = FALSE)
-
-my_table <- my_table %>%
+                         print_models = FALSE) %>%
   kableExtra::add_header_above(c(" "=1, "GHGpc" =2, "GHGpc"=1))
-            
-my_table
+
+if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+
+ tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.tex"),
+                     overwrite = TRUE)
+
+  tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.docx"),
+                     overwrite = TRUE)
+
 
 ```
 
+```{r, eval = FALSE, echo = FALSE}
+
+modelsummary::modelsummary(models,
+             stars = FALSE,
+             vcov = vcov_list,
+             fmt = 6,
+             coef_rename = cov_labels,
+             title = my_title,
+             output = "kableExtra",
+             add_rows = rows,
+             gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
+             escape = FALSE,
+             notes = table_notes
+
+) %>%
+  kableExtra::add_header_above(c(" "=1, "GHGpc" =4))
+
+            
+```
 # Exercises
 
 1. What would the intuitive relationship between greenhouse gases per capita and GDP per capita be in Equation \ref{eq:eq_1} if $$\beta_1$$ were positive, $$\beta_2$$ were negative, and $$\beta_3$$ were effectively zero? (Think of what the relationship would be at low levels of GDP per capita, intermediate levels, and then high levels of GDP per capita)

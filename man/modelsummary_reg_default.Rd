@@ -21,6 +21,7 @@ modelsummary_reg_default(
   output_filename = "regression_table",
   export_output = TRUE,
   print_models = TRUE,
+  output = "default",
   ...
 )
 }

@@ -54,6 +54,7 @@ modelsummary_reg_default <- function(reg_vars_list,
                                  output_filename = "regression_table",
                                  export_output = TRUE,
                                  print_models = TRUE,
+                                 output = "default",
                                  ...
                                  ){
 
@@ -170,6 +171,7 @@ modelsummary_reg_default <- function(reg_vars_list,
                                          gof_omit = gof_omit,
                                          escape = escape,
                                          notes = table_notes,
+                                         output = output,
                                          ...
   )
 
