@@ -97,9 +97,11 @@ Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome varia
 Equation \ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
 
 
-\begin{align}
-GHGpc_{i,t} &= \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}
-\end{align}
+
+
+
+$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
+
 
 $$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_2}$$
 
@@ -157,7 +159,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266c3004fc8>
+#> <environment: 0x00000266c07f5a90>
 ```
 Let's restrict the year we're considering to 1960 so that we don't have to worry about trends over time. We'll do it by setting a parameter `cross_section_year` so that this is easy to change throughout the code.
 
@@ -234,16 +236,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000266bf219238>
+#> <environment: 0x00000266bef3ab08>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000266bd5ce018>
+#> <environment: 0x00000266bcf463d8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000266bc5e8810>
+#> <environment: 0x00000266bbd9f668>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000266bb986a68>
+#> <environment: 0x00000266c29caa38>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 

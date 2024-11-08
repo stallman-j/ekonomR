@@ -108,9 +108,11 @@ Equation \ref{eq:eq_3} instead takes $$\log(\text{GDPpc})$$ as the outcome varia
 Equation \ref{eq:eq_4} shows a regression of $$\text{GDPpc}$$ on $$\log(\text{GDPpc})$$ (a linear-log regression, often called a semi-elasticity).
 
 
-\begin{align}
-GHGpc_{i,t} &= \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}
-\end{align}
+
+
+
+$$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \varepsilon_{i,t}\label{eq:eq_1}$$
+
 
 $$GHGpc_{i,t} = \beta_0 + \beta_1 \text{GDPpc}_{i,t} + \beta_2 \text{GDPpc}^2_{i,t} + \beta_3 \text{GDPpc}_{i,t}^3 + \varepsilon_{i,t}\label{eq:eq_2}$$
 
