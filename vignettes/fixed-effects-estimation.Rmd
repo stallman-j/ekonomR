@@ -432,13 +432,11 @@ Because we set a label above, we can also cross-reference the table. An example 
 
 # Default output with `modelsummary_reg_default`.
 
-This is an optional section, but you might find this function helpful for generating nice looking regression tables.
+The function `modelsummary_reg_default` might be helpful for generating nice looking regression tables, but this is an optional section.
 
-`ekonomR` has a function called `modelsummary_reg_default()` that includes all the above in a simple regression format with nice defaults. It works for both linear models and fixed effects. It hasn't been modified to get fancier than that.
+`ekonomR`'s function `modelsummary_reg_default()` that includes all the above in a simple regression format with nice defaults. It works for both linear models and fixed effects. It hasn't been modified to get fancier than that.
 
 All you need to do is be able to input the regression variables in a list such that the function can read it, and you'll get a pretty reasonable output table for your fixed effects regression of choice. 
-
-The regression equation formula doesn't yet allow for complicated interactions yet of the sort `fixest` excels at, but it's good for outputting simple correlations and fixed effects regressions.
 
 Create the regression variables. You can have however many regressions you want, and here's an example with 3.
 
@@ -515,7 +513,7 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
 
 ```{r, eval = TRUE, echo = FALSE}
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ,
+                         data = reg_data,
                          my_title = "This is my title \\label{tab:my_table_label}",
                          table_notes = list(a = "Top level notes",
                                             b = "Second level notes"),
