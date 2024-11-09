@@ -870,7 +870,7 @@ my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
                          export_output = FALSE)
 
 my_table <- my_table %>%
-  tinytable::group_tt(j = list("GHGpc" =2:4,"GHGpc" = 5))
+  tinytable::group_tt(j = list("GHGpc" =2:3,"GHGpc" = 4))
 
 # generate output folder if it doesn't already exist
 
