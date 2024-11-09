@@ -144,7 +144,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000020ab8c05f38>
+#> <environment: 0x00000209f193c9b8>
 ```
  The `~` usually means "by" or "on" in R.
  
@@ -223,16 +223,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000020ab73642b8>
+#> <environment: 0x00000209ee6789a8>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x0000020ab8107a48>
+#> <environment: 0x00000209ee60dd70>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x0000020ab82e0090>
+#> <environment: 0x00000209ee5c0d00>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x0000020abad91740>
+#> <environment: 0x00000209ee589328>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -1333,7 +1333,7 @@ library(ekonomR)
 data("ghg_pop_gdp")
 
 names(ghg_pop_gdp)
-View(head(ghg_pop_gdp))
+#View(head(ghg_pop_gdp))
 
 # Things you would change in a four-column reg table without fixed effects ----
 # set parameters
@@ -1369,6 +1369,10 @@ reg_3_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
 reg_4_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
                    regvars = c("gdp000_pc"))
 
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars,
+                      reg_4_vars)
 # things you would not need to change ----
 
 # make regression formulas
