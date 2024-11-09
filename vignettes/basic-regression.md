@@ -144,7 +144,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000209f193c9b8>
+#> <environment: 0x00000200b89f9bd8>
 ```
  The `~` usually means "by" or "on" in R.
  
@@ -223,16 +223,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x00000209ee6789a8>
+#> <environment: 0x00000200b9a79050>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x00000209ee60dd70>
+#> <environment: 0x00000200b9aa82b8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x00000209ee5c0d00>
+#> <environment: 0x00000200b9ad2878>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x00000209ee589328>
+#> <environment: 0x00000200b9b12f08>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
@@ -726,7 +726,6 @@ modelsummary::modelsummary(models,
              vcov = "HC1",
              coef_rename = cov_labels,
              title = my_title,
-             format = 'latex',
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
              escape = FALSE
 )
@@ -943,7 +942,6 @@ modelsummary::modelsummary(models,
              vcov = "HC1",
              coef_rename = cov_labels,
              title = my_title,
-             format = 'latex',
              add_rows = rows,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
              escape = FALSE,
@@ -1086,7 +1084,6 @@ modelsummary::modelsummary(models,
              vcov = "HC1",
              coef_rename = cov_labels,
              title = my_title,
-             format = "latex",
              add_rows = rows,
              gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors",
              escape = FALSE,

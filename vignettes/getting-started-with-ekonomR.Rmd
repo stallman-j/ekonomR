@@ -154,9 +154,14 @@ remotes::install_github("stallman-j/ekonomR")
 
 Then you'll want to bring the package into your library. Putting a package in your library is like downloading an app that you've already bought onto a new device.
 
+`ekonomR` uses a *lot* of packages. You're going to be asked if you want to download a bunch of packages and their updates. You should first try entering 1 (update all) and then when a box pops up to ask if you want to install from source the packages which are available, also click "yes."
+
+`ekonomR` relies on some packages' latest versions, so you really do want these. This update could take 15 minutes to half an hour to download everything, depending on your computer.
+
 ``` {r, results = FALSE}
 library(ekonomR)
 ```
+
 
 ## Re-installing 
 
