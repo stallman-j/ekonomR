@@ -331,7 +331,7 @@ If you're getting `NA` in the rows for a particular variable when you do your ow
 | Year FE   | N   | Y   | N   | Y   |
 | Country FE| N   | N   | Y   | N   |
 
-**Produce final output**
+**Produce final output** {#final-output}
 
 We have a few more things to remove, so `gof_omit` grew a little bit. We also added `vcov_list` to tell `modelsummary` which standard errors to pick, and just for illustration I've set `fmt = 6` to make the coefficients show out to 6 decimal places.
 
@@ -430,7 +430,7 @@ If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Git
 
 Because we set a label above, we can also cross-reference the table. An example of how to do this is given in the file `templates/examples/inserting-tables.tex`.
 
-# Simple regression table with `modelsummary_reg_default()` (optional)
+# Automating with `modelsummary_reg_default()` (optional)
 
 You may have noticed that we've set up the regression tables quite similarly in the last two vignettes. The basic sequence has been the following:
 
@@ -570,9 +570,11 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
 
     - You don't need to make up a new table to do this; you can just figure it out from your R console output.
 
-3. Reproduce the final table, but instead of using *per capita* variables use just GDP and just greenhouse gas emissions by country. Remember to change the column title, the table title, the table notes, and the covariate labels.
+3. Reproduce the [final table from the final output section](#final-output), but instead of using *per capita* variables use just GDP and just greenhouse gas emissions by country. Remember to change the column title, the table title, the table notes, and the covariate labels accordingly.
 
     - Briefly describe which table, using the per capita variables or the raw country-level variables, that you find more convincing if we're trying to evaluate the relationship between economic growth and greenhouse gas emissions. Why do you prefer the one you prefer?
+
+4. Overall, do you find the evidence of this vignette series to be in favor of or against the hypothesis of the Green Kuznets curve? Do you find this evidence convincing?
 
 # Just the code, please
 
