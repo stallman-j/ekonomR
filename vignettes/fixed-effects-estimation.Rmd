@@ -430,6 +430,134 @@ If you'd like to be even fancier, you can sync your Overleaf with Dropbox or Git
 
 Because we set a label above, we can also cross-reference the table. An example of how to do this is given in the file `templates/examples/inserting-tables.tex`.
 
+# Simple regression table with `modelsummary_reg_default()` (optional)
+
+You may have noticed that we've set up the regression tables quite similarly in the last two vignettes. The basic sequence has been the following:
+
+1. Define lists for reach regression model that includes the outcome variable, the regressors, and optionally the variables with fixed effects
+2. Make regression formulas from those lists
+3. Figure out which standard errors to use according to the regression formula
+4. Generate the models, possibly printing them to console to examine in detail
+5. Add in dependent variable means and (if using fixed effects) indicate which regressions use what fixed effects
+6. Decide the title, footnotes, and formatting of the table
+7. Generate a table with `modelsummary`
+8. Export the table to LaTex and/or Word in a convenient folder
+
+Well. If you provide step 1, `modelsummary_reg_default()` does steps 2-8.
+
+This is just a function that wraps around the above workflow. It's not designed for advanced regressions, but if you're exploring the data and want to check out the correlations and what happens when you include fixed effects, it's pretty good!
+
+All you have to do is get the variables formatted into a list in a way that the function accepts. Once you've done that, `modelsummary_reg_default()` runs through the whole sequence and tries to do a reasonable job of getting you all the way to a table.
+
+Here are a few examples
+
+## Default specifications, with fixed effects
+
+```{r, eval = FALSE}
+# generate lists of regression variables
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars  = NULL)
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = "year")
+
+reg_3_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = c("iso3c"))
+
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars)
+
+# generate output
+
+modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = reg_data,
+                         output_filename = "example_reg_table")
+```
+
+## Some customization, no fixed effects
+
+You don't need to run a regression with fixed effects to use this function. 
+
+We could've basically gotten the output from the [Basic Regression](https://stallman-j.github.io/ekonomR/vignettes/basic-regression/) with the following code:
+
+```{r, eval = FALSE}
+
+# define regression outcome and regressor variables
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc"))
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"))
+
+reg_3_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
+                   regvars = c("log(gdp_pc)"))
+
+reg_4_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
+                   regvars = c("gdp000_pc"))
+
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars,
+                      reg_4_vars)
+
+my_table <- ekonomR::modelsummary_reg_default(reg_vars_list,
+                                              data = ghg_pop_gdp %>% dplyr::filter(year == 1960 & gcb_ghg_territorial_pc > 0),
+                                              cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$","Log(GDP pc)"),
+                                              table_notes = "Robust standard errors given in parentheses. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024).",
+                                              my_title = paste0("Cross Section GHG and GDP per capita relationship, ", 1960, " \\label{tab:basic_reg_table}"),
+                                              output_filename = "basic-regression_redone",
+                                              print_models = FALSE  # doesn't let models print to console
+                                                         )
+)
+```
+## More customization
+
+It's not necessary to ask `modelsummary_reg_default()` to export the table. If you want to add some formatting at the end, just set `export_output = FALSE`, save the output, and then you can process ex post like the following.
+
+```{r, eval = FALSE}
+
+reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars  = NULL)
+
+reg_2_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc","I(gdp000_pc^2)","I(gdp000_pc^3)"),
+                   fevars = "year")
+
+reg_3_vars <- list(outvar = "gcb_ghg_territorial_pc",
+                   regvars = c("gdp000_pc"),
+                   fevars = c("iso3c"))
+
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars)
+
+my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = reg_data,
+                         my_title = "This is my title \\label{tab:my_table_label}",
+                         table_notes = list(a = "Top level notes",
+                                            b = "Second level notes"),
+                         cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
+                         fe_names = c("Year FE","Country FE"),
+                         depvar_means = NULL, #c(1.23,4.59,"lego"),
+                         fmt = 6,
+                         export_output = FALSE)
+
+my_table <- my_table %>%
+  tinytable::group_tt(j = list("GHGpc" =2,"GHGpc" = 3, "GHGpc" = 4))
+
+# generate output folder if it doesn't already exist
+
+if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output","01_tables"), recursive = TRUE)
+
+ tinytable::save_tt(my_table,
+                     output = here::here("output","01_tables","fixed_effects_table.docx"),
+                     overwrite = TRUE)
+```
 
 # Exercises
 
@@ -621,14 +749,19 @@ reg_vars_list <- list(reg_1_vars,
                       reg_3_vars)
 
 # generate output
+
+modelsummary_reg_default(reg_vars_list = reg_vars_list,
+                         data = reg_data,
+                         output_filename = "example_reg_table")
+
 my_table <- modelsummary_reg_default(reg_vars_list = reg_vars_list,
-                         data = ghg_pop_gdp,
+                         data = reg_data,
                          my_title = "This is my title \\label{tab:my_table_label}",
                          table_notes = list(a = "Top level notes",
                                             b = "Second level notes"),
                          cov_labels = c("Intercept","GDP pc","(GDP pc)$^2$", "(GDP pc)$^3$"),
                          fe_names = c("Year FE","Country FE"),
-                         depvar_means = c(1.23,4.59,8.90,"lego"),
+                         depvar_means = NULL, #c(1.23,4.59,"lego"),
                          fmt = 6,
                          export_output = FALSE)
 

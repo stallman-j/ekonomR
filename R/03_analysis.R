@@ -1,5 +1,6 @@
 #' modelsummary_reg_default
-#' @description modelsummary_reg_default takes in a list of regression variables formatted in a particular way and a data frame, and outputs a modelsummary table with reasonable defaults for these regressions. It currently supports using fixest::feols with fixed effects (in which case it clusters standard errors by the fixed effects categories); as well as lm() for regression equations which do not have fixed effects variables inputted. It tries to cleverly add in dependent variable means and fixed effect rows.
+#' @description modelsummary_reg_default is a workflow wrapper around modelsummary::modelsummary() and tinytable::save_tt(). It takes in a list of regression variables and a dataframe, turns the list of regression variables into regression models, and outputs a modelsummary table with reasonable defaults for these regressions.
+#' It currently supports using fixest::feols with fixed effects (in which case it clusters standard errors by the fixed effects categories); as well as lm() for regression equations which do not have fixed effects variables inputted. It tries to cleverly add in dependent variable means and fixed effect rows if fixed effects are included.
 #' See the vignette [Fixed Effects Estimation](https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation) for how this function comes together and a couple examples of use.
 #' @param reg_vars_list requires a list where each element of the list is also a list.
 #' @param my_title title for your table
@@ -66,7 +67,7 @@ modelsummary_reg_default <- function(reg_vars_list,
   vcov_list            <- vector(mode = "list", length = len)
   unique_varnames_list <- vector(mode = "list", length = len)
   models_list          <- vector(mode = "list", length = len)
-
+  unique_fes_list      <- vector(mode = "list", length = len)
 
    # make regression formulas
   for (i in 1:len) {
@@ -80,7 +81,6 @@ modelsummary_reg_default <- function(reg_vars_list,
     vcov_list[[i]] <- ekonomR::cluster_formula(reg_eqs_list[[i]], verbose = FALSE)
   }
 
-  # if none of
 
   # generate models
   for (i in 1:len) {
@@ -94,37 +94,84 @@ modelsummary_reg_default <- function(reg_vars_list,
                                         vcov = vcov_list[[i]],
                                         data = data)
     }
-  }
 
-  if (print_models == TRUE) print(lapply(models_list,summary))
-
-  # get the number of unique regressor vars
-
-
-  for (i in 1:len) {
+    # get the number of unique regressor vars
     unique_varnames_list[[i]] <- unique(reg_vars_list[[i]]$regvars)
+
+    # get the number of unique FE vars
+    unique_fes_list[[i]] <- unique(reg_vars_list[[i]]$fevars)
+
   }
+
+
+  if (print_models == TRUE) {print(lapply(models_list,summary))}
 
   length_unique_varnames <- length(unique(unlist(unique_varnames_list)))
+  unique_fes             <- unique(unlist(unique_fes_list))
 
-  # get the number of unique FE vars
+  # determine the rows to add into the table
 
-  unique_fes_list <- vector(mode = "list", length = len)
+  # if unique_fes comes up NULL, none of the regressions have fixed effects,
+  # so just add the depvar means
 
-  for (i in 1:len) {
-    unique_fes_list[[i]] <- unique(reg_vars_list[[i]]$fevars)
-  }
+  if (is.null(unique_fes)) {
 
-  unique_fes <- unique(unlist(unique_fes_list))
+    col_1 <- data.frame("term" = c("Mean"))
+    other_cols <- matrix(NA,
+                         nrow = nrow(col_1),
+                         ncol = len) %>% as.data.frame()
+    rows <- cbind(col_1,other_cols)
+
+    for (i in 1:len){
+
+      if (is.null(depvar_means)) {
+
+        # if the thing listed as "outvar" is not actually a variable in the dataset, create a temp var and take its mean
+
+        if (!(reg_vars_list[[i]]$outvar) %in% names(data)) { # if there's a formula given as a character, try to evaluate it
+
+          message(paste0(reg_vars_list[[i]]$outvar, " is not a column variable in your data. I'm going to try to get the dependent variable mean anyways and it might work, but you should check that it went through right."))
+
+          temp_data <- data %>%
+                     dplyr::mutate(temp_outvar = eval(str2lang(reg_vars_list[[i]]$outvar)))
+
+          rows[1,i+1] <- round(mean(temp_data$temp_outvar, na.rm = TRUE),2)
+
+        } else { # the thing listed as "outvar" is actually a variable in the dataset, then take its mean
+
+        rows[1,i+1] <- round(mean(data[[reg_vars_list[[i]]$outvar]], na.rm = TRUE),2)
+        }
+
+      } else {
+        rows[1,i+1] <- depvar_means[i]
+      }
+
+    }
+
+    attr(rows, 'position') <- 2*n_total_regvars+6
+
+
+  } else { # end if is.null(unique_fes) i.e. the reg table has no FEs, just add the depvar means
+
+    # now assuming that there are regressions with fixed effects
 
 # add attribute rows for depvar means and fixed effects
 
-  # determine the number of columns in this regression
-  col_1 <- data.frame("term" = c("Mean",paste0(unique_fes," FE")))
+  # determine the number of rows to add by getting the first column of this "rows" data frame
+  # it'll look like
 
-  if (!is.null(fe_names)) {
+    # |Mean     |
+    # |year FEs |
+    # |iso3c FEs|
+    # |...      |
+
+  if (!is.null(fe_names)) { # if fe_names were given by user, replace here
     col_1 <- data.frame("term" = c("Mean",fe_names))
+  } else {
+    col_1 <- data.frame("term" = c("Mean",paste0(unique_fes," FE")))
+
   }
+
   other_cols <- matrix(NA,
                        nrow = nrow(col_1),
                        ncol = len) %>% as.data.frame()
@@ -155,8 +202,11 @@ modelsummary_reg_default <- function(reg_vars_list,
 
   }
 
-  # set the position of the rows
-  attr(rows, 'position') <- 2*n_total_regvars+3+c(1:len)
+  # set the position of the rows. we want a row for each of the mean and the FEs
+  attr(rows, 'position') <- 2*n_total_regvars+3+c(1:(length(unique_fes)+1))
+
+  }
+
 
   my_table <- modelsummary::modelsummary(models_list,
                                          stars = stars,
@@ -169,7 +219,6 @@ modelsummary_reg_default <- function(reg_vars_list,
                                          gof_omit = gof_omit,
                                          escape = escape,
                                          notes = table_notes,
-                                         output = output,
                                          ...
   )
 

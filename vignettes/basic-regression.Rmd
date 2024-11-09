@@ -677,7 +677,7 @@ library(ekonomR)
 data("ghg_pop_gdp")
 
 names(ghg_pop_gdp)
-View(head(ghg_pop_gdp))
+#View(head(ghg_pop_gdp))
 
 # Things you would change in a four-column reg table without fixed effects ----
 # set parameters
@@ -713,6 +713,10 @@ reg_3_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
 reg_4_vars <- list(outvar = "log(gcb_ghg_territorial_pc)",
                    regvars = c("gdp000_pc"))
 
+reg_vars_list <- list(reg_1_vars,
+                      reg_2_vars,
+                      reg_3_vars,
+                      reg_4_vars)
 # things you would not need to change ----
 
 # make regression formulas

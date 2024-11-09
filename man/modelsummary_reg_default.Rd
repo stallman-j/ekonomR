@@ -12,7 +12,9 @@ modelsummary_reg_default(
   cov_labels = FALSE,
   fe_names = NULL,
   depvar_means = NULL,
+  format = "latex",
   stars = FALSE,
+  escape = FALSE,
   gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
   fmt = 4,
   out_path = here::here("output", "01_tables"),
@@ -35,7 +37,11 @@ modelsummary_reg_default(
 
 \item{depvar_means}{default of NULL takes the mean of the dependent variable for each column, rounded to 2 significant digits, with missing values removed before the mean is calculated. If you want something different, input a numeric vector of the means that you want for each column of your regression. If not NULL, this vector therefore needs to have the same number of elements as reg_vars_list does.}
 
+\item{format}{defaults to "latex", in modelsummary}
+
 \item{stars}{defaults to FALSE, from modelsummary}
+
+\item{escape}{defaults to FALSE, in modelsummary so that output is less buggy}
 
 \item{gof_omit}{goodness of fit statistics to ignore, defaults to keeping mostly the R2 and Adj R2}
 
@@ -50,16 +56,13 @@ modelsummary_reg_default(
 \item{print_models}{default is TRUE, whether you want to print the list of models with output to the console}
 
 \item{...}{additional options to put into modelsummary}
-
-\item{format}{defaults to "latex", in modelsummary}
-
-\item{escape}{defaults to FALSE, in modelsummary so that output is less buggy}
 }
 \value{
 a modelsummary object
 }
 \description{
-modelsummary_reg_default takes in a list of regression variables formatted in a particular way and a data frame, and outputs a modelsummary table with reasonable defaults for these regressions. It currently supports using fixest::feols with fixed effects (in which case it clusters standard errors by the fixed effects categories); as well as lm() for regression equations which do not have fixed effects variables inputted. It tries to cleverly add in dependent variable means and fixed effect rows.
+modelsummary_reg_default is a workflow wrapper around modelsummary::modelsummary() and tinytable::save_tt(). It takes in a list of regression variables and a dataframe, turns the list of regression variables into regression models, and outputs a modelsummary table with reasonable defaults for these regressions.
+It currently supports using fixest::feols with fixed effects (in which case it clusters standard errors by the fixed effects categories); as well as lm() for regression equations which do not have fixed effects variables inputted. It tries to cleverly add in dependent variable means and fixed effect rows if fixed effects are included.
 See the vignette \href{https://stallman-j.github.io/ekonomR/vignettes/fixed-effects-estimation}{Fixed Effects Estimation} for how this function comes together and a couple examples of use.
 }
 \examples{
