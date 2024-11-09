@@ -331,7 +331,7 @@ If you're getting `NA` in the rows for a particular variable when you do your ow
 | Year FE   | N   | Y   | N   | Y   |
 | Country FE| N   | N   | Y   | N   |
 
-**Produce final output** {#final-output}
+## Produce final output {#final-output}
 
 We have a few more things to remove, so `gof_omit` grew a little bit. We also added `vcov_list` to tell `modelsummary` which standard errors to pick, and just for illustration I've set `fmt = 6` to make the coefficients show out to 6 decimal places.
 
