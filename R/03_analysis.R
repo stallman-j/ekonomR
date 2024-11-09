@@ -1,3 +1,28 @@
+#' Get Regression Equation
+#' @param outcome_var a string vector with the outcome variable name
+#' @param regressor_vars a character vector with all the regressors (not fixed effects) variable names
+#' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of.
+#' @returns A regression formula that can either be used as an input to the lm function or fixest::feols if fe_vars is not null
+#' @export
+
+reg_equation <- function(outcome_var = "lge_15",
+                         regressor_vars = c("gdp_pc","tfr"),
+                         fe_vars        = NULL){
+
+  reg_string <- paste(outcome_var, paste(regressor_vars, collapse = " + "), sep = " ~ ")
+
+  if (!is.null(fe_vars)){
+    reg_form <- paste(reg_string,paste(fe_vars,collapse = " + "), sep = "|") %>% as.formula()
+
+  } else
+
+    reg_form   <- reg_string %>% as.formula()
+
+  return(reg_form)
+
+
+}
+
 #' modelsummary_reg_default
 #' @description modelsummary_reg_default is a workflow wrapper around modelsummary::modelsummary() and tinytable::save_tt(). It takes in a list of regression variables and a dataframe, turns the list of regression variables into regression models, and outputs a modelsummary table with reasonable defaults for these regressions.
 #' It currently supports using fixest::feols with fixed effects (in which case it clusters standard errors by the fixed effects categories); as well as lm() for regression equations which do not have fixed effects variables inputted. It tries to cleverly add in dependent variable means and fixed effect rows if fixed effects are included.
@@ -299,30 +324,7 @@ lm_model <- function(df,
   return(lm)
 }
 
-#' Get Regression Equation
-#' @param outcome_var a string vector with the outcome variable name
-#' @param regressor_vars a character vector with all the regressors (not fixed effects) variable names
-#' @param fe_vars if fixed effects desired, a character vector of the variable names to take fixed effects of.
-#' @returns A regression formula that can either be used as an input to the lm function or fixest::feols if fe_vars is not null
-#' @export
 
-reg_equation <- function(outcome_var = "lge_15",
-                         regressor_vars = c("gdp_pc","tfr"),
-                         fe_vars        = NULL){
-
-  reg_string <- paste(outcome_var, paste(regressor_vars, collapse = " + "), sep = " ~ ")
-
-  if (!is.null(fe_vars)){
-    reg_form <- paste(reg_string,paste(fe_vars,collapse = " + "), sep = "|") %>% as.formula()
-
-  } else
-
-    reg_form   <- reg_string %>% as.formula()
-
-  return(reg_form)
-
-
-}
 
 #' cluster_formula: gives the formula for clustering standard errors based on what fixed effects variables you tell it to keep, for use in the argument of modelsummary
 #'
