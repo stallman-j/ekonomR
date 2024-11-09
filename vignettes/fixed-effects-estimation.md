@@ -348,7 +348,6 @@ my_table <- modelsummary::modelsummary(models,
                                        fmt  = 6, # to 4 decimal places
                                        coef_rename = cov_labels,
                                        title = my_title,
-                                       format = "latex",
                                        add_rows = rows,
                                        gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
                                        escape = FALSE,
@@ -588,7 +587,6 @@ We could've basically gotten the output from the [Basic Regression](https://stal
 
 
 ``` r
-
 # define regression outcome and regressor variables
 reg_1_vars <- list(outvar = "gcb_ghg_territorial_pc",
                    regvars = c("gdp000_pc"))
@@ -615,7 +613,7 @@ my_table <- ekonomR::modelsummary_reg_default(reg_vars_list,
                                               output_filename = "basic-regression_redone",
                                               print_models = FALSE  # doesn't let models print to console
                                                          )
-)
+
 ```
 ## More customization
 
@@ -814,7 +812,6 @@ my_table <- modelsummary::modelsummary(models,
                                        fmt  = 6, # to 4 decimal places
                                        coef_rename = cov_labels,
                                        title = my_title,
-                                       format = "latex",
                                        add_rows = rows,
                                        gof_omit = "AIC|BIC|RMSE|Log.Lik|Std.Errors|FE:|Adj.|F",
                                        escape = FALSE,
