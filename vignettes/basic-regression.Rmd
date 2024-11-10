@@ -173,7 +173,7 @@ lm_example <- stats::lm(reg_eq_ex,
 
 summary(lm_example)
 
-lmtest::coeftest(lm_example,   vcov = vcovHC, type = "HC1")
+lmtest::coeftest(lm_example,   vcov = sandwich::vcovHC, type = "HC1")
 ```
 Unsurprisingly, the heteroskedasticity-robust standard errors are a little bigger.
 

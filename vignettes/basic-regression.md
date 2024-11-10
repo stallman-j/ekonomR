@@ -144,7 +144,7 @@ reg_eq_ex <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 
 reg_eq_ex
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000023936c49150>
+#> <environment: 0x00000239350ad678>
 ```
  The `~` usually means "by" or "on" in R.
  
@@ -191,7 +191,7 @@ summary(lm_example)
 #> Multiple R-squared:  0.5827,	Adjusted R-squared:  0.5788 
 #> F-statistic: 146.6 on 1 and 105 DF,  p-value: < 2.2e-16
 
-lmtest::coeftest(lm_example,   vcov = vcovHC, type = "HC1")
+lmtest::coeftest(lm_example,   vcov = sandwich::vcovHC, type = "HC1")
 #> 
 #> t test of coefficients:
 #> 
@@ -223,16 +223,16 @@ reg_eq_4 <- ekonomR::reg_equation(outcome_var = "gcb_ghg_territorial_pc",
 # display
 reg_eq_1
 #> gcb_ghg_territorial_pc ~ gdp_pc
-#> <environment: 0x0000023931c4f610>
+#> <environment: 0x000002393103ded0>
 reg_eq_2
 #> log(gcb_ghg_territorial_pc) ~ log(gdp_pc)
-#> <environment: 0x0000023931bd0760>
+#> <environment: 0x0000023930f7f4b8>
 reg_eq_3
 #> log(gcb_ghg_territorial_pc) ~ gdp_pc
-#> <environment: 0x0000023931b8ac20>
+#> <environment: 0x0000023930d6a838>
 reg_eq_4
 #> gcb_ghg_territorial_pc ~ gdp_pc + I(gdp_pc^2) + I(gdp_pc^3)
-#> <environment: 0x0000023931b558e8>
+#> <environment: 0x0000023930bfbf40>
 ```
 Now let's make our `lm()` objects. That is, let's actually run the regressions, keeping in mind this caveat about the robust standard errors not being quite right.
 
