@@ -7,28 +7,31 @@ note{b}={Second level notes},
 ]                     %% tabularray outer close
 {                     %% tabularray inner open
 colspec={Q[]Q[]Q[]Q[]},
+cell{1}{2}={c=2,}{halign=c,},
+cell{1}{4}={c=1,}{halign=c,},
 column{1}={halign=l,},
 column{2}={halign=c,},
 column{3}={halign=c,},
 column{4}={halign=c,},
-hline{10}={1,2,3,4}{solid, 0.05em, black},
+hline{11}={1,2,3,4}{solid, 0.05em, black},
 }                     %% tabularray inner close
 \toprule
+& GHGpc &  &  \\ \cmidrule[lr]{2-3}\cmidrule[lr]{4-4}
 & (1) & (2) & (3) \\ \midrule %% TinyTableHeader
 Intercept    & -0.017223  &            &            \\
 & (0.018464) &            &            \\
-GDP pc       & 0.114956   & 0.125539   & 0.024887   \\
-& (0.004084) & (0.004778) & (0.007998) \\
-(GDP pc)$^2$ & -0.000637  & -0.000716  &            \\
-& (0.000099) & (0.000087) &            \\
-(GDP pc)$^3$ & 0.000002   & 0.000002   &            \\
-& (0.000000) & (0.000000) &            \\
+GDP pc       & 0.114956   & 0.125539   & 0.063043   \\
+& (0.004084) & (0.004778) & (0.013474) \\
+(GDP pc)$^2$ & -0.000637  & -0.000716  & -0.000739  \\
+& (0.000099) & (0.000087) & (0.000259) \\
+(GDP pc)$^3$ & 0.000002   & 0.000002   & 0.000003   \\
+& (0.000000) & (0.000000) & (0.000001) \\
 Num.Obs.     & 10235      & 10235      & 10235      \\
 Mean         & 1.24       & 1.24       & 1.24       \\
 Year FE      & N          & Y          & N          \\
 Country FE   & N          & N          & Y          \\
-R2           & 0.552      & 0.575      & 0.867      \\
-R2 Within    &            & 0.567      & 0.120      \\
+R2           & 0.552      & 0.575      & 0.879      \\
+R2 Within    &            & 0.567      & 0.203      \\
 \bottomrule
 \end{talltblr}
 \end{table}
