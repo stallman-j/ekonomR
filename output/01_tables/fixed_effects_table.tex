@@ -1,37 +1,36 @@
 \begin{table}
 \centering
 \begin{talltblr}[         %% tabularray outer open
-caption={This is my title \label{tab:my_table_label}},
-note{a}={Top level notes},
-note{b}={Second level notes},
+caption={GHG and GDP per capita relationship \label{tab:fe_reg}},
+note{}={Robust standard errors given in parentheses in column (1). The other columns have standard errors clustered at the units for which fixed effects are calculated. Population data are obtained from UN-DESA (2023). Gross domestic product (GDP) in 2017 chained PPP thousand USD per capita (PWT 2023). Greenhouse gases in tonnes of carbon per year from GCB (2024).},
 ]                     %% tabularray outer close
 {                     %% tabularray inner open
-colspec={Q[]Q[]Q[]Q[]},
-cell{1}{2}={c=2,}{halign=c,},
-cell{1}{4}={c=1,}{halign=c,},
+colspec={Q[]Q[]Q[]Q[]Q[]},
+cell{1}{2}={c=4,}{halign=c,},
 column{1}={halign=l,},
 column{2}={halign=c,},
 column{3}={halign=c,},
 column{4}={halign=c,},
-hline{11}={1,2,3,4}{solid, 0.05em, black},
+column{5}={halign=c,},
+hline{11}={1,2,3,4,5}{solid, 0.05em, black},
 }                     %% tabularray inner close
 \toprule
-& GHGpc &  &  \\ \cmidrule[lr]{2-3}\cmidrule[lr]{4-4}
-& (1) & (2) & (3) \\ \midrule %% TinyTableHeader
-Intercept    & -0.017223  &            &            \\
-& (0.018464) &            &            \\
-GDP pc       & 0.114956   & 0.125539   & 0.063043   \\
-& (0.004084) & (0.004778) & (0.013474) \\
-(GDP pc)$^2$ & -0.000637  & -0.000716  & -0.000739  \\
-& (0.000099) & (0.000087) & (0.000259) \\
-(GDP pc)$^3$ & 0.000002   & 0.000002   & 0.000003   \\
-& (0.000000) & (0.000000) & (0.000001) \\
-Num.Obs.     & 10235      & 10235      & 10235      \\
-Mean         & 1.24       & 1.24       & 1.24       \\
-Year FE      & N          & Y          & N          \\
-Country FE   & N          & N          & Y          \\
-R2           & 0.552      & 0.575      & 0.879      \\
-R2 Within    &            & 0.567      & 0.203      \\
+& GHGpc &  &  &  \\ \cmidrule[lr]{2-5}
+& (1) & (2) & (3) & (4) \\ \midrule %% TinyTableHeader
+Intercept    & -0.017223  &            &            &            \\
+& (0.018464) &            &            &            \\
+GDP pc       & 0.114956   & 0.125539   & 0.063043   & 0.064470   \\
+& (0.004084) & (0.004778) & (0.013474) & (0.014323) \\
+(GDP pc)$^2$ & -0.000637  & -0.000716  & -0.000739  & -0.000737  \\
+& (0.000099) & (0.000087) & (0.000259) & (0.000265) \\
+(GDP pc)$^3$ & 0.000002   & 0.000002   & 0.000003   & 0.000002   \\
+& (0.000000) & (0.000000) & (0.000001) & (0.000001) \\
+Num.Obs.     & 10235      & 10235      & 10235      & 10235      \\
+Mean         & 1.24       & 1.24       & 1.24       & 1.24       \\
+Year FE      & N          & Y          & N          & Y          \\
+Country FE   & N          & N          & Y          & Y          \\
+R2           & 0.552      & 0.575      & 0.879      & 0.883      \\
+R2 Within    &            & 0.567      & 0.203      & 0.168      \\
 \bottomrule
 \end{talltblr}
 \end{table}

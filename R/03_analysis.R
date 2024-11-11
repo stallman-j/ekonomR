@@ -212,8 +212,24 @@ modelsummary_reg_default <- function(reg_vars_list,
 
       # fill in the depvar means with either the default value or the thing the user gave
       if (is.null(depvar_means)) {
-      rows[1,i+1] <- round(mean(data[[reg_vars_list[[i]]$outvar]], na.rm = TRUE),2)
-      } else {
+
+        # if the thing listed as "outvar" is not actually a variable in the dataset, create a temp var and take its mean
+
+        if (!(reg_vars_list[[i]]$outvar) %in% names(data)) { # if there's a formula given as a character, try to evaluate it
+
+          message(paste0(reg_vars_list[[i]]$outvar, " is not a column variable in your data. I'm going to try to get the dependent variable mean anyways and it might work, but you should check that it went through right."))
+
+          temp_data <- data %>%
+            dplyr::mutate(temp_outvar = eval(str2lang(reg_vars_list[[i]]$outvar)))
+
+          rows[1,i+1] <- round(mean(temp_data$temp_outvar, na.rm = TRUE),2)
+
+        } else { # the thing listed as "outvar" is actually a variable in the dataset, then take its mean
+
+          rows[1,i+1] <- round(mean(data[[reg_vars_list[[i]]$outvar]], na.rm = TRUE),2)
+        }
+
+        } else {
         rows[1,i+1] <- depvar_means[i]
       }
 

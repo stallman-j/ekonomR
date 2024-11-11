@@ -5,29 +5,30 @@ caption={My regression table \label{tab:reg-table}},
 note{}={Robust standard errors given in parentheses.},
 ]                     %% tabularray outer close
 {                     %% tabularray inner open
-colspec={Q[]Q[]Q[]Q[]},
+colspec={Q[]Q[]Q[]Q[]Q[]},
 column{1}={halign=l,},
 column{2}={halign=c,},
 column{3}={halign=c,},
 column{4}={halign=c,},
-hline{10}={1,2,3,4}{solid, 0.05em, black},
+column{5}={halign=c,},
+hline{10}={1,2,3,4,5}{solid, 0.05em, black},
 }                     %% tabularray inner close
 \toprule
-& (1) & (2) & (3) \\ \midrule %% TinyTableHeader
-(Intercept)    & -0.0172  &          &          \\
-& (0.0185) &          &          \\
-gdp000_pc      & 0.1150   & 0.1255   & 0.0630   \\
-& (0.0041) & (0.0048) & (0.0135) \\
-I(gdp000_pc^2) & -0.0006  & -0.0007  & -0.0007  \\
-& (0.0001) & (0.0001) & (0.0003) \\
-I(gdp000_pc^3) & 0.0000   & 0.0000   & 0.0000   \\
-& (0.0000) & (0.0000) & (0.0000) \\
-Num.Obs.       & 10235    & 10235    & 10235    \\
-Mean           & 1.24     & 1.24     & 1.24     \\
-year FE        & N        & Y        & N        \\
-iso3c FE       & N        & N        & Y        \\
-R2             & 0.552    & 0.575    & 0.879    \\
-R2 Within      &          & 0.567    & 0.203    \\
+& (1) & (2) & (3) & (4) \\ \midrule %% TinyTableHeader
+(Intercept)    & -0.0172  &          &          &          \\
+& (0.0185) &          &          &          \\
+gdp000_pc      & 0.1150   & 0.1255   & 0.0630   & 0.0286   \\
+& (0.0041) & (0.0048) & (0.0135) & (0.0099) \\
+I(gdp000_pc^2) & -0.0006  & -0.0007  & -0.0007  & -0.0004  \\
+& (0.0001) & (0.0001) & (0.0003) & (0.0001) \\
+I(gdp000_pc^3) & 0.0000   & 0.0000   & 0.0000   & 0.0000   \\
+& (0.0000) & (0.0000) & (0.0000) & (0.0000) \\
+Num.Obs.       & 10235    & 10235    & 10235    & 10201    \\
+Mean           & 1.24     & 1.24     & 1.24     & NA       \\
+year FE        & N        & Y        & N        & Y        \\
+iso3c FE       & N        & N        & Y        & Y        \\
+R2             & 0.552    & 0.575    & 0.879    & 0.933    \\
+R2 Within      &          & 0.567    & 0.203    & 0.045    \\
 \bottomrule
 \end{talltblr}
 \end{table}
