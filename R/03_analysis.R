@@ -94,6 +94,7 @@ modelsummary_reg_default <- function(reg_vars_list,
   models_list          <- vector(mode = "list", length = len)
   unique_fes_list      <- vector(mode = "list", length = len)
 
+
    # make regression formulas
   for (i in 1:len) {
     reg_eqs_list[[i]] <- ekonomR::reg_equation(outcome_var = reg_vars_list[[i]]$outvar,
@@ -173,7 +174,7 @@ modelsummary_reg_default <- function(reg_vars_list,
 
     }
 
-    attr(rows, 'position') <- 2*n_total_regvars+6
+    attr(rows, 'position') <- 2*length_unique_varnames+6
 
 
   } else { # end if is.null(unique_fes) i.e. the reg table has no FEs, just add the depvar means
@@ -244,7 +245,7 @@ modelsummary_reg_default <- function(reg_vars_list,
   }
 
   # set the position of the rows. we want a row for each of the mean and the FEs
-  attr(rows, 'position') <- 2*n_total_regvars+3+c(1:(length(unique_fes)+1))
+  attr(rows, 'position') <- 2*length_unique_varnames+3+c(1:(length(unique_fes)+1))
 
   }
 
