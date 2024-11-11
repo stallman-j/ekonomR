@@ -568,7 +568,7 @@ if (!dir.exists(here::here("output","01_tables"))) dir.create(here::here("output
 
     - You don't need to make up a new table to do this; you can just figure it out from your R console output.
 
-3. Reproduce the [final table from the final output section](#final-output), but instead of using *per capita* variables use just GDP and just greenhouse gas emissions by country. Remember to change the column title, the table title, the table notes, and the covariate labels accordingly.
+3. Reproduce the [final table from the final output section](#final-output), but instead of using *per capita* variables use just GDP and just greenhouse gas emissions by country. Remember to change the column title, the table title, the table notes, and the covariate labels accordingly. **Note:** this is **not** a regression in the section using `modelsummary_reg_defaul` but the final regression from the section labeled [Produce final output](#final-output).
 
     - Briefly describe which table, using the per capita variables or the raw country-level variables, that you find more convincing if we're trying to evaluate the relationship between economic growth and greenhouse gas emissions. Why do you prefer the one you prefer?
 
