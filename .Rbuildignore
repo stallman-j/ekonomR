@@ -4,3 +4,13 @@
 ^data-raw$
 ^LICENSE\.md$
 ^ekonomR\.Rproj$
+^_data$
+^_includes$
+^_layouts$
+^_sass$
+^archive$
+^data$
+^output$
+^example-project$
+^_config\.yml$
+^Gemfile$
