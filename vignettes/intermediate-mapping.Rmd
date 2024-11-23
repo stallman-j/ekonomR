@@ -1,0 +1,410 @@
+---
+title: "Intermediate Mapping"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-10-29"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{intermediate-mapping}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
+
+# Agenda
+
+We're going to download a geopackage file for Ecuador from the global administrative areas (GADM) which you can learn about [here](https://uwaterloo.ca/library/geospatial/collections/us-and-world-geospatial-data-resources/global-administrative-areas-gadm). 
+
+We'll then randomly pick a municipality from Ecuador, and plot Ecuador with that municipality shaded.
+
+
+# Prerequisites
+
+First, bring `ekonomR` into your working library.
+
+``` {r}
+library(ekonomR)
+```
+
+# Set Parameters
+
+We're going to set the path that we want to download the GADM data into. 
+
+```{r, eval = TRUE, results = FALSE, echo = FALSE}
+data_raw_path <- file.path("E:","data","01_raw")
+
+```
+
+```{r, eval = FALSE, results = FALSE}
+data_raw_path <- here::here("data","01_raw")
+# if you want to save the data somewhere else
+# data_raw_path <- file.path("E:","data","01_raw")
+
+```
+
+Clicking `Tanzania` in the dropdown on the [GADM site](https://gadm.org/download_country.html), we can see that the path to the country-level geopackage is `https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_TZA.gpkg`.
+
+
+Let's also set the following:
+
+1. The country by its ISO3c code (a standard abbreviation for countries)
+2. The way we want the name of that country written
+3. A color to shade the localities we choose on the map
+4. The level of administrative unit that we're interested in (the cantons are administrative level 2)
+5. The filename that we want, created by concatenating the country and the typical format that GADM uses to write the filenames
+6. The complete input path
+7. The column name that we want to sample from to create labels (which here is going to be called `NAME_2`). 
+8. The number of localities to sample
+
+This way this code is very easy to adapt.
+
+If we want to randomly choose a province from Kenya, for instance, we could change `country <- "KEN"`, `level <- 1` and `name_var` to be `NAME_1`. 
+
+`locality_color` provides the HEX color codes for a medium Yale blue, which we'll use for mapping.
+
+```{r}
+  country        <- "TZA"
+  country_name   <- "Tanzania"
+  locality_color <- "#286dc0"
+  base_url       <- "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/"
+  level          <- 3
+  filename       <- paste0("gadm41_",country,".gpkg")
+  in_path        <- file.path(data_raw_path,"GADM",filename)
+  name_var       <- "NAME_2"
+  num_localities <- 1
+  names_to_keep  <- c("Meru")
+```
+
+# Download data
+
+If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `download_data()` function from `ekonomR` will create the folder path for you. This `if` statement wraps around the call to download the data, so that if the file already exists, there's no need to re-download it.
+
+```{r}
+
+if (!file.exists(file.path(data_raw_path,"GADM",filename))) {
+  ekonomR::download_data(data_subfolder = "GADM",
+                          data_raw = data_raw_path,
+                          url = paste0(base_url,filename),
+                          filename = filename)
+}
+
+
+
+
+```
+```{r, eval = FALSE, echo = FALSE}
+  country        <- "TZA"
+  country_name   <- "Tanzania"
+  locality_color <- "#286dc0"
+  base_url       <- "https://geodata.ucdavis.edu/gadm/gadm3.6/Rsf/"
+  filename       <- "gadm36_TZA_3_sf.rds"
+  level          <- 2
+  in_path        <- file.path(data_raw_path,"GADM",filename)
+  name_var       <- "NAME_2"
+  num_localities <- 1
+  names_to_keep  <- c("Meru")
+```
+
+# Download data
+
+If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `download_data()` function from `ekonomR` will create the folder path for you. 
+
+```{r, eval = FALSE, echo = FALSE}
+  ekonomR::download_data(data_subfolder = "GADM",
+                          data_raw = data_raw_path,
+                          url = paste0(base_url,filename),
+                          filename = filename)
+```
+Let's examine the layers that this geopackage contains. We see there are 4 layers; the admin level 0 is a country-level shapefile. Tanzania has 31 regions (called *mkoa* in Swahili), which is its administrative level 1. Administrative level 2 had 184 districts as of 2021. In our dataset, there are 31 level-1 features and 186 level-2 features, again subdivided into divisions (level 3, 3,669 unique features) and then wards.
+
+The Coordinate Reference System (CRS) is [WGS 84](https://gisgeography.com/wgs84-world-geodetic-system/), which is likely the most common CRS available for global mapping. It's very important to understand what CRS you're using at any time you're doing mapping. If you get this wrong your maps and any spatial analysis you do will not make sense.
+
+```{r}
+sf::st_layers(in_path)
+```
+Let's read in the layer at administrative level 2. The final line tries to make the geometries valid if possible.
+
+```{r}
+country_gpgk <- sf::st_read(dsn = in_path,
+                            layer = paste0("ADM_ADM_",level)) %>%
+                sf::st_make_valid()
+
+
+```
+`MULTIPOLYGON` as a geometry type suggests that some municipalities contain more than one polygon, for instance if they're islands. If every row (canton) contained a single closed polygon,  `Geometry type` would be `POLYGON`.
+
+# Choose a locality
+
+We're going to choose the divisions of the Meru district and plot them.
+
+```{r}
+# filter, using base R so we can retain the column name as a character var
+my_localities   <- country_gpgk[country_gpgk[[name_var]] %in% names_to_keep,]
+
+my_localities <- cbind(my_localities,
+                       sf::st_coordinates(sf::st_centroid(my_localities)))
+
+name_3_var <- "NAME_3"
+names_3_to_keep <- c("Makiba","Maroroni","Kikatiti","King'ori")
+
+my_divisions   <- my_localities[my_localities[[name_3_var]] %in% names_3_to_keep,]
+
+```
+
+# Map the locality
+
+Let's put it all together in a map!
+
+## Take the union to generate a bigger polygon
+
+If you want to see more in this vein, check out [the ggplot2 spatial tutorial at r-spatial](https://r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)
+
+```{r}
+continent_polygon <- rnaturalearth::ne_countries(continent = "africa")
+
+country_polygon  <- sf::st_union(country_gpgk)
+
+district_polygon <- sf::st_union(my_localities)
+
+```
+Congratulations, by the way! You've just performed a spatial analysis! Wasn't that suspiciously easy?
+
+## Make the map with ggplot2
+
+I usually make my maps by setting the first line as `ggplot2::ggplot()` which opens up a blank figure. You could also write your data in there, but if you're pulling from several different data frames it's usually easier to set the data in each row.
+
+`geom_sf()` adds a `sf` (spatial) layer to the map. 
+
+We're going to make the first layer be all the polygons of the level of interest (here municipalities) with a medium grey outline and very light gray interior. 
+
+The second layer will be the locality (or localities, if you changed `num_localities` to be greater than 1) of our choosing. 
+
+The third layer is going to overlay the text of the localities we sampled on the map at the centroid of that locality.
+
+We're also including `theme_minimal_map()` from `ekonomR` as the wraparound theme for a simple mapping theme that generally looks nice and could go into a slide deck.
+
+```{r, results = "hide"}
+  map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = district_polygon,
+          color = "gray70",
+          fill = "gray99",
+          alpha = 0.5,
+          linewidth = .1) +
+    ggplot2::geom_sf(data = my_localities,
+            alpha = .3,
+            fill  = locality_color,
+            color = locality_color,
+            linewidth = .1) +
+    ggplot2::geom_text(data = my_divisions,
+                       ggplot2::aes(X,Y, label = NAME_3),
+                       size = 5) +
+    ggplot2::labs(title = paste0("Meru District, Tanzania"),
+         caption = c("Data from GADM (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+
+map
+```
+Now we save the function with `ggsave_map` which provides some nice defaults to the `ggsave()` function from `ggplot2`.
+
+```{r}
+out_path <- file.path("C:","Projects","water-in-africa","documents","presentations","figures")
+
+
+  ekonomR::ggsave_map(output_folder = out_path,
+           plotname = map,
+           filename = paste0("Meru-district-in-TZA-with-divisions.png"),
+           width = 8,
+           height = 8,
+           dpi  = 300)
+```
+
+
+```{r, results = "hide"}
+  map <- ggplot2::ggplot() +
+      ggplot2::geom_sf(data = country_polygon,
+          color = "gray70",
+          fill = "gray99",
+          alpha = 0.5,
+          linewidth = .5) +
+    ggplot2::geom_sf(data = district_polygon,
+            alpha = .3,
+            fill  = locality_color,
+            color = locality_color,
+            linewidth = .5) +
+    # ggplot2::geom_text(data = my_localities,
+    #                    ggplot2::aes(X,Y, label = NAME_2),
+    #                    size = 5) +
+    ggplot2::labs(title = paste0("Meru District, Tanzania"),
+         caption = c("Data from GADM (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+
+map
+```
+
+```{r}
+
+  ekonomR::ggsave_map(output_folder = out_path,
+           plotname = map,
+           filename = paste0("Meru-district_TZA.png"),
+           width = 9,
+           height = 9,
+           dpi  = 300)
+```
+
+We'd like to write to geojson to upload into another software. Let's try it:
+
+```{r, results = "hide"}
+  map <- ggplot2::ggplot() +
+  ggplot2::geom_sf(data = continent_polygon,
+                 color = "gray70",
+                 fill = "gray99",
+                 alpha = 0.5) +
+      ggplot2::geom_sf(data = country_polygon,
+          color = "gray70",
+          fill = "gray70",
+          alpha = 0.5,
+          linewidth = .5) +
+    ggplot2::geom_sf(data = district_polygon,
+            alpha = .3,
+            fill  = locality_color,
+            color = locality_color,
+            linewidth = .5) +
+    # ggplot2::geom_text(data = my_localities,
+    #                    ggplot2::aes(X,Y, label = NAME_2),
+    #                    size = 5) +
+    ggplot2::labs(title = paste0("Meru District in Tanzania in Africa"),
+         caption = c("Data from GADM (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+
+map
+
+
+  ekonomR::ggsave_map(output_folder = out_path,
+           plotname = map,
+           filename = paste0("Meru-district_TZA.png"),
+           width = 9,
+           height = 9,
+           dpi  = 300)
+```
+
+
+```{r}
+
+out_path <- file.path("E:","data","03_clean","GADM")
+
+
+if (!dir.exists(out_path)) dir.create(out_path, recursive = TRUE)
+
+sf::st_write(my_divisions,
+             dsn = file.path(out_path,"divisions_in_meru_tza.geojson"),
+                             layer = "divisions_in_meru_tza.geojson")
+
+```
+
+
+```{r, echo = FALSE}
+url <- paste0("https://github.com/stallman-j/ekonomR/blob/main/output/03_maps/",paste0(country_name, "_with_",num_localities,"_at-gadm-level_",level,"_randomly-chosen.png"),"?raw=true")
+
+knitr::include_graphics(url)
+
+```
+
+# Exercise
+
+1. For a different country, different administrative level, and different number of localities, generate a plot with the administrative polygons shaded in with the color `"#228B22"`.
+
+# Just the code, please
+
+```{r, eval = FALSE}
+library(ekonomR)
+
+# Set the path to download the data on your local machine
+data_raw_path <- here::here("data","01_raw")
+
+# Set Parameters
+  country        <- "ECU"
+  country_name   <- "Ecuador"
+  locality_color <- "#286dc0"
+  level          <- 2
+  filename       <- paste0("gadm41_",country,".gpkg")
+  in_path        <- file.path(data_raw_path,"GADM",filename)
+  name_var       <- "NAME_2"
+  num_localities <- 1
+  
+# Download Data
+  ekonomR::download_data(data_subfolder = "GADM",
+                          data_raw = data_raw_path,
+                          url = "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_ECU.gpkg",
+                          filename = filename)
+
+# examine layers
+  sf::st_layers(in_path)
+
+# Read in spatial data
+country_gpgk <- sf::st_read(dsn = in_path,
+                            layer = paste0("ADM_ADM_",level)) %>%
+                sf::st_make_valid()
+
+# Randomly sample
+
+# set randomization seed
+set.seed(seed = 16)
+
+# sample localities
+
+sampled_indices <- sample(1:nrow(country_gpgk), size = num_localities )
+
+locality_name   <- country_gpgk[sampled_indices,name_var] %>% sf::st_drop_geometry() %>% as.character()
+
+my_localities   <- country_gpgk[sampled_indices,]
+
+# get polygon centroids for labeling
+my_localities <- cbind(my_localities,
+                       sf::st_coordinates(sf::st_centroid(my_localities)))
+
+# generate map
+  map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = country_gpgk,
+          color = "gray70",
+          fill = "gray99",
+          alpha = 0.5,
+          linewidth = .1) +
+    ggplot2::geom_sf(data = my_localities,
+            alpha = .3,
+            fill  = locality_color,
+            color = locality_color,
+            linewidth = .4) +
+    ggplot2::geom_text(data = my_localities,
+                       ggplot2::aes(X,Y, label = NAME_2),
+                       size = 5) +
+    ggplot2::labs(title = paste0(country_name," with ",num_localities," canton randomly chosen"),
+         caption = c("Data from GADM (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+  
+map
+
+# save map
+  ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
+           plotname = map,
+           filename = paste0(country_name, "_with_",num_localities,"_at-gadm-level_",level,"_randomly-chosen.png"),
+           width = 9,
+           height = 5,
+           dpi  = 300)
+```

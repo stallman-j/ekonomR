@@ -71,7 +71,9 @@ knitr::include_graphics(url)
 ``` {r}
 knitr::knit(input = here::here("README.Rmd"), output = here::here("README.md"))
 ```
-
+```{r}
+knitr::knit(input = here::here("vignettes","converting-to-excel.Rmd"), output = here::here("vignettes","converting-to-excel.pdf"))
+```
 ## Documentation 
 
 ``` {r, results = FALSE}

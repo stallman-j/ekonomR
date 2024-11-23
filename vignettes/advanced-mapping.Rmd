@@ -1,0 +1,481 @@
+---
+title: "Advanced Mapping"
+layout: single
+date: "2024-10-29"
+output:
+  pdf_document: default
+  rmarkdown::html_vignette: default
+toc_sticky: true
+author_profile: true
+toc: true
+toc_label: Contents
+vignette: "%\\VignetteIndexEntry{intermediate-mapping} %\\VignetteEngine{knitr::rmarkdown}
+  %\\VignetteEncoding{UTF-8}\n"
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
+
+# Agenda
+
+We're going to download a the basins data from [HydroATLAS](https://www.hydrosheds.org/hydroatlas) and plot all the basins and sub-basins for Africa, like the picture given [here](https://www.hydrosheds.org/products/hydrobasins)
+ but just for Africa.
+ 
+ 
+We'll then select a sub-basin that intersects with the Meru district in Tanzania, plot all levels of basins with that district, and export one of the sub-basins to a geojson file for later processin in Python.
+
+# Prerequisites
+
+First, bring `ekonomR` into your working library.
+
+``` {r}
+library(ekonomR)
+```
+
+# Set Parameters
+
+Set the path that we want to download the data into. 
+
+```{r, eval = TRUE, results = FALSE, echo = FALSE}
+data_raw_path <- file.path("E:","data","01_raw")
+
+```
+
+```{r, eval = FALSE, results = FALSE}
+#data_raw_path <- here::here("data","01_raw")
+# if you want to save the data somewhere else
+# data_raw_path <- file.path("E:","data","01_raw")
+
+```
+
+
+`locality_color` provides the HEX color codes for a medium Yale blue, which we'll use for mapping.
+
+```{r}
+
+  locality_color <- "#286dc0"
+  hydrobasin_level <- 01
+  equal_area_crs   <- "ESRI:102022"
+
+```
+
+# Bring in pre-existing data
+
+The vignette [Intermediate Mapping](https://stallman-j.github.io/ekonomR/vignettes/intermediate-mapping/) already showed how to download a country shapefile from the [Global Administrative Areas (GADM)]((https://uwaterloo.ca/library/geospatial/collections/us-and-world-geospatial-data-resources/global-administrative-areas-gadm)). 
+
+For the purposes of this vignette, we're going to look at the intersection of a district in Tanzania called Makiba. We want to find out which river basins intersect with it, using river basin data from [HydroSHEDS](https://www.hydrosheds.org/products/hydrobasins). 
+
+We'll also look at all the basins and nested sub-basins in Africa, and plot those.
+
+# Download data
+
+If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `download_data()` function from `ekonomR` will create the folder path for you. This `if` statement wraps around the call to download the data, so that if the file already exists, there's no need to re-download it.
+
+We want to download a 2.5G file that's BasinATLAS, which requires a while. The download will time out if we don't increase the amount of time that R's trying to download something.
+
+I've increased the timeout time to 3,000 seconds or 50 minutes. This is hopefully far too long for what you would need.
+
+```{r}
+
+options(timeout = 3000)
+
+filename <- "BasinATLAS_Data_v10.gdb"
+
+path <- file.path(data_raw_path,"HydroATLAS","BasinsATLAS",filename)
+# only do this download and extract if the file doesn't already exist
+
+if (!file.exists(path)) {
+  
+  ekonomR::download_data(data_subfolder = file.path("BasinsATLAS"),
+                          data_raw = data_raw_path,
+                          url = "https://figshare.com/ndownloader/files/20082137",
+                         filename = filename,
+                         zip_file = TRUE)
+  }
+```
+
+Now we want to bring the data in. The file gets extracted to a *folder* called `"BasinATLAS_Data_v10.gdb"`, but the actual `gdb` file lives in trhe folder *inside* that.
+
+Let's take a quick look at the layers. There are 1 through 10, and it looks like it's probably the case that the 941,012 multipolygons in level 10 are probably the most concentrated of the sub-basins. Let's bring in the first layer just to take a quick plot.
+
+```{r}
+in_path <- file.path(path,"BasinATLAS_v10.gdb")
+
+sf::st_layers(in_path)
+```
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    hydro_basin <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev01")
+tictoc::toc()
+
+```
+Make a quick plot
+
+```{r}
+  map <- ggplot2::ggplot() +
+    ggplot2::geom_sf(data = hydro_basin,
+          color = "gray70",
+          fill = "gray99",
+          alpha = 0.5,
+          linewidth = .1) +
+    # ggplot2::geom_sf(data = my_localities,
+    #         alpha = .3,
+    #         fill  = locality_color,
+    #         color = locality_color,
+    #         linewidth = .1) +
+    # ggplot2::geom_text(data = my_divisions,
+    #                    ggplot2::aes(X,Y, label = NAME_3),
+    #                    size = 5) +
+    ggplot2::labs(title = paste0("Basic Hydro Basins"),
+         caption = c("Data from HydroATLAS (2024)")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+
+#map
+```
+
+Output
+
+```{r}
+out_path <- file.path("C:","Projects","water-in-africa","output","03_maps")
+
+
+  ekonomR::ggsave_map(output_folder = out_path,
+           plotname = map,
+           filename = paste0("HydroBASINS_lev01.png"),
+           width = 9,
+           height = 6,
+           dpi  = 300)
+```
+
+# Keep basins in Africa
+
+We have this basin data and we'd like to keep only the basins that intersect with Africa. 
+`ekonomR` loads the package `rnaturalearth` which has some simple continent maps that we can use.
+
+We don't care at present about the country boundaries, so we take `sf::st_union()` to aggregate them. We just want a simple intersection, so for right now we'll set spherical geometry not to use the s2 spherical geometry package.
+
+```{r}
+sf::sf_use_s2(FALSE)
+continent_polygon <- rnaturalearth::ne_countries(continent = "africa") %>%
+                    sf::st_make_valid() %>%
+                    sf::st_union()
+
+```
+Do a quick plot to check that looks about right:
+
+```{r}
+plot(sf::st_geometry(continent_polygon))
+```
+
+# Get intersection of Africa polygon and HydroBASINS
+
+```{r}
+
+intersected_basins <- sf::st_intersection(hydro_basin,continent_polygon)
+```
+Plot it out to see that this makes sense. Looks like two main basins, Africa mainland and Madagascar.
+
+```{r}
+plot(sf::st_geometry(intersected_basins))
+
+```
+
+# Get next-level-down basins and intersect with Africa
+
+Now let's get the basins of the next level down, 02. For Africa, there are 10 of these out of 62 globally.
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_02 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev02")
+tictoc::toc()
+```
+Intersect again with Africa...
+
+```{r}
+
+intersected_basins_02 <- sf::st_intersection(basin_02,continent_polygon)
+```
+Plot to double-check:
+
+```{r}
+plot(sf::st_geometry(intersected_basins_02))
+
+```
+
+# Sub- Basins
+
+Do it all together for the next levels down.
+
+At level 3 basins, we have 292 sub-basins globally, and 42 in Africa.
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_03 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev03")
+tictoc::toc()
+
+
+intersected_basins_03 <- sf::st_intersection(basin_03,continent_polygon)
+
+plot(sf::st_geometry(intersected_basins_03))
+
+
+```
+
+At level 4, we have 1,342 sub-basins globally, 244 of which are in Africa.
+
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_04 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev04")
+tictoc::toc()
+
+
+intersected_basins_04 <- sf::st_intersection(basin_04,continent_polygon)
+
+plot(sf::st_geometry(intersected_basins_04))
+
+
+```
+At level 5, there are 4,734 basins globally, and 1,020 in Africa.
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_05 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev05")
+tictoc::toc()
+
+
+intersected_basins_05 <- sf::st_intersection(basin_05,continent_polygon)
+
+plot(sf::st_geometry(intersected_basins_05))
+
+
+```
+At level 6, there are 16,397 sub-basins globally, and 3,591 in Africa.
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_06 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev06")
+tictoc::toc()
+
+
+intersected_basins_06 <- sf::st_intersection(basin_06,continent_polygon)
+
+plot(sf::st_geometry(intersected_basins_06))
+
+
+```
+
+At level 7, there are 57,646 sub-basins globally, and 12,350 in Africa.
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_07 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev07")
+tictoc::toc()
+
+
+intersected_basins_07 <- sf::st_intersection(basin_07,continent_polygon)
+
+plot(sf::st_geometry(intersected_basins_07))
+
+
+```
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_08 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev08")
+tictoc::toc()
+
+
+intersected_basins_08 <- sf::st_intersection(basin_08,continent_polygon)
+
+
+```
+
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_09 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev09")
+tictoc::toc()
+
+
+intersected_basins_09 <- sf::st_intersection(basin_09,continent_polygon)
+
+
+```
+
+
+If we go all the way to level 10, we get 941,012 sub-basins globally, and 209,367 in Africa.
+
+```{r}
+tictoc::tic("Bring in the HydroBASIN shape files")
+    basin_10 <- sf::st_read(dsn = in_path,
+                               layer = "BasinATLAS_v10_lev10")
+tictoc::toc()
+
+
+intersected_basins_10 <- sf::st_intersection(basin_10,continent_polygon)
+
+
+```
+
+
+```{r, results = "hide"}
+  map <- ggplot2::ggplot() +
+  ggplot2::geom_sf(data = intersected_basins_06,
+            alpha = .3,
+            fill  = "gray99",
+            color = locality_color,
+            linewidth = .1) +
+    ggplot2::geom_sf(data = intersected_basins_03,
+            alpha = .3,
+            fill  = "gray99",
+            color = "black",
+            linewidth = .5) +
+    ggplot2::labs(title = paste0("Africa, Level 3 and Level 6 Sub-Basins"),
+         caption = paste0("Data from HydroSHEDS (2013) \n Includes ",nrow(intersected_basins_03), " level 3 and ",nrow(intersected_basins_06), " level 6 basins.")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+
+map
+```
+
+And save
+
+```{r}
+out_path <- file.path("C:","Projects","water-in-africa","output","03_maps")
+
+
+  ekonomR::ggsave_map(output_folder = out_path,
+           plotname = map,
+           filename = paste0("Africa_hydrobasins_level03_level06.png"),
+           width = 9,
+           height = 8,
+           dpi  = 300)
+```    
+
+# Get intersection of Level 7 Basin with a Division in Tanzania
+
+There's a boundaries file in `ekonomR` that gives the shapefile from GADM of Makiba, one of Tanzania's districts in which gravity irrigation has taken place for at least a century.
+
+We'll bring it in, and then calculate which of the Level 7 Basins intersects with it, then export that basin to a geojson.
+
+```{r}
+data("makiba")
+
+makiba_ea <- makiba %>%
+             sf::st_transform(crs = equal_area_crs)
+
+makiba_ea <- cbind(makiba_ea,
+                       sf::st_coordinates(sf::st_centroid(makiba_ea)))
+
+basin_09_ea <- intersected_basins_09 %>%
+             sf::st_transform(crs = equal_area_crs)
+
+basin_09_ea <- cbind(basin_09_ea,
+                       sf::st_coordinates(sf::st_centroid(basin_09_ea)))
+              
+
+```
+
+Get intersection. This is going to be more problematic at a smaller scale, because the basins and Makiba are both small. We might prefer to choose an equal-area CRS and so that we're taking planar calculations.
+
+
+
+```{r}
+
+#intersected_basin_makiba <- sf::st_intersects(basin_10_ea,makiba_ea)
+
+does_intersect = lengths(sf::st_intersects(basin_09_ea,makiba_ea))>0
+
+my_basin <- basin_09_ea[does_intersect,]
+
+plot(sf::st_geometry(my_basin))
+```
+
+
+
+```{r}
+  map1 <- ggplot2::ggplot() +
+  ggplot2::geom_sf(data = my_basin,
+            alpha = .3,
+            fill  = "gray99",
+            color = locality_color,
+            linewidth = .1) +
+        ggplot2::geom_sf(data = makiba_ea,
+            alpha = 0,
+            fill  = "gray70",
+            color = "black",
+            linewidth = .5) +
+      ggplot2::geom_text(data = makiba_ea,
+                       ggplot2::aes(X,Y, label = NAME_3),
+                       size = 5) +
+    ggplot2::labs(title = paste0("Makiba, Tanzania and its associated Level 9 Basins"),
+         caption = paste0("Data from HydroSHEDS (2013).")) +
+    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                               axis_title_y = ggplot2::element_blank())
+
+map1
+
+# save map
+  ekonomR::ggsave_map(output_folder = out_path,
+           plotname = map1,
+           filename = paste0("Makiba_level-09_basins.png"),
+           width = 8,
+           height = 8,
+           dpi  = 300)
+
+```
+```{r}
+  country        <- "TZA"
+  country_name   <- "Tanzania"
+  locality_color <- "#286dc0"
+  base_url       <- "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/"
+  gadm_level     <- 1
+  filename       <- paste0("gadm41_",country,".gpkg")
+  in_path        <- file.path(data_raw_path,"GADM",filename)
+  name_var       <- "NAME_2"
+  num_localities <- 1
+  names_to_keep  <- c("Meru")
+```
+
+# Download data
+
+If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `download_data()` function from `ekonomR` will create the folder path for you. This `if` statement wraps around the call to download the data, so that if the file already exists, there's no need to re-download it.
+
+```{r}
+
+if (!file.exists(file.path(data_raw_path,"GADM",filename))) {
+  ekonomR::download_data(data_subfolder = "GADM",
+                          data_raw = data_raw_path,
+                          url = paste0(base_url,filename),
+                          filename = filename)
+}
+```
+
+Read in the country-level shapefile. To make taking the intersection easier, we use level 1 so that there are fewer rows to deal with
+
+```{r}
+country_gpgk <- sf::st_read(dsn = in_path,
+                            layer = paste0("ADM_ADM_",gadm_level)) %>%
+                sf::st_make_valid()
+
+```
+Then take the union of all the level-1 subdivisions. We'll start with taking any basin that intersects with 

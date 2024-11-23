@@ -2,14 +2,14 @@
 % Please edit documentation in R/01_download.R
 \name{download_multiple_files}
 \alias{download_multiple_files}
-\title{Download Files}
+\title{Download Multiple Files}
 \usage{
 download_multiple_files(
   data_subfolder = NULL,
   data_raw = NULL,
   base_url,
-  sub_urls,
-  filenames,
+  sub_urls = NULL,
+  filenames = NULL,
   pass_protected = FALSE,
   zip_file = FALSE,
   username = NULL,
@@ -17,24 +17,31 @@ download_multiple_files(
 )
 }
 \arguments{
-\item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder}
+\item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Could be nested several folders, e.g. data_subfolder = file.path("WPP","2024") and data_raw = NULL will download into here::here("data","01_raw","WPP","2024"). NULL defaults to just downloading into data_raw. Creates the folders if they don't already exist.}
 
 \item{data_raw}{location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")}
 
-\item{base_url}{the url of the folder to download. This is the thing that is common to all the URLs you're downloading.}
+\item{base_url}{the url of the folder to download. This should be the thing that is common to all the URLs you're downloading. Must be provided. If you're using this to download a single file, could also just be the whole URL, but if that's your use-case why not use the download_data() function instead. You can include or omit the final backslash, i.e. if the files are "https://some-website/subpage/file1.csv" and "https://some-website/subpage/file2.csv", then you could write either base_url = "https://some-website/subpage" or base_url = "https://some-website/subpage/". You CANNOT just input a vector into base_url.}
 
-\item{sub_urls}{the additional endings to the base url that you'd like to download separately, but which you don't want to go into the name of the file itself. Requires a vector of character strings. Could be empty with "".}
+\item{sub_urls}{the parts of the URL that differ. Default to NULL assumes you're using this function like download_data() to download a single file. e.g. if the URLs are "https://some-website/subpage/file1.csv" and "https://some-website/subpage/file2.csv", you would want base_url = "https://some-website/subpage" and sub_urls = c("file1.csv","file2.csv").}
 
-\item{filenames}{vector of character strings. The names of files, without paths, to attach to the suburls}
+\item{filenames}{vector of character strings. Default of NULL assumes that the filenames you're downloading are the same as the sub_urls. This might not be true if the sub_urls are complicated. For example, if the URLs were "https://some-website/subpage-1/file1.zip" and "https://some-website/subpage-2/file2.zip", you would want base_url = "https://some-website", sub_urls = c("subpage-1/file1.zip","subpage-2/file2.zip"), and filenames = c("file.zip","file2.zip"). If on the other hand your URLs are "https://some-website/subpage/file1.zip" and "https://some-website/subpage/file2.zip", then you would want base_url = "https://some-website/subpage" and sub_urls = c("file1.zip","file2.zip"). For this, you could set filenames = NULL or filenames = c("file1.zip","file2.zip").}
 
-\item{pass_protected}{logical, default is FALSE. Set to TRUE if the data requires a simple username and login}
+\item{pass_protected}{logical, default is FALSE. Set to TRUE if the data requires a simple username and login. If pass_protected = FALSE and username = NULL and password = NULL, then the system will prompt you for the username and password for EVERY new download. Avoid this by setting username and password.}
 
-\item{zip_file}{logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder of the same name as your download request. Default is FALSE.}
+\item{zip_file}{logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will attempt to unzip these files and store them in the folder given by file.path(data_raw,data_subfolder). Default of FALSE doesn't make attempt to extract, so if you're having unzipping troubles even if you're downloading .zip files, set zip_file = FALSE to trouble-shoot and manually unzip.}
 
 \item{username}{if pass_protected is TRUE, you'll need to input the username. Default of NULL asks for user input. Note this is required for EACH URL you want to download. If you're planning to batch download, you can input your username as a character vector. Note that this is NOT secure. It's on the to-do list to add this in a secure way.}
 
 \item{password}{if pass_protected is TRUE, you need to input a password. Default of NULL asks for manual input. As this is required for EVERY URL you have, you can input a character vector to get around this. Note, however, that this is NOT a secure method of downloading data. Future updates will at some point fix this.}
 }
 \description{
-Function for downloading multiple data files from a website. Includes options for password protected sites, as well as options to unzip the files.
+\code{download_multiple_files} downloads multiple data files from a website into a sensible default folder. Works for password protected sites, and also unzips basic zip files.
+}
+\examples{
+# example code
+years    <- 2020:2022
+sub_urls <- paste0("annual_aqi_by_county_",years,".zip")
+download_multiple_files(data_subfolder = "EPA", data_raw = NULL, base_url = "https://aqs.epa.gov/aqsweb/airdata/", sub_urls = sub_urls, zip_file = TRUE)
+
 }

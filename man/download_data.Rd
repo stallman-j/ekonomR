@@ -16,14 +16,15 @@ download_data(
 )
 }
 \arguments{
-\item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder. This will be created if it doesn't exist already.}
+\item{data_subfolder}{name of subfolder in the 01_raw data folder to place data in. Null defaults to just living in the data_raw folder. This will be created if it doesn't exist already. You can go multiple folders deep for data_subfolder, e.g. data_subfolder = file.path("GADM","TZA_shp") with data_raw = NULL would download into here::here("data","01_raw","GADM","TZA_shp").}
 
-\item{data_raw}{location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")
-#' @param filename a character vector}
+\item{data_raw}{location (file path) of raw data folder. Default input of NULL sets this to here::here("data","01_raw")}
+
+\item{filename}{character vector of the name of the file. For example, if the URL is "https://some-website/subpage/myfile.zip", you would want url = "https://some-website/subpage/myfile.zip" and could have filename = "myfile.zip", but you don't need filename to be the same as in the last portion of the URL, e.g. for this example you could have filename = "myfile_2024.zip".}
 
 \item{url}{the url of the folder to download}
 
-\item{zip_file}{logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder of the same name as your download request. Default is FALSE.}
+\item{zip_file}{logical, whether you're downloading files of the form ".zip". If so, setting zip_file to TRUE will automatically unzip these files and store them in a folder given by data_raw/data_subfolder. Default is FALSE.}
 
 \item{pass_protected}{logical, default is FALSE. Set to TRUE if the data requires a simple username and login}
 
@@ -36,4 +37,9 @@ data file in the particular subfolder
 }
 \description{
 download_data is a function for downloading a single file from a website, including zip or password protected file, with nice defaults of where to send the data and what to name it.
+}
+\examples{
+# example code
+download_data(data_subfolder = "EPA", url ="https://aqs.epa.gov/aqsweb/airdata/annual_aqi_by_county_1980.zip",filename = "annual_aqi_by_county_1980.zip", zip_file = TRUE)
+)
 }
