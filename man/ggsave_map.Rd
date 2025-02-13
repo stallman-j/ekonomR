@@ -8,6 +8,7 @@ ggsave_map(
   output_folder = NULL,
   plotname,
   filename,
+  device = png,
   width = 9,
   height = 5,
   dpi = 300
@@ -18,7 +19,9 @@ ggsave_map(
 
 \item{plotname}{the name of the plot that you generated}
 
-\item{filename}{the name of the output filename, e.g. "my-plot"}
+\item{filename}{the name of the output filename, e.g. "my-plot". do NOT put the file extension on here}
+
+\item{device}{default png,}
 
 \item{width}{numeric, defaults to 9 (inches)}
 

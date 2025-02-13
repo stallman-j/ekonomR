@@ -92,7 +92,8 @@ theme_map_gif <- function(legend_text_size = 17,
 #'
 #' @param output_folder the path to the output directory. defaults to here::here("output","03_maps")
 #' @param plotname the name of the plot that you generated
-#' @param filename the name of the output filename, e.g. "my-plot"
+#' @param filename the name of the output filename, e.g. "my-plot". do NOT put the file extension on here
+#' @param device default png, 
 #' @param width numeric, defaults to 9 (inches)
 #' @param height numeric, height, defaults to 5 (inches)
 #' @param dpi pixel count, defaults to 300
@@ -103,6 +104,7 @@ theme_map_gif <- function(legend_text_size = 17,
 ggsave_map <- function(output_folder = NULL,
                      plotname,
                      filename,
+                     device = png,
                      width = 9,
                      height = 5,
                      dpi    = 300)  {
@@ -116,9 +118,9 @@ ggsave_map <- function(output_folder = NULL,
   if (!dir.exists(output_folder)) dir.create(output_folder, recursive = TRUE) # recursive lets you create any needed subdirectories
 
 
-  ggplot2::ggsave(filename = file.path(output_folder,filename),
+  ggplot2::ggsave(filename = file.path(output_folder,paste0(filename,as.character(device))),
          plot = plotname,
-         device = png,
+         device = device,
          width = width,
          height = height,
          units = c("in"),
