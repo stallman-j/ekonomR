@@ -67,9 +67,13 @@ download_multiple_files <- function(data_subfolder = NULL,
 
 
   for (i in seq_along(sub_urls)) {
+    # to deal with a URL that doesn't exist
+    # https://stackoverflow.com/questions/8093914/use-trycatch-skip-to-next-value-of-loop-upon-error
+    skip_to_next <- FALSE
 
     if(zip_file == TRUE){
       unzip_path <- file.path(extract_path, filenames[i])
+      outzip_path <- stringr::str_remove(unzip_path,".zip")
 
     # will need to check this later
     if(pass_protected == TRUE) {
@@ -86,27 +90,34 @@ download_multiple_files <- function(data_subfolder = NULL,
         password <- password
       }
 
-
+      tryCatch(
       httr::GET(url = paste0(base_url,sub_urls[i]),
                 httr::authenticate(user = username,
                        password = password),
-                httr::write_disk(unzip_path, overwrite = TRUE))
+                httr::write_disk(unzip_path, overwrite = TRUE)),
+      error = function(e) {skip_to_next <<- TRUE})
+
 
     }else if (pass_protected == FALSE) {
 
+      tryCatch(
       download.file(url =paste0(base_url,sub_urls[i]),
                     destfile = unzip_path,
-                    mode     = "wb")
+                    mode     = "wb"),
+      error = function(e) {skip_to_next <<- TRUE})
+
     }
 
-      if (!dir.exists(unzip_path)) {
-        dir.create(unzip_path)
+      if (!dir.exists(outzip_path)) {
+        dir.create(outzip_path, recursive = TRUE)
       }
 
       # unzip the file
+      tryCatch(
       unzip(unzip_path,
-            exdir = extract_path,
-            overwrite = TRUE)
+            exdir = outzip_path,
+            overwrite = TRUE),
+      error = function(e) {skip_to_next <<- TRUE})
 
 
     } else if (zip_file == FALSE) {
@@ -123,18 +134,20 @@ download_multiple_files <- function(data_subfolder = NULL,
         } else {
           password <- password
         }
-
+        tryCatch(
         httr::GET(url = paste0(base_url,sub_urls[i]),
             httr::authenticate(user = username,
                          password = password),
             httr::write_disk(path = file.path(data_raw,data_subfolder,filenames[i]),
-                       overwrite = TRUE))
+                       overwrite = TRUE)),
+        error = function(e) {skip_to_next <<- TRUE})
 
       }else{
-
+        tryCatch(
         download.file(url = paste0(base_url,sub_urls[i]),
                       destfile = file.path(data_raw, data_subfolder, filenames[i]),
-                      mode     = "wb")
+                      mode     = "wb"),
+        error = function(e) {skip_to_next <<- TRUE})
       }
     }
 
@@ -165,7 +178,7 @@ download_multiple_files <- function(data_subfolder = NULL,
 #'
 download_data <- function(data_subfolder = NULL,
                           data_raw = NULL,
-                          filename = NULL,
+                          filename,
                           url,
                           zip_file = FALSE,
                           pass_protected = FALSE,
@@ -200,7 +213,8 @@ download_data <- function(data_subfolder = NULL,
   # otherwise same as ultimate extraction path
   if(zip_file == TRUE){
 
-    unzip_path <- file.path(data_raw, data_subfolder, filename)
+    unzip_path <- file.path(extract_path, filename)
+    outzip_path <- stringr::str_remove(unzip_path,".zip")
 
     if(pass_protected == TRUE) {
 

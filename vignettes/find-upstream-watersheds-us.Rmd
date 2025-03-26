@@ -1,0 +1,191 @@
+---
+title: "Finding Upstream Watersheds in the US"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2025-03-26"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{find-upstream-watersheds-us}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+**Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
+
+If you're not sure if your `ekonomR` is up to date or you're new to the woods, you may want to check out the vignette [Getting Started with ekonomR](https://stallman-j.github.io/ekonomR/vignettes/getting-started-with-ekonomR/), and the [Coding Review](https://stallman-j.github.io/ekonomR/vignettes/coding-review/) for a couple key operations I'll be assuming you know.
+
+Assuming you have the latest and greatest of `ekonomR`, bring it into your library.
+``` {r}
+
+# if you don't have ekonomR installed, get it from github
+#install.packages("remotes")
+#remotes::install_github("stallman-j/ekonomR") 
+
+library(ekonomR)
+```
+# Prerequisites
+
+This analysis assumes you'll have downloaded two watersheds at the "HUC 2" level from the United States Geological Service. Check out the [Basic Downloading Vignette](https://stallman-j.github.io/ekonomR/vignettes/basic-downloading/) if you don't happen to have these handy.
+
+Because of that vignette, I now get to assume that you have in the location `here::here("data","01_raw","USGS")` unzipped geopackage folders called `WBD_01_HU2_GPKG` and `WBD_02_HU2_GPKG`. 
+
+We're going to open up those big shapefiles and examine how, for each watershed, to delineate what its neighbors next upstream, two watersheds upstream, and three watersheds upstream are.
+
+This information is actually contained within the [USGS National Hydrography Dataset](https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer). 
+
+The (somewhat okay) documentation can be accessed [here](https://www.usgs.gov/national-hydrography/national-hydrography-dataset).
+
+
+
+In particular
+
+Let's bring in the files. This will require the `sf` package which is imported with `ekonomR`.
+
+```{r}
+
+huc_level <- 12 # change this to change the layer we bring in
+filename <- paste0("NHDPLUS_H_0101_HU4_GDB")
+
+# define input path
+path <- here::here("data","01_raw","USGS",filename,paste0(filename,".gdb"))
+```
+
+With a geopackage, it's often the case that we have a bunch of layers that we could extract. Let's check them all out:
+
+```{r}
+sf::st_layers(dsn = path)
+
+```
+
+We can now see that there's a layer for `WBDHU12`. Let's read that in.
+
+```{r}
+
+hucs_sf <- sf::st_read(dsn = path,
+                       layer = paste0("WBDHU",huc_level))
+
+```
+We have two columns of interest: `HUC12` and `ToHUC`. `ToHUC` gives us, for a given `HUC12`, the next downstream `HUC12`.
+
+```{r}
+
+hucs_df <- hucs_sf %>%
+              dplyr::select(ToHUC,HUC12) %>%
+              sf::st_drop_geometry() %>%
+              dplyr::rename(up_01 = "HUC12",
+                            current_huc12 = "ToHUC")
+
+
+# here's a test dataframe first
+
+simple_df <- data.frame(
+  current_huc12 = c("A", "B", "C", "D"),
+  up_01 = c("B", "C", "D", "E")
+)
+
+```
+
+Then I asked GPT-4 how to make a function that we can run through an `sapply` so that we'll be able to parallelize this later over the entire thingamajig.
+
+```{r}
+next_up <- function(df = hucs_df, upstream_value){
+  next_row <- df[df$current_huc12 == upstream_value,]
+  if (nrow(next_row) == 1){
+    return(next_row$up_01)
+  } else{
+    return(NA)
+  }
+}
+
+```
+
+Then apply this function to find `up_02`:
+
+```{r}
+simple_df$up_02 <- sapply(simple_df$up_01, function(x) next_up(simple_df,x))
+
+
+print(simple_df)
+
+#and we can keep iterating:
+  
+simple_df$up_03 <- sapply(simple_df$up_02, function(x) next_up(simple_df,x))
+
+print(simple_df)
+```
+
+Now that we can see that this works, let's do it with our actual watersheds data
+
+```{r}
+
+hucs_df$up_02 <- sapply(hucs_df$up_01, function(x) next_up(hucs_df,x))
+hucs_df$up_03 <- sapply(hucs_df$up_02, function(x) next_up(hucs_df,x))
+
+
+```
+
+# Big Data
+
+Now let's bring it all together with the 20-gig national data
+
+
+```{r}
+
+filename <- paste0("NHDPlus_H_National_Release_2_GDB")
+
+#path <- here::here("data","01_raw","USGS","NHDPlus_H_National_Release_2_GDB","NHDPlus_H_National_Release_2.gdb")
+
+path <- file.path("E:","data","01_raw","USGS","NHDPlus_H_National_Release_2_GDB","NHDPlus_H_National_Release_2.gdb")
+
+sf::st_layers(dsn = path)
+
+```
+
+Examine the layers just to make sure, and then proceed as before. Because you don't have to work with the entire geodatabase but just the layer of interest, it's n
+
+```{r, eval = FALSE}
+
+tictoc::tic("Read in national HUC12 data")
+big_hucs <- sf::st_read(dsn = path,
+                       layer = paste0("WBDHU",huc_level))
+tictoc::toc()
+# HUC12 data: 66.98 sec elapsed
+
+tictoc::tic("Made smaller DF")
+hucs_df <- big_hucs %>%
+              dplyr::select(tohuc,huc12) %>%
+              sf::st_drop_geometry() %>%
+              dplyr::rename(up_01 = "huc12",
+                            current_huc12 = "tohuc")
+tictoc::toc()
+
+# get the next upstream watersheds
+tictoc::tic("Got the next other upstream")
+hucs_df$up_02 <- sapply(hucs_df$up_01, function(x) next_up(hucs_df,x))
+tictoc::toc()
+# Got the next other upstream: 234.25 sec elapsed
+
+
+# Got third upstream: 1334.3 sec elapsed
+tictoc::tic("Got third upstream")
+hucs_df$up_03 <- sapply(hucs_df$up_02, function(x) next_up(hucs_df,x))
+tictoc::toc()
+
+out_path <- here::here("data","03_clean","USGS")
+if (!dir.exists(out_path)) dir.create(out_path, recursive = TRUE)
+
+
+saveRDS(hucs_df, file = file.path(out_path,"HUC12_upstream_relationships.rds"))
+
+
+```

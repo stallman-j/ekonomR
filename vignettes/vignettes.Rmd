@@ -40,7 +40,7 @@ I'll list the vignettes first, and then in the following section will explain wh
 
 ## Downloading
 
-- [Basic Data Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-data-downloading/)
+- [Basic Downloading](https://stallman-j.github.io/ekonomR/vignettes/basic-downloading/)
 - To add: downloading data with `httr` and `rvest`
 - To add: downloading data through a python API with `reticulate`
 
@@ -50,7 +50,6 @@ I'll list the vignettes first, and then in the following section will explain wh
 - [Basic Cleaning: Penn World Tables](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_pwt/)
 - [Basic Cleaning: World Population Prospects](https://stallman-j.github.io/ekonomR/vignettes/basic-cleaning_wpp/)
 - [Basic Merging](https://stallman-j.github.io/ekonomR/vignettes/basic-merging/)
-
 - To add: Extracting Rasters to Vectors
 
 ## Analysis
@@ -82,6 +81,9 @@ I'll list the vignettes first, and then in the following section will explain wh
 - [Basic Mapping](https://stallman-j.github.io/ekonomR/vignettes/basic-mapping/)
 - to add: getting climate rasters down to vectors and ready for analysis
 
+## Hydrology
+
+- [Finding Upstream Watersheds in the US](https://stallman-j.github.io/ekonomR/vignettes/find-upstream-watersheds-us/)
 
 ## Varia
 

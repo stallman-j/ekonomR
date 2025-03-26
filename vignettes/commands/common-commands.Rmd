@@ -1,0 +1,100 @@
+---
+title: "Common Commands for Knitting and GitHub"
+layout: single
+toc: true
+toc_label: "Contents"
+toc_sticky: true
+author_profile: true
+date: "2024-11-15"
+output: pdf_document
+---
+
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = FALSE, # suppress a bunch of the output messages
+  comment = "#>",
+  fig.path = "man/figures/documentation/",
+  out.width = "100%"
+)
+
+library(tinytex)
+library(knitr)
+```
+
+# Git Commands
+
+To push to git, do this in a gitbash terminal (e.g. the R Terminal with Git enabled)
+
+``` {r, eval = FALSE}
+git add .
+git commit -m "commit message here"
+git push -u origin main
+
+```
+
+# Adding the URL of a figure
+
+```{r, results = "hide", echo = FALSE, eval = FALSE}
+my_plot <- ggplot2::ggplot() + 
+  ggplot2::geom_point(data = data_country,
+                      ggplot2::aes(x = year, 
+                                   y =gcb_ghg_territorial)
+                      ) +
+  ggplot2::labs(title = paste0("Territorial Emissions, ",chosen_country_name),
+       caption = c("GDP from GCB (2023)"),
+       x ="" ,
+       y = "Emissions (units here)"
+  ) + 
+  ggplot2::theme_minimal()
+
+
+```
+
+```{r, echo = FALSE, results = "hide"}
+ggsave_plot(output_folder = here::here("output","02_figures"),
+         plotname = my_plot,
+         filename = paste0("gcb_territorial_emissions_",chosen_country_name,"_plot-03.png"),
+         width = 8,
+         height = 6,
+         dpi  = 400)
+```
+
+```{r, echo = FALSE}
+url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/gcb_territorial_emissions_China_plot-03.png?raw=true"
+knitr::include_graphics(url)
+
+```
+
+# Knit Commands
+
+## Meeting Notes
+``` {r}
+today <- Sys.Date()
+
+knitr::knit(input = here::here("documents","meeting-notes_full-detail","IDB-Yale_condensed-meeting-notes.Rmd"), output = here::here("documents",paste0("IDB-Yale_condensed-meeting-notes_updated_",today,".pdf")))
+            
+```
+``` {r}
+today <- Sys.Date()
+
+knitr::knit(input = here::here("documents","meeting-notes_full-detail","IDB-Yale_condensed-meeting-notes.Rmd"), output = here::here("documents",paste0("IDB-Yale_condensed-meeting-notes_updated_",today,".pdf")))
+            
+```
+
+``` {r, results = FALSE}
+knitr::knit(input = here::here("README.Rmd"), output = here::here("README.md"))
+```
+
+# Spatial stuff
+
+
+``` {r, results = FALSE}
+knitr::knit(input = here::here("vignettes","basic-downloading.Rmd"), output = here::here("vignettes","basic-downloading.md"))
+
+knitr::knit(input = here::here("vignettes","find-upstream-watersheds-us.Rmd"), output = here::here("vignettes","find-upstream-watersheds-us.md"))
+
+knitr::knit(input = here::here("vignettes","vignettes.Rmd"), output = here::here("vignettes","vignettes.md"))
+```

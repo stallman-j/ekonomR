@@ -14,18 +14,18 @@ st_intersects_wf <- function(keep_sf,
                       out_name = "my_out_sf",
                       out_type = c(".rds",".gpkg")
 ){
-  
+
   if (!dir.exists(out_path)) dir.create(out_path, recursive = TRUE)
-  
+
   intersecting_indices <- lengths(sf::st_intersects(keep_sf, intersecting_sf))>0
   intersected_sf <-keep_sf[intersecting_indices,]
-  
+
   if (".rds" %in% out_type){  saveRDS(intersected_sf,file.path(out_path,paste0(out_name,".rds"))) }
   if (".shp" %in% out_type){  sf::write_sf(intersected_sf,file.path(out_path,paste0(out_name,".shp")))}
   if (".gpkg" %in% out_type){  sf::write_sf(intersected_sf,file.path(out_path,paste0(out_name,".gpkg")))}
   if (".geojson" %in% out_type){  sf::write_sf(intersected_sf,file.path(out_path,paste0(out_name,".geojson")))}
-  
-  
+
+
   return(intersected_sf)
 
 } # end function

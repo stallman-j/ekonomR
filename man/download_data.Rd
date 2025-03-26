@@ -7,7 +7,7 @@
 download_data(
   data_subfolder = NULL,
   data_raw = NULL,
-  filename = NULL,
+  filename,
   url,
   zip_file = FALSE,
   pass_protected = FALSE,
