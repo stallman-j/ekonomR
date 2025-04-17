@@ -74,6 +74,7 @@ I'll list the vignettes first, and then in the following section will explain wh
 ## Spatial analysis
 
 - [Basic Mapping](https://stallman-j.github.io/ekonomR/vignettes/basic-mapping/)
+- [Advanced Mapping](https://stallman-j.github.io/ekonomR/vignettes/advanced-mapping/)
 - to add: getting climate rasters down to vectors and ready for analysis
 
 ## Hydrology

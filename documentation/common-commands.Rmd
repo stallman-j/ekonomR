@@ -129,6 +129,10 @@ knitr::knit(input = here::here("vignettes","fixed-effects-estimation.Rmd"), outp
 ``` {r, results = FALSE}
 knitr::knit(input = here::here("vignettes","basic-mapping.Rmd"), output = here::here("vignettes","basic-mapping.md"))
 
+knitr::knit(input = here::here("vignettes","advanced-mapping.Rmd"), output = here::here("vignettes","advanced-mapping.md"))
+
+knitr::knit(input = here::here("vignettes","raster-extraction-workflow.Rmd"), output = here::here("vignettes","raster-extraction-workflow.md"))
+
 ```
 
 ### R Tricks

@@ -12,13 +12,7 @@ toc_label: Contents
 vignette: "%\\VignetteIndexEntry{intermediate-mapping} %\\VignetteEngine{knitr::rmarkdown}
   %\\VignetteEncoding{UTF-8}\n"
 ---
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 
-```
 
 **Make sure** you've got the latest version of `ekonomR`. It's getting updated frequently. 
 
@@ -36,29 +30,28 @@ We'll then select a sub-basin that intersects with the Meru district in Tanzania
 
 If you don't have the `ekonomR` package, get it with this:
 
-``` {r, results = FALSE, eval = FALSE}
+
+``` r
 install.packages("remotes")
 remotes::install_github("stallman-j/ekonomR")
 ```
 
 If you already have the latest version, don't run the code above and just bring `ekonomR` into your working library.
 
-``` {r}
+
+``` r
 library(ekonomR)
 ```
 
 # Set Parameters
 
-Set the path that we want to download the data into.
+Set the path that we want to download the data into. 
 
-```{r, eval = TRUE, results = FALSE, echo = FALSE}
-data_raw_path <- file.path("E:","data","01_raw")
 
-```
 
-```{r, eval = FALSE, results = FALSE}
-data_raw_path <- here::here("data","01_raw")
 
+``` r
+#data_raw_path <- here::here("data","01_raw")
 # if you want to save the data somewhere else
 # data_raw_path <- file.path("E:","data","01_raw")
 
@@ -67,7 +60,8 @@ data_raw_path <- here::here("data","01_raw")
 
 `locality_color` provides the HEX color codes for a medium Yale blue, which we'll use for mapping.
 
-```{r}
+
+``` r
 
   locality_color <- "#286dc0"
   hydrobasin_level <- 01
@@ -91,7 +85,8 @@ We want to download a 2.5G file that's BasinATLAS, which requires a while. The d
 
 I've increased the timeout time to 3,000 seconds or 50 minutes. This is hopefully far too long for what you would need.
 
-```{r, eval = FALSE, results = FALSE}
+
+``` r
 
 options(timeout = 3000)
 
@@ -114,22 +109,34 @@ Now we want to bring the data in. The file gets extracted to a *folder* called `
 
 Let's take a quick look at the layers. There are 1 through 10, and it looks like it's probably the case that the 941,012 multipolygons in level 10 are probably the most concentrated of the sub-basins. Let's bring in the first layer just to take a quick plot.
 
-```{r}
+
+``` r
 in_path <- file.path(path,"BasinATLAS_v10.gdb")
 
 sf::st_layers(in_path)
+#> Driver: OpenFileGDB 
+#> Available layers:
 ```
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     hydro_basin <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev01")
+#> Reading layer `BasinATLAS_v10_lev01' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 10 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
-
+#> Bring in the HydroBASIN shape files: 4.16 sec elapsed
 ```
 Make a quick plot
 
-```{r}
+
+``` r
   map <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = hydro_basin,
           color = "gray70",
@@ -152,9 +159,12 @@ Make a quick plot
 map
 ```
 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
+
 Save this map within the folder we want. 
 
-```{r, eval = FALSE}
+
+``` r
 
   ekonomR::ggsave_map(output_folder = here::here("output","03_maps"),
            plotname = map,
@@ -171,54 +181,77 @@ We have this basin data and we'd like to keep only the basins that intersect wit
 
 We don't care at present about the country boundaries, so we take `sf::st_union()` to aggregate them. We just want a simple intersection, so for right now we'll set spherical geometry not to use the s2 spherical geometry package.
 
-```{r}
+
+``` r
 sf::sf_use_s2(FALSE)
 continent_polygon <- rnaturalearth::ne_countries(continent = "africa") %>%
                     sf::st_make_valid() %>%
                     sf::st_union()
-
+#> although coordinates are longitude/latitude, st_union assumes that they are planar
 ```
 Do a quick plot to check that looks about right:
 
-```{r}
+
+``` r
 plot(sf::st_geometry(continent_polygon))
 ```
 
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
+
 # Get intersection of Africa polygon and HydroBASINS
 
-```{r}
+
+``` r
 
 intersected_basins <- sf::st_intersection(hydro_basin,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 ```
 Plot it out to see that this makes sense. Looks like two main basins, Africa mainland and Madagascar.
 
-```{r}
-plot(sf::st_geometry(intersected_basins))
 
+``` r
+plot(sf::st_geometry(intersected_basins))
 ```
+
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18-1.png)
 
 # Get next-level-down basins and intersect with Africa
 
 Now let's get the basins of the next level down, 02. For Africa, there are 10 of these out of 62 globally.
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_02 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev02")
+#> Reading layer `BasinATLAS_v10_lev02' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 62 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 1.63 sec elapsed
 ```
 Intersect again with Africa...
 
-```{r}
+
+``` r
 
 intersected_basins_02 <- sf::st_intersection(basin_02,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 ```
 Plot to double-check:
 
-```{r}
-plot(sf::st_geometry(intersected_basins_02))
 
+``` r
+plot(sf::st_geometry(intersected_basins_02))
 ```
+
+![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png)
 
 # Sub- Basins
 
@@ -226,262 +259,197 @@ Do it all together for the next levels down.
 
 At level 3 basins, we have 292 sub-basins globally, and 42 in Africa.
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_03 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev03")
+#> Reading layer `BasinATLAS_v10_lev03' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 292 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 0.83 sec elapsed
 
 
 intersected_basins_03 <- sf::st_intersection(basin_03,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 
 plot(sf::st_geometry(intersected_basins_03))
-
-
 ```
+
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png)
 
 At level 4, we have 1,342 sub-basins globally, 244 of which are in Africa.
 
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_04 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev04")
+#> Reading layer `BasinATLAS_v10_lev04' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 1342 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 0.59 sec elapsed
 
 
 intersected_basins_04 <- sf::st_intersection(basin_04,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 
 plot(sf::st_geometry(intersected_basins_04))
-
-
 ```
+
+![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
 At level 5, there are 4,734 basins globally, and 1,020 in Africa.
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_05 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev05")
+#> Reading layer `BasinATLAS_v10_lev05' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 4734 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 0.67 sec elapsed
 
 
 intersected_basins_05 <- sf::st_intersection(basin_05,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 
 plot(sf::st_geometry(intersected_basins_05))
-
-
 ```
+
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
 At level 6, there are 16,397 sub-basins globally, and 3,591 in Africa.
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_06 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev06")
+#> Reading layer `BasinATLAS_v10_lev06' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 16397 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 1.81 sec elapsed
 
 
 intersected_basins_06 <- sf::st_intersection(basin_06,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 
 plot(sf::st_geometry(intersected_basins_06))
-
-
 ```
+
+![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
 
 At level 7, there are 57,646 sub-basins globally, and 12,350 in Africa.
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_07 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev07")
+#> Reading layer `BasinATLAS_v10_lev07' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 57646 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 3.86 sec elapsed
 
 
 intersected_basins_07 <- sf::st_intersection(basin_07,continent_polygon)
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 
 plot(sf::st_geometry(intersected_basins_07))
-
-
 ```
-```{r}
+
+![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png)
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_08 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev08")
+#> Reading layer `BasinATLAS_v10_lev08' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 190675 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 13.31 sec elapsed
 
 
 intersected_basins_08 <- sf::st_intersection(basin_08,continent_polygon)
-
-
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 ```
 
 
-```{r}
+
+``` r
 tictoc::tic("Bring in the HydroBASIN shape files")
     basin_09 <- sf::st_read(dsn = in_path,
                                layer = "BasinATLAS_v10_lev09")
+#> Reading layer `BasinATLAS_v10_lev09' from data source 
+#>   `E:\data\01_raw\HydroATLAS\BasinsATLAS\BasinATLAS_Data_v10.gdb\BasinATLAS_v10.gdb' using driver `OpenFileGDB'
+#> Simple feature collection with 508190 features and 296 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -180 ymin: -55.9875 xmax: 180.0006 ymax: 83.62564
+#> Geodetic CRS:  WGS 84
 tictoc::toc()
+#> Bring in the HydroBASIN shape files: 34.97 sec elapsed
 
 
 intersected_basins_09 <- sf::st_intersection(basin_09,continent_polygon)
-
-
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> Warning: attribute variables are assumed to be spatially constant throughout all geometries
 ```
 
 
 If we go all the way to level 10, we get 941,012 sub-basins globally, and 209,367 in Africa.
 
-```{r}
-tictoc::tic("Bring in the HydroBASIN shape files")
-    basin_10 <- sf::st_read(dsn = in_path,
-                               layer = "BasinATLAS_v10_lev10")
-tictoc::toc()
-
-
-intersected_basins_10 <- sf::st_intersection(basin_10,continent_polygon)
-
-
-```
-
-
-```{r, results = "hide"}
-  map <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = intersected_basins_06,
-            alpha = .3,
-            fill  = "gray99",
-            color = locality_color,
-            linewidth = .1) +
-    ggplot2::geom_sf(data = intersected_basins_03,
-            alpha = .3,
-            fill  = "gray99",
-            color = "black",
-            linewidth = .5) +
-    ggplot2::labs(title = paste0("Africa, Level 3 and Level 6 Sub-Basins"),
-         caption = paste0("Data from HydroSHEDS (2013) \n Includes ",nrow(intersected_basins_03), " level 3 and ",nrow(intersected_basins_06), " level 6 basins.")) +
-    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
-                               axis_title_y = ggplot2::element_blank())
-
-map
-```
-
-And save
-
-```{r}
-out_path <- file.path("C:","Projects","water-in-africa","output","03_maps")
-
-
-  ekonomR::ggsave_map(output_folder = out_path,
-           plotname = map,
-           filename = paste0("Africa_hydrobasins_level03_level06.png"),
-           width = 9,
-           height = 8,
-           dpi  = 300)
-```    
-
-# Get intersection of Level 7 Basin with a Division in Tanzania
-
-There's a boundaries file in `ekonomR` that gives the shapefile from GADM of Makiba, one of Tanzania's districts in which gravity irrigation has taken place for at least a century.
-
-We'll bring it in, and then calculate which of the Level 7 Basins intersects with it, then export that basin to a geojson.
-
-```{r}
-data("makiba")
-
-makiba_ea <- makiba %>%
-             sf::st_transform(crs = equal_area_crs)
-
-makiba_ea <- cbind(makiba_ea,
-                       sf::st_coordinates(sf::st_centroid(makiba_ea)))
-
-basin_09_ea <- intersected_basins_09 %>%
-             sf::st_transform(crs = equal_area_crs)
-
-basin_09_ea <- cbind(basin_09_ea,
-                       sf::st_coordinates(sf::st_centroid(basin_09_ea)))
-              
-
-```
-
-Get intersection. This is going to be more problematic at a smaller scale, because the basins and Makiba are both small. We might prefer to choose an equal-area CRS and so that we're taking planar calculations.
 
 
 
-```{r}
-
-#intersected_basin_makiba <- sf::st_intersects(basin_10_ea,makiba_ea)
-
-does_intersect = lengths(sf::st_intersects(basin_09_ea,makiba_ea))>0
-
-my_basin <- basin_09_ea[does_intersect,]
-
-plot(sf::st_geometry(my_basin))
-```
 
 
 
-```{r}
-  map1 <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = my_basin,
-            alpha = .3,
-            fill  = "gray99",
-            color = locality_color,
-            linewidth = .1) +
-        ggplot2::geom_sf(data = makiba_ea,
-            alpha = 0,
-            fill  = "gray70",
-            color = "black",
-            linewidth = .5) +
-      ggplot2::geom_text(data = makiba_ea,
-                       ggplot2::aes(X,Y, label = NAME_3),
-                       size = 5) +
-    ggplot2::labs(title = paste0("Makiba, Tanzania and its associated Level 9 Basins"),
-         caption = paste0("Data from HydroSHEDS (2013).")) +
-    ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
-                               axis_title_y = ggplot2::element_blank())
 
-map1
 
-# save map
-  ekonomR::ggsave_map(output_folder = out_path,
-           plotname = map1,
-           filename = paste0("Makiba_level-09_basins.png"),
-           width = 8,
-           height = 8,
-           dpi  = 300)
 
-```
-```{r}
-  country        <- "TZA"
-  country_name   <- "Tanzania"
-  locality_color <- "#286dc0"
-  base_url       <- "https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/"
-  gadm_level     <- 1
-  filename       <- paste0("gadm41_",country,".gpkg")
-  in_path        <- file.path(data_raw_path,"GADM",filename)
-  name_var       <- "NAME_2"
-  num_localities <- 1
-  names_to_keep  <- c("Meru")
-```
 
-# Download data
 
-If the path `here::here("data","01_raw","GADM")` doesn't already exist, the `download_data()` function from `ekonomR` will create the folder path for you. This `if` statement wraps around the call to download the data, so that if the file already exists, there's no need to re-download it.
 
-```{r}
 
-if (!file.exists(file.path(data_raw_path,"GADM",filename))) {
-  ekonomR::download_data(data_subfolder = "GADM",
-                          data_raw = data_raw_path,
-                          url = paste0(base_url,filename),
-                          filename = filename)
-}
-```
 
-Read in the country-level shapefile. To make taking the intersection easier, we use level 1 so that there are fewer rows to deal with
 
-```{r}
-country_gpgk <- sf::st_read(dsn = in_path,
-                            layer = paste0("ADM_ADM_",gadm_level)) %>%
-                sf::st_make_valid()
 
-```
-Then take the union of all the level-1 subdivisions. We'll start with taking any basin that intersects with 
+
