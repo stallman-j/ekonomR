@@ -40,7 +40,6 @@ library(ekonomR)
 #> Loading required package: magrittr
 #> Loading required package: ggplot2
 #> Warning: package 'ggplot2' was built under R version 4.4.3
-#> Warning in get(method, envir = home): internal error 1 in R_decompress1 with libdeflate
 #> Loading required package: modelsummary
 #> Warning: package 'modelsummary' was built under R version 4.4.3
 #> Loading required package: sandwich
@@ -50,13 +49,15 @@ library(ekonomR)
 
 Here's the agenda for today:
 
-1. Download a year of the [Climate Hazards Center InfraREd Precipitation with Stations](https://www.chc.ucsb.edu/data/chirps-gefs) data.
+1. Download a week from the [Climate Hazards Center InfraREd Precipitation with Stations](https://www.chc.ucsb.edu/data/chirps-gefs) data.
 2. Download some country shapefiles from [GADM](https://www.hydrosheds.org/hydroatlas).
 3. Extract the total precipitation over each day in the year from the CHIRPS onto the polygon basins within our country of choice, which we'll take as Benin.
 
 # Set paths and parameters
 
-Let's set a couple paths and parameters
+Let's set a couple paths and parameters. If you have not learned of the marvelous [here](https://here.r-lib.org/) package, here is your introduction. It's amazing. Never set absolute paths where `here::here()` will do. 
+
+You should notice that your paths should differ from mine.
 
 
 
@@ -148,11 +149,15 @@ years <- year
 
   unzipped_filenames <- paste0("chirps-v2.0.",date_sequence,".tif")
 
+  # put unzipped files together into a raster stack. this is an advantage of terra over raster
+  
   year_rast <- terra::rast(x =file.path(data_path,"01_raw","CHIRPS",as.character(year),unzipped_filenames))
 
   terra::time(year_rast) <- date_times_for_rast
   
   names(year_rast) <- rep(raster_names_substring,times=length(filenames))
+  
+  # write the raster
   
   output_path    <- file.path(data_path,"03_clean","CHIRPS")
   
@@ -160,7 +165,7 @@ years <- year
   
   if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE) # recursive lets you create any needed subdirectories
   
-  # replace the -9999 into NA values
+  # replace the -9999 into NA values, because CHIRPS NA values are -9999
   year_rast <- terra::subst(year_rast, -9999, NA)
   
   terra::writeRaster(year_rast,
@@ -168,6 +173,8 @@ years <- year
           overwrite = TRUE)
   
 
+  # also generate a projected raster and write it
+  
   output_ea_filename <- paste0("chirps_daily_p05_",year,"_equal_area_example-week.tif")
   
   ea_rast <- terra::project(year_rast, y = equal_area_crs)
@@ -180,26 +187,24 @@ years <- year
 #> The path where you can find your downloaded data, E:/data/01_raw/CHIRPS/2020, already exists.
 ```
 
-Now, we bring in our raster. There's something funky with the projection, so we'll just redo the projection to double-check this.
-
+Now, bring in our raster. There's something funky with the projection, so we'll just redo the projection.
 
 ``` r
   terra_raster <- terra::rast(file.path(data_path,"03_clean","CHIRPS",output_ea_filename)) %>%
                   terra::project(y = equal_area_crs)
                 
-
 ```
 
-Let's take a look at the first day. It's easiest to just use the `terra::plot()` feature with rasters if you just want a quick look:
+Let's take a look at the first day. It's easiest to just use the `terra::plot()` feature with rasters if you just want a quick look. In your console, this would be the following: 
 
 
 ``` r
-
 terra::plot(terra_raster[[1]])
 ```
-But if you'd rather include the sf feature on later, it makes sense to leran the `ggplot2` way. In that case, you have to make the raster into a dataframe, and tell it to plot the x and y coordinates, and then fill with the column name. I'll also use my `theme_minimal_map()` function to make it look nicer.
 
-It won't work unless you use the backticks with the `fill` argument and input the name of the raster layer.
+If you'd rather include the sf feature on later, it makes sense to leran the `ggplot2` way. In that case, you have to make the raster into a dataframe, and tell it to plot the x and y coordinates, and then fill with the column name. I'll also use `ekonomR`'s `theme_minimal_map()` function to make it look nicer.
+
+This won't work unless you use the backticks with the `fill` argument and input the name of the raster layer. Common cause of errors.
 
 
 ``` r
@@ -212,13 +217,14 @@ plot_1 <- ggplot2::ggplot() +
   ekonomR::theme_minimal_map()
 ```
 
+Throw it into your console to see
 
 ``` r
 plot_1 
 
 ```
 
-We may as well also save it using `ekonomR`'s convenience wrapper for saving mapping functions.
+I may as well also profile how I save these using `ekonomR`'s convenience wrapper for saving mapping functions.
 
 
 ``` r
@@ -232,6 +238,8 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
 
 ![plot of chunk unnamed-chunk-13](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa_example-precip.png?raw=true)
 
+One part down! Let's move onto the shapefiles
+
 
 # Download, Clean, and Bring in the Shapefiles
 
@@ -239,7 +247,6 @@ This downloads province-level shapefiles for our country of interest, examines t
 
 
 ``` r
- 
   ekonomR::download_data(data_subfolder = "GADM",
                           data_raw = file.path(data_path,"01_raw"),
                           url = paste0("https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_",country,".gpkg"),
@@ -341,11 +348,11 @@ Finally, get an sf data frame of these
                               weights = my_weights,
                               drop_geometry = FALSE
   )
-#> Successfully extracted raster : 0.11 sec elapsed
-#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.15 sec elapsed
+#> Successfully extracted raster : 0.1 sec elapsed
+#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.13 sec elapsed
 #> Joining with `by = join_by(vector_sf_id)`
-#> Merged extracted sf units back to the units sf: 0.05 sec elapsed
-#> Saved long data frame: 0.02 sec elapsed
+#> Merged extracted sf units back to the units sf: 0.03 sec elapsed
+#> Saved long data frame: 0.01 sec elapsed
 ```
 
 Now suppose we wanted to plot the extracted version. Let's do it for the same layer as we did of the raster, which here is the first date in our date sequence.
@@ -455,10 +462,10 @@ Now let's do the extraction again around the buffers.
                               weights = my_weights,
                               drop_geometry = FALSE
   )
-#> Successfully extracted raster : 0.09 sec elapsed
+#> Successfully extracted raster : 0.1 sec elapsed
 #> Extracted all terra_raster separate layer_substrings to vector_sf: 0.14 sec elapsed
 #> Joining with `by = join_by(vector_sf_id)`
-#> Merged extracted sf units back to the units sf: 0.02 sec elapsed
+#> Merged extracted sf units back to the units sf: 0 sec elapsed
 #> Saved long data frame: 0.01 sec elapsed
   
 
@@ -495,3 +502,316 @@ plot_5
 ![plot of chunk unnamed-chunk-38](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa_example-benin-centroids_precip.png?raw=true)
 
 Congratulations! You're a pro.
+
+# Just the Code, Please
+
+
+``` r
+# uncomment if you need to install
+#install.packages("remotes")
+#remotes::install_github("stallman-j/ekonomR")
+
+library(ekonomR)
+
+data_path <- here::here("data")
+
+# parameters
+
+
+year <- 2020
+country <- "BEN"
+country_name <- "Benin"
+gadm_filename       <- paste0("gadm41_",country,".gpkg")
+gadm_in_path        <- file.path(data_path,"01_raw","GADM",gadm_filename)
+gadm_level          <- 2 # like provinces
+equal_area_crs   <- "ESRI:102022"
+raster_names_substring <- "precip_mm_day"
+
+# download and clean raster
+
+years <- year
+
+# if you want more years
+# years <- 1981:2021
+
+for (year in years){
+  
+  start_date <- paste0(as.character(year),"-06-01")
+  end_date   <- paste0(as.character(year),"-06-07")
+  
+  # use these instead if you want the full year. Benin's rainy season is April-July and Sep-Nov so we want to observe some action here
+  
+  #start_date <- paste0(as.character(year),"-01-01")
+  #end_date <- paste0(as.character(year),"-12-31") # uncomment if you want the full year
+  
+  date_sequence <- seq(lubridate::ymd(start_date),lubridate::ymd(end_date),by = "day") %>% format("%Y.%m.%d")
+  date_times_for_rast <- seq(lubridate::ymd(start_date),lubridate::ymd(end_date),by = "day") 
+  
+  filenames <- paste0("chirps-v2.0.",date_sequence,".tif.gz")
+  sub_urls <- paste0(year,"/",filenames)
+  
+  # if you want to test if your download works or something is going wrong, restrict to just two days
+  # filenames<- filenames[1:2]
+  # sub_urls <- sub_urls[1:2]
+  
+  
+  ekonomR::download_multiple_files(data_subfolder = as.character(year),
+                                   data_raw = file.path(data_path,"01_raw","CHIRPS"),
+                                   base_url = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/africa_daily/tifs/p05",
+                                   sub_urls = sub_urls,
+                                   filename = filenames,
+                                   zip_file = FALSE)
+  
+  # unzip the .gz files
+  
+  path <- file.path(data_path,"01_raw","CHIRPS",as.character(year))
+  
+  files <- list.files(path)
+  
+  files_to_unzip <- files[stringr::str_detect(files,".gz")]
+  
+  
+  for (file in files_to_unzip){
+    
+    R.utils::gunzip(file.path(path,file),
+                    remove = TRUE,
+                    overwrite = TRUE)
+  }
+  
+  unzipped_filenames <- paste0("chirps-v2.0.",date_sequence,".tif")
+  
+  # put unzipped files together into a raster stack. this is an advantage of terra over raster
+  
+  year_rast <- terra::rast(x =file.path(data_path,"01_raw","CHIRPS",as.character(year),unzipped_filenames))
+  
+  terra::time(year_rast) <- date_times_for_rast
+  
+  names(year_rast) <- rep(raster_names_substring,times=length(filenames))
+  
+  # write the raster
+  
+  output_path    <- file.path(data_path,"03_clean","CHIRPS")
+  
+  output_filename <- paste0("chirps_daily_p05_",year,"_first-week.tif")
+  
+  if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE) # recursive lets you create any needed subdirectories
+  
+  # replace the -9999 into NA values, because CHIRPS NA values are -9999
+  year_rast <- terra::subst(year_rast, -9999, NA)
+  
+  terra::writeRaster(year_rast,
+                     file = file.path(output_path,output_filename),
+                     overwrite = TRUE)
+  
+  
+  # also generate a projected raster and write it
+  
+  output_ea_filename <- paste0("chirps_daily_p05_",year,"_equal_area_example-week.tif")
+  
+  ea_rast <- terra::project(year_rast, y = equal_area_crs)
+  
+  terra::writeRaster(ea_rast,
+                     file = file.path(output_path,output_ea_filename),
+                     overwrite = TRUE)
+  
+}
+
+# bring in raster
+
+terra_raster <- terra::rast(file.path(data_path,"03_clean","CHIRPS",output_ea_filename)) %>%
+  terra::project(y = equal_area_crs)
+
+# plot
+
+terra::plot(terra_raster[[1]])
+
+plot_1 <- ggplot2::ggplot() + 
+  ggplot2::geom_tile(data = as.data.frame(terra_raster[[1]], xy = TRUE),
+                     ggplot2::aes(x = x, 
+                                  y =y,
+                                  fill = `precip_mm_day`)
+  ) +
+  ekonomR::theme_minimal_map()
+
+plot_1
+
+ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
+                     plotname = plot_1,
+                     filename = paste0("africa_example-precip.png"),
+                     width = 8,
+                     height = 6,
+                     dpi  = 400)
+
+
+# Download, Clean, and bring in shapefiles
+
+ekonomR::download_data(data_subfolder = "GADM",
+                       data_raw = file.path(data_path,"01_raw"),
+                       url = paste0("https://geodata.ucdavis.edu/gadm/gadm4.1/gpkg/gadm41_",country,".gpkg"),
+                       filename = gadm_filename)
+
+
+sf::st_layers(gadm_in_path)
+
+vector_sf <- sf::st_read(dsn = gadm_in_path,
+                         layer = paste0("ADM_ADM_",gadm_level)) %>%
+  sf::st_make_valid() %>%
+  sf::st_transform(crs = equal_area_crs)
+
+# Plot
+
+plot_2 <- ggplot2::ggplot() + 
+  ggplot2::geom_tile(data = as.data.frame(terra_raster[[1]], xy = TRUE),
+                     ggplot2::aes(x = x, 
+                                  y =y,
+                                  fill = `precip_mm_day`)) +
+  ggplot2::geom_sf(data = vector_sf,
+                   color = "white",
+                   alpha = 1)+
+  ekonomR::theme_minimal_map()
+
+plot_2
+
+ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
+                     plotname = plot2,
+                     filename = paste0("africa_example-precip-and-country.png"),
+                     width = 8,
+                     height = 6,
+                     dpi  = 400)
+
+# Extract Raster to Shapefiles
+
+my_func           <- "sum"
+my_weights       <- NULL
+
+# check CRS
+
+# cat(terra::crs(vector_sf),"\n")
+# cat(terra::crs(terra_raster),"\n")
+# 
+# vector_sf <- vector_sf %>% sf::st_transform(crs = terra::crs(terra_raster))
+
+extracted_out_path <- file.path(data_path,"03_clean","merged",country)
+
+extracted_out_filename <- paste0(country,"_",year,"_gadm-level_",gadm_level,"_daily_precip_example.rds")
+
+out_sf <- ekonomR::raster_extract_workflow(terra_raster = terra_raster,
+                                           vector_sf    = vector_sf,
+                                           save_raster_copy=FALSE,
+                                           extracted_out_path  = extracted_out_path,
+                                           extracted_out_filename = extracted_out_filename,
+                                           func = my_func,
+                                           weights = my_weights,
+                                           drop_geometry = FALSE
+)
+
+date_to_plot <- start_date
+
+sf_to_plot <- out_sf %>%
+  dplyr::filter(date == date_to_plot)
+
+plot_3 <- ggplot2::ggplot() + 
+  ggplot2::geom_sf(data = sf_to_plot,
+                   aes(geometry = geom,
+                       fill = precip_sum))+
+  ggplot2::scale_fill_viridis_c()+
+  ggplot2::labs(title = paste0("Precipitation Example, ",country_name),
+                caption = c("Data from CHIRPS (2025) and GADM (2019)"),
+                fill = "Sum Precip (mm)") +
+  ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                             axis_title_y = ggplot2::element_blank(),
+                             legend_position = "right")
+plot_3
+
+ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
+                     plotname = plot_3,
+                     filename = paste0("africa_example-benin.png"),
+                     width = 8,
+                     height = 6,
+                     dpi  = 400)
+
+# Bonus: Extract to buffered centroids
+
+buffer_distance <- 3000
+
+# just the buffers alone
+vector_sf_centroid_buffers <- sf::st_buffer(sf::st_centroid(vector_sf),dist = buffer_distance)
+
+# if you wanted everything all together
+vector_sf_centroids <- cbind(vector_sf,
+                             sf::st_coordinates(sf::st_centroid(vector_sf)),
+                             sf::st_buffer(sf::st_centroid(vector_sf), dist = buffer_distance))
+
+plot_4 <- ggplot2::ggplot() + 
+  ggplot2::geom_sf(data = sf_to_plot,
+                   aes(geometry = geom,
+                       fill = precip_sum))+
+  ggplot2::scale_fill_viridis_c()+
+  ggplot2::geom_sf(data = vector_sf_centroid_buffers,
+                   aes(geometry = geom,
+                       color = "red",
+                       alpha = 1))+
+  ggplot2::labs(title = paste0("Precipitation and Centroids, ",country_name),
+                caption = c("Data from CHIRPS (2025) and GADM (2019)"),
+                fill = "Sum Precip (mm)",
+                color = "Centroid Location") +
+  ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                             axis_title_y = ggplot2::element_blank(),
+                             legend_position = "right")
+
+plot_4
+
+ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
+                     plotname = plot_4,
+                     filename = paste0("africa_example-benin-centroids.png"),
+                     width = 8,
+                     height = 6,
+                     dpi  = 400)
+
+
+# Extract aroudn buffers
+
+extracted_out_buffer_filename <- paste0(country,"_",year,"_gadm-level_",gadm_level,"_daily_precip_buffer_example.rds")
+
+
+buffer_out_sf <- ekonomR::raster_extract_workflow(terra_raster = terra_raster,
+                                                  vector_sf    = vector_sf_centroid_buffers,
+                                                  save_raster_copy=FALSE,
+                                                  extracted_out_path  = extracted_out_path,
+                                                  extracted_out_filename = extracted_out_buffer_filename,
+                                                  func = my_func,
+                                                  weights = my_weights,
+                                                  drop_geometry = FALSE
+)
+
+
+buffer_sf_to_plot <- buffer_out_sf %>%
+  dplyr::filter(date == date_to_plot)
+
+# plot to check
+plot_5 <- ggplot2::ggplot() + 
+  ggplot2::geom_sf(data = buffer_sf_to_plot,
+                   aes(geometry = geom,
+                       fill = precip_sum))+
+  ggplot2::scale_fill_viridis_c()+
+  ggplot2::labs(title = paste0("Precipitation for Buffers, ",country_name),
+                caption = c("Data from CHIRPS (2025) and GADM (2019)"),
+                fill = "Sum Precip (mm)") +
+  ekonomR::theme_minimal_map(axis_title_x = ggplot2::element_blank(),
+                             axis_title_y = ggplot2::element_blank(),
+                             legend_position = "right")
+
+
+
+
+
+plot_5
+
+ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
+                     plotname = plot_5,
+                     filename = paste0("africa_example-benin-centroids_precip.png"),
+                     width = 8,
+                     height = 6,
+                     dpi  = 400)
+
+```
