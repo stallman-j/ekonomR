@@ -72,7 +72,9 @@ raster_names_substring <- "precip_mm_day"
 ```
 
 
-# Download, Clean, and Bring in a Weekly Precipitation Raster
+# Raster Prep
+
+## Download and Clean
 
 For the sake of illustration we'll just download and clean a week's worth of CHIRPS files in 2021, but I'll write this as a loop so you could easily extend it.
 
@@ -172,6 +174,8 @@ years <- year
 #> The path where you can find your downloaded data, E:/data/01_raw/CHIRPS/2020, already exists.
 ```
 
+## Bring in Raster File
+
 Now, bring in our raster. There's something funky with the projection, so we'll just redo the projection.
 
 ``` r
@@ -179,6 +183,8 @@ Now, bring in our raster. There's something funky with the projection, so we'll 
                   terra::project(y = equal_area_crs)
                 
 ```
+
+## Plot Raster
 
 Let's take a look at the first day. It's easiest to just use the `terra::plot()` feature with rasters if you just want a quick look. In your console, this would be the following: 
 
@@ -226,7 +232,9 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
 One part down! Let's move onto the shapefiles
 
 
-# Download, Clean, and Bring in the Shapefiles
+# Prep Vector Shapefiles
+
+## Download Shapefiles
 
 This downloads province-level shapefiles for our country of interest, examines the layers, and brings in the level we want. See the [Basic Mapping](https://stallman-j.github.io/ekonomR/vignettes/basic-mapping/) vignette for more on this.
 
@@ -239,6 +247,8 @@ This downloads province-level shapefiles for our country of interest, examines t
 #> The path where you should find your downloaded data, E:/data/01_raw/GADM, already exists.
 #> Downloaded file gadm41_BEN.gpkg into the path E:/data/01_raw/GADM
 ```
+
+## Bring in Shapefiles
 
 Let's bring in our vector shapefile:
 
@@ -259,6 +269,9 @@ vector_sf <- sf::st_read(dsn = gadm_in_path,
 #> Bounding box:  xmin: 0.774345 ymin: 6.23491 xmax: 3.851701 ymax: 12.41835
 #> Geodetic CRS:  WGS 84
 ```
+
+
+## Plot
 May as well plot the first raster layer and our shapefiles together to have a look. All that really shows is that Benin is small relative to our raster. But this also suggests that, if you were doing an operation on the full raster, you might lose some time to computations because it would be faster to extract to your shapefiles first, and then do the computations.
 
 
@@ -283,8 +296,10 @@ plot_2
 
 
 ![plot of chunk unnamed-chunk-19](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa_example-precip-and-country.png?raw=true)
-# Extract Raster to Shapefiles
 
+# Extraction!
+
+## Preliminaries
 These are some parameters we might want within the `raster_extract_workflow` function for the `ekonomR` package:
 
 
@@ -317,7 +332,11 @@ Let's set the extraction paths. I like to do this outside of the function. That 
   extracted_out_filename <- paste0(country,"_",year,"_gadm-level_",gadm_level,"_daily_precip_example.rds")
 ```
   
-Finally, get an sf data frame of these
+## Easy Extract
+
+Finally, get an sf data frame with the `raster_extract_workflow` function, which conveniently wraps around either `terra::extract()` for points, or `exactextractr::exactextract()` for polygons and lines.
+
+There are some other options you can use, try seeing the help with `?raster_extract_workflow()` if your use-case differs a lot from this vignette.
 
 
 ``` r
@@ -331,11 +350,12 @@ Finally, get an sf data frame of these
                               drop_geometry = FALSE
   )
 #> Successfully extracted raster : 0.03 sec elapsed
-#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.06 sec elapsed
+#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.08 sec elapsed
 #> Joining with `by = join_by(vector_sf_id)`
-#> Merged extracted sf units back to the units sf: 0.03 sec elapsed
-#> Saved long data frame: 0.02 sec elapsed
+#> Merged extracted sf units back to the units sf: 0 sec elapsed
+#> Saved long data frame: 0.03 sec elapsed
 ```
+## Plot
 
 Suppose we wanted to plot the extracted version. Let's do it for the same layer as we did of the raster, which here is the first date in our date sequence.
 
@@ -375,9 +395,11 @@ plot_3
 
 # Bonus: Extract to buffered centroids
 
-As a bonus, suppose we instead want to extract to the buffered centroids of the polygons, rather than over the entire polygons. Here's what would change.
+Suppose we instead want to extract to the buffered centroids of the polygons, rather than over the entire polygons. Here's what would change.
 
-First, get the centroids of the polygons, the buffers, and show what that looks like.
+## Get centroids and buffers
+
+First, get the centroids of the polygons, the buffers, and show what that looks like. Because we're in the equal-area CRS, buffers here are in meters. (You should be able to figure out what those units are using code from somewhere in this vignette.)
 
 
 ``` r
@@ -394,6 +416,7 @@ vector_sf_centroids <- cbind(vector_sf,
 #> Warning: st_centroid assumes attributes are constant over geometries
 #> Warning: st_centroid assumes attributes are constant over geometries
 ```
+## Plot
 
 
 ``` r
@@ -425,6 +448,7 @@ plot_4
 
 ![plot of chunk unnamed-chunk-33](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa_example-benin-centroids.png?raw=true)
 
+## Extract
 Now let's do the extraction again around the buffers.
 
 
@@ -443,11 +467,11 @@ Now let's do the extraction again around the buffers.
                               weights = my_weights,
                               drop_geometry = FALSE
   )
-#> Successfully extracted raster : 0.02 sec elapsed
-#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.07 sec elapsed
+#> Successfully extracted raster : 0.03 sec elapsed
+#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.08 sec elapsed
 #> Joining with `by = join_by(vector_sf_id)`
-#> Merged extracted sf units back to the units sf: 0 sec elapsed
-#> Saved long data frame: 0.01 sec elapsed
+#> Merged extracted sf units back to the units sf: 0.01 sec elapsed
+#> Saved long data frame: 0 sec elapsed
   
 
 buffer_sf_to_plot <- buffer_out_sf %>%
@@ -718,6 +742,8 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
                      dpi  = 400)
 
 # Bonus: Extract to buffered centroids
+
+# buffers are in meters here
 
 buffer_distance <- 3000
 

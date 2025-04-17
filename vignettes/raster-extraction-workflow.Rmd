@@ -78,7 +78,9 @@ raster_names_substring <- "precip_mm_day"
 ```
 
 
-# Download, Clean, and Bring in a Weekly Precipitation Raster
+# Raster Prep
+
+## Download and Clean
 
 For the sake of illustration we'll just download and clean a week's worth of CHIRPS files in 2021, but I'll write this as a loop so you could easily extend it.
 
@@ -177,12 +179,16 @@ years <- year
   
 ```
 
+## Bring in Raster File
+
 Now, bring in our raster. There's something funky with the projection, so we'll just redo the projection.
 ```{r}
   terra_raster <- terra::rast(file.path(data_path,"03_clean","CHIRPS",output_ea_filename)) %>%
                   terra::project(y = equal_area_crs)
                 
 ```
+
+## Plot Raster
 
 Let's take a look at the first day. It's easiest to just use the `terra::plot()` feature with rasters if you just want a quick look. In your console, this would be the following: 
 
@@ -230,7 +236,9 @@ knitr::include_graphics(url)
 One part down! Let's move onto the shapefiles
 
 
-# Download, Clean, and Bring in the Shapefiles
+# Prep Vector Shapefiles
+
+## Download Shapefiles
 
 This downloads province-level shapefiles for our country of interest, examines the layers, and brings in the level we want. See the [Basic Mapping](https://stallman-j.github.io/ekonomR/vignettes/basic-mapping/) vignette for more on this.
 
@@ -241,6 +249,8 @@ This downloads province-level shapefiles for our country of interest, examines t
                           filename = gadm_filename)
 
 ```
+
+## Bring in Shapefiles
 
 Let's bring in our vector shapefile:
 
@@ -253,6 +263,9 @@ vector_sf <- sf::st_read(dsn = gadm_in_path,
                 sf::st_transform(crs = equal_area_crs)
 
 ```
+
+
+## Plot
 May as well plot the first raster layer and our shapefiles together to have a look. All that really shows is that Benin is small relative to our raster. But this also suggests that, if you were doing an operation on the full raster, you might lose some time to computations because it would be faster to extract to your shapefiles first, and then do the computations.
 
 ```{r, eval = TRUE}
@@ -286,8 +299,10 @@ url <- "https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa
 knitr::include_graphics(url)
 
 ```
-# Extract Raster to Shapefiles
 
+# Extraction!
+
+## Preliminaries
 These are some parameters we might want within the `raster_extract_workflow` function for the `ekonomR` package:
 
 
@@ -317,7 +332,11 @@ Let's set the extraction paths. I like to do this outside of the function. That 
   extracted_out_filename <- paste0(country,"_",year,"_gadm-level_",gadm_level,"_daily_precip_example.rds")
 ```
   
-Finally, get an sf data frame of these
+## Easy Extract
+
+Finally, get an sf data frame with the `raster_extract_workflow` function, which conveniently wraps around either `terra::extract()` for points, or `exactextractr::exactextract()` for polygons and lines.
+
+There are some other options you can use, try seeing the help with `?raster_extract_workflow()` if your use-case differs a lot from this vignette.
 
 ```{r}
   out_sf <- ekonomR::raster_extract_workflow(terra_raster = terra_raster,
@@ -330,6 +349,7 @@ Finally, get an sf data frame of these
                               drop_geometry = FALSE
   )
 ```
+## Plot
 
 Suppose we wanted to plot the extracted version. Let's do it for the same layer as we did of the raster, which here is the first date in our date sequence.
 
@@ -377,9 +397,11 @@ knitr::include_graphics(url)
 
 # Bonus: Extract to buffered centroids
 
-As a bonus, suppose we instead want to extract to the buffered centroids of the polygons, rather than over the entire polygons. Here's what would change.
+Suppose we instead want to extract to the buffered centroids of the polygons, rather than over the entire polygons. Here's what would change.
 
-First, get the centroids of the polygons, the buffers, and show what that looks like.
+## Get centroids and buffers
+
+First, get the centroids of the polygons, the buffers, and show what that looks like. Because we're in the equal-area CRS, buffers here are in meters. (You should be able to figure out what those units are using code from somewhere in this vignette.)
 
 ```{r}
 buffer_distance <- 3000
@@ -393,6 +415,7 @@ vector_sf_centroids <- cbind(vector_sf,
                        sf::st_buffer(sf::st_centroid(vector_sf), dist = buffer_distance))
 
 ```
+## Plot
 
 ```{r, eval = TRUE}
 plot_4 <- ggplot2::ggplot() + 
@@ -433,6 +456,7 @@ knitr::include_graphics(url)
 
 ```
 
+## Extract
 Now let's do the extraction again around the buffers.
 
 
@@ -728,6 +752,8 @@ ekonomR::ggsave_plot(output_folder = here::here("output","02_figures"),
                      dpi  = 400)
 
 # Bonus: Extract to buffered centroids
+
+# buffers are in meters here
 
 buffer_distance <- 3000
 
