@@ -28,21 +28,6 @@ Bring in the `ekonomR` package: install ahead of time if you need to. It brings 
 #remotes::install_github("stallman-j/ekonomR")
 
 library(ekonomR)
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Loading required package: magrittr
-#> Loading required package: ggplot2
-#> Warning: package 'ggplot2' was built under R version 4.4.3
-#> Loading required package: modelsummary
-#> Warning: package 'modelsummary' was built under R version 4.4.3
-#> Loading required package: sandwich
 ```
 
 # Agenda
@@ -296,9 +281,6 @@ plot_2
 ```
 
 
-```
-#> Error: object 'plot2' not found
-```
 
 ![plot of chunk unnamed-chunk-19](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa_example-precip-and-country.png?raw=true)
 # Extract Raster to Shapefiles
@@ -314,7 +296,9 @@ These are some parameters we might want within the `raster_extract_workflow` fun
 ```
 
 
-If you'd like to examine the CRS of each of these, here's what you do. Or if you don't really care what the CRS is, you can just have the vector transformed to the CRS of the terra raster.
+If you'd like to examine the CRS of each of these, here's what you do. Or if you don't really care what the CRS is, you can just have the vector transformed to the CRS of the terra raster when you bring it in. 
+
+The raster extraction packages `terra` and `exactextractr` will also try to match the CRSs if they can if you've input two different ones, so if you've never done this before and it hasn't seemed to go haywire, that's probably why.
 
 
 ``` r
@@ -322,8 +306,6 @@ If you'd like to examine the CRS of each of these, here's what you do. Or if you
   cat(terra::crs(terra_raster),"\n")
   
   vector_sf <- vector_sf %>% sf::st_transform(crs = terra::crs(terra_raster))
-
-    
 ```
 
 Let's set the extraction paths. I like to do this outside of the function. That way if for instance I want to send this into a loop, it's not a total mess.
@@ -348,18 +330,17 @@ Finally, get an sf data frame of these
                               weights = my_weights,
                               drop_geometry = FALSE
   )
-#> Successfully extracted raster : 0.1 sec elapsed
-#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.13 sec elapsed
+#> Successfully extracted raster : 0.03 sec elapsed
+#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.06 sec elapsed
 #> Joining with `by = join_by(vector_sf_id)`
 #> Merged extracted sf units back to the units sf: 0.03 sec elapsed
-#> Saved long data frame: 0.01 sec elapsed
+#> Saved long data frame: 0.02 sec elapsed
 ```
 
-Now suppose we wanted to plot the extracted version. Let's do it for the same layer as we did of the raster, which here is the first date in our date sequence.
+Suppose we wanted to plot the extracted version. Let's do it for the same layer as we did of the raster, which here is the first date in our date sequence.
 
 
 ``` r
-
 date_to_plot <- start_date
 
 sf_to_plot <- out_sf %>%
@@ -462,8 +443,8 @@ Now let's do the extraction again around the buffers.
                               weights = my_weights,
                               drop_geometry = FALSE
   )
-#> Successfully extracted raster : 0.1 sec elapsed
-#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.14 sec elapsed
+#> Successfully extracted raster : 0.02 sec elapsed
+#> Extracted all terra_raster separate layer_substrings to vector_sf: 0.07 sec elapsed
 #> Joining with `by = join_by(vector_sf_id)`
 #> Merged extracted sf units back to the units sf: 0 sec elapsed
 #> Saved long data frame: 0.01 sec elapsed
@@ -502,6 +483,12 @@ plot_5
 ![plot of chunk unnamed-chunk-38](https://github.com/stallman-j/ekonomR/blob/main/output/02_figures/africa_example-benin-centroids_precip.png?raw=true)
 
 Congratulations! You're a pro.
+
+## Important Notes
+
+Make sure that you've tested some comparisons between your input rasters and your output extractions to see that the numbers make sense. The choice of function and weights over which to extract is very important and can lead to nonsense results if you've chosen it wrong.
+
+Your observation in the dataframe is given by: the unique vector units are given an ID called `vector_sf_id`, then there is your `date`, so an observation is a `vector_sf_id` by `date`, so here a province by day.
 
 # Just the Code, Please
 
