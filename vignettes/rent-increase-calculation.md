@@ -269,7 +269,7 @@ From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12\% an
 
 From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6\% and 21.2\%, giving an estimated proposed rent ranging from \$1750 to \$1820.
 
-I think a fair number to propose, then, is probably about \$1800.
+I think a fair number to propose, then, is probably about \$1850.
 
 # Just the Code
 
