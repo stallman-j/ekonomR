@@ -64,5 +64,5 @@ a pivoted-long sf
 # example code
 }
 \author{
-jillianstallman
+jstallman
 }

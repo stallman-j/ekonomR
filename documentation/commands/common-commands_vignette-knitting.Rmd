@@ -135,6 +135,14 @@ knitr::knit(input = here::here("vignettes","raster-extraction-workflow.Rmd"), ou
 
 ```
 
+### Varia vignettes
+
+``` {r, results = FALSE}
+knitr::knit(input = here::here("vignettes","rent-increase-calculation.Rmd"), output = here::here("vignettes","rent-increase-calculation.md"))
+
+
+```
+
 ### R Tricks
 
 ``` {r}

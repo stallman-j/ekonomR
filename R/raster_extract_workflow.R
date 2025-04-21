@@ -1,7 +1,7 @@
 #' raster_extract_wf: Raster Extraction Workflow
 #'
 #' \code{raster_extract_wf} takes a terra spatial raster stack and extracts from this to either points, polygons or lines to generate for each spatial unit an extracted value for each raster layer. Outputs a long data frame where an observation is spatial-unit-by-raster-layer. This is typically going to be a spatial unit (e.g. city) by time (e.g. 2004 July) for a particular variable (e.g. sea surface temperature).
-#' @author jillianstallman
+#' @author jstallman
 #' @param terra_raster a terra raster. If not from 0-360 degrees longitude and -90 to 90 degrees latitude will rotate the latitude (which takes a while). This is an option because, for instance if you're using ERA-5 rasters, they're often on a different longitude system than what your shapefiles might be. Climate science tends to go from -180 to 180 degrees longitude.
 #' @param vector_sf an sf object with polygons, points or lines to be extracted to
 #' @param save_updated_raster default FALSE, logical. Set to TRUE if you want to save a copy of the raster you bring in with possibly updated coordinate reference system or rotated correctly

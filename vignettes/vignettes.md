@@ -84,6 +84,7 @@ I'll list the vignettes first, and then in the following section will explain wh
 ## Varia
 
 - [Basic Randomization: Presentation Ordering ](https://stallman-j.github.io/ekonomR/vignettes/basic-randomization/)
+- [Rent Calculations](https://stallman-j.github.io/ekonomR/vignettes/rent-increase-calculation/)
 - To add: Rselenium shenanigans
 - To add: Proselytizing for Parallelization
 - To add: Avoiding engaging too deeply with Python by using `reticulate`
