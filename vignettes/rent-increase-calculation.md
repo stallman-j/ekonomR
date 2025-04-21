@@ -394,3 +394,57 @@ rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = b
                                                                start_rent = 3200)
 #> [1] "Inflation from Apr 2021 to Mar 2025 was 18.5% according to the BLS CPI that you inputted.\n For a starting rent of $3200 you might propose a rent of $3791.677."
 ```
+
+I'm also going to include here some additional calculations of other expenses. Ignore if you just want the vignette, but I want to assess the actual paid expenses in non-rent expenditure relative to the suggested increase from the CPI and see how reasonable this seems to be.
+
+
+``` r
+
+start_date <- "2021-04-01"
+
+end_date <- "2025-04-01"
+
+start_rent <- 3300
+
+number_of_months <- lubridate::interval(lubridate::ymd(start_date),lubridate::ymd(end_date)) %/% months(1)
+
+# 48 months
+
+rent_paid <- start_rent*number_of_months
+
+rent_owed <- 3200*number_of_months
+
+# other costs
+
+barn_cost <- 60000
+
+generator <- 1000
+
+# number of years: 4
+pest_control <- 1200*4
+
+# UI is 300 during 9 months of the year, 500 during the 3 summer months
+
+ui_cost <-300*number_of_months*3/4 + 500*number_of_months*1/4
+
+# oil cost: 600 * 3 months of winter * 2 years (1st 2 years probably much less, assume 2/3 the cost)
+
+oil_cost <- 600*3*2 + 400*3*2
+
+difference_rent_paid_and_owed <- rent_paid - rent_owed
+# 4800 difference
+
+additional_expenses <- pest_control + barn_cost + generator + ui_cost + oil_cost
+
+additional_expenses_variable <- pest_control + ui_cost + oil_cost
+
+# 27600 additional annual expenses
+# 88600 if include barn + generator
+
+# take the 27600 additional expenses which were over 4 years, and divide by 48 to get monthly additional increase
+
+additional_monthly_expenses <-additional_expenses_variable/number_of_months
+
+# 575 in additional monthly expenses on top of the 3200 rent
+
+```
