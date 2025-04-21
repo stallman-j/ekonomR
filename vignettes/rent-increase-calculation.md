@@ -93,50 +93,22 @@ They update this every year. Fortunately, for reasons, I have been tracking a nu
 
 
 
-![plot of chunk unnamed-chunk-76](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2020-2021.png?raw=true)
+![plot of chunk unnamed-chunk-6](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2020-2021.png?raw=true)
 
 
 
-![plot of chunk unnamed-chunk-77](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2022-2023.png?raw=true)
+![plot of chunk unnamed-chunk-7](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2022-2023.png?raw=true)
 
-![plot of chunk unnamed-chunk-78](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2023-2024.png?raw=true)
+![plot of chunk unnamed-chunk-8](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2023-2024.png?raw=true)
 
-![plot of chunk unnamed-chunk-79](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2024-2025.png?raw=true)
+![plot of chunk unnamed-chunk-9](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2024-2025.png?raw=true)
 
 
-Simplest thing to do here is to say: let's find the percentage increase between the `Housing and Food` category from the 2020-2021 academic year, and use that as our inflation measure. 
+Simplest thing to do here is to say: let's find the average percentage increase between the `Housing and Food` category from the 2020-2021 and 2022-2023 academic year, and use that as our midline measure. 
 
-That will slightly **over-estimate** the price increase, because my rent started in 2021 summer. Starting from 2020 gives me an extra year of inflation:
+I'd like the 2021-2022 to start with, but we make do! I don't want to use the 2020-2021 directly, since that was a year with a bunch of inflation from Covid and I entered my housing *after* that big blip.
 
 That means we're looking at the following:
-
-
-``` r
-start_housing_food <- 1915
-end_housing_food   <- 2401
-
-calculated_inflation_high <- (end_housing_food - start_housing_food)/(start_housing_food)
-
-recommended_rent_high <- start_rent + start_rent*calculated_inflation_high
-
-print(paste0("For a starting rent of $",start_rent,", a high estimate for the proposed rent should be $",round(recommended_rent_high,3)," from a calculated inflation of ",round(calculated_inflation_high,3)*100,"%."))
-#> [1] "For a starting rent of $1400, a high estimate for the proposed rent should be $1755.3 from a calculated inflation of 25.4%."
-```
-Let's go ahead and get a lower bound from starting with the 2022-2023 estimate:
-
-
-``` r
-start_housing_food <- 2149
-end_housing_food   <- 2401
-
-calculated_inflation_low <- (end_housing_food - start_housing_food)/(start_housing_food)
-
-recommended_rent_low <- start_rent + start_rent*calculated_inflation_low
-
-print(paste0("For a starting rent of $",start_rent,", a low estimate for the proposed rent should be $",round(recommended_rent_low,3)," from a calculated inflation of ",round(calculated_inflation_low,3)*100,"%."))
-#> [1] "For a starting rent of $1400, a low estimate for the proposed rent should be $1564.169 from a calculated inflation of 11.7%."
-```
-Suppose we take the average of these two starting points. What I really want is the 2021-2022 COL! But I can't find it, so we make do.
 
 
 
@@ -151,9 +123,26 @@ recommended_rent_mid <- start_rent + start_rent*calculated_inflation_mid
 print(paste0("For a starting rent of $",start_rent,", a mid-range estimate for the proposed rent should be $",round(recommended_rent_mid,3)," from a calculated inflation of ",round(calculated_inflation_mid,3)*100,"%."))
 #> [1] "For a starting rent of $1400, a mid-range estimate for the proposed rent should be $1654.232 from a calculated inflation of 18.2%."
 ```
+
+Let's get a lower bound from starting with the 2022-2023 estimate:
+
+
+``` r
+start_housing_food <- 2149
+end_housing_food   <- 2401
+
+calculated_inflation_low <- (end_housing_food - start_housing_food)/(start_housing_food)
+
+recommended_rent_low <- start_rent + start_rent*calculated_inflation_low
+
+print(paste0("For a starting rent of $",start_rent,", a low estimate for the proposed rent should be $",round(recommended_rent_low,3)," from a calculated inflation of ",round(calculated_inflation_low,3)*100,"%."))
+#> [1] "For a starting rent of $1400, a low estimate for the proposed rent should be $1564.169 from a calculated inflation of 11.7%."
+```
+
+
 ## Conclusion Yale
 
-Based on the Yale data, a reasonable range of proposal would be somewhere between \$1564.2 and \$1755.3, with a middle-range estimate being about \$1650. 
+Based on the Yale data, a low range of proposal would be \$1564.2, with a middle-range estimate being about \$1650. 
 
 # BLS Data
 
@@ -267,7 +256,7 @@ It looks like housing has risen slightly faster than the overall CPI in the nort
 
 The Yale and BLS numbers are pretty close! That's reassurring.
 
-From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12% and 25.4%, with the low number coming from ignoring 2021-2022 due to data constraints, giving me an estimated proposed rent ranging from about \$1564.2 to \$1755.3, with a middle-range estimate being about \$1650, off a starting value of \$1400.
+From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12% and 25.4%, with the low number coming from ignoring 2021-2022 due to data constraints, giving me an estimated proposed rent ranging from about \$1564.2 to about \$1650, off a starting value of \$1400.
 
 From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6% and 21.2%, giving an estimated proposed rent ranging from \$1632.60 to \$1696.37.
 
