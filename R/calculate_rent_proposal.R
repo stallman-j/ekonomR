@@ -7,7 +7,7 @@
 #' @param start_year character, year of start date. Default "2021"
 #' @param end_month character, three-letter month as given by BLS, e.g. "Mar"
 #' @param end_year character, year of end date. Default is "2025"
-#' @param start_rent numeric, starting rent. Default is 1500
+#' @param start_rent numeric, starting rent. Default is 1400
 #' @param skip_val numeric, number of rows to skip in the BLS xlsx data. Default 10 worked for the ones I downloaded
 #' @param ... additional parameters to put into the readxl::read_xlsx() call for the BLS file
 #' @export
@@ -19,7 +19,7 @@ calculate_rent_proposal <- function(bls_xlsx_file,
                                     start_year  = "2021",
                                     end_month   = "Mar",
                                     end_year    = "2025",
-                                    start_rent  = 1500,
+                                    start_rent  = 1400,
                                     skip_val    = 10, # change if something goes wrong
                                     ...){
 
@@ -47,6 +47,8 @@ calculate_rent_proposal <- function(bls_xlsx_file,
 
   rent_proposed <- start_rent + start_rent*inflation
 
-  print(paste0("Inflation from ",start_month, " " ,start_year, " to ", end_month, " ", end_year, " was ",round(inflation,3)*100,"% according to the BLS CPI that you inputted.\n For a starting rent of $",start_rent," you might propose a rent of $",round(rent_proposed,3),"."))
+  print(paste0("Inflation from ",start_month, " " ,start_year, " to ", end_month, " ", end_year, " was ",round(inflation,3)*100,"% according to the BLS CPI that you inputted."))
+
+  print(paste0("For a starting rent of $",start_rent," you might propose a rent of $",round(rent_proposed,3),"."))
   return(rent_proposed)
 }

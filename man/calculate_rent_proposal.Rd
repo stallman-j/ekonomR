@@ -10,7 +10,7 @@ calculate_rent_proposal(
   start_year = "2021",
   end_month = "Mar",
   end_year = "2025",
-  start_rent = 1500,
+  start_rent = 1400,
   skip_val = 10,
   ...
 )
@@ -26,7 +26,7 @@ calculate_rent_proposal(
 
 \item{end_year}{character, year of end date. Default is "2025"}
 
-\item{start_rent}{numeric, starting rent. Default is 1500}
+\item{start_rent}{numeric, starting rent. Default is 1400}
 
 \item{skip_val}{numeric, number of rows to skip in the BLS xlsx data. Default 10 worked for the ones I downloaded}
 

@@ -45,12 +45,12 @@ So here's what we're doing:
 5. For the same initial rent, calculate what it would be worth today looking at the overall CPI
 6. Present to my landlord a proposed rent increase based on these metrics that is generous but fair.
 
-My initial rent in June of 2021 was \$1500. We'll use this as our baseline.
+My initial rent in June of 2021 was \$1400 with $100 for parking. I'll use \$1400 as my baseline and see how this shakes out.
 
 
 ``` r
 
-start_rent <- 1500
+start_rent <- 1400
 start_date <- lubridate::ymd("2021-06-01")
 start_year <- "2021"
 start_month <- "Jun"
@@ -83,7 +83,7 @@ Suppose we simply say, rents increased about %5 from March 2023 to April 2025, s
 
 ``` r
 print(paste0("A very rough estimate for a new rent might be ", start_rent*1.05*1.05))
-#> [1] "A very rough estimate for a new rent might be 1653.75"
+#> [1] "A very rough estimate for a new rent might be 1543.5"
 ```
 # Yale Cost of Living
 
@@ -93,15 +93,15 @@ They update this every year. Fortunately, for reasons, I have been tracking a nu
 
 
 
-![plot of chunk unnamed-chunk-6](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2020-2021.png?raw=true)
+![plot of chunk unnamed-chunk-76](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2020-2021.png?raw=true)
 
 
 
-![plot of chunk unnamed-chunk-7](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2022-2023.png?raw=true)
+![plot of chunk unnamed-chunk-77](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2022-2023.png?raw=true)
 
-![plot of chunk unnamed-chunk-8](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2023-2024.png?raw=true)
+![plot of chunk unnamed-chunk-78](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2023-2024.png?raw=true)
 
-![plot of chunk unnamed-chunk-9](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2024-2025.png?raw=true)
+![plot of chunk unnamed-chunk-79](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2024-2025.png?raw=true)
 
 
 Simplest thing to do here is to say: let's find the percentage increase between the `Housing and Food` category from the 2020-2021 academic year, and use that as our inflation measure. 
@@ -120,7 +120,7 @@ calculated_inflation_high <- (end_housing_food - start_housing_food)/(start_hous
 recommended_rent_high <- start_rent + start_rent*calculated_inflation_high
 
 print(paste0("For a starting rent of $",start_rent,", a high estimate for the proposed rent should be $",round(recommended_rent_high,3)," from a calculated inflation of ",round(calculated_inflation_high,3)*100,"%."))
-#> [1] "For a starting rent of $1500, a high estimate for the proposed rent should be $1880.679 from a calculated inflation of 25.4%."
+#> [1] "For a starting rent of $1400, a high estimate for the proposed rent should be $1755.3 from a calculated inflation of 25.4%."
 ```
 Let's go ahead and get a lower bound from starting with the 2022-2023 estimate:
 
@@ -134,7 +134,7 @@ calculated_inflation_low <- (end_housing_food - start_housing_food)/(start_housi
 recommended_rent_low <- start_rent + start_rent*calculated_inflation_low
 
 print(paste0("For a starting rent of $",start_rent,", a low estimate for the proposed rent should be $",round(recommended_rent_low,3)," from a calculated inflation of ",round(calculated_inflation_low,3)*100,"%."))
-#> [1] "For a starting rent of $1500, a low estimate for the proposed rent should be $1675.896 from a calculated inflation of 11.7%."
+#> [1] "For a starting rent of $1400, a low estimate for the proposed rent should be $1564.169 from a calculated inflation of 11.7%."
 ```
 Suppose we take the average of these two starting points. What I really want is the 2021-2022 COL! But I can't find it, so we make do.
 
@@ -149,11 +149,11 @@ calculated_inflation_mid <- (end_housing_food - start_housing_food)/(start_housi
 recommended_rent_mid <- start_rent + start_rent*calculated_inflation_mid
 
 print(paste0("For a starting rent of $",start_rent,", a mid-range estimate for the proposed rent should be $",round(recommended_rent_mid,3)," from a calculated inflation of ",round(calculated_inflation_mid,3)*100,"%."))
-#> [1] "For a starting rent of $1500, a mid-range estimate for the proposed rent should be $1772.392 from a calculated inflation of 18.2%."
+#> [1] "For a starting rent of $1400, a mid-range estimate for the proposed rent should be $1654.232 from a calculated inflation of 18.2%."
 ```
-## Conclusion
+## Conclusion Yale
 
-Based on the Yale data, a reasonable range of proposal would be somewhere between \$1680 and \$1880, with a middle-range estimate being about \$1770.
+Based on the Yale data, a reasonable range of proposal would be somewhere between \$1564.2 and \$1755.3, with a middle-range estimate being about \$1650. 
 
 # BLS Data
 
@@ -230,8 +230,8 @@ I could therefore suggest increasing my rent to:
 ``` r
 rent_proposed <- start_rent + start_rent*inflation
 
-print(paste0('You might propose increasing rent from ',start_rent, ' to ', rent_proposed,'.'))
-#> [1] "You might propose increasing rent from 1500 to 1817.54401882976."
+print(paste0('You might propose increasing rent from ',start_rent, ' to ', round(rent_proposed,2),'.'))
+#> [1] "You might propose increasing rent from 1400 to 1696.37."
 ```
 
 
@@ -244,7 +244,8 @@ Let's try it out. The default values are the ones I want for my case, so all I n
 bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
 
 rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
-#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted.\n For a starting rent of $1500 you might propose a rent of $1817.544."
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted."
+#> [1] "For a starting rent of $1400 you might propose a rent of $1696.374."
 ```
 I downloaded the overall CPI as well from [**the BLS page (`all items`)**](https://www.bls.gov/regions/mid-atlantic/news-release/consumerpriceindex_northeast.htm). Let's see if it works!
 
@@ -253,23 +254,28 @@ I downloaded the overall CPI as well from [**the BLS page (`all items`)**](https
 bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
 
 rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
-#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted.\n For a starting rent of $1500 you might propose a rent of $1749.216."
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted."
+#> [1] "For a starting rent of $1400 you might propose a rent of $1632.602."
 ```
 
 
-## Conclusion
+## Conclusion BLS
 
-It looks like housing has risen slightly faster than the overall CPI in the northeast over that time. A reasonable suggestion might be somewhere in \$1750 to \$1850.
+It looks like housing has risen slightly faster than the overall CPI in the northeast over that time. A reasonable suggestion might be somewhere in \$1632.602 to \$1696.37.
 
 # Overall Conclusion
 
-Interestingly, the Yale and BLS numbers are pretty close!
+The Yale and BLS numbers are pretty close! That's reassurring.
 
-From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12\% and 25.4\%, with the low number coming from ignoring 2021-2022 due to data constraints, giving me an estimated proposed rent ranging from about \$1680 to \$1880 off a starting value of \$1500.
+From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12% and 25.4%, with the low number coming from ignoring 2021-2022 due to data constraints, giving me an estimated proposed rent ranging from about \$1564.2 to \$1755.3, with a middle-range estimate being about \$1650, off a starting value of \$1400.
 
-From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6\% and 21.2\%, giving an estimated proposed rent ranging from \$1750 to \$1820.
+From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6% and 21.2%, giving an estimated proposed rent ranging from \$1632.60 to \$1696.37.
 
-I think a fair number to propose, then, is probably about \$1850.
+With a midrange estimate of about 20% inflation, that also increases my parking fee to about \$120.
+
+I think a fair proposal would be to go to \$1700 for the main rent, which is a little above the BLS data, a little below the very highest Yale estimate (which, recall, was based on adding in an extra year of inflation from 2020-2021), but generous relative to the mid-range estimate off the Yale data and slightly higher than the highest BLS estimate.
+
+If I add on approximately \$120 for parking, then I might want to propose a total rent of about \$1820.
 
 # Just the Code
 
@@ -383,7 +389,8 @@ bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_
 rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi,
                                                                       start_month = "Apr",
                                                                       start_rent = 3200)
-#> [1] "Inflation from Apr 2021 to Mar 2025 was 21.5% according to the BLS CPI that you inputted.\n For a starting rent of $3200 you might propose a rent of $3886.887."
+#> [1] "Inflation from Apr 2021 to Mar 2025 was 21.5% according to the BLS CPI that you inputted."
+#> [1] "For a starting rent of $3200 you might propose a rent of $3886.887."
 
 
 # With Function, overall CPI
@@ -392,7 +399,8 @@ bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.
 rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi,
                                                                start_month = "Apr",
                                                                start_rent = 3200)
-#> [1] "Inflation from Apr 2021 to Mar 2025 was 18.5% according to the BLS CPI that you inputted.\n For a starting rent of $3200 you might propose a rent of $3791.677."
+#> [1] "Inflation from Apr 2021 to Mar 2025 was 18.5% according to the BLS CPI that you inputted."
+#> [1] "For a starting rent of $3200 you might propose a rent of $3791.677."
 ```
 
 I'm also going to include here some additional calculations of other expenses. Ignore if you just want the vignette, but I want to assess the actual paid expenses in non-rent expenditure relative to the suggested increase from the CPI and see how reasonable this seems to be.

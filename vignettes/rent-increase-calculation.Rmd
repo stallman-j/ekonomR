@@ -50,11 +50,11 @@ So here's what we're doing:
 5. For the same initial rent, calculate what it would be worth today looking at the overall CPI
 6. Present to my landlord a proposed rent increase based on these metrics that is generous but fair.
 
-My initial rent in June of 2021 was \$1500. We'll use this as our baseline.
+My initial rent in June of 2021 was \$1400 with $100 for parking. I'll use \$1400 as my baseline and see how this shakes out.
 
 ```{r}
 
-start_rent <- 1500
+start_rent <- 1400
 start_date <- lubridate::ymd("2021-06-01")
 start_year <- "2021"
 start_month <- "Jun"
@@ -166,9 +166,9 @@ recommended_rent_mid <- start_rent + start_rent*calculated_inflation_mid
 print(paste0("For a starting rent of $",start_rent,", a mid-range estimate for the proposed rent should be $",round(recommended_rent_mid,3)," from a calculated inflation of ",round(calculated_inflation_mid,3)*100,"%."))
 
 ```
-## Conclusion
+## Conclusion Yale
 
-Based on the Yale data, a reasonable range of proposal would be somewhere between \$1680 and \$1880, with a middle-range estimate being about \$1770.
+Based on the Yale data, a reasonable range of proposal would be somewhere between \$1564.2 and \$1755.3, with a middle-range estimate being about \$1650. 
 
 # BLS Data
 
@@ -239,7 +239,7 @@ I could therefore suggest increasing my rent to:
 ```{r}
 rent_proposed <- start_rent + start_rent*inflation
 
-print(paste0('You might propose increasing rent from ',start_rent, ' to ', rent_proposed,'.'))
+print(paste0('You might propose increasing rent from ',start_rent, ' to ', round(rent_proposed,2),'.'))
 
 ```
 
@@ -263,19 +263,23 @@ rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = b
 ```
 
 
-## Conclusion
+## Conclusion BLS
 
-It looks like housing has risen slightly faster than the overall CPI in the northeast over that time. A reasonable suggestion might be somewhere in \$1750 to \$1850.
+It looks like housing has risen slightly faster than the overall CPI in the northeast over that time. A reasonable suggestion might be somewhere in \$1632.602 to \$1696.37.
 
 # Overall Conclusion
 
-Interestingly, the Yale and BLS numbers are pretty close!
+The Yale and BLS numbers are pretty close! That's reassurring.
 
-From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12\% and 25.4\%, with the low number coming from ignoring 2021-2022 due to data constraints, giving me an estimated proposed rent ranging from about \$1680 to \$1880 off a starting value of \$1500.
+From the Yale numbers, inflation over 2021 to 2025 was somewhere between 12% and 25.4%, with the low number coming from ignoring 2021-2022 due to data constraints, giving me an estimated proposed rent ranging from about \$1564.2 to \$1755.3, with a middle-range estimate being about \$1650, off a starting value of \$1400.
 
-From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6\% and 21.2\%, giving an estimated proposed rent ranging from \$1750 to \$1820.
+From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6% and 21.2%, giving an estimated proposed rent ranging from \$1632.60 to \$1696.37.
 
-I think a fair number to propose, then, is probably about \$1850.
+With a midrange estimate of about 20% inflation, that also increases my parking fee to about \$120.
+
+I think a fair proposal would be to go to \$1700 for the main rent, which is a little above the BLS data, a little below the very highest Yale estimate (which, recall, was based on adding in an extra year of inflation from 2020-2021), but generous relative to the mid-range estimate off the Yale data and slightly higher than the highest BLS estimate.
+
+If I add on approximately \$120 for parking, then I might want to propose a total rent of about \$1820.
 
 # Just the Code
 
