@@ -93,15 +93,15 @@ They update this every year. Fortunately, for reasons, I have been tracking a nu
 
 
 
-![plot of chunk unnamed-chunk-10](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2020-2021.png?raw=true)
+![plot of chunk unnamed-chunk-6](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2020-2021.png?raw=true)
 
 
 
-![plot of chunk unnamed-chunk-11](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2022-2023.png?raw=true)
+![plot of chunk unnamed-chunk-7](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2022-2023.png?raw=true)
 
-![plot of chunk unnamed-chunk-12](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2023-2024.png?raw=true)
+![plot of chunk unnamed-chunk-8](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2023-2024.png?raw=true)
 
-![plot of chunk unnamed-chunk-13](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2024-2025.png?raw=true)
+![plot of chunk unnamed-chunk-9](https://github.com/stallman-j/ekonomR/blob/main/output/manual/yale-col_2024-2025.png?raw=true)
 
 
 Let's find the average percentage increase between the `Housing and Food` category from the 2020-2021 and 2022-2023 academic year, and use that as our starting price.
@@ -259,13 +259,13 @@ The Yale and BLS numbers are pretty close! That's reassurring.
 
 From the Yale numbers, inflation over 2021 to 2025 was somewhere between 11.7% and 18.2%, giving me an estimated proposed rent ranging from about \$1570 to about \$1650, off a starting value of \$1400.
 
-From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6% and 21.2%, giving an estimated proposed rent ranging from about \$1630 to \$1700.
+From the BLS data, inflation from June 2021 to March 2025 ranged between 16.6% and 21.2%, giving an estimated proposed rent ranging from about \$1630 to \$1690.
 
 Taking the higher estimate of about 20% inflation, that also increases my parking fee to about \$120.
 
-I think a fair proposal would be to propose \$1700 for the main rent, which is the highest number that comes in, and is even rounding up from the BLS data. It's higher than the Yale estimates.
+I think a fair proposal would be \$1680 for the main rent, which implies an inflation over the time of %20. That is at the top of the range for the BLS and higher than any of the Yale estimates.
 
-If I add on approximately \$120 for parking, then I might want to propose a total rent of about \$1820.
+If I add on approximately \$120 for parking, then I might want to propose a total rent + parking of about \$1800.
 
 # Just the Code
 
