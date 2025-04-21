@@ -244,7 +244,7 @@ Let's try it out. The default values are the ones I want for my case, so all I n
 bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
 
 rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
-#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1817.544."
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted.\n For a starting rent of $1500 you might propose a rent of $1817.544."
 ```
 I downloaded the overall CPI as well from [**the BLS page (`all items`)**](https://www.bls.gov/regions/mid-atlantic/news-release/consumerpriceindex_northeast.htm). Let's see if it works!
 
@@ -253,7 +253,7 @@ I downloaded the overall CPI as well from [**the BLS page (`all items`)**](https
 bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
 
 rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
-#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1749.216."
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted.\n For a starting rent of $1500 you might propose a rent of $1749.216."
 ```
 
 
@@ -380,13 +380,17 @@ print(paste0('You might propose increasing rent from ',start_rent, ' to ', rent_
 # With Function, Housing CPI
 bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
 
-rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
-#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1817.544."
+rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi,
+                                                                      start_month = "Apr",
+                                                                      start_rent = 3200)
+#> [1] "Inflation from Apr 2021 to Mar 2025 was 21.5% according to the BLS CPI that you inputted.\n For a starting rent of $3200 you might propose a rent of $3886.887."
 
 
 # With Function, overall CPI
 bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
 
-rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
-#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1749.216."
+rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi,
+                                                               start_month = "Apr",
+                                                               start_rent = 3200)
+#> [1] "Inflation from Apr 2021 to Mar 2025 was 18.5% according to the BLS CPI that you inputted.\n For a starting rent of $3200 you might propose a rent of $3791.677."
 ```

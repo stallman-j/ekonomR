@@ -378,11 +378,15 @@ print(paste0('You might propose increasing rent from ',start_rent, ' to ', rent_
 # With Function, Housing CPI
 bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
 
-rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
+rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi,
+                                                                      start_month = "Apr",
+                                                                      start_rent = 3200)
 
 
 # With Function, overall CPI
 bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
 
-rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
+rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi,
+                                                               start_month = "Apr",
+                                                               start_rent = 3200)
 ``` 

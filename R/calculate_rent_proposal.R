@@ -47,6 +47,6 @@ calculate_rent_proposal <- function(bls_xlsx_file,
 
   rent_proposed <- start_rent + start_rent*inflation
 
-  print(paste0("Inflation from ",start_month, " " ,start_year, " to ", end_month, " ", end_year, " was ",round(inflation,3)*100,"% according to the BLS CPI that you inputted. For a starting rent of $",start_rent," you might propose a rent of $",round(rent_proposed,3),"."))
+  print(paste0("Inflation from ",start_month, " " ,start_year, " to ", end_month, " ", end_year, " was ",round(inflation,3)*100,"% according to the BLS CPI that you inputted.\n For a starting rent of $",start_rent," you might propose a rent of $",round(rent_proposed,3),"."))
   return(rent_proposed)
 }
