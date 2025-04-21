@@ -2,8 +2,7 @@
 % Please edit documentation in R/calculate_rent_proposal.R
 \name{calculate_rent_proposal}
 \alias{calculate_rent_proposal}
-\title{Title
-\code{raster_extract_wf} takes a terra spatial raster stack and extracts from this to either points, polygons or lines to generate for each spatial unit an extracted value for each raster layer. Outputs a long data frame where an observation is spatial-unit-by-raster-layer. This is typically going to be a spatial unit (e.g. city) by time (e.g. 2004 July) for a particular variable (e.g. sea surface temperature).}
+\title{Calculate rent Proposal}
 \usage{
 calculate_rent_proposal(
   bls_xlsx_file,
@@ -37,8 +36,7 @@ calculate_rent_proposal(
 suggested proposed rent based on the inflation calculated.
 }
 \description{
-Title
-\code{raster_extract_wf} takes a terra spatial raster stack and extracts from this to either points, polygons or lines to generate for each spatial unit an extracted value for each raster layer. Outputs a long data frame where an observation is spatial-unit-by-raster-layer. This is typically going to be a spatial unit (e.g. city) by time (e.g. 2004 July) for a particular variable (e.g. sea surface temperature).
+\code{calculate_rent_proposal} takes in a BLS file and some start and end dates, then a starting rent, and suggests a proposed rent based on the increase in CPI from the start date to ending date.
 }
 \author{
 jstallman

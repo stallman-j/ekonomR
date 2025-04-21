@@ -76,11 +76,12 @@ If I look at one-bedroom apartments, those rents are *down* \$100 year-on-year. 
 
 ### Rental Market Trends
 
-Now suppose I look at New Haven on [Rental Market Trends](https://www.zumper.com/rent-research/new-haven-ct). There we have numbers back to March 2023 and to present, which is giving us that the average rent prices for all bedroom counts and property types was about \$2100 in March 2023, and \$2200 in April 2025. That's a $\frac{2200-2100}{2100} = 4.7\%$ increase over about two years. Suppose we simply say, rents increased about \%5 from March 2023 to April 2025, so suppose that they would have increased about \%5 again from March 2021 to March 2023, then I should be at about \$1654.
+Now suppose I look at New Haven on [Rental Market Trends](https://www.zumper.com/rent-research/new-haven-ct). There we have numbers back to March 2023 and to present, which is giving us that the average rent prices for all bedroom counts and property types was about \$2100 in March 2023, and \$2200 in April 2025. That's a \[\frac{2200-2100}{2100} = 4.7\%\] increase over about two years. 
+
+Suppose we simply say, rents increased about %5 from March 2023 to April 2025, so suppose that they would have increased about %5 again from March 2021 to March 2023, then I should be at about $1654.
 
 
 ``` r
-
 print(paste0("A very rough estimate for a new rent might be ", start_rent*1.05*1.05))
 #> [1] "A very rough estimate for a new rent might be 1653.75"
 ```
@@ -164,8 +165,6 @@ I'll grab the excel sheet (you have to manually download it) from `Rent of prima
 
 
 ``` r
-
-
 filename <- "SeriesReport-20250421164640_e25244.xlsx"
 
 # number of lines to skip
@@ -229,7 +228,6 @@ I could therefore suggest increasing my rent to:
 
 
 ``` r
-
 rent_proposed <- start_rent + start_rent*inflation
 
 print(paste0('You might propose increasing rent from ',start_rent, ' to ', rent_proposed,'.'))
@@ -243,21 +241,19 @@ Let's try it out. The default values are the ones I want for my case, so all I n
 
 
 ``` r
-
 bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
 
 rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
-#> Error: 'calculate_rent_proposal' is not an exported object from 'namespace:ekonomR'
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1817.544."
 ```
 I downloaded the overall CPI as well from [**the BLS page (`all items`)**](https://www.bls.gov/regions/mid-atlantic/news-release/consumerpriceindex_northeast.htm). Let's see if it works!
 
 
 ``` r
-
 bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
 
 rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
-#> Error: 'calculate_rent_proposal' is not an exported object from 'namespace:ekonomR'
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1749.216."
 ```
 
 
@@ -281,7 +277,6 @@ Here's just the code. I'll run this through with a starting value of \$3200, for
 
 
 ``` r
-
 start_rent <- 3200
 start_date <- lubridate::ymd("2021-06-01")
 start_year <- "2021"
@@ -386,12 +381,12 @@ print(paste0('You might propose increasing rent from ',start_rent, ' to ', rent_
 bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
 
 rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
-#> Error: 'calculate_rent_proposal' is not an exported object from 'namespace:ekonomR'
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 21.2% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1817.544."
 
 
 # With Function, overall CPI
 bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
 
 rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
-#> Error: 'calculate_rent_proposal' is not an exported object from 'namespace:ekonomR'
+#> [1] "Inflation from Jun 2021 to Mar 2025 was 16.6% according to the BLS CPI that you inputted. For a starting rent of $1500 you might propose a rent of $1749.216."
 ```
