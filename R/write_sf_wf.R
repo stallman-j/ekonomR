@@ -9,7 +9,7 @@
 #'
 #' @returns the intersected sf (i.e. the rows of `my_sf` which had a positive intersection with `intersecting_sf`)
 #' @export
-st_intersects_wf <- function(my_sf,
+write_sf_wf <- function(my_sf,
                              out_path = here::here(),
                              out_name = "my_out_sf",
                              out_type = c(".rds",".shp")
