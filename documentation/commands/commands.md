@@ -19,3 +19,16 @@ In R: `devtools::document()` to generate / update the .Rd files for function doc
 2. `git add .` to add everything
 3. `git commit -m "commit message here"` to specify the commit message
 4. `git push -u origin main` to push
+
+
+
+# to knit the README file so it can be viewed on Github
+# do this in R Console
+library(knitr)
+knitr::knit(input = "README.Rmd", output = "README.md")
+
+knitr::knit(input = file.path("documentation","documentation.Rmd"), output = file.path("documentation","documentation.md"))
+
+
+knitr::knit(input = here::here("vignettes","basic-cleaning_wpp.Rmd"), output = here::here("vignettes","basic-cleaning_wpp.md"))
+

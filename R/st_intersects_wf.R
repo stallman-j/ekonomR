@@ -1,5 +1,7 @@
 #' st_intersects_wf
-#' Wrapper around st_intersects that, for a given `keep_sf` and `intersecting_sf`, calculates st_intersects, keeps the rows of `keep_sf` which had positive intersection, and saves them as a desired output in a particular file path. the `_wf` is for "workflow" because this is a common workflow
+#'
+#' \code{st_intersects_wf} Wrapper around st_intersects that, for a given `keep_sf` and `intersecting_sf`, calculates st_intersects, keeps the rows of `keep_sf` which had positive intersection, and saves them as a desired output in a particular file path. the `_wf` is for "workflow" because this is a common workflow
+#' @author jstallman
 #' @param keep_sf the input sf, the one which will have rows kept and saved as an output
 #' @param intersecting_sf the sf which will be intersected. This is not kept in any form
 #' @param out_path file path, place to save the output. gets created if it doesn't already exist

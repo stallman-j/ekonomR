@@ -168,10 +168,10 @@ I can't find BLS data split out by city with CPI. If you're a labor economist in
 
 [**Here's**](https://www.bls.gov/regions/mid-atlantic/news-release/consumerpriceindex_northeast.htm) the website to find CPI for the northeast US.
 
-I'll grab the excel sheet (you have to manually download it) from `Rent of primary residence in Northeast urban`, and bring it in.
+I'll grab the excel sheet (you have to manually download it) from `Rent of primary residence` in Northeast urban, and bring it in.
 
 ```{r}
-filename <- "SeriesReport-20250421164640_e25244.xlsx"
+filename <- "bls_2025-04_CPI_rent-primary-residence-northeast.xlsx"
 
 # number of lines to skip in excel calc
 skip_val <- 10
@@ -240,14 +240,14 @@ To get a different benchmark, let's do this for the overall CPI from the BLS. Th
 Let's try it out. The default values are the ones I want for my case, so all I need to do is tell my function what file to take:
 
 ```{r}
-bls_file_rental_housing_cpi <- file.path(data_path,"SeriesReport-20250421164640_e25244.xlsx")
+bls_file_rental_housing_cpi <- file.path(data_path,"bls_2025-04_CPI_rent-primary-residence-northeast.xlsx")
 
 rent_suggested_rental_housing_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_rental_housing_cpi)
 ```
 I downloaded the overall CPI as well from [**the BLS page (`all items`)**](https://www.bls.gov/regions/mid-atlantic/news-release/consumerpriceindex_northeast.htm). Let's see if it works!
 
 ```{r}
-bls_file_overall_cpi <- file.path(data_path,"SeriesReport-20250421172231_bfdf8d.xlsx")
+bls_file_overall_cpi <- file.path(data_path,"bls_2025-04_CPI_all-items-northeast.xlsx")
 
 rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi)
 
@@ -257,6 +257,21 @@ rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = b
 ## Conclusion for Inflation from the BLS
 
 It looks like housing has risen slightly faster than the overall CPI in the northeast over that time. A reasonable suggestion might be somewhere in \$1632.60 to \$1696.37.
+
+## Bonus: Fuel and Utilities
+
+Let's see, if fuel and utilites costs were separated out, should that be higher or lower than overall rents.
+
+I downloaded from the `Fuels and utilities` option on the [BLS Northeast page](https://www.bls.gov/regions/mid-atlantic/news-release/consumerpriceindex_northeast.htm)
+
+```{r}
+bls_file_overall_cpi <- file.path(data_path,"bls_2025-04_CPI_fuels-utilities-northeast.xlsx")
+
+rent_suggested_overall_cpi <- ekonomR::calculate_rent_proposal(bls_xlsx_file = bls_file_overall_cpi,
+                                                               start_rent = 100)
+
+```
+For an initial \$100 in, you would expect fuel and utilities to go up to about \$134.
 
 # Overall Conclusion
 
@@ -456,5 +471,30 @@ additional_monthly_expense_just_utilities <-  (ui_cost + oil_cost)/number_of_mon
 
 
 print(paste0("Additional monthly expenses amount to about $", additional_monthly_expense_just_utilities,", with just UI and oil."))
+
+```
+# Other expenses
+
+```{r}
+
+cable_internet_start <- 204.43
+
+internet_start <- 80
+
+cable_difference <- cable_internet_start - internet_start
+
+cable_internet_end   <- 294.45
+
+inflation_cable <- (cable_internet_end-cable_internet_start)/cable_internet_start
+
+# 44% relative to the 20% in rent
+
+# would have been:
+
+cable_internet_counterfactual <- cable_internet_start*1.20
+internet_counterfactual <- internet_start*(1+inflation_cable)
+
+cable_gap_start <- cable_internet_start - internet_start
+cable_gap_end <- cable_internet_end - internet_counterfactual
 
 ```
