@@ -14,3 +14,5 @@
 ^example-project$
 ^_config\.yml$
 ^Gemfile$
+^\.positai$
+^\.claude$
