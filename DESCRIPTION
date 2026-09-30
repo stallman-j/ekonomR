@@ -8,7 +8,6 @@ Description: This package provides a typical workflow for economists, particular
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Imports: 
     AER,
     countrycode,
@@ -48,3 +47,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.1.0
